@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1266px" height="556px" viewBox="0 0 1266 556" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Architecture</title>
+    <g id="Architecture" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect fill="#242424" x="0" y="0" width="1266" height="556"></rect>
+        <g id="Group" transform="translate(118.000000, 78.000000)">
+            <text id="User" font-family="Gilroy-Bold, Gilroy" font-size="37" font-weight="bold" fill="#FFFFFF">
+                <tspan x="648.297" y="35">User</tspan>
+            </text>
+            <text id="Worker" font-family="Gilroy-Bold, Gilroy" font-size="37" font-weight="bold" fill="#FFFFFF">
+                <tspan x="906.6725" y="210">Worker</tspan>
+            </text>
+            <text id="Employer" font-family="Gilroy-Bold, Gilroy" font-size="37" font-weight="bold" fill="#00CCAF">
+                <tspan x="439.4865" y="210">Employer</tspan>
+            </text>
+            <g transform="translate(118.000000, 354.000000)" fill="#00CCAF" font-family="Gilroy-Bold, Gilroy" font-size="37" font-weight="bold" id="class-name">
+                <g>
+                    <text id="Employer-Copy">
+                        <tspan x="2.1515" y="35">Recruiter</tspan>
+                    </text>
+                </g>
+            </g>
+            <g transform="translate(633.000000, 354.000000)" fill="#00CCAF" font-family="Gilroy-Bold, Gilroy" font-size="37" font-weight="bold" id="class-name-copy">
+                <g>
+                    <text id="Employer-Copy">
+                        <tspan x="2.7235" y="35">Organization</tspan>
+                    </text>
+                </g>
+            </g>
+            <g transform="translate(225.000000, 178.000000)">
+                <rect id="Rectangle" fill="#1C1C1C" x="0" y="0" width="204" height="42" rx="16"></rect>
+                <text id="abstract-class" font-family="Gilroy-Bold, Gilroy" font-size="26" font-weight="bold" fill="#3294D3">
+                    <tspan x="16.987" y="29.5">abstract class</tspan>
+                </text>
+            </g>
+            <g transform="translate(0.000000, 356.000000)">
+                <rect id="Rectangle" fill="#1C1C1C" x="0" y="0" width="108" height="42" rx="16"></rect>
+                <text id="class" font-family="Gilroy-Bold, Gilroy" font-size="26" font-weight="bold" fill="#3294D3">
+                    <tspan x="23.6" y="29.5">class</tspan>
+                </text>
+            </g>
+            <g transform="translate(515.000000, 356.000000)">
+                <rect id="Rectangle" fill="#1C1C1C" x="0" y="0" width="108" height="42" rx="16"></rect>
+                <text id="class" font-family="Gilroy-Bold, Gilroy" font-size="26" font-weight="bold" fill="#3294D3">
+                    <tspan x="23.6" y="29.5">class</tspan>
+                </text>
+            </g>
+            <g transform="translate(403.000000, 51.000000)" id="Connectors-/-Zigzag-Copy">
+                <path d="M286,3 L286,28.0002835 C286,39.0458219 277.052747,48 265.991025,48 L27.0089751,48 C15.9583233,48 7,56.9443546 7,67.9997165 L7,93" id="Path" stroke-opacity="0.38243007" stroke="#3294D3" stroke-width="2"></path>
+                <path d="M281,5 C281,7.76142375 283.238576,10 286,10 C288.761424,10 291,7.76142375 291,5 C291,2.23857625 288.761424,-2.01858732e-16 286,0 C283.238576,2.01858732e-16 281,2.23857625 281,5 L281,5 Z" id="Oval" fill="#257BF4"></path>
+                <path d="M2,91 C2,93.7614237 4.23857625,96 7,96 C9.76142375,96 12,93.7614237 12,91 C12,88.2385763 9.76142375,86 7,86 C4.23857625,86 2,88.2385763 2,91 L2,91 Z" id="Oval" fill="#257BF4"></path>
+            </g>
+            <g transform="translate(126.000000, 239.000000)" id="Connectors-/-Zigzag-Copy">
+                <path d="M286,3 L286,28.0002835 C286,39.0458219 277.052747,48 265.991025,48 L27.0089751,48 C15.9583233,48 7,56.9443546 7,67.9997165 L7,93" id="Path" stroke-opacity="0.38243007" stroke="#3294D3" stroke-width="2"></path>
+                <path d="M281,5 C281,7.76142375 283.238576,10 286,10 C288.761424,10 291,7.76142375 291,5 C291,2.23857625 288.761424,-2.01858732e-16 286,0 C283.238576,2.01858732e-16 281,2.23857625 281,5 L281,5 Z" id="Oval" fill="#257BF4"></path>
+                <path d="M2,91 C2,93.7614237 4.23857625,96 7,96 C9.76142375,96 12,93.7614237 12,91 C12,88.2385763 9.76142375,86 7,86 C4.23857625,86 2,88.2385763 2,91 L2,91 Z" id="Oval" fill="#257BF4"></path>
+            </g>
+            <g transform="translate(682.000000, 51.000000)" id="Connectors-/-Zigzag-Copy">
+                <g transform="translate(146.500000, 48.000000) scale(-1, 1) translate(-146.500000, -48.000000) ">
+                    <path d="M286,3 L286,28.0002835 C286,39.0458219 277.052747,48 265.991025,48 L27.0089751,48 C15.9583233,48 7,56.9443546 7,67.9997165 L7,93" id="Path" stroke-opacity="0.38243007" stroke="#3294D3" stroke-width="2"></path>
+                    <path d="M281,5 C281,7.76142375 283.238576,10 286,10 C288.761424,10 291,7.76142375 291,5 C291,2.23857625 288.761424,-2.01858732e-16 286,0 C283.238576,2.01858732e-16 281,2.23857625 281,5 L281,5 Z" id="Oval" fill="#257BF4"></path>
+                    <path d="M2,91 C2,93.7614237 4.23857625,96 7,96 C9.76142375,96 12,93.7614237 12,91 C12,88.2385763 9.76142375,86 7,86 C4.23857625,86 2,88.2385763 2,91 L2,91 Z" id="Oval" fill="#257BF4"></path>
+                </g>
+            </g>
+            <g transform="translate(405.000000, 239.000000)" id="Connectors-/-Zigzag-Copy">
+                <g transform="translate(146.500000, 48.000000) scale(-1, 1) translate(-146.500000, -48.000000) ">
+                    <path d="M286,3 L286,28.0002835 C286,39.0458219 277.052747,48 265.991025,48 L27.0089751,48 C15.9583233,48 7,56.9443546 7,67.9997165 L7,93" id="Path" stroke-opacity="0.38243007" stroke="#3294D3" stroke-width="2"></path>
+                    <path d="M281,5 C281,7.76142375 283.238576,10 286,10 C288.761424,10 291,7.76142375 291,5 C291,2.23857625 288.761424,-2.01858732e-16 286,0 C283.238576,2.01858732e-16 281,2.23857625 281,5 L281,5 Z" id="Oval" fill="#257BF4"></path>
+                    <path d="M2,91 C2,93.7614237 4.23857625,96 7,96 C9.76142375,96 12,93.7614237 12,91 C12,88.2385763 9.76142375,86 7,86 C4.23857625,86 2,88.2385763 2,91 L2,91 Z" id="Oval" fill="#257BF4"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
