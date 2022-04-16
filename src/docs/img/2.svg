@@ -2,7 +2,7 @@
 <svg width="1266px" height="556px" viewBox="0 0 1266 556" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <title>Architecture</title>
     <g id="Architecture" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <rect fill="#242424" x="0" y="0" width="1266" height="556"></rect>
+        <rect fill="#0C1117" x="0" y="0" width="1266" height="556"></rect>
         <g id="Group" transform="translate(118.000000, 78.000000)">
             <text id="User" font-family="Gilroy-Bold, Gilroy" font-size="37" font-weight="bold" fill="#FFFFFF">
                 <tspan x="648.297" y="35">User</tspan>
