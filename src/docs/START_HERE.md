@@ -43,7 +43,7 @@ In order to start the project u **need** .env file in root folder
 ## Other docs
 [syntax conventions](./syntax_convention.md)
 
-[how to write ur own docs](./md_cheatsheet)
+[how to write ur own docs](./md_cheatsheet.md)
 
 [project structure](./project_architecture.md)
 
