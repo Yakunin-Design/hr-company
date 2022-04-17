@@ -1,4 +1,5 @@
 import { Employer } from '../models/Employer';
+import { Worker }  from '../models/Worker'
 
 type location = {
     metro_station: string;
@@ -16,12 +17,15 @@ interface skill {
 }
 
 interface JobOffer {
+    id: number;
     host: Employer;
     title: string;
     location: location;
-    description: string;
+    description?: string;
     hour_rate: number;
     skills: skill[];
+    applicants: Worker[];
+    hired: Worker[];
 }
 
 interface FullTimeJobOffer extends JobOffer {

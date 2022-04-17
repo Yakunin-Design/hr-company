@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node ./build/server",
-    "dev": "clear; npx nodemon ./build/server.js --config ./config/nodemon.json",
-    "dev-w": "clear; nodemon ./build/server.js --config ./config/nodemon.json",
+    "dev": "clear; eval $(cat .env) npx nodemon ./build/server.js --config ./config/nodemon.json",
+    "dev-w": "clear; eval $(cat .env) nodemon ./build/server.js --config ./config/nodemon.json",
     "ts": "npx tsc -w --project ./config/tsconfig.json",
     "ts-w": "tsc -w --project ./config/tsconfig.json"
   },

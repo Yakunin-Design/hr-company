@@ -1,31 +1,15 @@
-// tests
-import './tests/models';
-import { Organization } from './models/Organization';
-import { FullTimeJobOffer } from './interfaces/JobOffer';
+import express, { Express, Request, Response } from 'express';
 
-const YakuninDesign = new Organization('Yakunin Design');
+import { test_router } from './routers/test_router';
 
-const job1: FullTimeJobOffer = {
-    host: YakuninDesign,
-    title: 'Sheff',
-    location: {
-        metro_station: 'Begovaya',
-        address: 'Drortsovaya 1'
-    },
-    description: 'We need an awesome sheff',
-    hour_rate: 260,
-    skills: [
-        {
-            title: 'responsebility',
-            priority: 5
-        }
-    ],
-    scedule: {
-        work_days: 2,
-        non_working_days: 2
-    }
-}
+const app = express(); 
 
-YakuninDesign.add_job_offer(job1);
+app.use(express.json());
+// routers
+app.use(test_router);
 
-YakuninDesign.log_all_job_offers();
+app.get('', (req: Request, res: Response) => {
+    res.send('hi :)');
+});
+
+app.listen(6969, () => console.log('the server is up!'));
