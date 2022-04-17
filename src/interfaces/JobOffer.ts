@@ -17,7 +17,6 @@ interface skill {
 }
 
 interface JobOffer {
-    id: number;
     host: Employer;
     title: string;
     location: location;

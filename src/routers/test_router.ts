@@ -15,7 +15,6 @@ function validate(jo: JobOffer): boolean {
 test_router.post('/jobs/create', async (req: Request, res: Response) => {
     // data from auth middleware
     const YakuninHoldings = new Organization('Yakunin Holings');
-    const id: number = 0;
 
     let hired: Worker[] = [];
     let applicants: Worker[] = [];
@@ -24,7 +23,6 @@ test_router.post('/jobs/create', async (req: Request, res: Response) => {
     let new_job_offer = req.body;
     
     new_job_offer.host = YakuninHoldings;
-    new_job_offer.id = id;
     new_job_offer.hired = hired;
     new_job_offer.aplicants = applicants;
 
