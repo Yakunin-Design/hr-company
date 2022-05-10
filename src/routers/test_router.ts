@@ -10,6 +10,10 @@ test_router.get('/test', (req: Request, res: Response) => res.send('this is resp
 
 test_router.get('/search', (req: Request, res: Response) => res.render('search'));
 
+test_router.get('/chat', async (req: Request, res: Response) => {
+    res.render('chat');
+});
+
 function validate(jo: JobOffer): boolean {
     return true;
 }
