@@ -42,4 +42,18 @@ test_router.post('/jobs/create', async (req: Request, res: Response) => {
     res.status(400).send('The data to create users is wrong!');
 });
 
+test_router.post('/get-job-offers', async (req: Request, res: Response) => {
+    const payload: string = req.body.payload;
+    console.log(payload);
+    // error if regex is incorect
+    let db_result = await db.read_many('job_offers', { title: { $regex: new RegExp('^' + payload + '.*', 'i')}});
+    db_result = db_result.slice(0, 5);
+    let response_array:string[] = [];
+    db_result.forEach((e) => {
+        response_array.push(e.title);
+    })
+    console.log(response_array);
+    res.status(200).send(JSON.stringify({titles: response_array}));
+});
+
 export { test_router }

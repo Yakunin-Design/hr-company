@@ -1,0 +1,19 @@
+/*
+    Default style reset
+*/
+
+body {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: "Gilroy";
+    font-weight: normal;
+    font-size: 16px;
+}
+
+// Buttons & inputs
+button, input[type="submit"], input[type="reset"], input[type="text"] {
+    background: inherit;
+    font: inherit;
+	outline: none;
+}

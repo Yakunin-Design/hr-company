@@ -1,0 +1,18 @@
+.bubbles {
+    display: flex;
+    margin-top: 10px;
+    // .bubbles__bubble-block
+
+    &__bubble-block {
+        background-color: $grey;
+        padding: 10px 30px;
+        margin-right: 5px;
+        border-radius: 7px;
+        cursor: pointer;
+    }
+
+    &__bubble-block:hover {
+        background-color: #d7d7d7;
+    }
+
+}

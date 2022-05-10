@@ -1,0 +1,19 @@
+/*
+    Unitls
+*/
+@import 'utils/variables';
+@import 'utils/fonts';
+@import 'utils/reset';
+@import 'utils/container';
+
+/*
+    Components
+*/
+// header
+@import 'components/header';
+
+// main
+@import 'components/search/search';
+
+// footer
+@import 'components/footer';

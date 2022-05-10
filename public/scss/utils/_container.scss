@@ -1,0 +1,18 @@
+// Container util
+.container {
+    margin: 0px auto;
+}
+
+// Desktop
+@media (min-width: 1300px) {
+    .container{
+        width: 1300px;
+    }
+}
+
+// Mobile
+@media (max-width: 1300px) {
+    .container{
+        width: 90%;
+    }
+}
