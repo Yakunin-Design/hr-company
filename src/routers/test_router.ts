@@ -8,6 +8,8 @@ const test_router = Router();
 
 test_router.get('/test', (req: Request, res: Response) => res.send('this is response form test router!'));
 
+test_router.get('/search', (req: Request, res: Response) => res.render('search'));
+
 function validate(jo: JobOffer): boolean {
     return true;
 }
