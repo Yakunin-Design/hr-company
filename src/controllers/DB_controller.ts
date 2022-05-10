@@ -1,7 +1,7 @@
 import { MongoClient } from 'mongodb';
 
 class Mongo {
-    static client = new MongoClient(process.env.DB_CONNECTION_URL + '/hr-db');
+    static client = new MongoClient('mongodb://localhost:27017' + '/hr-db'); //process.env.DB_CONNECTION_URL
 
     /**
      * --- Opening and closing connection to db ---

@@ -28,7 +28,8 @@ test_router.post('/jobs/create', async (req: Request, res: Response) => {
     new_job_offer.hired = hired;
     new_job_offer.aplicants = applicants;
 
-    console.log(process.env.DB_CONNECTION_URL);
+    // console.log(process.env.DB_CONNECTION_URL);
+    console.log('localhost');
 
     // validate
     if (validate(new_job_offer)) {
