@@ -1,0 +1,36 @@
+.schedule {
+    margin-top: 15px;
+}
+
+.--filled {
+    margin-top: 30px;
+}
+
+
+.schedule__label {
+    margin: 0px;
+    font-size: 14px;
+    font-family: 600px;
+}
+
+.days {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.days__block {
+    background-color: #D8D8D8;
+    //width: 25px;
+    height: 18px;
+    border-radius: 4px;
+    width: 100%;
+    margin-right: 10px;
+}
+
+.--last {
+    margin-right: 0px;
+}
+.--picked {
+    background-color: #1C5FC3;
+}

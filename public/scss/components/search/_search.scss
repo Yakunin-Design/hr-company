@@ -1,7 +1,10 @@
 @import './search_bar';
 @import './bubbles';
+@import './content_box';
+@import './content_offer';
 
 .search {
     display: flex;
     flex-direction: column;
+    font-family: 'Gilroy';
 }

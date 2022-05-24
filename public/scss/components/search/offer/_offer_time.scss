@@ -1,0 +1,24 @@
+@import './offer_picture';
+
+.offer__time {
+    margin-top: 25px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.label__name {
+    font-size: 10px;
+    font-weight: 600;
+    color: #808080;
+    margin-bottom: 5px;
+}
+
+.label__text {
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.time__picture {
+    display: flex;
+    align-items: center;
+}

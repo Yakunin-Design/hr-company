@@ -46,7 +46,7 @@ test_router.post('/jobs/create', async (req: Request, res: Response) => {
     res.status(400).send('The data to create users is wrong!');
 });
 
-test_router.post('/get-job-offers', async (req: Request, res: Response) => {
+test_router.post('/get-job-offers-title', async (req: Request, res: Response) => {
     const payload: string = req.body.payload;
     console.log(payload);
     // error if regex is incorect
@@ -58,6 +58,19 @@ test_router.post('/get-job-offers', async (req: Request, res: Response) => {
     })
     console.log(response_array);
     res.status(200).send(JSON.stringify({titles: response_array}));
+});
+
+test_router.post('/get-job-offers', async (req: Request, res: Response) => {
+    const skip: number = req.body.skip;
+    let filter: object = {}
+    if (req.body.title != '') {
+        filter = {title: { $regex: new RegExp('^' + req.body.title + '.*', 'i')}}
+    }
+    console.log(skip);
+    // error if regex is incorect
+    let db_result = await db.read_many_variable('job_offers', skip, 100, filter);
+    console.log(db_result);
+    res.status(200).send(JSON.stringify(db_result));
 });
 
 export { test_router }

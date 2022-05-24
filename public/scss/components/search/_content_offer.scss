@@ -1,0 +1,17 @@
+@import './offer/offer_top';
+@import './offer/offer_name';
+@import './offer/schedule';
+@import './offer/offer_time';
+@import './offer/offer_bottom';
+
+.offer {
+    box-sizing: border-box;
+    width: 280px;
+    background-color: #F4F4F4;
+    //background-color: rgb(173, 133, 133);
+    margin-bottom: 25px;
+    padding-left: 22px;
+    padding-right: 22px;
+    padding-top: 20px;
+    border-radius: 6px;
+}

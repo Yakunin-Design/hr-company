@@ -1,0 +1,54 @@
+@import './subway_color';
+.top {
+    display: flex;
+    justify-content: space-between;
+    p {
+        margin: 0px;
+    }
+}
+
+.subway, .name {
+    display: flex;
+    width: 110px;
+    height: 25px;
+    align-items: center;
+}
+
+.name__logo {
+    width: 15px;
+    height: 15px;
+    background-color: aqua;
+    border: 1px solid black;
+    border-radius: 50%;
+    margin-right: 7px;
+}
+
+.name {
+    font-size: 8.5px;
+    font-weight: 600;
+    background-color: #fff;
+    justify-content: center;
+    border-radius: 6px;
+}
+
+.subway {
+    justify-content: end;
+}
+
+.subway_logo {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    color: white;
+    font-size: 7px;
+    font-family: 'Rockwell';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 7px;
+}
+
+.subway__station{
+    font-size: 11px;
+    font-weight: 500;
+}

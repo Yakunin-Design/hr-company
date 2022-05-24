@@ -11,8 +11,20 @@
 }
 
 // Mobile
-@media (max-width: 1300px) {
+@media (max-width: 1330px) {
     .container{
-        width: 90%;
+        width: 960px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .container{
+        width: 620px;
+    }
+}
+
+@media (max-width: 650px) {
+    .container{
+        width: 280px;
     }
 }

@@ -14,14 +14,20 @@
     // .search-bar__filters
 
     &__filters {
-        padding: 20px;
+        width: 63px;
+        height: 63px;
         border-radius: 10px;
         background: $blue;
         color: white;
         border: 2px solid $grey;
         margin-left: 10px;
         cursor: pointer;
+        display: grid;
+        align-items: center;
+        justify-content: center;
     }
+
+    
 
     // .search-bar__find
 
@@ -39,5 +45,23 @@
     &__filters:hover, &__find:hover {
         background-color: $accent;
     }
-    
+
+    @media (max-width: 650px) {
+        &__search-input {
+            padding: 10px 20px;
+            font-size: 10px !important;
+        }
+
+        &__filters {
+            padding: 10px;
+            width: 43px;
+            height: 43px;
+            border-radius: 5px;
+        }
+
+        &__find {
+            padding: 10px;
+            border-radius: 5px;
+        }
+    }
 }

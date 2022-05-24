@@ -1,4 +1,5 @@
 import { MongoClient } from 'mongodb';
+import internal from 'stream';
 
 class Mongo {
     static client = new MongoClient('mongodb://localhost:27017' + '/hr-db'); //process.env.DB_CONNECTION_URL
@@ -80,6 +81,22 @@ class Mongo {
             const collection = this.client.db().collection(collection_name.toString());
 
             const cursor = collection.find(filter);
+            return await cursor.toArray();
+        }
+        catch (e) {
+            console.log(e);
+        }
+        finally {
+            await this.close_connection();
+        }
+    }
+
+    static async read_many_variable(collection_name: string, skip:number,limit:number,filter = {}) {
+        try {
+            await this.start_connection();
+            const collection = this.client.db().collection(collection_name.toString());
+
+            const cursor = collection.find(filter).skip(skip).limit(limit);
             return await cursor.toArray();
         }
         catch (e) {
