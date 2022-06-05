@@ -1,7 +1,7 @@
 let socket = io();
 
 const colors = ['--avatar-red', '--avatar-blue', '--avatar-green', '--avatar-purple','--avatar-yellow', '--avatar-grey']
-const random_number =  Math.floor(Math.random() * 5);
+const random_number =  Math.floor(Math.random() * 6);
 
 const form = document.getElementById('form');
 const input = document.getElementById('input');
