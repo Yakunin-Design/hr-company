@@ -2,15 +2,15 @@ import jwt, { SignOptions } from 'jsonwebtoken';
 import Result from './Result';
 import { ObjectId } from 'mongodb';
 
-const secret = 'shhhh';
+const SECRET = 'shhhh';
 
-function sign_jwt(userID: ObjectId): Result<string> {
+function sign_jwt(userID: ObjectId, user_type: string): Result<string> {
     try {
-        const payload = { userID };
+        const payload = { userID, user_type };
         const options: SignOptions = { issuer: 'Yakunin Design', algorithm: 'HS256' };
         
         return {
-            Ok: jwt.sign(payload, secret, options),
+            Ok: jwt.sign(payload, SECRET, options),
             Err: null
         }
 

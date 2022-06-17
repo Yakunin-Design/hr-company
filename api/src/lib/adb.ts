@@ -2,11 +2,11 @@ import { MongoClient, ObjectId, WithId, Document } from 'mongoDB';
 import Result from '../lib/Result';
 
 class DB {
-    private static uri = process.env.DB_URL || 'mongodb://localhost:27017/testdb';
+    private static uri = process.env.DB_URL || 'mongodb://localhost:27017/test_db';
     private static db_limit: number = 100;
 
     private collection: string;
-    private data: object;
+    data: object;
 
     constructor(data: object, collection: string) {
         this.data = data;
@@ -30,8 +30,23 @@ class DB {
 
     }
 
-    public async update(): Promise<void> {
-        console.log("bruh");
+    public async update(): Promise<Result<boolean>> {
+        try {
+            await DB.start_connection();
+            const collection = DB.client.db().collection(this.collection.toString());
+            const response = await collection.findOne(this.data);
+
+            const result = collection.updateOne(response!._id, this.data);
+
+            return { Ok: true, Err: null };
+        }
+        catch (e) {
+            console.log(e);
+            return { Ok: false, Err: new Error('db error') };
+        }
+        finally {
+            await DB.close_connection();
+        }
     }
 
     public async find(filter?: object): Promise<Result<WithId<Document> | null>> {
@@ -51,7 +66,7 @@ class DB {
         }
     }
 
-    public async getid(): Promise<any | null> {
+    public async getid(): Promise<Result<ObjectId | null>> {
         try {
             await DB.start_connection();
             const collection = DB.client.db().collection(this.collection.toString());
@@ -59,20 +74,21 @@ class DB {
             const response = result?._id;
 
             if (response != null) {
-                return response
+                return { Ok: response, Err: null };
             }
 
-            return "balls";
+            return { Ok: null, Err: new Error("not found, baaaals") };
         }
         catch (e) {
             console.log(e);
+            return { Ok: null, Err: new Error('db error') };
         }
         finally {
             await DB.close_connection();
         }
     }
 
-    public async delete(): Promise<any | null> {
+    public async delete(): Promise<Result<boolean | null>> {
         try {
             await DB.start_connection();
             const collection = DB.client.db().collection(this.collection);
@@ -80,12 +96,38 @@ class DB {
 
             if (result.deletedCount === 1) {
                 console.log("Successfully deleted one document.");
+                return { Ok: true, Err: null };
             } else {
                 console.log("No documents matched the query. Deleted 0 documents.");
+                return { Ok: false, Err: new Error("No documents matched the query. Deleted 0 documents.") };
             }
         }
         catch (e) {
             console.log(e);
+            return { Ok: null, Err: new Error("db error") };
+        }
+        finally {
+            await DB.close_connection();
+        }
+    }
+
+    public static async delete_by_id(collection_name: string, id: string): Promise<Result<boolean>> {
+        try {
+            await DB.start_connection();
+            const collection = DB.client.db().collection(collection_name);
+            const result = await collection.deleteOne({_id: new ObjectId(id)});
+
+            if (result.deletedCount === 1) {
+                console.log("Successfully deleted one document.");
+                return { Ok: true, Err: null };
+            } else {
+                console.log("No documents matched the query. Deleted 0 documents.");
+                return { Ok: false, Err: new Error("No documents matched the query. Deleted 0 documents.") };
+            }
+        }
+        catch (e) {
+            console.log(e);
+            return { Ok: null, Err: new Error("db error") };
         }
         finally {
             await DB.close_connection();
@@ -120,7 +162,7 @@ class DB {
             await DB.start_connection();
             const collection = DB.client.db().collection(collection_name);
 
-            const result = await collection.findOne({_id:id});
+            const result = await collection.findOne({_id: new ObjectId(id)});
 
             return { Ok: result, Err: null };
         }
@@ -138,7 +180,6 @@ class DB {
     private static async start_connection() {
         try {
             await this.client.connect();
-            console.log('Connection with DB established successfully!');
         }
         catch (e) {
             console.log(e);
@@ -148,7 +189,6 @@ class DB {
     private static async close_connection() {
         try {
             await this.client.close();
-            console.log('The connection to the DB was closed!');
         }
         catch (e) {
             console.log(e);
