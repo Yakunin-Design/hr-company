@@ -1,0 +1,150 @@
+.card-container {
+    padding: 1rem;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.card {
+    background-color: white;
+    margin: 2em 0;
+    padding: 2em;
+    border-radius: 11px;
+}
+
+@media (min-width: 500px) {
+    .card {
+        padding: 3em 4em;
+    }
+}
+
+.card__input {
+    width: 100%;
+
+    padding: 0.9em 1.2em;
+    /* margin-top: 0.5em; */
+
+    border-radius: 0.2rem;
+    border: 2px solid black;
+
+    font-size: 1rem;
+}
+
+.card__title {
+    margin-top: 0.5em;
+}
+
+.card__upload {
+    color: #818181;
+}
+
+.card__photo {
+    margin-right: 1.5em;
+}
+
+.card__login{
+    margin-top: 2.5em;
+}
+
+.card__logo {
+    margin-top: 2em;
+}
+
+.card__phone {
+    margin-top: 2em;
+}
+
+.card__label {
+    /* margin-top: 1.25em; */
+    margin-top: 1.9em;
+    margin-bottom: 1em;
+}
+
+.--photo-label {
+    display: flex;
+    align-items: center;
+}
+
+.icon-plus {
+    border-radius: 50%;
+    border: 2px solid black;
+    padding: .7em;
+}
+
+.birthday {
+    display: flex;
+    justify-content: space-between;
+}
+
+.--day {
+    flex: 2;
+    text-align: center;
+    padding: 0.9em 0;
+}
+
+.--month {
+    flex: 6;
+    padding: 0.9em 0;
+    margin: 0 1em;
+}
+
+.--year {
+    flex: 3;
+    text-align: center;
+    padding: 0.9em 0;
+}
+
+.citizenships {
+    display: flex;
+    justify-content: space-between;
+    gap: 1em;
+
+    margin-top: 0.5em;
+}
+
+.--radio-label {
+    color: #979797;
+    border: 2px solid #979797;
+    border-radius: 0.2rem;
+
+    font-size: .9rem;
+    user-select: none;
+
+    padding: 0.5em 0.7em;
+
+    display: grid;
+    align-items: center;
+}
+
+@media (min-width: 400px) {
+    .--radio-label {
+        padding: 0.8em 1.2em;
+    }
+}
+
+.--hiden{
+	display: none;
+}
+
+.--hiden:checked + label{
+	border: 2.5px solid var(--accent) !important;
+    color: var(--accent);
+}
+
+.card__help {
+    margin-top: 1.1em;
+    color: var(--accent);
+}
+
+.help__register {
+    margin-bottom: 0.5em;
+}
+
+.card__button {
+    width: 100%;
+    margin-top: 5em;
+    padding: 0.9em 3.2em;
+}
+
+.--card-btn-secondary {
+    margin-top: 1.2em;
+}

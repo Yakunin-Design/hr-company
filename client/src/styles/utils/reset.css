@@ -1,0 +1,69 @@
+/* 
+----------------------------------------------------------------
+						Style reset	
+----------------------------------------------------------------
+*/
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: var(--background-main);
+}
+
+html {
+	font-size: 16px;
+	font-family: 'Gilroy', sans-serif;
+}
+
+a {
+	text-decoration: none;
+}
+
+button {
+    color: #26589F;
+    background: transparent;
+
+    outline: none;
+    border: none;
+    border-spacing: 0;
+    box-shadow: none;
+    text-shadow: none;
+
+    font-family: inherit;
+    text-decoration: none;
+    text-indent: 0;
+
+    cursor: pointer;
+}
+
+input {
+    outline: none;
+    border: none;
+    box-shadow: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+input[type="text"] {
+    -webkit-appearance: none;
+}
+
+select {
+    outline: none;
+    border: none;
+    box-shadow: none;
+    text-indent: 0.3em;
+    /* -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none; */
+    background-color: transparent;
+}
+
+select::-ms-expand {
+    display: none;
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>akar-icons:plus</title>
+    <g id="08-|-Sign-up" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="EMP-step-1-Copy" transform="translate(-707.000000, -394.000000)">
+            <g id="Group" transform="translate(691.000000, 378.000000)">
+                <g id="akar-icons:plus" transform="translate(16.000000, 16.000000)">
+                    <rect id="ViewBox" x="0" y="0" width="24" height="24"></rect>
+                    <path d="M12,20 L12,12 M12,12 L12,4 M12,12 L20,12 M12,12 L4,12" id="Shape" stroke="#000000" stroke-width="2" stroke-linecap="round"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
