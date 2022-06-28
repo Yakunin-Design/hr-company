@@ -1,6 +1,6 @@
 type Result<T> = {
     Ok: T | null,
-    Err: Error | null
+    Err?: Error
 }
 
 export default Result;

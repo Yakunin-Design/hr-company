@@ -9,10 +9,7 @@ function sign_jwt(userID: ObjectId, user_type: string): Result<string> {
         const payload = { userID, user_type };
         const options: SignOptions = { issuer: 'Yakunin Design', algorithm: 'HS256' };
         
-        return {
-            Ok: jwt.sign(payload, SECRET, options),
-            Err: null
-        }
+        return { Ok: jwt.sign(payload, SECRET, options) }
 
     } catch (e) {
         console.log(e);

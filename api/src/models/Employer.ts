@@ -1,11 +1,9 @@
 import IEmployer from "../interfaces/IEmployer";
-import DB from "../lib/adb";
 
-class Employer extends DB {
+class Employer {
     static db_collection: string = 'employers';
     
     constructor(data: IEmployer) {
-        super(data, Employer.db_collection);
     }
 
 }

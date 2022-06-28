@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
-import DB from '../lib/adb';
+import { ObjectId } from 'mongodb';
+import db from '../lib/idb';
 
 const SECRET = 'shhhh';
 
@@ -19,9 +20,10 @@ function auth(req: Request, res: Response, next: NextFunction) {
         res.locals.jwt = decoded;
 
         // Store user object in memory
-        let db_result = await DB.get_document_by_id(res.locals.jwt.user_type + 's', res.locals.jwt.userID);
 
-        if(db_result.Err || db_result.Ok == null) {
+        let db_result = await db.find({_id: new ObjectId(res.locals.jwt.userID)},res.locals.jwt.user_type + 's', );
+
+        if(!db_result.Ok) {
             return res.status(500).send('Something went wrong');
         }
 
@@ -37,5 +39,4 @@ function auth(req: Request, res: Response, next: NextFunction) {
     });
 
 };
-
 export default auth;

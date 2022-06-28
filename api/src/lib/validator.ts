@@ -1,7 +1,7 @@
 import Result from './Result';
 import IWorker from '../interfaces/IWorker'
 import IEmployer from '../interfaces/IEmployer'
-import DB from './adb';
+import db from '../lib/idb'
 
 type common_validation_data = {
     email: string,
@@ -28,7 +28,7 @@ function common_checks(data: common_validation_data): Result<boolean> {
     checker = full_name(data.full_name)
     if (!checker.Ok) return { Ok: null, Err: checker.Err };
 
-    return { Ok: true, Err: null };
+    return { Ok: true};
 }
 
 async function employer_checks(payload: IEmployer): Promise<Result<IEmployer>> {
@@ -47,6 +47,9 @@ async function employer_checks(payload: IEmployer): Promise<Result<IEmployer>> {
     let checker = await exists('employers', cardentials);
     if (!checker.Ok) return {Ok: null, Err: checker.Err};
 
+    checker = await exists('workers', cardentials);
+    if (!checker.Ok) return {Ok: null, Err: checker.Err};
+
     checker = common_checks(common_data);
     if (!checker.Ok) return {Ok: null, Err: checker.Err};
 
@@ -56,7 +59,7 @@ async function employer_checks(payload: IEmployer): Promise<Result<IEmployer>> {
     checker = inn(payload.inn);
     if (!checker.Ok) return {Ok: null, Err: checker.Err};
 
-    return { Ok: payload, Err: null };
+    return { Ok: payload };
 }
 
 async function worker_checks(payload: IWorker): Promise<Result<IWorker>> {
@@ -76,6 +79,9 @@ async function worker_checks(payload: IWorker): Promise<Result<IWorker>> {
     let checker = await exists('workers', cardentials);
     if (!checker.Ok) return {Ok: null, Err: checker.Err};
 
+    checker = await exists('employers', cardentials);
+    if (!checker.Ok) return {Ok: null, Err: checker.Err};
+
     checker = common_checks(common_data);
     if (!checker.Ok) return { Ok: null, Err: checker.Err };
       
@@ -88,7 +94,7 @@ async function worker_checks(payload: IWorker): Promise<Result<IWorker>> {
     checker = specialty(payload.specialty);
     if (!checker.Ok) return { Ok: null, Err: checker.Err };
 
-    return { Ok: payload, Err: null };
+    return { Ok: payload };
 }
 
 function email(email: string): Result<boolean> {
@@ -100,7 +106,7 @@ function email(email: string): Result<boolean> {
     const regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     
     return regex.test(email)
-        ? { Ok: true, Err: null }
+        ? { Ok: true }
         : { Ok: false, Err: new Error('email check failed') };
 
 }
@@ -114,7 +120,7 @@ function phone(phone: string): Result<boolean> {
     const regex = /^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/;
     
     return regex.test(phone)
-        ? { Ok: true, Err: null }
+        ? { Ok: true }
         : { Ok: false, Err: new Error('phone check failed') };
         
 }
@@ -127,7 +133,7 @@ function password(password: string): Result<boolean> {
     if (password.length < 4) {
         return { Ok: null, Err: new Error("Your password is too short")};
     }
-    return { Ok: true, Err: null };
+    return { Ok: true };
 }
 
 function full_name(name: string): Result<boolean> {
@@ -142,7 +148,7 @@ function full_name(name: string): Result<boolean> {
         return { Ok: null, Err: new Error('Name check falied') };
     }
 
-    return { Ok: true, Err: null };
+    return { Ok: true };
 }
 
 function inn(inn: string): Result<boolean> {
@@ -155,7 +161,7 @@ function inn(inn: string): Result<boolean> {
         return { Ok: false, Err: new Error('inn check failed') };
     }
 
-    return { Ok: true, Err: null };
+    return { Ok: true };
 }
 
 function company(company: string): Result<boolean> {
@@ -167,7 +173,7 @@ function company(company: string): Result<boolean> {
         return { Ok: false, Err: new Error('company check failed') };
     }
 
-    return { Ok: true, Err: null };
+    return { Ok: true };
 }
 
 function birthday(birthday: string): Result<boolean> {
@@ -178,7 +184,7 @@ function birthday(birthday: string): Result<boolean> {
     const regex = /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/;
 
     return regex.test(birthday)
-        ? { Ok: true, Err: null }
+        ? { Ok: true }
         : { Ok: false, Err: new Error('birthday check failed') };
 }
 
@@ -191,23 +197,20 @@ function citizenship(citizenship: string): Result<boolean> {
         return { Ok: false, Err: new Error('citizenship check failed') };
     }
 
-    return { Ok: true, Err: null };
+    return { Ok: true };
 }
 
-function specialty(specialty: string[]): Result<boolean> {
-   
+function specialty(specialty: string): Result<boolean> {
     if(!specialty || specialty.length === 0){
         return { Ok: null, Err: new Error('Specialty empty') };
     }
 
     //need to edit!
-    specialty.forEach(elem => {
-        if (elem.length < 5) {
-            return { Ok: false, Err: new Error('specialty check failed') };
-        }
-    })
+    if (specialty[0].length < 5) {
+        return { Ok: false, Err: new Error('specialty check failed') };
+    }
 
-    return { Ok: true, Err: null };
+    return { Ok: true };
 }
     
 
@@ -215,7 +218,7 @@ function specialty(specialty: string[]): Result<boolean> {
 
 
 async function exists(collection_name: string, cardentials: cardentials): Promise<Result<boolean>> {
-    const result = await DB.find_all(collection_name, {$or: [{phone: cardentials.phone}, {email: cardentials.email}]});
+    const result = await db.find_all({$or: [{phone: cardentials.phone}, {email: cardentials.email}]}, collection_name);
 
     if (result.Ok === null) 
         return { Ok: null, Err: new Error('DB error') };
@@ -224,7 +227,7 @@ async function exists(collection_name: string, cardentials: cardentials): Promis
         return { Ok: null, Err: new Error('User already exists!') };
 
     if (result.Ok?.length === 0) {
-        return { Ok: true, Err: null };
+        return { Ok: true };
     }
 
     return { Ok: null, Err: new Error('DB error') };

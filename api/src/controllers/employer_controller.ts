@@ -4,4 +4,8 @@ function profile(req: Request, res: Response): void {
     res.status(200).send(res.locals.user);
 };
 
-export default { profile }
+async function edit(req: Request, res: Response): Promise<void> { 
+    res.status(200).send('Employer: ok');
+}
+
+export default { profile, edit }
