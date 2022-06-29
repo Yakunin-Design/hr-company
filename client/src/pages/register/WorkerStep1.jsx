@@ -9,10 +9,6 @@ function WorkerStep1(props) {
         border: '2px solid red'
     } 
 
-/*
-
-
-*/
     return(
         <>
             <h2 className="card__title --ld">Регистрация</h2>
@@ -51,8 +47,9 @@ function WorkerStep1(props) {
                     <input
                         className="card__input --day"
                         type="tel"
-                        maxlength="2"
+                        maxLength="2"
                         name="day"
+                        value={form_data.day}
                         style={errors.includes('day') ? error_style : {}}
                         onChange={(event) => on_change(event)}
                         placeholder="00"
@@ -83,8 +80,9 @@ function WorkerStep1(props) {
                     <input
                         className="card__input --year"
                         type="tel"
-                        maxlength="4"
+                        maxLength="4"
                         placeholder="0000"
+                        value={form_data.year}
                         style={errors.includes('year') ? error_style : {}}
                         name="year"
                         onChange={(event) => on_change(event)}

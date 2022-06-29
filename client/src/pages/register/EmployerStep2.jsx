@@ -42,7 +42,7 @@ function EmployerStep2(props) {
                 <h3 className="card__label --ld">Email</h3>
                 <input
                     className="card__input"
-                    type="text"
+                    type="email"
                     placeholder="mail@example.com"
                     style={errors.includes('email') ? error_style : {}}
                     name="email"

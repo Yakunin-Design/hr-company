@@ -1,5 +1,8 @@
-import React from 'react'; import Header from '../components/Header'
+import React from 'react'
 import { Link } from 'react-router-dom'
+
+import Header from '../components/Header'
+import Footer from '../components/Footer'
 
 import SelectUserType from './register/SelectUserType'
 
@@ -16,6 +19,10 @@ import { worker_validation_step1, worker_validation_step2, employer_validation_s
 import back_arrow_icon from '../img/back-arrow.svg'
 
 function RegisterPage() {
+
+    if (localStorage.getItem('jwt')) {
+		window.location.replace('/profile')
+	}
 
     const [form_errors, set_form_errors] = React.useState([])
     
@@ -72,6 +79,8 @@ function RegisterPage() {
                 step: prev_step.step + 1,
             }
         })
+
+        window.scrollTo({ top: 80 })
     }
 
     function prev_step() {
@@ -87,8 +96,6 @@ function RegisterPage() {
 
     function handle_change(event) {
         const { name, value } = event.target
-
-        console.log(form_data)
 
         set_form_data(prev_form_data => { 
             return {
@@ -134,21 +141,44 @@ function RegisterPage() {
     }
 
     function set_data() {
-        let birthday = form_data.day + '.' + form_data.month + '.' + form_data.year
-        const data = {
-            user_type: step.type,
-            payload: {
-                ...form_data,
-                birthday,
-                specialty: [form_data.specialty]
+        let data = {}
+
+        if (step.type === 'worker') {
+            let birthday = form_data.day + '.' + form_data.month + '.' + form_data.year
+
+            data = {
+                user_type: step.type,
+                payload: {
+                    ...form_data,
+                    birthday,
+                    specialty: [form_data.specialty]
+                }
             }
+
+            delete data.payload.day
+            delete data.payload.month
+            delete data.payload.year
+            delete data.payload.password_confirmation
+
+            delete data.payload.company
+            delete data.payload.inn
+
+        } else {
+            data = {
+                user_type: step.type,
+                payload: {
+                    ...form_data
+                }
+            }
+            delete data.payload.day
+            delete data.payload.month
+            delete data.payload.month
+            delete data.payload.year
+            delete data.payload.password_confirmation
+
+            delete data.payload.specialty
+            delete data.payload.citizenship
         }
-
-        delete data.payload.day
-        delete data.payload.month
-        delete data.payload.year
-        delete data.payload.password_confirmation
-
         return data
     }
 
@@ -164,7 +194,7 @@ function RegisterPage() {
                     {(step.step === 1 || step.step === 2) && <button className="card__button --primary-btn" onClick={next_step}>Далее</button>}
 
                     {
-                        (step.step !== 3) ?
+                        (step.step !== 3) &&
                             <>
                                 <div className="card__registration">
                                     <Link to={'/login'}>
@@ -172,14 +202,13 @@ function RegisterPage() {
                                     </Link>
                                 </div>
                             </>
-
-                            : <button className="card__button --primary-btn" onClick={set_data}>Завершить регистарцию</button>
                     }
 
                 </div>
             </div>
+            <Footer />
 		</>
 	)
 }
 
-export default RegisterPage;
+export default RegisterPage

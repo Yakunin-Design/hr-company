@@ -50,7 +50,7 @@ function EmployerStep1(props) {
                     className="card__input"
                     type="tel"
                     style={errors.includes('inn') ? error_style : {}}
-                    maxlength="12"
+                    maxLength="12"
                     name="inn"
                     value={form_data.inn}
                     onChange={(event) => on_change(event)}

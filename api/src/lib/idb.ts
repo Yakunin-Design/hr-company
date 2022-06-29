@@ -51,13 +51,14 @@ class db {
             await this.start_connection();
             const collection = this.client.db().collection(collection_name ? collection_name : db.collection);
             const id = (await collection.insertOne(data)).insertedId;
-            await this.close_connection();
-            return {Ok: id};
+            return { Ok: id };
         }
         catch (e) {
-            await this.close_connection();
             console.log(e);
             return {Ok: null, Err: new Error("err:" + e)}
+        }
+        finally {
+            await this.close_connection();
         }
     }
 
@@ -68,15 +69,15 @@ class db {
 
             const data = await collection.findOne(filter);
 
-            await this.close_connection();
-
             return {Ok: data};
         }
         catch (e) {
-            await this.close_connection();
             console.log(e);
             throw new Error("err:" + e);
             // return {Ok: null, Err: new Error("err:" + e)}
+        }
+        finally {
+            await this.close_connection();
         }
     }
 
@@ -88,13 +89,14 @@ class db {
             const cursor = collection.find(filter ? filter : {}).skip(skip ? skip : 0).limit(limit ? limit : db.limit);;
             const all_values = await cursor.toArray();
 
-            await this.close_connection();
             return {Ok: all_values};
         }
         catch (e) {
-            await this.close_connection()
             console.log(e)
             return {Ok: null, Err: new Error("err:" + e)}
+        }
+        finally {
+            await this.close_connection();
         }
     }
 
@@ -103,13 +105,15 @@ class db {
             await this.start_connection();
             const collection = this.client.db().collection(collection_name ? collection_name : db.collection);
             const test = await collection.updateOne(filter, data);
-            await this.close_connection();
+
             return {Ok: test};
         }
         catch (e) {
-            await this.close_connection();
             console.log(e);
             return {Ok: null, Err: new Error("err:" + e)}
+        }
+        finally {
+            await this.close_connection();
         }
     }
 
@@ -118,13 +122,14 @@ class db {
             await this.start_connection();
             const collection = this.client.db().collection(collection_name ? collection_name : db.collection);
             await collection.deleteOne({_id: new ObjectId(id)});
-            await this.close_connection();
             return {Ok: true};
         }
         catch (e) {
-            await this.close_connection();
             console.log(e);
             return {Ok: false, Err: new Error("err:" + e)}
+        }
+        finally {
+            await this.close_connection();
         }
     }
 
@@ -149,7 +154,6 @@ class db {
             return { Ok: document.Ok };
         }
         catch (e) {
-            await this.close_connection();
             console.log(e);
             throw new Error('DB error');
         }

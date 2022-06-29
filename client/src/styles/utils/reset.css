@@ -15,12 +15,28 @@ body {
 }
 
 html {
-	font-size: 16px;
+	font-size: 12px;
 	font-family: 'Gilroy', sans-serif;
+}
+
+@media (min-width: 350px) {
+    html {
+        font-size: 14px;
+    }
+}
+
+@media (min-width: 700px) {
+    html {
+        font-size: 16px;
+    }
 }
 
 a {
 	text-decoration: none;
+}
+
+hr {
+    border: 1px solid #d8d8d8;
 }
 
 button {
@@ -57,7 +73,7 @@ select {
     outline: none;
     border: none;
     box-shadow: none;
-    text-indent: 0.3em;
+    text-indent: 0.5em;
     /* -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none; */
@@ -66,4 +82,19 @@ select {
 
 select::-ms-expand {
     display: none;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    background-color: transparent;
+    -webkit-box-shadow: 0 0 0px 1000px rgba(0,0,0,0) inset;
+    box-shadow: 0 0 0px 1000px rgba(0,0,0,0) inset;
+    transition: background-color 5000s ease-in-out 0s;
 }

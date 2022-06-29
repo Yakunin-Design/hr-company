@@ -1,6 +1,6 @@
 .card-container {
     padding: 1rem;
-    max-width: 500px;
+    max-width: 580px;
     margin: 0 auto;
 }
 
@@ -21,9 +21,8 @@
     width: 100%;
 
     padding: 0.9em 1.2em;
-    /* margin-top: 0.5em; */
 
-    border-radius: 0.2rem;
+    border-radius: 0.4rem;
     border: 2px solid black;
 
     font-size: 1rem;
@@ -54,7 +53,6 @@
 }
 
 .card__label {
-    /* margin-top: 1.25em; */
     margin-top: 1.9em;
     margin-bottom: 1em;
 }
@@ -104,7 +102,7 @@
 .--radio-label {
     color: #979797;
     border: 2px solid #979797;
-    border-radius: 0.2rem;
+    border-radius: 0.4rem;
 
     font-size: .9rem;
     user-select: none;
@@ -147,4 +145,40 @@
 
 .--card-btn-secondary {
     margin-top: 1.2em;
+}
+
+.card__description {
+    margin-top: 1.25em;
+    color: var(--bodycopy);
+}
+
+.phone-code {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2em;
+}
+
+.phone-code__value {
+    width: 100%;
+    font-weight: 700;
+	font-size: 4.4rem;
+	line-height: 110%;
+}
+
+.code-number {
+    width: 15%;
+}
+
+.phone-code__value::-moz-placeholder {
+    color: var(--background-main);
+}
+
+.phone-code__value::-webkit-input-placeholder {
+    color: var(--background-main);
+}
+
+.code-number__underline {
+    height: .4rem;
+    background-color: var(--accent);
+    border-radius: .25rem;
 }

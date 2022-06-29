@@ -92,6 +92,7 @@ async function login(req: Request, res: Response): Promise<void> {
 
 async function signup(req: Request, res: Response): Promise<void> {
     try {
+
         // Get user type
         const { user_type, payload } = req.body;
 

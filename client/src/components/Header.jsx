@@ -7,7 +7,6 @@ import menu_icon from '../img/menu.svg'
 import { Link } from 'react-router-dom'
 
 function Header(props) { 
-
     const [show_menu, set_show_menu] = React.useState(false)
 
     function toggle_menu() {

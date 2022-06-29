@@ -157,7 +157,7 @@ function inn(inn: string): Result<boolean> {
     }
 
     // check inn
-    if (inn.length != 8 && inn.length != 12) {
+    if (inn.length != 10 && inn.length != 12) {
         return { Ok: false, Err: new Error('inn check failed') };
     }
 

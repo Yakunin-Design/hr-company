@@ -3,7 +3,13 @@ import Header from '../components/Header';
 
 import { Link } from 'react-router-dom'
 
+import Footer from '../components/Footer'
+
 function LandingPage() {
+	if (localStorage.getItem('jwt')) {
+		window.location.replace('/profile')
+	}
+
 	return (
 		<>
 			<Header/>
@@ -13,6 +19,7 @@ function LandingPage() {
 					<h2>Регистрация</h2>
 				</Link>
 			</div>
+			<Footer/>
 		</>
 	)
 }

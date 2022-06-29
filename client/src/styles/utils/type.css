@@ -55,6 +55,13 @@ h3 {
     letter-spacing: 0.05rem;
 }
 
+h4 {
+	font-weight: 600;
+	font-size: 0.875rem;
+	color: #000;
+	line-height: 125%;
+}
+
 @media (min-width: 650px) {
     h2 {
         font-size: 2.8rem;
@@ -87,7 +94,7 @@ h3 {
 
 .--cl {
 	text-align: center;
-	color: white;
+	color: white !important;
 }
 
 .--rl {
@@ -109,4 +116,5 @@ p {
 
 .--v2 {
 	font-weight: 500 !important;
+	color: var(--bodycopy);
 }

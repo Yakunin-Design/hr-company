@@ -3,7 +3,7 @@
     color: white;
 
     padding: .7em 3.2em;
-    border-radius: .3rem;
+    border-radius: .4rem;
 
     font-size: 1.05rem;
     font-weight: 700;
@@ -21,7 +21,7 @@
 
     border: 2px solid var(--accent);
     padding: .7em 3.2em;
-    border-radius: .3rem;
+    border-radius: .4rem;
 
     font-size: 1.05rem;
     font-weight: 700;
@@ -29,8 +29,18 @@
     text-align: center;
 }
 
+.--red-btn {
+    border-color: red;
+    color: red;
+}
+
 .--secondary-btn:hover {
     background-color: var(--background-main);
+}
+
+.--red-btn:hover {
+    background-color: red;
+    color: white;
 }
 
 .--floating-btn {

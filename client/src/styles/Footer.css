@@ -1,5 +1,6 @@
 footer {
     background-color: var(--background-header);
+    margin-top: 15rem;
 }
 
 footer .--page-container {

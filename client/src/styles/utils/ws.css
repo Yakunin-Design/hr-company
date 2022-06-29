@@ -1,0 +1,31 @@
+.--mt1 {
+    margin-top: 1rem;
+}
+
+.--mt2 {
+    margin-top: 2rem;
+}
+
+.--mt3 {
+    margin-top: 3rem;
+}
+
+.--mt5 {
+    margin-top: 5rem;
+}
+
+.--pt1 {
+    padding-top: 1rem;
+}
+
+.--pt2 {
+    padding-top: 2rem;
+}
+
+.--pt3 {
+    padding-top: 3rem;
+}
+
+.--pt5 {
+    padding-top: 5rem;
+}
