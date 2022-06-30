@@ -59,3 +59,10 @@
 .--floating-btn:hover {
     background-color: #f2f2f2;
 }
+
+.--save-btn {
+    position: fixed;
+    bottom: 10%;
+    right: 10%;
+    cursor: pointer;
+}

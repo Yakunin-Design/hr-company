@@ -65,6 +65,21 @@ input {
     appearance: none;
 }
 
+input::-moz-placeholder {
+    font-family: 'Gilroy';
+    font-size: 1rem;
+}
+
+textarea::-moz-placeholder {
+    font-family: 'Gilroy';
+    font-size: 1rem;
+}
+
+textarea {
+    font-size: 1rem;
+    font-family: 'Gilroy';
+}
+
 input[type="text"] {
     -webkit-appearance: none;
 }

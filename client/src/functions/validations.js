@@ -35,34 +35,70 @@ function checkInn(value){
 	}
 }
 
+function check_full_name(name) {
+    const nameArray = name.trim().split(' ');
+
+    if (nameArray.length < 2) {
+        return false
+    }
+    nameArray.forEach(element => {
+        if (element.length < 2) {
+            return false;
+        }
+    });
+    return true
+}
+
+function check_day(day) {
+    if (day < 1 || day > 31) {
+        return false
+    }
+    return true
+}
+
+function check_month(month) {
+    return month === '00' ? false : true;
+}
+
+function check_year(year) {
+    const current_year = new Date().getFullYear() - 10;
+
+    if (year < 1900 || year > current_year) {
+        return false;
+    }
+    return true
+}
+
+function check_phone(phone) {
+    const regex = /^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/;
+    if (!regex.test(phone)) {
+        return false
+    }
+    return true
+}
+
+function check_email(email) {
+    const regex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+    if (!regex.test(email)) {
+        return false
+    }
+    return true
+}
+
 function worker_validation_step1(form_data) {
     let errors = [];
 
-    const name = form_data.full_name.trim().split(' ');
-    if (name.length < 2) {
-        errors.push('full_name');
-    }
-    name.forEach(element => {
-        if (element.length < 2) {
-            errors.push('full_name');
-        }
-    });
+    !check_full_name(form_data.full_name) && errors.push('full_name');
 
     if (form_data.specialty.length < 5 ) errors.push('specialty');
 
-    if (form_data.month === '00' ) errors.push('month');
+    !check_month(form_data.month) && errors.push('month');
 
     if (form_data.citizenship === '' ) errors.push('citizenship');
 
-    if (form_data.day < 1 || form_data.day > 31) {
-        errors.push('day');
-    }
+    !check_day(form_data.day) && errors.push('day');
 
-    const current_year = new Date().getFullYear() - 10;
-
-    if (form_data.year < 1900 || form_data.year > current_year) {
-        errors.push('year');
-    }
+    !check_year(form_data.year) && errors.push('year');
     
     return errors
 }
@@ -70,18 +106,10 @@ function worker_validation_step1(form_data) {
 function worker_validation_step2(form_data) {
 
     let errors = [];
-    let regex
-
     
-    regex = /^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/;
-    if (!regex.test(form_data.phone)) {
-        errors.push('phone')
-    }
+    !check_phone(form_data.phone) && errors.push('phone');
 
-    regex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-    if (!regex.test(form_data.email)) {
-        errors.push('email')
-    }
+    !check_email(form_data.email) && errors.push('email');
 
     if (form_data.password.length < 8 ) errors.push('password');
 
@@ -104,25 +132,11 @@ function employer_validation_step2(form_data) {
     let errors = [];
     let regex
 
-    const name = form_data.full_name.trim().split(' ');
-    if (name.length < 2) {
-        errors.push('full_name');
-    }
-    name.forEach(element => {
-        if (element.length < 2) {
-            errors.push('full_name');
-        }
-    });
+    !check_full_name(form_data.full_name) && errors.push('full_name');
     
-    regex = /^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/;
-    if (!regex.test(form_data.phone)) {
-        errors.push('phone')
-    }
+    !check_phone(form_data.phone) && errors.push('phone');
 
-    regex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-    if (!regex.test(form_data.email)) {
-        errors.push('email')
-    }
+    !check_email(form_data.email) && errors.push('email');
 
     if (form_data.password.length < 8 ) errors.push('password');
 
@@ -133,4 +147,14 @@ function employer_validation_step2(form_data) {
     return errors
 }
 
-export { worker_validation_step1, worker_validation_step2, employer_validation_step1, employer_validation_step2 }
+export { worker_validation_step1, 
+         worker_validation_step2,
+         employer_validation_step1,
+         employer_validation_step2,
+         check_day,
+         check_month,
+         check_year,
+         check_full_name,
+         check_phone,
+         check_email
+        }

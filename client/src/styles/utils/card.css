@@ -119,11 +119,11 @@
     }
 }
 
-.--hiden{
+.--hiden {
 	display: none;
 }
 
-.--hiden:checked + label{
+.--hiden:checked + label {
 	border: 2.5px solid var(--accent) !important;
     color: var(--accent);
 }
@@ -167,6 +167,15 @@
 
 .code-number {
     width: 15%;
+}
+
+.card__textarea {
+    max-width: 100%;
+    min-width: 100%;
+    min-height: 10rem;
+    padding: 0.9em 1.2em;
+    border: 2px solid black;
+    border-radius: 0.4rem;
 }
 
 .phone-code__value::-moz-placeholder {

@@ -3,5 +3,11 @@
     max-width: 1200px;
 
     margin: 0 auto;
-    padding: 0 2em;
+    padding: 0 1rem;
+}
+
+@media (min-width: 500px) {
+    .--page-container {
+        padding: 0 2em;
+    }
 }
