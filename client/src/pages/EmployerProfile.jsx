@@ -1,28 +1,26 @@
 import React from 'react'
 import LkNav from '../components/LkNav'
 import Footer from '../components/Footer'
-import { check_email, check_phone, check_full_name } from '../functions/validations'
 import '../styles/utils/lk.css'
 import edit_pencil from '../img/edit_pencil.svg'
 
 function EmployerProfile(props) {
-    const [unsaved_changes, set_unsaved_changes] = React.useState(false)
-    // {pole: new_value}
-    const [user_data, set_user_data] = React.useState({
+
+    const [emp_data, set_emp_data] = React.useState({
         ...props.user.user_data,
         description: ''
     })
 
-    console.log(user_data)
+    const [unsaved_changes, set_unsaved_changes] = React.useState(false);
 
     function handle_change(event) {
         const {name, value} = event.target
 
         set_unsaved_changes(true)
 
-        set_user_data(prev_user_data => {
+        set_emp_data(prev_employer_data => {
             return {
-                ...prev_user_data,
+                ...prev_employer_data,
                 [name]: value
             }
         })
@@ -30,16 +28,18 @@ function EmployerProfile(props) {
 
     function save_data() {
         // validation
-
         set_unsaved_changes(false)
 
         // send data to api
-        console.log(user_data)
+        console.log(emp_data)
     }
 
     function log_out() {
-        localStorage.removeItem('jwt')
-        window.location.replace('/login')
+        const confirm_log_out = window.confirm('Вы уверены что хотите выйти из аккаунта ?')
+        if (confirm_log_out) {
+            localStorage.removeItem('jwt')
+            window.location.replace('/login')
+        }
     }
 
     return (
@@ -56,10 +56,10 @@ function EmployerProfile(props) {
                             <div className="--avatar"></div>
                         </div>
 
-                        <img src={edit_pencil} className='--edit_pencil'/>
+                        <img src={edit_pencil} className='--edit_pencil' alt=''/>
 
-                        <h2 className="--mt2">{user_data.company}</h2>
-                        <p className="--mt1">{user_data.description ? user_data.description : <span className="documents__add">Добавить описание + </span>}</p>
+                        <h2 className="--mt2">{emp_data.company}</h2>
+                        <p className="--mt1">{emp_data.description ? emp_data.description : <span className="documents__add">Добавить описание + </span>}</p>
                     </section>
 
                     <h2 className="lk__section-title">Контактное лицо</h2>
@@ -70,7 +70,7 @@ function EmployerProfile(props) {
                             className="card__input --mt1"
                             type="text"
                             name="full_name"
-                            value={user_data.full_name}
+                            value={emp_data.full_name}
                             onChange={event => handle_change(event)}
                         />
 
@@ -82,7 +82,7 @@ function EmployerProfile(props) {
                                     type="text"
                                     name="email"
                                     placeholder="email@example.com"
-                                    value={user_data.email}
+                                    value={emp_data.email}
                                     onChange={event => handle_change(event)}
                                 />
                             </div>
@@ -93,7 +93,7 @@ function EmployerProfile(props) {
                                     type="text"
                                     name="phone"
                                     placeholder="+7 (000) 000 00-00"
-                                    value={user_data.phone}
+                                    value={emp_data.phone}
                                     onChange={event => handle_change(event)}
                                 />
                             </div>

@@ -402,7 +402,7 @@ function WorkerProfile(props) {
                                                 />
                                         </div>
                                     </div>
-                                    <img src={time_span} alt="" srcset="" className='--exp-time-span'/>
+                                    <img src={time_span} className='--exp-time-span'/>
                                     <div className="add-date__block">
                                             <h3 className="card__label ld">Окончание работы</h3>
                                             <div className="add-date__inputs">

@@ -36,10 +36,13 @@ function Profile(props) {
     }, [])
 
     return (
-        props.user.user_data.specialty
-            ? <WorkerProfile user={props.user} />
-            : <EmployerProfile user={props.user} />
+        <>
+            {props.user.user_type === 'employer' && <EmployerProfile user={props.user} />}
+            {props.user.user_type === 'worker' && <WorkerProfile user={props.user} />}
+        </>
     )
 }
+
+// props.user.user_data.specialty ? 'worker' : 'employer'
 
 export default Profile
