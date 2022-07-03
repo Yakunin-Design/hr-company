@@ -8,6 +8,7 @@
 
     background-color: #fff;
     padding-bottom: 2rem;
+    z-index: 1;
 }
 
 .sidebar hr {

@@ -1,6 +1,7 @@
 import React from 'react'
 import LkNav from '../components/LkNav'
 import Footer from '../components/Footer'
+import {check_day, check_month, check_year, check_full_name, check_phone, check_email} from '../functions/validations'
 import '../styles/utils/lk.css'
 
 import eye from '../img/eye.svg'
@@ -9,11 +10,17 @@ import floating_plus from '../img/floating_plus.svg'
 import ProgressArrow from '../img/progress_arrow'
 import time_span from '../img/time_span.svg'
 
+
 // import exp_data from '../test/data/experiences'
 import Experience from '../components/Experience'
+import axios from 'axios'
 
 function WorkerProfile(props) {
-    const [unsaved_changes, set_unsaved_changes] = React.useState(false)
+
+    const [edit_errors, set_edit_errors] = React.useState([])
+    const [edits, set_edits] = React.useState([])
+
+    const [show_save_btn, set_show_save_btn] = React.useState(false)
 
     const [user_data, set_user_data] = React.useState({
         ...props.user.user_data,
@@ -29,7 +36,7 @@ function WorkerProfile(props) {
 
     function toggle_add_experience() {
         set_add_experience(prev => !prev)
-        set_unsaved_changes(true)
+        add_experience && set_show_save_btn(true)
     }
 
     function log_out() {
@@ -40,20 +47,86 @@ function WorkerProfile(props) {
         }
     }
 
+    function add_data(data, edit) {
+        data[edit] = user_data[edit]
+        set_edits(prev => prev.filter(edit => edit != user_data[edit] ))
+    }
+
     function save_data() {
-        // validation
+        console.log(edits)
+        const err = []
+        let data = {}
 
-        toggle_add_experience()
-        set_unsaved_changes(false)
+        edits.forEach(edit => {
+            if (edit === 'full_name') {
+                check_full_name(user_data[edit]) ? add_data(data, edit) : err.push(edit)
+            }
+            if (edit === 'email') {
+                check_email(user_data[edit]) ? add_data(data, edit) : err.push(edit)
+            }
+            if (edit === 'phone') {
+                check_phone(user_data[edit]) ? add_data(data, edit) : err.push(edit)
+            }
+            if (edit === 'day') {
+                check_day(user_data[edit]) ? add_data(data, edit) : err.push(edit)
+            }
+            if (edit === 'month') {
+                check_month(user_data[edit]) ? add_data(data, edit) : err.push(edit)
+            }
+            if (edit === 'year') {
+                check_year(user_data[edit]) ? add_data(data, edit) : err.push(edit)
+            }
+            if (edit === 'citizenship' || edit === 'status') {
+                add_data(data, edit)
+            }
+        })
 
-        // send data to api
-        console.log(user_data)
+        set_edit_errors(err)
+
+        const birthday = (data.day ? data.day : props.user.user_data.birthday.slice(0,2)) + '.' + (data.month ? data.month : props.user.user_data.birthday.slice(3,5)) + '.' + (data.year ? data.year : props.user.user_data.birthday.slice(6))
+
+        if (err.length === 0) { 
+            set_show_save_btn(false)
+            set_add_experience(false)
+        }
+
+        delete data.day
+        delete data.month
+        delete data.year
+        
+        const result_data = JSON.stringify({
+            ...data,
+            birthday
+        })
+
+        console.log(result_data)
+
+        const config = {
+            headers: {
+                authorization: 'Bearer ' + localStorage.getItem('jwt')
+            }
+        }
+
+        Object.keys(data).length > 0 &&
+        axios.post('http://localhost:6969/profile/edit', result_data, config)
+            .then(res => {
+                if (!res.data) {
+                    return console.log('bruh')
+                }
+            })
+            .catch(e => {
+                console.log(e.message)
+            })
+
     }
 
     function handle_change(event) {
         const {name, value, type, checked} = event.target
 
-        set_unsaved_changes(true)
+        set_show_save_btn(true)
+
+        set_edits(prev => prev.filter(edit => edit != name ))
+        set_edits(prev => [...prev, name])
 
         set_user_data(prev_user_data => {
             return {
@@ -64,13 +137,16 @@ function WorkerProfile(props) {
     }
 
     const experiences =
-            user_data.experience.map(exp => {
-        
-            return (
-                <Experience data={exp} />
-            )
+        user_data.experience.map(exp => {
+    
+        return (
+            <Experience data={exp} />
+        )
     })
 
+    const error_style = {
+        border: '2px solid red'
+    } 
 
     return (
         <div className="lk">
@@ -78,7 +154,7 @@ function WorkerProfile(props) {
             <main className="lk__container">
                 <div className="--page-container">
 
-                    {unsaved_changes && <div className="--primary-btn --save-btn" onClick={save_data}>Сохранить</div>}
+                    {show_save_btn && <div className="--primary-btn --save-btn" onClick={save_data}>Сохранить</div>}
 
                     {/* 
                         ------------ PROGRESS BAR ------------
@@ -131,6 +207,7 @@ function WorkerProfile(props) {
                                 value={user_data.full_name}
                                 placeholder="Фамилия Имя Отчество"
                                 onChange={event => handle_change(event)}
+                                style={edit_errors.includes('full_name') ? error_style : {}}
                             />
 
                             <div className="card__birthday">
@@ -144,6 +221,7 @@ function WorkerProfile(props) {
                                         value={user_data.day}
                                         placeholder="00"
                                         onChange={event => handle_change(event)}
+                                        style={edit_errors.includes('day') ? error_style : {}}
                                     />
 
                                     <select className="card__input --month"
@@ -151,6 +229,7 @@ function WorkerProfile(props) {
                                         name="month"
                                         value={user_data.month}
                                         onChange={event => handle_change(event)}
+                                        style={edit_errors.includes('month') ? error_style : {}}
                                     >
                                         <option value="00">Месяц</option>
                                         <option value="01">Января</option>
@@ -175,6 +254,7 @@ function WorkerProfile(props) {
                                         name="year"
                                         value={user_data.year}
                                         onChange={event => handle_change(event)}
+                                        style={edit_errors.includes('year') ? error_style : {}}
                                     />
                                 </div>	
                             </div>
@@ -297,6 +377,7 @@ function WorkerProfile(props) {
                                     placeholder="email@example.com"
                                     value={user_data.email}
                                     onChange={event => handle_change(event)}
+                                    style={edit_errors.includes('email') ? error_style : {}}
                                 />
                             </div>
                             <div className="lk__contact --phone">
@@ -308,6 +389,7 @@ function WorkerProfile(props) {
                                     placeholder="+7 (000) 000 00-00"
                                     value={user_data.phone}
                                     onChange={event => handle_change(event)}
+                                    style={edit_errors.includes('phone') ? error_style : {}}
                                 />
                             </div>
                         </div>

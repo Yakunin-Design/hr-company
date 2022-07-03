@@ -3,35 +3,85 @@ import LkNav from '../components/LkNav'
 import Footer from '../components/Footer'
 import '../styles/utils/lk.css'
 import edit_pencil from '../img/edit_pencil.svg'
+import {check_full_name, check_email, check_phone} from '../functions/validations'
+import axios from 'axios'
 
 function EmployerProfile(props) {
+
+    const [edit_errors, set_edit_errors] = React.useState([])
+    const [show_save_btn, set_show_save_btn] = React.useState(false)
 
     const [emp_data, set_emp_data] = React.useState({
         ...props.user.user_data,
         description: ''
     })
 
-    const [unsaved_changes, set_unsaved_changes] = React.useState(false);
+    const [edits, set_edits] = React.useState([])
 
     function handle_change(event) {
         const {name, value} = event.target
 
-        set_unsaved_changes(true)
+        set_show_save_btn(true)
 
-        set_emp_data(prev_employer_data => {
+        set_edits(prev => prev.filter(edit => edit != name ))
+        set_edits(prev => [...prev, name])
+
+        set_emp_data(prev_emp_data => {
             return {
-                ...prev_employer_data,
+                ...prev_emp_data,
                 [name]: value
             }
         })
     }
 
-    function save_data() {
-        // validation
-        set_unsaved_changes(false)
+    /*
 
-        // send data to api
-        console.log(emp_data)
+    edits (api): 
+    {
+        "full_name": "petr petrov"
+        "email": "pert@rus.ru"
+    }
+
+    errors-state:
+    ['phone']
+
+    */
+
+    function add_data(data, edit) {
+        data[edit] = emp_data[edit]
+        set_edits(prev => prev.filter(edit => edit != emp_data[edit] ))
+    }
+
+    function save_data() {
+        console.log(edits)
+        const err = []
+        const data = {}
+
+        edits.forEach(edit => {
+            if (edit === 'full_name') {
+                check_full_name(emp_data[edit]) ? add_data(data, edit) : err.push(edit)
+            }
+            if (edit === 'email') {
+                check_email(emp_data[edit]) ? add_data(data, edit) : err.push(edit)
+            }
+            if (edit === 'phone') {
+                check_phone(emp_data[edit]) ? add_data(data, edit) : err.push(edit)
+            }
+        })
+
+        set_edit_errors(err)
+
+        const jwt = localStorage.getItem('jwt') || ''
+
+        // send data to api to save changes to db
+        axios.post('http://localhost:6969/profile/edit', JSON.stringify(data), {headers : {authorization : 'Bearer ' + jwt}})
+
+        err.length === 0 && set_show_save_btn(false)
+
+        console.log("Err:")
+        console.log(err)
+        console.log("Data:")
+        console.log(data)
     }
 
     function log_out() {
@@ -42,6 +92,10 @@ function EmployerProfile(props) {
         }
     }
 
+    const error_style = {
+        border: '2px solid red'
+    } 
+
     return (
         <div className="lk">
 
@@ -49,7 +103,7 @@ function EmployerProfile(props) {
             <main className="lk__container">
                 <div className="--page-container">
 
-                    {unsaved_changes && <div className="--primary-btn --save-btn" onClick={save_data}>Сохранить</div>}
+                    {show_save_btn && <div className="--primary-btn --save-btn" onClick={save_data}>Сохранить</div>}
 
                     <section className="lk__section lk__basic-info --employer-basic-info">
                         <div className="personal_data__avatar-block --employer-avatar-block">
@@ -72,6 +126,7 @@ function EmployerProfile(props) {
                             name="full_name"
                             value={emp_data.full_name}
                             onChange={event => handle_change(event)}
+                            style={edit_errors.includes('full_name') ? error_style : {}}
                         />
 
                         <div className="lk__contacts">
@@ -84,6 +139,7 @@ function EmployerProfile(props) {
                                     placeholder="email@example.com"
                                     value={emp_data.email}
                                     onChange={event => handle_change(event)}
+                                    style={edit_errors.includes('email') ? error_style : {}}
                                 />
                             </div>
                             <div className="lk__contact --phone">
@@ -95,6 +151,7 @@ function EmployerProfile(props) {
                                     placeholder="+7 (000) 000 00-00"
                                     value={emp_data.phone}
                                     onChange={event => handle_change(event)}
+                                    style={edit_errors.includes('phone') ? error_style : {}}
                                 />
                             </div>
                         </div>
