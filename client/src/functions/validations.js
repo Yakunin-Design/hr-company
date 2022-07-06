@@ -57,12 +57,12 @@ function check_day(day) {
 }
 
 function check_month(month) {
-    return month === '00' ? false : true;
+    return (month === '00' || month === '') ? false : true;
 }
 
 function check_year(year) {
     const current_year = new Date().getFullYear() - 10;
-
+    console.log(current_year);
     if (year < 1900 || year > current_year) {
         return false;
     }

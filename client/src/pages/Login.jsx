@@ -1,11 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-
+import { check_phone,check_email } from '../functions/validations'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
 function LoginPage() {
+
+    const error_style = {
+        border: '2px solid red'
+    } 
+
     if (localStorage.getItem('jwt')) {
 		window.location.replace('/profile')
 	}
@@ -15,7 +20,7 @@ function LoginPage() {
         password: ''
     })
 
-    const [errors, set_errors] = React.useState()
+    const [errors, set_errors] = React.useState([]);
 
     function handle_change(event) {
         const { name, value } = event.target
@@ -29,20 +34,37 @@ function LoginPage() {
     }
 
     function sign_in() {
+        if (!check_email(form_data.login) && !check_phone(form_data.login)) {
+            set_errors('login')
+            return console.log('invalid login')
+        }
 
+        if (form_data.password.length < 8) {
+            set_errors('uncorrected_password')
+            return console.log('invalid password')
+        }
+        set_errors([])
         axios.post('http://localhost:6969/login', form_data)
             .then(res => {
 
                 if (!res.data) {
-                    return console.log('invalid data')
+                    console.log('smth wrong')
                 }
 
-                console.log(res)
                 localStorage.setItem('jwt', res.data)
 
                 window.location.replace("/profile")
             }).catch(err => {
                 console.log(err);
+
+                if (err.response.data === 'Account with passed cardentials was not found') {
+                    set_errors('not_found')
+                }
+
+                if (err.response.data === 'Wrong password') {
+                    set_errors('wrong_password')
+                }
+
             })
     }
 
@@ -60,7 +82,9 @@ function LoginPage() {
                             type="text"
                             name = "login"
                             onChange={event => handle_change(event)}
+                            style={errors.includes('login') ? error_style : {}}
                         />
+                        {errors.includes('not_found') && <span className="card__wrong">Аккаунт не найден</span>}
                     </div>
 
                     <div className="card__password">
@@ -70,7 +94,9 @@ function LoginPage() {
                             type="password"
                             name = "password"
                             onChange={event => handle_change(event)}
+                            style={errors.includes('uncorrected_password') ? error_style : {}}
                         />
+                        {errors.includes('wrong_password') && <span className="card__wrong">Неверный пароль</span>}
                     </div>
 
                     <div className="card__prompt">

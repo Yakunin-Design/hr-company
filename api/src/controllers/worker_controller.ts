@@ -13,27 +13,25 @@ function profile(req: Request, res: Response): void {
 
 async function basic_edit(req: Request, res: Response): Promise<void> {
     try{
+        const data = req.body;
+
+        console.log(data.experience);
+
+        const changed_names: Array<string> = Object.keys(data);
+        const changed_values: Array<string | object | Array<string>> = Object.values(data);
+
         const allowed_edits = ['full_name', 'birthday', 'citizenship', 'status', 'disctrict', 'metro', 'salary', 'specialty', 'experience', 'documents'];
-        let edit = '';
 
-        if (!req.body.name || !req.body.value) {
-            res.status(400).send('Invalid data');
-            return;
-        }
-
-        for (let i = 0; i < allowed_edits.length; i++) {
-            if (allowed_edits[i] === req.body.name) {
-                edit = req.body.name;
-                break;
+        let edits = {};
+        for (let i = 0; i < changed_names.length; i++) {
+            if (allowed_edits.indexOf(changed_names[i]) === -1 || changed_values[i] === '') {
+                res.status(400).send('Invalid data');
+                return;
             }
+            edits[changed_names[i]] = changed_values[i];
         }
 
-        if (edit === '') {
-            res.status(400).send('Invalid data');    
-            return;
-        }
-
-        await db.update(res.locals.user, {$set: {[edit]: req.body.value}}, 'workers');
+        await db.update(res.locals.user, {$set: {...edits}}, 'workers');
 
         res.status(200).send('Updated');
     } catch (e) {

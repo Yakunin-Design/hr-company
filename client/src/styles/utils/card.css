@@ -28,6 +28,11 @@
     font-size: 1rem;
 }
 
+.card__wrong {
+    color: red;
+    margin-top: 0.5rem;
+}
+
 .card__title {
     margin-top: 0.5em;
 }

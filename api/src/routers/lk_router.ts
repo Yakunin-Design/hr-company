@@ -15,7 +15,7 @@ router.get('/profile', auth, (req: Request, res: Response) => {
 router.post('/profile/edit', auth, (req: Request, res: Response) => {
     res.locals.jwt.user_type === 'worker'
         ? worker_controller.basic_edit(req, res)
-        : employer_controller.edit(req, res)
+        : employer_controller.basic_edit(req, res)
 });
 
 router.post('/profile/verified_edit1', auth, (req: Request, res: Response) => {

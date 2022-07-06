@@ -29,10 +29,12 @@ function WorkerProfile(props) {
         year: props.user.user_data.birthday.slice(6),
         documents: [],
         status: 'ready',
-        experience: []
+        experience: props.user.user_data.experience || []
     })
 
     const [add_experience, set_add_experience] = React.useState(false)
+    const [exp_info, set_exp_info] = React.useState({})
+
 
     function toggle_add_experience() {
         set_add_experience(prev => !prev)
@@ -53,7 +55,6 @@ function WorkerProfile(props) {
     }
 
     function save_data() {
-        console.log(edits)
         const err = []
         let data = {}
 
@@ -81,38 +82,135 @@ function WorkerProfile(props) {
             }
         })
 
-        set_edit_errors(err)
+        if (Object.keys(exp_info).length > 0) {
 
-        const birthday = (data.day ? data.day : props.user.user_data.birthday.slice(0,2)) + '.' + (data.month ? data.month : props.user.user_data.birthday.slice(3,5)) + '.' + (data.year ? data.year : props.user.user_data.birthday.slice(6))
+            let err_count = 0;
+
+            if ( exp_info["title"] ) { 
+                if (exp_info["title"].length < 5) {
+                    err.push('title')
+                    err_count++;
+                }
+            } else {
+                err.push('title')
+                err_count++;
+            }
+
+            if (exp_info["employer"]) {
+                if ( exp_info["employer"].length < 3) {
+                    err.push('employer')
+                    err_count++;
+                }
+            }  else {
+                err.push('employer')
+                err_count++;
+            }
+                
+            if (exp_info["description"]) {
+                if ( exp_info["description"].length < 20) {
+                    err.push('description')
+                    err_count++;
+                }
+            } else {
+                err.push('description')
+                err_count++;
+            }
+            if (!exp_info["start_month"] || !check_month(exp_info["start_month"])) {
+                err.push('start_month')
+                err_count++;
+            }
+                
+            if (!exp_info["end_month"] || !check_month(exp_info["end_month"])) {
+                err.push('end_month')
+                err_count++;
+            }
+                
+            if ( !exp_info["start_year"] || exp_info["start_year"] <= (Number(props.user.user_data.birthday.slice(6))+ 16)) {
+                err.push('start_year')
+                err_count++;
+            }   
+            if (!exp_info["end_year"] || !check_year(Number(exp_info["end_year"]) - 10)) {
+                err.push('end_year')
+                err_count++;
+            }
+
+            if (exp_info["end_year"] < exp_info["start_year"] || (exp_info["end_year"] === exp_info["start_year"] && Number(exp_info["start_month"]) > Number(exp_info["end_month"]))) {
+                
+                err.push('start_year')
+                err.push('end_year')
+                err.push('start_month')
+                err.push('end_month')
+
+                err_count++;
+            }
+             
+            if (err_count === 0) {
+
+                set_user_data(prev_user_data => {
+                    const new_experience = prev_user_data.experience
+                    new_experience.indexOf(exp_info) === -1 && new_experience.push(exp_info)
+
+                    return {
+                        ...prev_user_data,
+                        'experience' : new_experience
+                    }
+                })
+                add_data(data, 'experience')
+            }
+
+        }
+
+        set_edit_errors(err)
 
         if (err.length === 0) { 
             set_show_save_btn(false)
             set_add_experience(false)
         }
 
-        delete data.day
-        delete data.month
-        delete data.year
-        
+        let birthday;
+        if (data.day || data.month || data.year) {
+
+            if (data.day) {
+                if (data.day.length === 1) {
+                    birthday = '0'+ data.day
+                } else {
+                    birthday = data.day
+                }
+            } else {
+                birthday = props.user.user_data.birthday.slice(0,2)
+            }
+
+            birthday += '.' + (data.month ? data.month : props.user.user_data.birthday.slice(3,5)) + '.' + (data.year ? data.year : props.user.user_data.birthday.slice(6))
+            
+            delete data.day
+            delete data.month
+            delete data.year
+
+        }
+        console.log(data.experience)
         const result_data = JSON.stringify({
             ...data,
-            birthday
+            birthday,
+            experience: data.experience
         })
 
         console.log(result_data)
+        birthday && delete result_data.birthday;
 
         const config = {
             headers: {
-                authorization: 'Bearer ' + localStorage.getItem('jwt')
+                authorization: 'Bearer ' + localStorage.getItem('jwt'),
+                'content-type': 'application/json'
             }
         }
 
-        Object.keys(data).length > 0 &&
+        Object.keys(result_data).length > 0 &&
         axios.post('http://localhost:6969/profile/edit', result_data, config)
             .then(res => {
                 if (!res.data) {
-                    return console.log('bruh')
+                    return console.log(res)
                 }
+                console.log(res)
             })
             .catch(e => {
                 console.log(e.message)
@@ -134,6 +232,23 @@ function WorkerProfile(props) {
                 [name]: type === 'checkbox' ? checked : value
             }
         })
+    }
+
+    function add_exp_info(event) {
+        const {name, value} = event.target
+
+        set_show_save_btn(true)
+
+        set_exp_info(prev => {
+            return ({
+                ...prev,
+                [name]: value
+            })
+        })
+
+        set_edits(prev => prev.filter(edit => edit != 'experience' ))
+        set_edits(prev => [...prev, 'experience'])
+        
     }
 
     const experiences =
@@ -396,6 +511,49 @@ function WorkerProfile(props) {
                     </section>
 
                     {/* 
+                        ------------ Dream Work ------------
+                    */}
+
+                    <h2 className="lk__section-title">Желаемая работа</h2>
+                    <section className="lk__section">
+                    <h3>Тип работы</h3>
+                        <div className="lk__work-status">
+                            <input 
+                                className="--hiden"
+                                id="work_any"
+                                type="radio"
+                                name="work_status"
+                                value='любая'
+                                checked= {user_data.work_status === 'любая'}
+                                onChange={event => handle_change(event)}
+                            />
+                            <label className="--radio-label --lk-radio --status-radio --cd" htmlFor="work_any">Любая</label>
+
+                            <input 
+                                className="--hiden"
+                                id="work_temporary"
+                                type="radio"
+                                name="work_status"
+                                value='временная'
+                                checked={user_data.work_status === 'временная'}
+                                onChange={event => handle_change(event)}
+                            />
+                            <label className="--radio-label --lk-radio --status-radio --cd" htmlFor="work_temporary">Временная</label>
+
+                            <input 
+                                className="--hiden"
+                                id="work_fulltime"
+                                type="radio"
+                                name="work_status"
+                                value='постоянная'
+                                checked={user_data.work_status === 'постоянная'}
+                                onChange={event => handle_change(event)}
+                            />
+                            <label className="--radio-label --lk-radio --status-radio --cd" htmlFor="work_fulltime">Постоянная</label>
+                        </div> 
+                    </section>
+
+                    {/* 
                         ------------ EXPERIENCE ------------
                     */}
 
@@ -420,10 +578,11 @@ function WorkerProfile(props) {
                                         <input
                                             className="card__input --mt1"
                                             type="text"
-                                            name="role"
+                                            name="title"
                                             placeholder="Повар горячего цеха"
-                                            value=""
-                                            onChange={event => handle_change(event)}
+                                            value= {exp_info.title}
+                                            onChange={event => add_exp_info(event)}
+                                            style={edit_errors.includes('title') ? error_style : {}}
                                         />
                                     </div>
                                     <div className="lk__contact --company">
@@ -431,9 +590,10 @@ function WorkerProfile(props) {
                                         <input
                                             className="card__input --mt1"
                                             type="text"
-                                            name="role"
-                                            value=""
-                                            onChange={event => handle_change(event)}
+                                            name="employer"
+                                            value= {exp_info.employer}
+                                            onChange={event => add_exp_info(event)}
+                                            style={edit_errors.includes('employer') ? error_style : {}}
                                         />
                                     </div>
                                 </div>
@@ -442,10 +602,11 @@ function WorkerProfile(props) {
                                 <textarea
                                     className="card__textarea --mt1"
                                     type="text"
-                                    name="role"
+                                    name="description"
                                     placeholder="Опишите ваши обязанности, объем работы и задачи"
-                                    value=""
-                                    onChange={event => handle_change(event)}
+                                    value= {exp_info.description}
+                                    onChange={event => add_exp_info(event)}
+                                    style={edit_errors.includes('description') ? error_style : {}}
                                 />
 
                                 <div className="experience__add-date add-date">
@@ -455,9 +616,10 @@ function WorkerProfile(props) {
 
                                                 <select className="card__input --month --exp-month"
                                                     id="exp-month"
-                                                    name="exp-start-month"
-                                                    value="00"
-                                                    onChange={event => handle_change(event)}
+                                                    name="start_month"
+                                                    value= {exp_info.start_month || '00'}
+                                                    onChange={event => add_exp_info(event)}
+                                                    style={edit_errors.includes('start_month') ? error_style : {}}
                                                 >
                                                     <option value="00">Месяц</option>
                                                     <option value="01">Января</option>
@@ -479,8 +641,10 @@ function WorkerProfile(props) {
                                                     type="tel"
                                                     maxLength="4"
                                                     placeholder="0000"
-                                                    name="exp-start-year"
-                                                    onChange={event => handle_change(event)}
+                                                    name="start_year"
+                                                    value= {exp_info.start_year}
+                                                    onChange={event => add_exp_info(event)}
+                                                    style={edit_errors.includes('start_year') ? error_style : {}}
                                                 />
                                         </div>
                                     </div>
@@ -491,9 +655,10 @@ function WorkerProfile(props) {
 
                                                 <select className="card__input --month --exp-month"
                                                     id="exp-month"
-                                                    name="exp-end-month"
-                                                    value="00"
-                                                    onChange={event => handle_change(event)}
+                                                    name="end_month"
+                                                    value= {exp_info.end_month || '00'}
+                                                    onChange={event => add_exp_info(event)}
+                                                    style={edit_errors.includes('end_month') ? error_style : {}}
                                                 >
                                                     <option value="00">Месяц</option>
                                                     <option value="01">Января</option>
@@ -515,8 +680,10 @@ function WorkerProfile(props) {
                                                     type="tel"
                                                     maxLength="4"
                                                     placeholder="0000"
-                                                    name="exp-end-year"
-                                                    onChange={event => handle_change(event)}
+                                                    name="end_year"
+                                                    value= {exp_info.end_year}
+                                                    onChange={event => add_exp_info(event)}
+                                                    style={edit_errors.includes('end_year') ? error_style : {}}
                                                 />
                                         </div>
                                     </div>
