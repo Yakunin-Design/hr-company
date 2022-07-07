@@ -2,19 +2,19 @@ import React from 'react'
 
 import { BrowserRouter as Router, Route, Routes as Switch} from 'react-router-dom'
 
-import LoginPage from './pages/Login'
+import LoginPage from './pages/auth/Login'
 import LandingPage from './pages/Landing'
-import RegisterPage from './pages/Register';
-import Profile from './pages/Profile';
-import MyJob from './pages/MyJob';
-import Reviews from './pages/Reviews';
-import Payments from './pages/Payments';
-import Chat from './pages/Chat';
+import RegisterPage from './pages/auth/Register';
+import Profile from './hooks/Profile';
+import MyJob from './pages/lk/Worker/MyJob';
+import Reviews from './pages/lk/Worker/Reviews';
+import Payments from './pages/lk/Employer/Payments';
+import Chat from './pages/lk/Chat';
 import FindWork from './pages/FindWork';
-import JobOffers from './pages/JobOffers';
-import WorkerBank from './pages/WorkerBank';
+import JobOffers from './pages/lk/Employer/JobOffers';
+import WorkerBank from './pages/lk/Employer/WorkerBank';
 import FindWorkers from './pages/FindWorkers';
-import Points from './pages/Points';
+import Points from './pages/lk/Employer/Points';
 
 function App() {
 
