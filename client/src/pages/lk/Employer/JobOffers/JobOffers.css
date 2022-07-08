@@ -1,0 +1,32 @@
+.job-offer-row {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    padding: 1.5em 2em;
+
+    cursor: pointer;
+    margin-top: 1.2rem;
+    margin-bottom: 1.2rem;
+}
+
+.job-offer-row__indicator {
+    min-width: 4em;
+    min-height: 4em;
+    border-radius: 18%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.job-offer-row__address {
+    background-color: var(--background-main);
+    border-radius: 0.7em;
+
+    padding: .7em 2em;
+    margin-left: auto;
+}
+
+.job-offer-row__address .subway {
+    margin-top: 0.5rem;
+}

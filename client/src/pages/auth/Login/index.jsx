@@ -57,6 +57,7 @@ function LoginPage() {
                 localStorage.setItem('jwt', res.data)
 
                 window.location.replace("/profile")
+
             }).catch(err => {
                 console.log(err);
 
