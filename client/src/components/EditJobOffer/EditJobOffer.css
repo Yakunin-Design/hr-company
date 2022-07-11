@@ -1,0 +1,413 @@
+.JobOffer-container {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 0 2em;
+    padding-bottom: 2em;
+}
+
+.JobOffer-container .CloseIcon {
+    position: absolute;
+    right: 2em;
+    top: 1em;
+}
+
+.JobOffer-container .CloseIcon #Full-HD-Copy {
+    fill: #ffffffb0;
+}
+
+.JobOffer-container .CloseIcon:hover #Full-HD-Copy {
+    fill: #fff;
+}
+
+.JobOffer {
+    max-width: 75em;
+    margin: 0 auto;
+    margin-top: 5rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-main);
+}
+
+.JobOffer hr {
+    position: absolute;
+    width: 100%;
+    left: 0em;
+}
+
+.--edit-top-hr {
+    margin-top: 6rem;
+}
+
+.--edit-middle-hr {
+    margin-top: 54rem;
+}
+
+.--edit-bottom-hr {
+    margin-top: 124rem;
+}
+
+.JobOffer__edit__input {
+    margin-top: 0.5rem;
+}
+
+.--specialty {
+    margin-top: 5rem;
+}
+
+.JobOffer__edit-location {
+    display: flex;
+    margin-top: 2rem;
+    gap: 3em;
+}
+
+.--address {
+    flex: 7;
+}
+
+.--subway {
+    flex: 3;
+}
+
+.JobOffer__edit-pricing {
+    margin-top: 3rem;
+}
+
+.--price-input {
+    max-width: 6em;
+}
+.--experience-input {
+    max-width: 4em;
+}
+
+.edit__range {
+    width: 100%;
+    height: 1.2rem;
+    border-radius: 0.7rem;
+    border: 1px solid #979797;
+    margin-top: 0.5rem;
+}
+
+.edit__range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 2.5em;
+    height: 1.2rem;
+    background: var(--accent);
+    border-radius: 0.7rem;
+    cursor: pointer;
+}
+
+.edit__range::-moz-range-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 2.5em;
+    height: 1.2rem;
+    background: var(--accent);
+    border-radius: 0.7rem;
+    cursor: pointer;
+}
+
+.edit-picing__label-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.graph {
+    display: flex;
+    height: 7rem;
+    align-items: flex-end;
+    gap: 0.2em;
+}
+
+.graph__block {
+    width: 100%;
+    max-width: 0.6em;
+    min-width: 0.2em;
+    height: 50%;
+    background-color: var(--accent3);
+    border-radius: 4rem;
+}
+
+.edit-experience {
+    margin-top: 6rem;
+}
+
+.--schedule-input {
+    max-width: 4em;
+    text-align: center;
+}
+
+.edit-schedule {
+    display: flex;
+    flex-direction: column;
+    margin-top: 6rem;
+    gap: 2em;
+}
+
+.schedule {
+    flex: 1;
+}
+
+.working-time {
+    flex: 1;
+}
+
+.schedule__card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 3em 10%;
+    gap: 1em;
+}
+
+.schedule__span {
+    margin-top: 2em;
+}
+
+.--working-time-input {
+    max-width: 6em;
+}
+
+.sex {
+    display: flex;
+    gap: 1em;
+    margin-top: 0.5rem;
+}
+
+.additional {
+    margin-top: 6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.additional__age {
+    margin-top: 6rem;
+}
+
+.additional__description {
+    margin-top: 6rem;
+}
+
+.additional__textarea {
+    padding: 2.5rem 2em;
+    min-height: 16rem;
+}
+
+.age__count {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+    gap: 0.9em;
+}
+
+.--age-input {
+    max-width: 5em;
+    padding: 0.4rem 0.5em;
+    margin-top: 0;
+    text-align: center;
+}
+
+.sliders_control {
+    position: relative;
+}
+
+.--age-range {
+    position: absolute;
+}
+
+#fromSlider {
+    height: 0;
+    z-index: 1;
+    border: none;
+}
+
+#fromSlider::-webkit-slider-thumb {
+    height: 1.2rem;
+    margin-top: 1.2rem;
+}
+
+#fromSlider::-moz-range-thumb {
+    height: 1.2rem;
+}
+
+.JobOffer__edit-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 1em;
+    flex-direction: column;
+    margin-top: 3em;
+}
+
+.JobOffer__edit-buttons button {
+    padding: 0.7em 1em;
+    width: 100%;
+}
+
+@media (min-width: 322px) { 
+    .--edit-bottom-hr {
+        margin-top: 123rem;
+    }
+}
+
+@media (min-width: 335px) { 
+    .--edit-middle-hr {
+        margin-top: 53rem;
+    }
+    .--edit-bottom-hr {
+        margin-top: 121rem;
+    }
+}
+
+@media (min-width: 389px) { 
+    .--edit-bottom-hr {
+        margin-top: 119rem;
+    }
+}
+
+@media (min-width: 450px) { 
+    .JobOffer__edit-buttons {
+        flex-direction: row;
+    }
+    .--edit-bottom-hr {
+        margin-top: 121rem;
+    }
+}
+
+@media (min-width: 500px) { 
+    .--edit-top-hr {
+        margin-top: 7rem;
+    }
+}
+
+@media (min-width: 530px) { 
+    .--edit-middle-hr {
+        margin-top: 55rem;
+    }
+}
+
+@media (min-width: 560px) {
+    .graph {
+        gap: 0.3em;
+    }
+    .graph__block {
+        width: 100%;
+        max-width: 0.6em;
+        min-width: 0.3em;
+    }
+    .--edit-top-hr {
+        margin-top: 8rem;
+    }
+}
+
+@media (min-width: 600px) {
+    .JobOffer__edit-buttons {
+        justify-content: flex-end;
+        gap: 3em;
+        margin-right: 0;
+    }
+    .JobOffer__edit-buttons button {
+        padding: 0.7em 3.2em;
+        width: auto;
+    }
+    .--edit-bottom-hr {
+        margin-top: 122rem;
+    }
+}
+
+@media (min-width: 668px) { 
+    .--edit-top-hr {
+        margin-top: 6rem;
+    }
+    .--edit-middle-hr {
+        margin-top: 52rem;
+    }
+    .--edit-bottom-hr {
+        margin-top: 118rem;
+    }
+}
+
+@media (min-width: 700px) { 
+    .--edit-top-hr {
+        margin-top: 8rem;
+    }
+    .--edit-middle-hr {
+        margin-top: 54rem;
+    }
+    .--edit-bottom-hr {
+        margin-top: 120rem;
+    }
+}
+
+@media (min-width: 763px) { 
+    .--edit-middle-hr {
+        margin-top: 52rem;
+    }
+    .--edit-bottom-hr {
+        margin-top: 117rem;
+    }
+}
+
+@media (min-width: 770px) { 
+    .--edit-top-hr {
+        margin-top: 5rem;
+    }
+}
+
+@media (min-width: 800px) {
+    .edit-schedule {
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 2em;
+    }
+
+    .schedule__card {
+        max-width: 24em;
+    }
+
+    .--edit-bottom-hr {
+        margin-top: 99rem;
+    }
+}
+
+@media (min-width: 829px) { 
+    .--edit-middle-hr {
+        margin-top: 51rem;
+    }
+    .--edit-bottom-hr {
+        margin-top: 97rem;
+    }
+}
+
+@media (min-width: 850px) {
+    .graph {
+        justify-content: space-between;
+        
+    }
+}
+
+@media (min-width: 1000px) {
+    .schedule{ 
+        flex: none;
+    }
+    .working-time {
+        flex: none;
+    }
+    .schedule__card {
+        padding: 3em 4em;
+        width: 24em;
+    }
+}
+
+@media (min-width: 1120px) {
+    .additional {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}

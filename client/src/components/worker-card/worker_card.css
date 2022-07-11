@@ -1,0 +1,35 @@
+.worker-card {
+    width: 18em;
+    padding: 1.5em 2em;
+}
+
+.worker-card__logo {
+    background-color: var(--accent);
+    width: 2.5em;
+    height: 2.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+.worker-card__full-name {
+    margin-top: 0.5rem;
+}
+
+.worker-card__speciality {
+    margin-top: 0.2rem;
+}
+
+.worker-card__rating {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    margin-top: 2rem;
+}
+
+.worker-card__status {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    margin-top: 0.4rem;
+}

@@ -4,7 +4,7 @@ import subway_icon from '../../assets/svg/subway-icon.svg'
 
 import './Subway.css'
 
-function Subway({ station }) {
+function Subway({ station, text_style }) {
 
     let backgorund = 'black'
 
@@ -93,7 +93,13 @@ function Subway({ station }) {
             <div className="subway__icon" style={style}>
                 <img className="subway__img" src={subway_icon} alt="metro-icon" />
             </div>
-            <p>{station}</p>
+            {
+                text_style
+                ?
+                text_style === 'h4' && <h4>{station}</h4>
+                :
+                <p>{station}</p>
+            }
         </div>
     )
 }

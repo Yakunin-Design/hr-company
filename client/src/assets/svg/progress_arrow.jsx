@@ -1,4 +1,4 @@
-export default function ProgressArrow({filled}) {
+export default function ProgressArrow() {
     return (
         <svg width="10px" height="8px" viewBox="0 0 10 8" version="1.1" xmlns="http://www.w3.org/2000/svg">
             <title>Path 2</title>

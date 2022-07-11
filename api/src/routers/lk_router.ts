@@ -19,11 +19,25 @@ router.post('/profile/edit', auth, (req: Request, res: Response) => {
 });
 
 router.post('/profile/verified_edit1', auth, (req: Request, res: Response) => {
-    user_controller.email_phone_edit_step1(req, res)
-})
+    user_controller.email_phone_edit_step1(req, res);
+});
 
 router.post('/profile/verified_edit2', auth, (req: Request, res: Response) => {
-    user_controller.email_phone_edit_step2(req, res)
+    user_controller.email_phone_edit_step2(req, res);
+});
+
+// get all job offers (min)
+// router.get('/job-offers')
+
+// create a new job offer
+router.post('/new-job-offer', auth, (req: Request, res: Response) => { 
+    if (res.locals.jwt.user_type === 'employer') employer_controller.create_job_offer(req, res);
 })
+
+router.get('/job-offers', auth, (req: Request, res: Response) => {
+    if (res.locals.jwt.user_type === 'employer') employer_controller.job_offers(req, res);
+})
+
+router.get('/job-offers/:id', (req: Request, res: Response) => employer_controller.full_job_offer(req, res));
 
 export default router;
