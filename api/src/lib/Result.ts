@@ -3,4 +3,6 @@ type Result<T> = {
     Err?: Error
 }
 
+// type Result<T> = T extends null ? { Err: Error } : { Ok: T }
+
 export default Result;

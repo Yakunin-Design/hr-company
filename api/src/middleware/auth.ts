@@ -24,7 +24,7 @@ function auth(req: Request, res: Response, next: NextFunction) {
         let db_result = await db.find({_id: new ObjectId(res.locals.jwt.userID)},res.locals.jwt.user_type + 's', );
 
         if(!db_result.Ok) {
-            return res.status(500).send('Something went wrong');
+            return res.status(400).send('Wrong jwt');
         }
 
         delete db_result.Ok.password;

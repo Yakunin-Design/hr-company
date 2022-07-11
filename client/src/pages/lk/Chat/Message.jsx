@@ -19,7 +19,6 @@ function Message(props) {
                         <MessageText />
                         <MessageText />
                     </div>
-
                 </div>
             </div>
             <hr />
