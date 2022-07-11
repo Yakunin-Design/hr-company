@@ -62,6 +62,13 @@ h4 {
 	line-height: 125%;
 }
 
+h5 {
+	font-weight: 600;
+	font-size: 0.6rem;
+	color: #000;
+	line-height: 125%;
+}
+
 @media (min-width: 650px) {
     h2 {
         font-size: 2.8rem;
