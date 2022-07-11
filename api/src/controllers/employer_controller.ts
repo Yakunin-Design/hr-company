@@ -59,7 +59,11 @@ async function create_job_offer(req: Request, res: Response): Promise<void> {
 
         const job_offer: IJobOffer = {
             ...validated.Ok!,
-            employer_id: res.locals.user._id
+            employer_id: res.locals.user._id,
+            status: 'active',  
+            candidates: [],
+            candidate_count: 0,
+            created: Math.floor(Date.now() / 1000)
         };
 
         if (!job_offer.point_id) {
@@ -88,16 +92,28 @@ async function job_offers(req: Request, res: Response): Promise<void> {
         // find all job offers (with employer_id from jwt)
         const employer_id = res.locals.user._id;
 
-        const db_result = await db.find_all({employer_id: employer_id}, 'job_offers')
+        const db_result = await db.find_all({ employer_id: employer_id }, 'job_offers');
 
         if (db_result.Err) { 
             res.status(500).send(db_result.Err.message);
+            return;
         }
 
         const min_job_offers = db_result.Ok!.map(jo => {
             return {
                 id: jo._id,
-                specialty: jo.specialty
+                specialty: jo.specialty,
+                address: jo.address,
+                subway: jo.subway,
+
+                candidate_count: jo.candidate_count,
+                created: jo.created,
+                status: jo.status,
+
+                price: jo.price,
+                schedule: jo.schedule,
+                working_time: jo.working_time,
+                employer_id: employer_id
             }
         });
 

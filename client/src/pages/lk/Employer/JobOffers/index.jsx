@@ -8,60 +8,73 @@ import './JobOffers.css'
 import job_offers from '../../../../data/job_offers'
 import JobOfferRow from './JobOfferRow'
 import EditJobOffer from '../../../../components/EditJobOffer'
+import DisplayJobOffer from '../../../../components/DisplayJobOffer'
+import axios from 'axios'
 
-const job_offers_data = job_offers[0]
 function JobOffers(props) {
 
-    /**
-     * use effect [min job_offers]
-     */
+    const [min_job_offers, set_min_job_offers] = React.useState([])
 
-    /**
-     *  show_full_job_offer (min job_offers) {
-     *    axios [job_offer]
-     *    
-     * }
-     */
+    // getting min job_offers
+    React.useEffect(() => {
+        const jwt = localStorage.getItem('jwt') || ''
 
-    /**
-     *  show_full_job_offer (min job_offers) {
-     *    axios [job_offer]
-     *    
-     * }
-     */
+        const config = {
+            headers: {
+                authorization: 'Bearer ' + jwt
+            }
+        }
+
+        axios.get('http://localhost:6969/job-offers', config)
+            .then(res => {
+                if (!res.data) {
+                    return console.log('bruh')
+                }
+
+                set_min_job_offers(res.data)
+            })
+            .catch(e => {
+                console.log(e)
+            })
+
+    }, [])
+
+    const active_job_offers = min_job_offers.map(jo => jo.status === 'active' && <JobOfferRow key={jo.id} data={jo} handle_click={toggle_full_job_offer} />)
+    const closed_job_offers = min_job_offers.map(jo => jo.status === 'closed' && <JobOfferRow key={jo.id} data={jo} />)
+
+    const [full_job_offer, set_full_job_offer] = React.useState(false)
+
+    function toggle_full_job_offer() {
+        set_full_job_offer(prev => !prev)
+    }
+
+    const [new_job_offer, set_new_job_offer] = React.useState(false)
+    function toggle_new_job_offer() {
+        set_new_job_offer(prev => !prev)
+    }
 
     return (
         <div className="lk">
             <LkNav page="job-offers" user_type={props.user.user_type}/>
             <main className="lk__container">
                 <div className="--page-container">
-                    <h2 className="--mt3">Активные вакансии</h2>
+                    <div className="job-offers__active">
+                        <h2>Активные вакансии</h2>
+                        <button className="--primary-btn" onClick={toggle_new_job_offer}>Создать вакансию</button>
+                    </div>
 
+                    { active_job_offers[0] === false ? <p>У вас нет активных вакансий</p> : active_job_offers }
 
+                    { closed_job_offers[0] != false && <h2 className="--mt3">Закрытые вакансии</h2> }
+                    { closed_job_offers }
 
-                    {
+                    {/* <EditJobOffer /> */}
 
-                        job_offers.map(job_offer => {
-                            if (job_offer.status === 'active')
-                            return <JobOfferRow props={job_offer}/>
-                        })
-
-                    }
-
-                    <h2 className="--mt3">Закрытые вакансии</h2>
-
-                    {
-
-                        job_offers.map(job_offer => {
-                            if (job_offer.status === 'closed')
-                            return <JobOfferRow props={job_offer} />
-                        })
-
-                    }
+                    { full_job_offer && <DisplayJobOffer id={full_job_offer} handle_click={toggle_full_job_offer} /> }
                 </div>
                 <Footer />
             </main>
-            <EditJobOffer props={job_offers_data}/>
+            {/* <EditJobOffer props={job_offers_data}/> */}
         </div>
     )
 }

@@ -1,5 +1,5 @@
 import IUser from "./IUser";
-import { document, experience, salary, metro } from "../types/worker_types";
+import { document, experience, salary, subway } from "../types/worker_types";
 
 interface IWorker extends IUser{
     birthday: string,
@@ -10,7 +10,7 @@ interface IWorker extends IUser{
     job_preference?: "Любая" | "Временная" | "Постоянная",
     salary?: salary,
     district?: string | null,
-    metro?: metro | null,
+    metro?: subway | null,
     experience?: experience[],
     documents?: document[],
 }

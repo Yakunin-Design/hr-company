@@ -3,7 +3,7 @@ type salary = {
     amount: number
 }
 
-type metro = {
+type subway = {
     branch: number,
     name: string
 }
@@ -33,4 +33,4 @@ type change = {
     value: string | salary
 }
 
-export {salary, metro, experience, passport, document, change}
+export { salary, subway, experience, passport, document, change }

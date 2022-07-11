@@ -17,6 +17,7 @@
     position: absolute;
     right: 2em;
     top: 1em;
+    cursor: pointer;
 }
 
 .JobOffer-container .CloseIcon #Full-HD-Copy {

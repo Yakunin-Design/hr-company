@@ -5,39 +5,93 @@ import time_span from '../../assets/svg/time_span.svg'
 import WorkerCard from '../worker-card'
 import CloseIcon from '../../assets/svg/close-icon-white'
 
+import axios from 'axios'
 
-function DisplayJobOffer ({props}) {
+function DisplayJobOffer(props) {
+
+    console.log(props.id)
+
+    const [job_offer_data, set_job_offer_data] = React.useState({
+        schedule: {
+            weekdays: 6,
+            weekends: 1
+        },
+        citizenships: 'bu/uk',
+        specialty: 'Mom!',
+        subway: 'Адмиралтейская',
+        company: 'Mac',
+        description: '',
+        working_time: {
+            start: '00:00',
+            end: '00:00'
+        },
+        sex: '',
+        salary: {
+            period: 'hour',
+            amount: ''
+        }
+    })
+
+    // Getting full job offer
+    React.useEffect(() => {
+
+        const jwt = localStorage.getItem('jwt') || ''
+
+        const config = {
+            headers: {
+                authorization: 'Bearer ' + jwt
+            }
+        }
+
+        axios.get(`http://localhost:6969/job-offers/${props.id}`, config)
+            .then(res => {
+                if (!res.data) {
+                    return console.log('bruh')
+                }
+
+                set_job_offer_data(res.data)
+            })
+            .catch(e => {
+                console.log(e)
+            })
+
+    }, [])
 
     const schedule_blocks = []
-    if (props.schedule) {
-        for(let i = 0; i < props.schedule.weekdays; i++) {
+    if (job_offer_data.schedule) {
+        for(let i = 0; i < job_offer_data.schedule.weekdays; i++) {
             schedule_blocks.push(<div className="schedule-block --weekdays"></div>)
         }
-        for(let i = 0; i < props.schedule.weekends; i++) {
+
+        for(let i = 0; i < job_offer_data.schedule.weekends; i++) {
             schedule_blocks.push(<div className="schedule-block --weekends"></div>)
         }
     }
 
     const citizenships = []
-    if (props.citizenships) {
-        if (props.citizenships === 'ru') {
+    if (job_offer_data.citizenships) {
+        if (job_offer_data.citizenships === 'ru') {
             citizenships.push(<div className="info-block__citizenships-block">🇷🇺</div>)
         }
-        if (props.citizenships === 'bu/uk') {
+
+        if (job_offer_data.citizenships === 'bu/uk') {
             citizenships.push(<div className="info-block__citizenships-block">🇷🇺</div>)
             citizenships.push(<div className="info-block__citizenships-block">🇧🇾/🇺🇦</div>)
         }
-        if (props.citizenships === 'sng') {
+
+        if (job_offer_data.citizenships === 'sng') {
             citizenships.push(<div className="info-block__citizenships-block">СНГ</div>)
         }
-        if (props.citizenships === 'other') {
+
+        if (job_offer_data.citizenships === 'other') {
             citizenships.push(<h3>Любое</h3>)
         }
     }
+
     return(
         <div className="JobOffer-container">
 
-            <CloseIcon />
+            <CloseIcon handle_click={props.handle_click} />
 
             <div className="card JobOffer">
                 <div className="JobOffer__header">
@@ -45,8 +99,8 @@ function DisplayJobOffer ({props}) {
                         <div className="company-logo__image"></div>
                     </div>
 
-                    <h2 className="--mt1 --cd">{props.specialty}</h2>
-                    <p className="JobOffer__company-info"><h4 className='JobOffer__company-name'>Макдональдс</h4> | <Subway station={props.subway} text_style="h4"/></p>
+                    <h2 className="--mt1 --cd">{job_offer_data.specialty}</h2>
+                    <p className="JobOffer__company-info"><h4 className='JobOffer__company-name'>Макдональдс</h4> | <Subway station={job_offer_data.subway} text_style="h4"/></p>
                     <button className="JobOffer__edit-btn --primary-btn --mt2">Редактировать</button>
                 </div>
                 <hr className='JobOffer_hr --top-hr'/>
@@ -77,7 +131,7 @@ function DisplayJobOffer ({props}) {
 
                     <div className="card JobOffer__info-block info-block">
                         {
-                            props.schedule 
+                            job_offer_data.schedule 
                             ?
                             <div className="info-block__schedule">
                                 <h4>График работы</h4>
@@ -93,28 +147,28 @@ function DisplayJobOffer ({props}) {
                             <p className="--v2 --mt1">График работы договорной</p>
                         }
                         {
-                            props.working_time 
+                            job_offer_data.working_time 
                             &&
                             <>
                                 <div className="info-block__wk-container">
 
                                     <div className="info-block__wk-block">
                                         <p>Начало</p>
-                                        <h3>{props.working_time.start}</h3>
+                                        <h3>{job_offer_data.working_time.start}</h3>
                                     </div>
 
                                     <img src={time_span} />
 
                                     <div className="info-block__wk-block">
                                         <p>Окончание</p>
-                                        <h3>{props.working_time.end}</h3>
+                                        <h3>{job_offer_data.working_time.end}</h3>
                                     </div>
 
                                 </div>
                             </>
                         }
                         {
-                            props.citizenships 
+                            job_offer_data.citizenships 
                             &&
                             <div className="info-block__citizenships">
                                 {
@@ -127,11 +181,11 @@ function DisplayJobOffer ({props}) {
 
                         }
                         {
-                            props.sex 
+                            job_offer_data.sex 
                             &&
                             <div className="info-block__sex">
                                 {
-                                    props.sex === 'male' 
+                                    job_offer_data.sex === 'male' 
                                     ?
                                     <>
                                         <div className="info-block__sex-block">man</div>
@@ -146,7 +200,7 @@ function DisplayJobOffer ({props}) {
                             </div>
                         }
                         <div className='JobOffer__price'>
-                            <h4 className='--cl'>{props.price.amount}₽ - {props.price.period}</h4>
+                            <h4 className='--cl'>{job_offer_data.salary.amount}₽ - {job_offer_data.salary.period}</h4>
                         </div>
                     </div>
                 </div>
