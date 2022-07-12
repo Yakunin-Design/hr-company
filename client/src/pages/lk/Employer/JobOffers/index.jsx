@@ -1,51 +1,19 @@
 import React from 'react'
+
 import LkNav from '../../../../components/MainNav'
 import Footer from '../../../../components/Footer'
 
 import '../../../../styles/utils/lk.css'
-import './JobOffers.css'
 
-import job_offers from '../../../../data/job_offers'
-import JobOfferRow from './JobOfferRow'
 import EditJobOffer from '../../../../components/EditJobOffer'
-import DisplayJobOffer from '../../../../components/DisplayJobOffer'
-import axios from 'axios'
+
+import JobOffersLogic from './JobOffersLogic'
+import useToggle from './hooks/useToggle'
 
 function JobOffers(props) {
 
-    const [min_job_offers, set_min_job_offers] = React.useState([])
-
-    // getting min job_offers
-    React.useEffect(() => {
-        const jwt = localStorage.getItem('jwt') || ''
-
-        const config = {
-            headers: {
-                authorization: 'Bearer ' + jwt
-            }
-        }
-
-        axios.get('http://localhost:6969/job-offers', config)
-            .then(res => {
-                if (!res.data) {
-                    return console.log('bruh')
-                }
-
-                set_min_job_offers(res.data)
-            })
-            .catch(e => {
-                console.log(e)
-            })
-
-    }, [])
-
-    const active_job_offers = min_job_offers.map(jo => jo.status === 'active' && <JobOfferRow key={jo._id} data={jo} />)
-    const closed_job_offers = min_job_offers.map(jo => jo.status === 'closed' && <JobOfferRow key={jo._id} data={jo} />)
-
-    const [new_job_offer, set_new_job_offer] = React.useState(false)
-    function toggle_new_job_offer() {
-        set_new_job_offer(prev => !prev)
-    }
+    const { active_job_offers, closed_job_offers } = JobOffersLogic()
+    const { new_job_offer, toggle_new_job_offer } = useToggle()
 
     return (
         <div className="lk">
@@ -59,7 +27,7 @@ function JobOffers(props) {
 
                     { active_job_offers[0] === false ? <p>У вас нет активных вакансий</p> : active_job_offers }
 
-                    { closed_job_offers[0] != false && <h2 className="--mt3">Закрытые вакансии</h2> }
+                    { closed_job_offers[0] !== false && <h2 className="--mt3">Закрытые вакансии</h2> }
                     { closed_job_offers }
 
                     {/* <EditJobOffer /> */}

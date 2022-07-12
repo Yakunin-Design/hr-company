@@ -5,7 +5,7 @@
     left: 0;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    padding: 0 2em;
+    padding: 0 1em;
     padding-bottom: 2em;
 }
 
@@ -34,21 +34,21 @@
 }
 
 .JobOffer hr {
-    position: absolute;
-    width: 100%;
-    left: 0em;
+    position: relative;
+    width: calc(100% + 4em);
+    left: -2em;
+    margin-top: 2rem;
 }
 
-.--edit-top-hr {
-    margin-top: 6rem;
+.--edit-labels {
+    width: auto;
 }
 
-.--edit-middle-hr {
-    margin-top: 54rem;
-}
-
-.--edit-bottom-hr {
-    margin-top: 124rem;
+.--edit-citizenships {
+    display: flex;
+    gap: 1em;
+    justify-content: flex-start;
+    margin-top: 0.6rem;
 }
 
 .JobOffer__edit__input {
@@ -181,6 +181,10 @@
     margin-top: 0.5rem;
 }
 
+.sex .--lk-radio {
+    width: auto;
+}
+
 .additional {
     margin-top: 6rem;
     display: flex;
@@ -251,45 +255,16 @@
     width: 100%;
 }
 
-@media (min-width: 322px) { 
-    .--edit-bottom-hr {
-        margin-top: 123rem;
-    }
-}
-
-@media (min-width: 335px) { 
-    .--edit-middle-hr {
-        margin-top: 53rem;
-    }
-    .--edit-bottom-hr {
-        margin-top: 121rem;
-    }
-}
-
-@media (min-width: 389px) { 
-    .--edit-bottom-hr {
-        margin-top: 119rem;
-    }
-}
-
 @media (min-width: 450px) { 
     .JobOffer__edit-buttons {
         flex-direction: row;
     }
-    .--edit-bottom-hr {
-        margin-top: 121rem;
-    }
 }
 
-@media (min-width: 500px) { 
-    .--edit-top-hr {
-        margin-top: 7rem;
-    }
-}
-
-@media (min-width: 530px) { 
-    .--edit-middle-hr {
-        margin-top: 55rem;
+@media (min-width: 500px) {
+    .JobOffer hr {
+        width: calc(100% + 8em);
+        left: -4em;
     }
 }
 
@@ -301,9 +276,6 @@
         width: 100%;
         max-width: 0.6em;
         min-width: 0.3em;
-    }
-    .--edit-top-hr {
-        margin-top: 8rem;
     }
 }
 
@@ -317,47 +289,11 @@
         padding: 0.7em 3.2em;
         width: auto;
     }
-    .--edit-bottom-hr {
-        margin-top: 122rem;
-    }
 }
 
-@media (min-width: 668px) { 
-    .--edit-top-hr {
-        margin-top: 6rem;
-    }
-    .--edit-middle-hr {
-        margin-top: 52rem;
-    }
-    .--edit-bottom-hr {
-        margin-top: 118rem;
-    }
-}
-
-@media (min-width: 700px) { 
-    .--edit-top-hr {
-        margin-top: 8rem;
-    }
-    .--edit-middle-hr {
-        margin-top: 54rem;
-    }
-    .--edit-bottom-hr {
-        margin-top: 120rem;
-    }
-}
-
-@media (min-width: 763px) { 
-    .--edit-middle-hr {
-        margin-top: 52rem;
-    }
-    .--edit-bottom-hr {
-        margin-top: 117rem;
-    }
-}
-
-@media (min-width: 770px) { 
-    .--edit-top-hr {
-        margin-top: 5rem;
+@media (min-width: 700px) {
+    .JobOffer-container {
+        padding: 0 2em;
     }
 }
 
@@ -370,19 +306,6 @@
 
     .schedule__card {
         max-width: 24em;
-    }
-
-    .--edit-bottom-hr {
-        margin-top: 99rem;
-    }
-}
-
-@media (min-width: 829px) { 
-    .--edit-middle-hr {
-        margin-top: 51rem;
-    }
-    .--edit-bottom-hr {
-        margin-top: 97rem;
     }
 }
 

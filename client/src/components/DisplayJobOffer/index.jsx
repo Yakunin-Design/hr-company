@@ -1,8 +1,17 @@
 import React from 'react'
+
 import Subway from '../Subway'
-import './DisplayJobOffer.css'
-import time_span from '../../assets/svg/time_span.svg'
 import WorkerCard from '../worker-card'
+
+import get_period from '../../functions/get_period'
+
+import './DisplayJobOffer.css'
+
+import time_span from '../../assets/svg/time_span.svg'
+import mark_filled from '../../assets/svg/mark_filled.svg'
+import clock from '../../assets/svg/clock.svg'
+import man from '../../assets/svg/man.svg'
+import woman from '../../assets/svg/woman.svg'
 import CloseIcon from '../../assets/svg/close-icon-white'
 
 import axios from 'axios'
@@ -29,6 +38,8 @@ function DisplayJobOffer(props) {
             amount: ''
         }
     })
+
+    const salary_period = job_offer_data.salary.period === 'hour' ? 'час' : job_offer_data.salary.period === 'month' ? 'месяц' : 'смена'
 
     // Getting full job offer
     React.useEffect(() => {
@@ -87,7 +98,7 @@ function DisplayJobOffer(props) {
     }
 
     return(
-        <div className="JobOffer-container">
+        <div className="JobOffer-container --display-container">
 
             <CloseIcon handle_click={props.handle_click} />
 
@@ -98,15 +109,29 @@ function DisplayJobOffer(props) {
                     </div>
 
                     <h2 className="--mt1 --cd">{job_offer_data.specialty}</h2>
-                    <div className="JobOffer__company-info"><h4 className='JobOffer__company-name'>Макдональдс</h4> | <h4 className='JobOffer__company-name'>{job_offer_data.address}</h4> | <Subway station={job_offer_data.subway} text_style="h4"/></div>
+                    <div className="JobOffer__company-info">
+                        <h4 className="JobOffer__company-name">Макдональдс</h4>
+                        <h4 className="JobOffer__separator">|</h4>
+                        <div className="company-info__created">
+                            <img src={clock} />
+                            <h4>{get_period(job_offer_data.created)}</h4>
+                        </div>
+                    </div>
                     <button className="JobOffer__edit-btn --primary-btn --mt2">Редактировать</button>
                 </div>
                 <hr className='JobOffer_hr --top-hr'/>
 
                 <div className="JobOffer__main">
-                    <div className="JobOffer__description">{job_offer_data.description ? job_offer_data.description : <h3>Описание отсутствует</h3>}</div>
-
+                    <div className="JobOffer__description">{job_offer_data.description ? <p>{job_offer_data.description}</p> : <h3>Описание отсутствует</h3>}</div>
                     <div className="card JobOffer__info-block info-block">
+                        <div className='info-block__address'>
+                            <h4>Адрес</h4>
+                            <Subway station={job_offer_data.subway} text_style="h4"/>
+                            <div className='addres'>
+                                <img src={mark_filled} alt="" srcset="" />
+                                <h4>{job_offer_data.address}</h4>
+                            </div>
+                        </div>
                         {
                             job_offer_data.schedule 
                             ?
@@ -158,35 +183,41 @@ function DisplayJobOffer(props) {
 
                         }
                         {
-                            job_offer_data.sex 
+                            (job_offer_data.sex && job_offer_data.sex != 'any')
                             &&
                             <div className="info-block__sex">
                                 {
                                     job_offer_data.sex === 'male' 
                                     ?
                                     <>
-                                        <div className="info-block__sex-block">man</div>
+                                        <div className="info-block__sex-block"><img src={man}/></div>
                                         <h4>Только мужчины</h4>
                                     </>
                                     :
                                     <>
-                                        <div className="info-block__sex-block">girls</div>
+                                        <div className="info-block__sex-block"><img src={woman}/></div>
                                         <h4>Только девушки</h4>
                                     </>
                                 }
                             </div>
                         }
                         <div className='JobOffer__price'>
-                            <h4 className='--cl'>{job_offer_data.salary.amount}₽ - {job_offer_data.salary.period}</h4>
+                            <h4 className='--cl'>{job_offer_data.salary.amount}₽ - {salary_period}</h4>
                         </div>
                     </div>
                 </div>
                 <hr className='JobOffer_hr --bottom-hr'/>
                 <div className='JobOffer__candidates'>
                     <h2 className='--cd --mt2'>Кандидаты</h2>
-                    <div className='JobOffer__candidates_container'>
-                        {/* <WorkerCard /> */}
-                    </div>
+                    {
+                        job_offer_data.candidate_count === []
+                        ?
+                        <div className='JobOffer__candidates_container'>
+                            {/* <WorkerCard /> */}
+                        </div>
+                        :
+                        <h3 className='--mt1 --cd'>Кандидаты отсутствуют</h3>
+                    }
                 </div>
             </div>
         </div>

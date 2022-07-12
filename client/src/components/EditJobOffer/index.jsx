@@ -1,6 +1,8 @@
 import React from 'react'
 import './EditJobOffer.css'
 import CloseIcon from '../../assets/svg/close-icon-white'
+import man from '../../assets/svg/man.svg'
+import woman from '../../assets/svg/woman.svg'
 
 import axios from 'axios'
 
@@ -147,6 +149,7 @@ function EditJobOffer (props) {
             }
         }
 
+        const n_regex = new RegExp('\n', 'g')
         const request_data = {
             ...job_offer_data,
             type: 'full time'
@@ -154,6 +157,10 @@ function EditJobOffer (props) {
 
         if (request_data.working_time.start === '' || request_data.working_time.end === '') {
             delete request_data.working_time
+        }
+
+        if (request_data.schedule.weekdays === '' && request_data.schedule.weekends === '') {
+            delete request_data.schedule
         }
 
         axios.post('http://localhost:6969/new-job-offer', request_data, config)
@@ -419,7 +426,7 @@ function EditJobOffer (props) {
                 <div className='JobOffer__edit-additional additional'>
                     <div className='additional__citizenship'>
                         <h3 className="--ld">Гражданство</h3>
-                        <div className="citizenships --lk-citizenships">
+                        <div className="citizenships --lk-citizenships --edit-citizenships">
                             <input 
                                 className="--hiden"
                                 id="other"
@@ -429,7 +436,7 @@ function EditJobOffer (props) {
                                 onChange={event => handle_change(event)}
                                 checked={job_offer_data.citizenship === 'other'}
                             />
-                            <label className="--radio-label --lk-radio --cd" htmlFor="other">Другое</label>
+                            <label className="--radio-label --lk-radio --cd --edit-labels" htmlFor="other">Другое</label>
 
                             <input
                                 className="--hiden"
@@ -440,7 +447,7 @@ function EditJobOffer (props) {
                                 onChange={event => handle_change(event)}
                                 checked={job_offer_data.citizenship === 'sng'}
                             />
-                            <label className="--radio-label --lk-radio --cd" htmlFor="sng">СНГ</label>
+                            <label className="--radio-label --lk-radio --cd --edit-labels" htmlFor="sng">СНГ</label>
 
                             <input 
                                 className="--hiden"
@@ -451,7 +458,7 @@ function EditJobOffer (props) {
                                 onChange={event => handle_change(event)}
                                 checked={job_offer_data.citizenship === 'bu/ua'}
                             />
-                            <label className="--radio-label --lk-radio --cd" htmlFor="bu/ua">🇧🇾/🇺🇦</label>
+                            <label className="--radio-label --lk-radio --cd --edit-labels" htmlFor="bu/ua">🇧🇾/🇺🇦</label>
 
                             <input 
                                 className="--hiden"
@@ -462,7 +469,7 @@ function EditJobOffer (props) {
                                 onChange={event => handle_change(event)}
                                 checked={job_offer_data.citizenship === 'ru'}
                             />
-                            <label className="--radio-label --lk-radio --cd" htmlFor="ru">🇷🇺</label>
+                            <label className="--radio-label --lk-radio --cd --edit-labels" htmlFor="ru">🇷🇺</label>
                         </div>
                     </div>
                     <div className='additional__sex'>
@@ -477,7 +484,7 @@ function EditJobOffer (props) {
                                 onChange={event => handle_change(event)}
                                 checked={job_offer_data.sex === 'any'}
                             />
-                            <label className="--radio-label --lk-radio --cd" htmlFor="all">Любой</label>
+                            <label className="--radio-label --lk-radio --cd --edit-labels" htmlFor="all">Любой</label>
 
                             <input
                                 className="--hiden"
@@ -488,7 +495,7 @@ function EditJobOffer (props) {
                                 onChange={event => handle_change(event)}
                                 checked={job_offer_data.sex === 'male'}
                             />
-                            <label className="--radio-label --lk-radio --cd" htmlFor="male">Мужчины</label>
+                            <label className="--radio-label --lk-radio --cd --edit-labels" htmlFor="male"><img src={man}/></label>
 
                             <input 
                                 className="--hiden"
@@ -499,7 +506,7 @@ function EditJobOffer (props) {
                                 onChange={event => handle_change(event)}
                                 checked={job_offer_data.sex === 'female'}
                             />
-                            <label className="--radio-label --lk-radio --cd" htmlFor="female">Женщины</label>
+                            <label className="--radio-label --lk-radio --cd --edit-labels" htmlFor="female"><img src={woman}/></label>
                         </div>
                     </div>
                 </div>
@@ -556,8 +563,8 @@ function EditJobOffer (props) {
                         className="card__textarea additional__textarea --mt1"
                         type="text"
                         name="description"
-                        placeholder={"Обязанности: \n \t - \n \t - \n Требования: \n \t - \n \t - \n Условия: \n \t - \n \t - \n"}
-                        value= {job_offer_data.description ? job_offer_data.description : "Обязанности: \n \t - \n \t - \n Требования: \n \t - \n \t - \n Условия: \n \t - \n \t - \n"}
+                        placeholder={"Обязанности:\n    - \n    - \nТребования:\n    - \n    - \nУсловия:\n    - \n    - \n"}
+                        value= {job_offer_data.description ? job_offer_data.description : "Обязанности:\n    - \n    - \nТребования:\n    - \n    - \nУсловия:\n    - \n    - \n"}
                         onChange={event => handle_change(event)}
                     />
                 </div>
