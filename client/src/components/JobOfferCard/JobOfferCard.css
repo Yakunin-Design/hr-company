@@ -2,6 +2,7 @@
     max-width: 19em;
     padding: 1.25em;
     position: relative;
+    cursor: pointer;
 }
 
 .JobOfferCard__place {

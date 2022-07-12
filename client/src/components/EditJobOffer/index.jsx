@@ -2,17 +2,18 @@ import React from 'react'
 import './EditJobOffer.css'
 import CloseIcon from '../../assets/svg/close-icon-white'
 
+import axios from 'axios'
 
-function EditJobOffer ({props}) {
+function EditJobOffer (props) {
 
     const activity = 'edit'
     const [job_offer_data, set_job_offer_data] = React.useState({
         specialty: '',
         address: '',
         subway: '',
-        price: {
+        salary: {
             amount: '100',
-            period: 'час'
+            period: 'hour'
         },
         experience: '0',
         schedule: {
@@ -24,7 +25,7 @@ function EditJobOffer ({props}) {
             end: '',
         },
         citizenship: "other",
-        sex: 'all',
+        sex: 'any',
         age: {
             from: '',
             to: '',
@@ -40,47 +41,40 @@ function EditJobOffer ({props}) {
                 return (
                     {
                         ...prev,
-                        price: {
+                        salary: {
                             amount : value,
-                            period : prev.price.period
+                            period : prev.salary.period
                         }
                     }
                 )
                 
             })
-        }
-
-        if (name === 'weekends') {
+        } else if (name === 'weekends') {
             set_job_offer_data(prev => {
                 return (
                     {
                         ...prev,
                         schedule: {
                             weekends : value,
-                            weekdays : prev.experience.weekdays
+                            weekdays : prev.schedule.weekdays
                         }
                     }
                 )
                 
             })
-        }
-
-        if (name === 'weekdays') {
+        } else if (name === 'weekdays') {
             set_job_offer_data(prev => {
                 return (
                     {
                         ...prev,
                         schedule: {
                             weekdays : value,
-                            weekends : prev.experience.weekends
+                            weekends : prev.schedule.weekends
                         }
                     }
                 )
-                
             })
-        }
-
-        if (name === 'wt-start') {
+        } else if (name === 'wt-start') {
             set_job_offer_data(prev => {
                 return (
                     {
@@ -93,9 +87,7 @@ function EditJobOffer ({props}) {
                 )
                 
             })
-        }
-
-        if (name === 'wt-end') {
+        } else if (name === 'wt-end') {
             set_job_offer_data(prev => {
                 return (
                     {
@@ -108,9 +100,7 @@ function EditJobOffer ({props}) {
                 )
                 
             })
-        }
-
-        if (name === 'age_from') {
+        } else if (name === 'age_from') {
             set_job_offer_data(prev => {
                 return (
                     {
@@ -123,9 +113,7 @@ function EditJobOffer ({props}) {
                 )
                 
             })
-        }
-
-        if (name === 'age_to') {
+        } else if (name === 'age_to') {
             set_job_offer_data(prev => {
                 return (
                     {
@@ -138,23 +126,50 @@ function EditJobOffer ({props}) {
                 )
                 
             })
-        }
-
-        set_job_offer_data(prev => {
-            return (
-                {
+        } else {
+            set_job_offer_data(prev => {
+            return {
                     ...prev,
                     [name] : value
                 }
-            )
-            
-        })
+            })
+        }
+    }
+
+    function save_job_offer() {
+        console.log(job_offer_data)
+
+        const jwt = localStorage.getItem('jwt') || ''
+
+        const config = {
+            headers: {
+                authorization: 'Bearer ' + jwt
+            }
+        }
+
+        const request_data = {
+            ...job_offer_data,
+            type: 'full time'
+        }
+
+        if (request_data.working_time.start === '' || request_data.working_time.end === '') {
+            delete request_data.working_time
+        }
+
+        axios.post('http://localhost:6969/new-job-offer', request_data, config)
+            .then(res => console.log(res))
+
+        props.toggle_new_job_offer()
+
+        document.location.reload()
     }
 
     return(
         <div className="JobOffer-container">
 
-            <CloseIcon />
+            <div onClick={props.toggle_new_job_offer}>
+                <CloseIcon />
+            </div>
 
             <div className="card JobOffer">
                 <h2 className='--cd'>{activity === 'create' ? "Создание" : "Редактирование"} вакансии</h2>
@@ -201,61 +216,61 @@ function EditJobOffer ({props}) {
                 <div className="JobOffer__edit-pricing edit-pricing">
                     <h3>Ставка в час,₽</h3>
                     <input 
-                        className='card__input JobOffer__edit__input --price-input' 
+                        className='card__input JobOffer__edit__input --salary-input' 
                         type="tel"
                         name='amount'
-                        value={job_offer_data.price.amount} 
+                        value={job_offer_data.salary.amount} 
                         onChange={event => handle_change(event)}
                     />
 
                     <div className='edit-pricing__range-block'>
 
                         <div className='range-block__graph graph'>
-                            <div className='graph__block' style={job_offer_data.price.amount <= 120 ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 140 && job_offer_data.price.amount > 120) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 160 && job_offer_data.price.amount > 140) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 180 && job_offer_data.price.amount > 160) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 200 && job_offer_data.price.amount > 180) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 220 && job_offer_data.price.amount > 200) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 240 && job_offer_data.price.amount > 220) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 260 && job_offer_data.price.amount > 240) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 280 && job_offer_data.price.amount > 260) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 300 && job_offer_data.price.amount > 280) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 320 && job_offer_data.price.amount > 300) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 340 && job_offer_data.price.amount > 320) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 360 && job_offer_data.price.amount > 340) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 380 && job_offer_data.price.amount > 360) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 400 && job_offer_data.price.amount > 380) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 420 && job_offer_data.price.amount > 400) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 440 && job_offer_data.price.amount > 420) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 460 && job_offer_data.price.amount > 440) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 480 && job_offer_data.price.amount > 460) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 500 && job_offer_data.price.amount > 480) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 520 && job_offer_data.price.amount > 500) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 540 && job_offer_data.price.amount > 520) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 560 && job_offer_data.price.amount > 540) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 580 && job_offer_data.price.amount > 560) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 600 && job_offer_data.price.amount > 580) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 620 && job_offer_data.price.amount > 600) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 640 && job_offer_data.price.amount > 620) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 660 && job_offer_data.price.amount > 640) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 680 && job_offer_data.price.amount > 660) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 700 && job_offer_data.price.amount > 680) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 720 && job_offer_data.price.amount > 700) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 740 && job_offer_data.price.amount > 720) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 760 && job_offer_data.price.amount > 740) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 780 && job_offer_data.price.amount > 760) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 800 && job_offer_data.price.amount > 780) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 820 && job_offer_data.price.amount > 800) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 840 && job_offer_data.price.amount > 820) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 860 && job_offer_data.price.amount > 840) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 880 && job_offer_data.price.amount > 860) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 900 && job_offer_data.price.amount > 880) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 920 && job_offer_data.price.amount > 900) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 940 && job_offer_data.price.amount > 920) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 960 && job_offer_data.price.amount > 940) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={(job_offer_data.price.amount <= 980 && job_offer_data.price.amount > 960) ? {backgroundColor: "var(--accent)"} : {}}></div>
-                            <div className='graph__block' style={job_offer_data.price.amount >= 980 ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={job_offer_data.salary.amount <= 120 ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 140 && job_offer_data.salary.amount > 120) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 160 && job_offer_data.salary.amount > 140) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 180 && job_offer_data.salary.amount > 160) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 200 && job_offer_data.salary.amount > 180) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 220 && job_offer_data.salary.amount > 200) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 240 && job_offer_data.salary.amount > 220) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 260 && job_offer_data.salary.amount > 240) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 280 && job_offer_data.salary.amount > 260) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 300 && job_offer_data.salary.amount > 280) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 320 && job_offer_data.salary.amount > 300) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 340 && job_offer_data.salary.amount > 320) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 360 && job_offer_data.salary.amount > 340) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 380 && job_offer_data.salary.amount > 360) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 400 && job_offer_data.salary.amount > 380) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 420 && job_offer_data.salary.amount > 400) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 440 && job_offer_data.salary.amount > 420) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 460 && job_offer_data.salary.amount > 440) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 480 && job_offer_data.salary.amount > 460) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 500 && job_offer_data.salary.amount > 480) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 520 && job_offer_data.salary.amount > 500) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 540 && job_offer_data.salary.amount > 520) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 560 && job_offer_data.salary.amount > 540) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 580 && job_offer_data.salary.amount > 560) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 600 && job_offer_data.salary.amount > 580) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 620 && job_offer_data.salary.amount > 600) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 640 && job_offer_data.salary.amount > 620) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 660 && job_offer_data.salary.amount > 640) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 680 && job_offer_data.salary.amount > 660) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 700 && job_offer_data.salary.amount > 680) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 720 && job_offer_data.salary.amount > 700) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 740 && job_offer_data.salary.amount > 720) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 760 && job_offer_data.salary.amount > 740) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 780 && job_offer_data.salary.amount > 760) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 800 && job_offer_data.salary.amount > 780) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 820 && job_offer_data.salary.amount > 800) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 840 && job_offer_data.salary.amount > 820) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 860 && job_offer_data.salary.amount > 840) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 880 && job_offer_data.salary.amount > 860) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 900 && job_offer_data.salary.amount > 880) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 920 && job_offer_data.salary.amount > 900) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 940 && job_offer_data.salary.amount > 920) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 960 && job_offer_data.salary.amount > 940) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={(job_offer_data.salary.amount <= 980 && job_offer_data.salary.amount > 960) ? {backgroundColor: "var(--accent)"} : {}}></div>
+                            <div className='graph__block' style={job_offer_data.salary.amount >= 980 ? {backgroundColor: "var(--accent)"} : {}}></div>
 
                         </div>
 
@@ -265,7 +280,7 @@ function EditJobOffer ({props}) {
                             min="100" 
                             max="1000" 
                             name='amount'
-                            value={job_offer_data.price.amount} 
+                            value={job_offer_data.salary.amount} 
                             onChange={event => handle_change(event)}
                         />
 
@@ -458,9 +473,9 @@ function EditJobOffer ({props}) {
                                 id="all"
                                 type="radio"
                                 name="sex"
-                                value="all"
+                                value="any"
                                 onChange={event => handle_change(event)}
-                                checked={job_offer_data.sex === 'all'}
+                                checked={job_offer_data.sex === 'any'}
                             />
                             <label className="--radio-label --lk-radio --cd" htmlFor="all">Любой</label>
 
@@ -512,7 +527,7 @@ function EditJobOffer ({props}) {
                             maxLength="2"
                         />
                     </div>
-                    <div class="sliders_control">
+                    <div className="sliders_control">
                         <input 
                             className='edit__range --age-range'
                             id="fromSlider"
@@ -537,8 +552,7 @@ function EditJobOffer ({props}) {
                 </div>
                 <div className='additional__description'>
                     <h3>Требования и компетенции</h3>
-                    <textarea 
-                        contenteditable
+                    <textarea
                         className="card__textarea additional__textarea --mt1"
                         type="text"
                         name="description"
@@ -549,7 +563,7 @@ function EditJobOffer ({props}) {
                 </div>
                 <div className="JobOffer__edit-buttons">
                     <button className="btn --secondary-btn">Предпросмотр</button>
-                    <button className="btn --primary-btn">Сохранить</button>
+                    <button className="btn --primary-btn" onClick={save_job_offer}>Сохранить</button>
                 </div>
             </div>
         </div>

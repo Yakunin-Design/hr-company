@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
-import { salary, metro } from "../types/worker_types";
+import { salary, subway } from "../types/worker_types";
 import db from '../lib/idb'
 
 type change = {
     name: string,
-    value: string | salary | metro | string[]
+    value: string | salary | subway | string[]
 }
 
 function profile(req: Request, res: Response): void {

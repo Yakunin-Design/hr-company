@@ -3,7 +3,15 @@ import React from 'react'
 import Indicator from './Indicator'
 import Subway from '../../../../components/Subway'
 
+import DisplayJobOffer from '../../../../components/DisplayJobOffer'
+
 function JobOfferRow(props) {
+
+    const [full_job_offer, set_full_job_offer] = React.useState(false)
+
+    function toggle_full_job_offer() {
+        set_full_job_offer(prev => !prev)
+    }
 
     const unixTimeNow = Math.floor(Date.now() / 1000)
     
@@ -12,7 +20,6 @@ function JobOfferRow(props) {
     const hour = timer / 60;
 
     let created
-    
     if (Math.floor(hour /24) > 0) {
 
         created = 
@@ -33,7 +40,10 @@ function JobOfferRow(props) {
     }
 
     return (
-        <div className="card job-offer-row" onClick={props.handle_click}>
+        <>
+        { full_job_offer && <DisplayJobOffer id={props.data.id} handle_click={toggle_full_job_offer} /> }
+
+        <div className="card job-offer-row" onClick={toggle_full_job_offer}>
             <Indicator count={props.data.candidate_count} />
             <h3>{props.data.specialty}</h3>
             <div className="job-offer-row__address">
@@ -42,6 +52,7 @@ function JobOfferRow(props) {
             </div>
             <p>{created}</p>
         </div>
+        </>
     )
 }
 

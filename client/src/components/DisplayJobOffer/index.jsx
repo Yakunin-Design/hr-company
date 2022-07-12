@@ -9,17 +9,15 @@ import axios from 'axios'
 
 function DisplayJobOffer(props) {
 
-    console.log(props.id)
-
     const [job_offer_data, set_job_offer_data] = React.useState({
         schedule: {
-            weekdays: 6,
-            weekends: 1
+            weekdays: 0,
+            weekends: 0
         },
-        citizenships: 'bu/uk',
-        specialty: 'Mom!',
-        subway: 'Адмиралтейская',
-        company: 'Mac',
+        citizenships: 'any',
+        specialty: '',
+        subway: '',
+        company: '',
         description: '',
         working_time: {
             start: '00:00',
@@ -100,34 +98,13 @@ function DisplayJobOffer(props) {
                     </div>
 
                     <h2 className="--mt1 --cd">{job_offer_data.specialty}</h2>
-                    <p className="JobOffer__company-info"><h4 className='JobOffer__company-name'>Макдональдс</h4> | <Subway station={job_offer_data.subway} text_style="h4"/></p>
+                    <div className="JobOffer__company-info"><h4 className='JobOffer__company-name'>Макдональдс</h4> | <h4 className='JobOffer__company-name'>{job_offer_data.address}</h4> | <Subway station={job_offer_data.subway} text_style="h4"/></div>
                     <button className="JobOffer__edit-btn --primary-btn --mt2">Редактировать</button>
                 </div>
                 <hr className='JobOffer_hr --top-hr'/>
 
                 <div className="JobOffer__main">
-                    <div className="JobOffer__description">
-
-                        <h3>Обязанности</h3>
-                        <p>Lorem ipsum dolor sit. <br/>
-                        Ipsa nam nuror qui recusandae <br/>
-                        exercitationemvoluptates doloremque sequi <br/>
-                        eaque minim perferendis adipisci! <br/>
-                        Vero, laboriosam.</p>
-
-                        <h3>Требования</h3>
-                        <p>Lorem iipisicing elit. <br/>
-                        Ipsa nam nue error qui recusandae <br/>
-                        exercitationem ratione corrupti voluptates doloremque sequi <br/>
-                        eaque sci! <br/>
-                        Vero, laboriosam.</p>
-
-                        <h3>Условия</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. <br/>
-                        Iequi <br/>
-                        eaque min nostrum perferendis adipisci! <br/>
-                        Vero, laboriosam.</p>
-                    </div>
+                    <div className="JobOffer__description">{job_offer_data.description ? job_offer_data.description : <h3>Описание отсутствует</h3>}</div>
 
                     <div className="card JobOffer__info-block info-block">
                         {
@@ -208,7 +185,7 @@ function DisplayJobOffer(props) {
                 <div className='JobOffer__candidates'>
                     <h2 className='--cd --mt2'>Кандидаты</h2>
                     <div className='JobOffer__candidates_container'>
-                        <WorkerCard />
+                        {/* <WorkerCard /> */}
                     </div>
                 </div>
             </div>

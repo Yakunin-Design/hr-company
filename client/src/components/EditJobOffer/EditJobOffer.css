@@ -53,6 +53,7 @@
 
 .JobOffer__edit__input {
     margin-top: 0.5rem;
+    background-color: transparent;
 }
 
 .--specialty {
@@ -77,7 +78,7 @@
     margin-top: 3rem;
 }
 
-.--price-input {
+.--salary-input {
     max-width: 6em;
 }
 .--experience-input {

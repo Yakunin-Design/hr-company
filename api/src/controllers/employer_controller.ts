@@ -110,7 +110,7 @@ async function job_offers(req: Request, res: Response): Promise<void> {
                 created: jo.created,
                 status: jo.status,
 
-                price: jo.price,
+                salary: jo.salary,
                 schedule: jo.schedule,
                 working_time: jo.working_time,
                 employer_id: employer_id

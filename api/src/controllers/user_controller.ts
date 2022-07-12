@@ -90,4 +90,27 @@ async function email_phone_edit_step2(req: Request, res: Response): Promise<void
     res.status(203).send('ok');
 }
 
-export default { email_phone_edit_step1, email_phone_edit_step2 }
+async function get_jobs(req: Request, res: Response): Promise<void> {
+    const db_result = await db.find_all({status: 'active'}, 'job_offers', 30);
+
+    // send
+    if (db_result.Err) {
+        res.status(400).send(db_result.Err.message);
+        return;
+    }
+
+    res.status(200).send(db_result.Ok!);
+}
+
+async function get_workers(req: Request, res: Response): Promise<void> {
+    const db_result = await db.find_all({}, 'workers', 30);
+
+    if (db_result.Err) {
+        res.status(400).send(db_result.Err.message);
+        return;
+    }
+
+    res.status(200).send(db_result.Ok!);
+}
+
+export default { email_phone_edit_step1, email_phone_edit_step2, get_jobs, get_workers }

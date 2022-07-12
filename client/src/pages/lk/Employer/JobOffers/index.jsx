@@ -39,14 +39,8 @@ function JobOffers(props) {
 
     }, [])
 
-    const active_job_offers = min_job_offers.map(jo => jo.status === 'active' && <JobOfferRow key={jo.id} data={jo} handle_click={toggle_full_job_offer} />)
-    const closed_job_offers = min_job_offers.map(jo => jo.status === 'closed' && <JobOfferRow key={jo.id} data={jo} />)
-
-    const [full_job_offer, set_full_job_offer] = React.useState(false)
-
-    function toggle_full_job_offer() {
-        set_full_job_offer(prev => !prev)
-    }
+    const active_job_offers = min_job_offers.map(jo => jo.status === 'active' && <JobOfferRow key={jo._id} data={jo} />)
+    const closed_job_offers = min_job_offers.map(jo => jo.status === 'closed' && <JobOfferRow key={jo._id} data={jo} />)
 
     const [new_job_offer, set_new_job_offer] = React.useState(false)
     function toggle_new_job_offer() {
@@ -69,12 +63,10 @@ function JobOffers(props) {
                     { closed_job_offers }
 
                     {/* <EditJobOffer /> */}
-
-                    { full_job_offer && <DisplayJobOffer id={full_job_offer} handle_click={toggle_full_job_offer} /> }
                 </div>
                 <Footer />
             </main>
-            {/* <EditJobOffer props={job_offers_data}/> */}
+            { new_job_offer && <EditJobOffer toggle_new_job_offer={toggle_new_job_offer} /> }
         </div>
     )
 }
