@@ -3,7 +3,7 @@ import LkNav from '../../components/MainNav'
 
 import Footer from '../../components/Footer'
 import '../../styles/utils/lk.css'
-import WorkerCard from '../../components/worker-card'
+import WorkerCard from '../../components/WorkerCard'
 import axios from 'axios'
 
 function FindWorkers(props) {

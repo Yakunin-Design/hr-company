@@ -9,12 +9,7 @@
     left: 0;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    padding: 0 2em;
     padding-bottom: 2em;
-}
-
-.--display-container {
-    height: 100%;
 }
 
 .JobOffer-container .CloseIcon {
@@ -102,10 +97,13 @@
 
 .JobOffer__info-block {
     width: 20em;
-    padding: 2em;
     position: relative;
     margin-top: 0px;
     width: 100%;
+}
+
+.info-block {
+    padding: 2em;
 }
 
 .info-block__address .subway {

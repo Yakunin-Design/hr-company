@@ -30,8 +30,8 @@ export default function JobOffersContainer() {
 
     }, [])
 
-    const active_job_offers = min_job_offers.map(jo => jo.status === 'active' && <JobOfferRow key={jo._id} data={jo} />)
-    const closed_job_offers = min_job_offers.map(jo => jo.status === 'closed' && <JobOfferRow key={jo._id} data={jo} />)
+    const active_job_offers = min_job_offers.map(jo => jo.status === 'active' && <JobOfferRow key={jo.id} data={jo} />)
+    const closed_job_offers = min_job_offers.map(jo => jo.status === 'closed' && <JobOfferRow key={jo.id} data={jo} />)
 
     return {
         active_job_offers,

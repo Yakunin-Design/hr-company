@@ -1,4 +1,4 @@
-function get_period(created_time) {
+export default function get_created_time(created_time) {
 
     const unixTimeNow = Math.floor(Date.now() / 1000)
     
@@ -47,5 +47,3 @@ function get_period(created_time) {
 
     return created += " Назад"
 }
-
-export default get_period

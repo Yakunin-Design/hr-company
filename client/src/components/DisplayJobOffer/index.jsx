@@ -1,9 +1,9 @@
 import React from 'react'
 
 import Subway from '../Subway'
-import WorkerCard from '../worker-card'
+import WorkerCard from '../WorkerCard'
 
-import get_period from '../../functions/get_period'
+import get_period from '../../functions/get_created_time'
 
 import './DisplayJobOffer.css'
 
@@ -98,7 +98,7 @@ function DisplayJobOffer(props) {
     }
 
     return(
-        <div className="JobOffer-container --display-container">
+        <div className="JobOffer-container">
 
             <CloseIcon handle_click={props.handle_click} />
 
@@ -128,7 +128,7 @@ function DisplayJobOffer(props) {
                             <h4>Адрес</h4>
                             <Subway station={job_offer_data.subway} text_style="h4"/>
                             <div className='addres'>
-                                <img src={mark_filled} alt="" srcset="" />
+                                <img src={mark_filled} alt="show on map" />
                                 <h4>{job_offer_data.address}</h4>
                             </div>
                         </div>

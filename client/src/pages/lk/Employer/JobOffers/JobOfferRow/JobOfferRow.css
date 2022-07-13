@@ -1,7 +1,4 @@
 .job-offer-row {
-    display: flex;
-    align-items: center;
-    gap: 2.5rem;
     padding: 1.5em 2em;
 
     cursor: pointer;
@@ -9,14 +6,20 @@
     margin-bottom: 1.2rem;
 }
 
-.job-offer-row__indicator {
+.job-offer-row__important {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.job-offer-row__indicator { 
     min-width: 4em;
-    min-height: 4em;
+    height: 4em;
     border-radius: 18%;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    place-items: center;
+    margin-left: 1em;
 }
 
 .job-offer-row__address {
@@ -24,17 +27,31 @@
     border-radius: 0.7em;
 
     padding: .7em 2em;
-    margin-left: auto;
+    /* margin-left: auto; */
+    margin: 2em 0;
 }
 
 .job-offer-row__address .subway {
     margin-top: 0.5rem;
 }
 
-.job-offers__active {
+.job-offer-row__time-created {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    gap: 1em;
+}
 
-    margin: 2rem 0;
+@media (min-width: 800px) {
+    .job-offer-row {
+        display: flex;
+        align-items: center;
+    }
+
+    .job-offer-row__important {
+        flex-direction: row-reverse;
+        margin-right: auto;
+    }
+
+    .job-offer-row__address, .job-offer-row__indicator {
+        margin-right: 1em;
+    }
 }

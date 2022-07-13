@@ -4,172 +4,13 @@ import CloseIcon from '../../assets/svg/close-icon-white'
 import man from '../../assets/svg/man.svg'
 import woman from '../../assets/svg/woman.svg'
 
-import axios from 'axios'
+import EditJobOfferLogic from './EditJobOfferLogic'
+import save_job_offer from './save_job_offer'
 
 function EditJobOffer (props) {
-
     const activity = 'edit'
-    const [job_offer_data, set_job_offer_data] = React.useState({
-        specialty: '',
-        address: '',
-        subway: '',
-        salary: {
-            amount: '100',
-            period: 'hour'
-        },
-        experience: '0',
-        schedule: {
-            weekdays: '',
-            weekends: '',
-        },
-        working_time: {
-            start: '',
-            end: '',
-        },
-        citizenship: "other",
-        sex: 'any',
-        age: {
-            from: '',
-            to: '',
-        },
-        description: ''
-    })
 
-    function handle_change(event) {
-        const { name, value } = event.target
-
-        if (name === 'amount') {
-            set_job_offer_data(prev => {
-                return (
-                    {
-                        ...prev,
-                        salary: {
-                            amount : value,
-                            period : prev.salary.period
-                        }
-                    }
-                )
-                
-            })
-        } else if (name === 'weekends') {
-            set_job_offer_data(prev => {
-                return (
-                    {
-                        ...prev,
-                        schedule: {
-                            weekends : value,
-                            weekdays : prev.schedule.weekdays
-                        }
-                    }
-                )
-                
-            })
-        } else if (name === 'weekdays') {
-            set_job_offer_data(prev => {
-                return (
-                    {
-                        ...prev,
-                        schedule: {
-                            weekdays : value,
-                            weekends : prev.schedule.weekends
-                        }
-                    }
-                )
-            })
-        } else if (name === 'wt-start') {
-            set_job_offer_data(prev => {
-                return (
-                    {
-                        ...prev,
-                        working_time: {
-                            start : value.lenght === 2 ? value + ":00" : value,
-                            end : prev.working_time.end
-                        }
-                    }
-                )
-                
-            })
-        } else if (name === 'wt-end') {
-            set_job_offer_data(prev => {
-                return (
-                    {
-                        ...prev,
-                        working_time: {
-                            start : prev.working_time.start,
-                            end : value.lenght === 2 ? value + ":00" : value
-                        }
-                    }
-                )
-                
-            })
-        } else if (name === 'age_from') {
-            set_job_offer_data(prev => {
-                return (
-                    {
-                        ...prev,
-                        age: {
-                            from : value,
-                            to : prev.age.to
-                        }
-                    }
-                )
-                
-            })
-        } else if (name === 'age_to') {
-            set_job_offer_data(prev => {
-                return (
-                    {
-                        ...prev,
-                        age: {
-                            from : prev.age.from,
-                            to : value
-                        }
-                    }
-                )
-                
-            })
-        } else {
-            set_job_offer_data(prev => {
-            return {
-                    ...prev,
-                    [name] : value
-                }
-            })
-        }
-    }
-
-    function save_job_offer() {
-        console.log(job_offer_data)
-
-        const jwt = localStorage.getItem('jwt') || ''
-
-        const config = {
-            headers: {
-                authorization: 'Bearer ' + jwt
-            }
-        }
-
-        const n_regex = new RegExp('\n', 'g')
-        const request_data = {
-            ...job_offer_data,
-            type: 'full time'
-        }
-
-        if (request_data.working_time.start === '' || request_data.working_time.end === '') {
-            delete request_data.working_time
-        }
-
-        if (request_data.schedule.weekdays === '' && request_data.schedule.weekends === '') {
-            delete request_data.schedule
-        }
-
-        axios.post('http://localhost:6969/new-job-offer', request_data, config)
-            .then(res => console.log(res))
-
-        props.toggle_new_job_offer()
-
-        document.location.reload()
-    }
+    const { job_offer_data, handle_change } = EditJobOfferLogic()
 
     return(
         <div className="JobOffer-container">
@@ -179,6 +20,9 @@ function EditJobOffer (props) {
             </div>
 
             <div className="card JobOffer">
+
+
+
                 <h2 className='--cd'>{activity === 'create' ? "Создание" : "Редактирование"} вакансии</h2>
                 <hr className='--edit-top-hr'/>
 
@@ -308,6 +152,10 @@ function EditJobOffer (props) {
 
                 </div>
 
+
+                
+
+
                 <h2 className='--cd --mt5'>Основные</h2>
                 <p className='--cd'>Рекомендуем заполнить эти поля для повышения релевантности вакансии</p>
                 <hr className='--edit-middle-hr'/>
@@ -419,6 +267,11 @@ function EditJobOffer (props) {
                         </div>
                     </div>
                 </div>
+
+
+                
+
+
                 <h2 className='--cd --mt5'>Дополнительные</h2>
                 <p className='--cd'>Заполнив эти настройки вы поможете правильным соискателям найти вашу вакансию</p>
                 <hr className='--edit-bottom-hr'/>
@@ -570,7 +423,7 @@ function EditJobOffer (props) {
                 </div>
                 <div className="JobOffer__edit-buttons">
                     <button className="btn --secondary-btn">Предпросмотр</button>
-                    <button className="btn --primary-btn" onClick={save_job_offer}>Сохранить</button>
+                    <button className="btn --primary-btn" onClick={() => save_job_offer(job_offer_data)}>Сохранить</button>
                 </div>
             </div>
         </div>

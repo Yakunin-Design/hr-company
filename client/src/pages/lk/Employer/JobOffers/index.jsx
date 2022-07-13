@@ -4,6 +4,7 @@ import LkNav from '../../../../components/MainNav'
 import Footer from '../../../../components/Footer'
 
 import '../../../../styles/utils/lk.css'
+import './JobOffers.css'
 
 import EditJobOffer from '../../../../components/EditJobOffer'
 
@@ -18,19 +19,18 @@ function JobOffers(props) {
     return (
         <div className="lk">
             <LkNav page="job-offers" user_type={props.user.user_type}/>
-            <main className="lk__container">
+            <main className="lk__container job-offers">
+
                 <div className="--page-container">
-                    <div className="job-offers__active">
-                        <h2>Активные вакансии</h2>
-                        <button className="--primary-btn" onClick={toggle_new_job_offer}>Создать вакансию</button>
+                    <div className="job-offers__heading">
+                        <h2 className="job-offers__title">Активные вакансии</h2>
+                        <button className="job-offers__add --primary-btn" onClick={toggle_new_job_offer}>Создать вакансию</button>
                     </div>
 
                     { active_job_offers[0] === false ? <p>У вас нет активных вакансий</p> : active_job_offers }
 
                     { closed_job_offers[0] !== false && <h2 className="--mt3">Закрытые вакансии</h2> }
                     { closed_job_offers }
-
-                    {/* <EditJobOffer /> */}
                 </div>
                 <Footer />
             </main>
