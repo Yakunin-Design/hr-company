@@ -1,5 +1,5 @@
 .job-offer-row {
-    padding: 1.5em 2em;
+    padding: 1.2em 2em;
 
     cursor: pointer;
     margin-top: 1.2rem;
@@ -40,7 +40,7 @@
     gap: 1em;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 900px) {
     .job-offer-row {
         display: flex;
         align-items: center;
@@ -51,7 +51,13 @@
         margin-right: auto;
     }
 
-    .job-offer-row__address, .job-offer-row__indicator {
+    .job-offer-row__address {
+        margin: 0;
+        margin-right: 1em;
+    }
+
+    .job-offer-row__indicator {
+        margin-left: 0;
         margin-right: 1em;
     }
 }

@@ -45,9 +45,8 @@
 }
 
 .--edit-citizenships {
-    display: flex;
+    display: grid;
     gap: 1em;
-    justify-content: flex-start;
     margin-top: 0.6rem;
 }
 
@@ -62,16 +61,43 @@
 
 .JobOffer__edit-location {
     display: flex;
+    flex-direction: column;
     margin-top: 2rem;
-    gap: 3em;
+    gap: 2em;
 }
 
 .--address {
-    flex: 7;
+    flex: 6;
 }
 
 .--subway {
-    flex: 3;
+    flex: 4;
+}
+
+.--subway-input {
+    position: relative;
+    z-index: 2;
+}
+
+.--subway-input-icon {
+
+    position: relative;
+    top: -2.4rem;
+    left: 1.2em;
+    z-index: 0;
+}
+#--subway-select::-webkit-calendar-picker-indicator {
+    opacity: 0 !important;
+}
+
+.--select-arrow {
+    position: absolute;
+    right: 3em;
+    margin-top: 1.9rem;
+}
+
+.--subway-input-icon h4{
+    display: none;
 }
 
 .JobOffer__edit-pricing {
@@ -81,6 +107,23 @@
 .--salary-input {
     max-width: 6em;
 }
+
+.salary-label {
+    display: flex;
+    gap: 0.5em;
+}
+
+.--period {
+    position: relative;
+    width: 11em;
+    top: -2.7rem;
+    padding: 0 1.2em;
+    border: none;
+    z-index: 2;
+    opacity: 0;
+    margin-left: -6em;
+}
+
 .--experience-input {
     max-width: 4em;
 }
@@ -266,6 +309,9 @@
         width: calc(100% + 8em);
         left: -4em;
     }
+    .--select-arrow {
+        right: 5em;
+    }
 }
 
 @media (min-width: 560px) {
@@ -276,6 +322,10 @@
         width: 100%;
         max-width: 0.6em;
         min-width: 0.3em;
+    }
+    .--edit-citizenships {
+        display: flex;
+        justify-content: flex-start;
     }
 }
 
@@ -307,12 +357,18 @@
     .schedule__card {
         max-width: 24em;
     }
+
 }
 
 @media (min-width: 850px) {
     .graph {
         justify-content: space-between;
         
+    }
+
+    .JobOffer__edit-location {
+        flex-direction: row;
+        gap: 3em;
     }
 }
 

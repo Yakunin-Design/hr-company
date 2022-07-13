@@ -26,9 +26,6 @@ router.post('/profile/verified_edit2', auth, (req: Request, res: Response) => {
     user_controller.email_phone_edit_step2(req, res);
 });
 
-// get all job offers (min)
-// router.get('/job-offers')
-
 // create a new job offer
 router.post('/new-job-offer', auth, (req: Request, res: Response) => { 
     if (res.locals.jwt.user_type === 'employer') employer_controller.create_job_offer(req, res);
