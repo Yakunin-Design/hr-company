@@ -1,5 +1,7 @@
 import React from 'react'
 import './worker_card.css'
+import star from '../../assets/svg/star.svg'
+import ready from '../../assets/svg/ready.svg'
 
 function WorkerCard(props) {
 
@@ -11,9 +13,14 @@ function WorkerCard(props) {
             <h3 className='worker-card__full-name'>{props.data.full_name}</h3>
             <p className='worker-card__speciality'>{props.data.specialty}</p>
             <div className='worker-card__rating'>
-                {/* star */}
-                <h3>{props.data.rating}</h3>
-                <p>{"(" + props.data.reviews_count + " отзывов)"}</p>
+                {
+                    (props.data.reviews_count && props.data.reviews_count != 0) &&
+                    <>
+                    <img src={star}/>
+                    <h3>{props.data.rating}</h3>
+                    <p>{"(" + props.data.reviews_count + " отзывов)"}</p>
+                    </>
+                }
             </div>
             <div className='worker-card__status'>
                 {
@@ -21,6 +28,7 @@ function WorkerCard(props) {
                     ?
                     <>
                         {/* ready icon */}
+                        <img src={ready}/>
                         <h3>Готов работать</h3>
                     </> 
                     :
