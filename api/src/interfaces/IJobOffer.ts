@@ -17,7 +17,7 @@ interface IJobOffer {
     specialty: string;
     address: string;
     subway: subway;
-    price: salary;
+    salary: salary;
 
     // General 
     experience?: number;

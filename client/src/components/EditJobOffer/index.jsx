@@ -3,7 +3,8 @@ import './EditJobOffer.css'
 import CloseIcon from '../../assets/svg/close-icon-white'
 import man from '../../assets/svg/man.svg'
 import woman from '../../assets/svg/woman.svg'
-
+import Subway from '../Subway'
+import select_arrow from '../../assets/svg/select_arrow.svg'
 import EditJobOfferLogic from './EditJobOfferLogic'
 import save_job_offer from './save_job_offer'
 
@@ -11,6 +12,26 @@ function EditJobOffer (props) {
     const activity = 'edit'
 
     const { job_offer_data, handle_change } = EditJobOfferLogic()
+
+    const stations = [
+        'Девяткино' ,'Гражданский проспект','Академическая','Политехническая','Площадь мужества','Лесная','Выборгская','Площадь Ленина','Чернышевская' ,'Площадь Восстания','Владимирская','Пушкинская','Технологический институт 1','Балтийская','Нарвская','Кировский завод','Автово','Ленинский проспект','Проспект Ветеранов',
+        'Парнас', 'Проспект Просвещения','Озерки','Удельная','Пионерская','Черная речка', 'Петроградская','Горьковская','Невский проспект','Сенная площадь','Технологический институт 2','Фрунзенская','Московские ворота','Электросила','Парк Победы','Московская','Звездная','Купчино',
+        'Дыбенко','Ладожская','Новочеркасская','Пл.Александра Невского 2','Лиговский проспект','Достоевская','Спасская','Проспект Большевиков',
+        'Беговая', 'Зенит','Приморская','Василеостровская','Гостиный Двор','Маяковская','Зенит','Пл.Александра Невского 1' ,'Елизаровская' ,'Ломоносовская','Пролетарская','Обухово','Рыбацкое',
+        'Комендантский проспект', 'Старая деревня','Крестовский остров','Чкаловская','Спортивная','Адмиралтейская' ,'Садовая','Звенигородская','Обводной канал','Волковская','Бухаресткая','Международная','Проспект Славы','Дунайская','Шушары'
+    ]
+
+    function display_period(period) {
+        let display_period = []
+
+        const start_amount = period === 'hour' ? 100 : period === 'month' ? 15000 : 500
+        const end_amount = start_amount * 10
+        for (let i = 1; i <= 10; i++) {
+            i === 10 ? display_period.push(<h4>{">" + (end_amount-start_amount) / 9 * i}</h4>) : display_period.push(<h4>{(end_amount-start_amount) / 9 * i}</h4>)
+        }
+
+        return display_period
+    }
 
     return(
         <div className="JobOffer-container">
@@ -56,16 +77,35 @@ function EditJobOffer (props) {
                         <input 
                             className='card__input JobOffer__edit__input --subway-input' 
                             type="text"
-                            name='subway' 
+                            name='subway'
+                            list='subways'
+                            id='--subway-select'
                             value={job_offer_data.subway}
                             onChange={event => handle_change(event)}
+                            style={stations.indexOf(job_offer_data.subway) != -1 ? {paddingLeft: "3em"} : {paddingLeft: "1.2em"}}
                         />
+                        <img src={select_arrow} className='--select-arrow'/>
+                        {
+                            stations.indexOf(job_offer_data.subway) != -1 
+                            &&
+                            <div className='--subway-input-icon'>
+                                <Subway station={job_offer_data.subway} text_style="h4" />
+                            </div>
+                        }
+
+                        <datalist id="subways">
+                            {
+                                stations.map((station) => { return <option value={station}>{station}</option> })
+                            }
+                        </datalist>
                     </div>
 
                 </div>
-
                 <div className="JobOffer__edit-pricing edit-pricing">
-                    <h3>Ставка в час,₽</h3>
+                    <div className='salary-label'>
+                        <h3>Ставка в {job_offer_data.salary.period === 'hour' ? 'час' : job_offer_data.salary.period === 'month' ? 'месяц' : 'смену'},₽</h3>
+                        <img src={select_arrow}/>
+                    </div>
                     <input 
                         className='card__input JobOffer__edit__input --salary-input' 
                         type="tel"
@@ -73,6 +113,16 @@ function EditJobOffer (props) {
                         value={job_offer_data.salary.amount} 
                         onChange={event => handle_change(event)}
                     />
+                    <select className="card__input --period"
+                        id="period"
+                        name="period"
+                        value={job_offer_data.salary.period}
+                        onChange={event => handle_change(event)}
+                    >
+                        <option value="hour">Час</option>
+                        <option value="day">Смену</option>
+                        <option value="month">Месяц</option>
+                    </select>
 
                     <div className='edit-pricing__range-block'>
 
@@ -122,30 +172,22 @@ function EditJobOffer (props) {
                             <div className='graph__block' style={(job_offer_data.salary.amount <= 960 && job_offer_data.salary.amount > 940) ? {backgroundColor: "var(--accent)"} : {}}></div>
                             <div className='graph__block' style={(job_offer_data.salary.amount <= 980 && job_offer_data.salary.amount > 960) ? {backgroundColor: "var(--accent)"} : {}}></div>
                             <div className='graph__block' style={job_offer_data.salary.amount >= 980 ? {backgroundColor: "var(--accent)"} : {}}></div>
-
                         </div>
 
                         <input 
                             className='edit__range' 
                             type="range" 
-                            min="100" 
-                            max="1000" 
+                            min={job_offer_data.salary.period === 'hour' ? '100' : job_offer_data.salary.period === 'month' ? '15000' : '500'}
+                            max={job_offer_data.salary.period === 'hour' ? '1000' : job_offer_data.salary.period === 'month' ? '150000' : '5000'}
                             name='amount'
                             value={job_offer_data.salary.amount} 
                             onChange={event => handle_change(event)}
                         />
 
                         <div className='edit-picing__label-container'>
-                            <h4>100</h4>
-                            <h4>200</h4>
-                            <h4>300</h4>
-                            <h4>400</h4>
-                            <h4>500</h4>
-                            <h4>600</h4>
-                            <h4>700</h4>
-                            <h4>800</h4>
-                            <h4>900</h4>
-                            <h4>1000</h4>
+                            {
+                                display_period(job_offer_data.salary.period).map(label => { return label})
+                            }
                         </div>
 
                     </div>

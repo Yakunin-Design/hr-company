@@ -41,9 +41,24 @@ export default function EditJobOfferLogic() {
                             period: prev.salary.period
                         }
                     }
-                )
-                
+                ) 
             })
+
+        
+        } else if (name === 'period') {
+            set_job_offer_data(prev => {
+                return (
+                    {
+                        ...prev,
+                        salary: {
+                            amount: prev.salary.amount,
+                            period: value
+                        }
+                    }
+                ) 
+            })
+
+        
         } else if (name === 'weekends') {
             set_job_offer_data(prev => {
                 return (
