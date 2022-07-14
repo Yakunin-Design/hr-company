@@ -5,7 +5,11 @@ import woman from '../../../assets/svg/woman.svg'
 
 export default function AdvancedSettings(props) {
 
-    const { job_offer_data, handle_change } = props
+    const { job_offer_data, handle_change, errors } = props
+
+    const error_style = {
+        border: '2px solid red'
+    }
 
     return (
         <>
@@ -109,6 +113,7 @@ export default function AdvancedSettings(props) {
                     value={job_offer_data.age.from}
                     onChange={event => handle_change(event)}
                     maxLength="2"
+                    style={errors.includes('age_from') ? error_style : {}}
                 />
                 <h3>до</h3>
                 <input 
@@ -119,6 +124,7 @@ export default function AdvancedSettings(props) {
                     value={job_offer_data.age.to}
                     onChange={event => handle_change(event)}
                     maxLength="2"
+                    style={errors.includes('age_to') ? error_style : {}}
                 />
             </div>
             <div className="sliders_control">

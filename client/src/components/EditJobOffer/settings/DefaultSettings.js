@@ -6,7 +6,11 @@ import select_arrow from '../../../assets/svg/select_arrow.svg'
 
 export default function AdvancedSettings(props) {
 
-    const { job_offer_data, handle_change } = props
+    const { job_offer_data, handle_change, errors } = props
+
+    const error_style = {
+        border: '2px solid red'
+    }
 
     const stations = [
         'Девяткино' ,'Гражданский проспект','Академическая','Политехническая','Площадь мужества','Лесная','Выборгская','Площадь Ленина','Чернышевская' ,'Площадь Восстания','Владимирская','Пушкинская','Технологический институт 1','Балтийская','Нарвская','Кировский завод','Автово','Ленинский проспект','Проспект Ветеранов',
@@ -15,6 +19,10 @@ export default function AdvancedSettings(props) {
         'Беговая', 'Зенит','Приморская','Василеостровская','Гостиный Двор','Маяковская','Зенит','Пл.Александра Невского 1' ,'Елизаровская' ,'Ломоносовская','Пролетарская','Обухово','Рыбацкое',
         'Комендантский проспект', 'Старая деревня','Крестовский остров','Чкаловская','Спортивная','Адмиралтейская' ,'Садовая','Звенигородская','Обводной канал','Волковская','Бухаресткая','Международная','Проспект Славы','Дунайская','Шушары'
     ]
+
+    const subway_input_style = {
+        paddingLeft: stations.indexOf(job_offer_data.subway) != -1 ? "3em" : "1.2em",
+    }
 
     function display_period(period) {
         let display_period = []
@@ -39,6 +47,7 @@ export default function AdvancedSettings(props) {
                 name='specialty' 
                 value={job_offer_data.specialty}
                 onChange={event => handle_change(event)}
+                style={errors.includes('specialty') ? error_style : {}}
             />
         </div>
 
@@ -52,6 +61,7 @@ export default function AdvancedSettings(props) {
                     name='address' 
                     value={job_offer_data.address}
                     onChange={event => handle_change(event)}
+                    style={errors.includes('address') ? error_style : {}}
                 />
             </div>
 
@@ -65,7 +75,7 @@ export default function AdvancedSettings(props) {
                     id='--subway-select'
                     value={job_offer_data.subway}
                     onChange={event => handle_change(event)}
-                    style={stations.indexOf(job_offer_data.subway) != -1 ? {paddingLeft: "3em"} : {paddingLeft: "1.2em"}}
+                    style={errors.includes('address') ? {...error_style, ...subway_input_style} : {...subway_input_style}}
                 />
                 <img src={select_arrow} className='--select-arrow'/>
                 {

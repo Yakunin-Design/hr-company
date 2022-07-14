@@ -2,7 +2,11 @@ import React from 'react'
 
 export default function AdvancedSettings(props) {
 
-    const { job_offer_data, handle_change } = props
+    const { job_offer_data, handle_change, errors } = props
+
+    const error_style = {
+        border: '2px solid red'
+    }
 
     return (
             <>
@@ -58,6 +62,7 @@ export default function AdvancedSettings(props) {
                                 value={job_offer_data.schedule.weekdays} 
                                 onChange={event => handle_change(event)}
                                 maxLength="1"
+                                style={errors.includes('weekdays') ? error_style : {}}
                             />
 
                         </div>
@@ -73,6 +78,7 @@ export default function AdvancedSettings(props) {
                                 value={job_offer_data.schedule.weekends} 
                                 onChange={event => handle_change(event)}
                                 maxLength="1"
+                                style={errors.includes('weekends') ? error_style : {}}
                             />
                         </div>
 
@@ -95,6 +101,7 @@ export default function AdvancedSettings(props) {
                                 onChange={event => handle_change(event)}
                                 maxLength="5"
                                 placeholder='9:00'
+                                style={errors.includes('wt-start') ? error_style : {}}
                             />
                         </div>
 
@@ -108,6 +115,7 @@ export default function AdvancedSettings(props) {
                                 onChange={event => handle_change(event)}
                                 maxLength="5"
                                 placeholder='21:00'
+                                style={errors.includes('wt-end') ? error_style : {}}
                             />
                         </div>
                     </div>
