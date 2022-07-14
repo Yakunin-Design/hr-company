@@ -3,15 +3,16 @@ import './EditJobOffer.css'
 import CloseIcon from '../../assets/svg/close-icon-white'
 import EditJobOfferLogic from './EditJobOfferLogic'
 import save_job_offer from './save_job_offer'
+import update_job_offer from './update_job_offer'
 
 import DefaultSettings from './settings/DefaultSettings'
 import MainSettings from './settings/MainSettings'
 import AdvancedSettings from './settings/AdvancedSettings'
 
 function EditJobOffer (props) {
-    const activity = 'edit'
+    const activity = 'create'
 
-    const { job_offer_data, handle_change } = EditJobOfferLogic()
+    const { job_offer_data, handle_change, job_offer_сhanges, set_job_offer_changes } = EditJobOfferLogic()
 
     const stations = [
         'Девяткино' ,'Гражданский проспект','Академическая','Политехническая','Площадь мужества','Лесная','Выборгская','Площадь Ленина','Чернышевская' ,'Площадь Восстания','Владимирская','Пушкинская','Технологический институт 1','Балтийская','Нарвская','Кировский завод','Автово','Ленинский проспект','Проспект Ветеранов',
@@ -21,6 +22,7 @@ function EditJobOffer (props) {
         'Комендантский проспект', 'Старая деревня','Крестовский остров','Чкаловская','Спортивная','Адмиралтейская' ,'Садовая','Звенигородская','Обводной канал','Волковская','Бухаресткая','Международная','Проспект Славы','Дунайская','Шушары'
     ]
 
+    const [errors, set_errors] = React.useState([])
     function display_period(period) {
         let display_period = []
 
@@ -43,24 +45,30 @@ function EditJobOffer (props) {
             <div className="card JobOffer">
                 <h2 className='--cd'>{activity === 'create' ? "Создание" : "Редактирование"} вакансии</h2>
                 <hr className='--edit-top-hr'/>
-                <DefaultSettings job_offer_data={job_offer_data} handle_change={handle_change} />
+                <DefaultSettings job_offer_data={job_offer_data} handle_change={handle_change} errors={errors}/>
 
 
                 <h2 className='--cd --mt5'>Основные</h2>
                 <p className='--cd'>Рекомендуем заполнить эти поля для повышения релевантности вакансии</p>
                 <hr className='--edit-middle-hr'/>
-                <MainSettings job_offer_data={job_offer_data} handle_change={handle_change} />
+                <MainSettings job_offer_data={job_offer_data} handle_change={handle_change} errors={errors}/>
 
 
                 <h2 className='--cd --mt5'>Дополнительные</h2>
                 <p className='--cd'>Заполнив эти настройки вы поможете правильным соискателям найти вашу вакансию</p>
                 <hr className='--edit-bottom-hr'/>
-                <AdvancedSettings job_offer_data={job_offer_data} handle_change={handle_change} />
+                <AdvancedSettings job_offer_data={job_offer_data} handle_change={handle_change} errors={errors}/>
 
 
                 <div className="JobOffer__edit-buttons">
                     <button className="btn --secondary-btn">Предпросмотр</button>
-                    <button className="btn --primary-btn" onClick={() => save_job_offer(job_offer_data)}>Сохранить</button>
+                    {
+                        activity === 'edit'
+                        ?
+                        <button className="btn --primary-btn" onClick={() => update_job_offer(job_offer_data, job_offer_сhanges, set_job_offer_changes)}>Сохранить</button>
+                        :
+                        <button className="btn --primary-btn" onClick={() => save_job_offer(job_offer_data, errors, set_errors, stations)}>Сохранить</button>
+                    }
                 </div>
             </div>
             

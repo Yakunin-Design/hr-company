@@ -28,6 +28,8 @@ export default function EditJobOfferLogic() {
         description: ''
     })
 
+    const [job_offer_сhanges, set_job_offer_changes] = React.useState([])
+
     function handle_change(event) {
         const { name, value } = event.target
 
@@ -41,10 +43,9 @@ export default function EditJobOfferLogic() {
                             period: prev.salary.period
                         }
                     }
-                ) 
+                )
             })
 
-        
         } else if (name === 'period') {
             set_job_offer_data(prev => {
                 return (
@@ -57,19 +58,7 @@ export default function EditJobOfferLogic() {
                     }
                 ) 
             })
-        } else if (name === 'period') {
-            set_job_offer_data(prev => {
-                return (
-                    {
-                        ...prev,
-                        salary: {
-                            amount: value === 'day' ? 500 : value === 'month' ? 15000 : 100,
-                            period: value
-                        }
-                    }
-                )
-                
-            })
+
         } else if (name === 'weekends') {
             set_job_offer_data(prev => {
                 return (
@@ -155,10 +144,15 @@ export default function EditJobOfferLogic() {
                 }
             })
         }
+
+        set_job_offer_changes(prev => prev.filter(edit => edit != name ))
+        set_job_offer_changes(prev => [...prev, name])
     }
 
     return {
         job_offer_data,
-        handle_change
+        handle_change,
+        job_offer_сhanges,
+        set_job_offer_changes
     }
 }
