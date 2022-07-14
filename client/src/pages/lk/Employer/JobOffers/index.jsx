@@ -34,7 +34,7 @@ function JobOffers(props) {
                 </div>
                 <Footer />
             </main>
-            { new_job_offer && <EditJobOffer toggle_new_job_offer={toggle_new_job_offer} /> }
+            {new_job_offer && <EditJobOffer create toggle_new_job_offer={toggle_new_job_offer} /> }
         </div>
     )
 }

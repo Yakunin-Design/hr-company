@@ -8,7 +8,6 @@ export default function description_dipslay(data_description) {
             description_without_tab.push(string)
         })
 
-        console.log(description_without_tab)
         description_array = description_without_tab.join("\u3164 \u3164 ").split("\n")
         description_array.forEach(string => {
             description.push(<>{string}<br/></>)

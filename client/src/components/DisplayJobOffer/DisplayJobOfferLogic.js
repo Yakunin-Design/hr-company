@@ -26,6 +26,12 @@ export default function DisplayJobOfferLogic(props) {
         }
     })
 
+    const [show_edit, set_show_edit] = React.useState(false)
+
+    // props.id
+    function toggle_edit() {
+        set_show_edit(prev => !prev)
+    }
 
     let description = description_dipslay(job_offer_data.description)
     // Getting full job offer
@@ -53,5 +59,5 @@ export default function DisplayJobOfferLogic(props) {
 
     }, [])
 
-    return {job_offer_data, description}
+    return {job_offer_data, description, show_edit, toggle_edit}
 }

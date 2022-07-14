@@ -2,7 +2,20 @@ import React from 'react'
 
 import Graph from './Graph'
 import Subway from '../../Subway'
+import subway_stations from '../../../data/subway_stations'
 import select_arrow from '../../../assets/svg/select_arrow.svg'
+
+function display_period(period) {
+    let display_period = []
+
+    const start_amount = period === 'hour' ? 100 : period === 'month' ? 15000 : 500
+    const end_amount = start_amount * 10
+    for (let i = 1; i <= 10; i++) {
+        i === 10 ? display_period.push(<h4>{">" + (end_amount-start_amount) / 9 * i}</h4>) : display_period.push(<h4>{(end_amount-start_amount) / 9 * i}</h4>)
+    }
+
+    return display_period
+}
 
 export default function AdvancedSettings(props) {
 
@@ -12,28 +25,8 @@ export default function AdvancedSettings(props) {
         border: '2px solid red'
     }
 
-    const stations = [
-        'Девяткино' ,'Гражданский проспект','Академическая','Политехническая','Площадь мужества','Лесная','Выборгская','Площадь Ленина','Чернышевская' ,'Площадь Восстания','Владимирская','Пушкинская','Технологический институт 1','Балтийская','Нарвская','Кировский завод','Автово','Ленинский проспект','Проспект Ветеранов',
-        'Парнас', 'Проспект Просвещения','Озерки','Удельная','Пионерская','Черная речка', 'Петроградская','Горьковская','Невский проспект','Сенная площадь','Технологический институт 2','Фрунзенская','Московские ворота','Электросила','Парк Победы','Московская','Звездная','Купчино',
-        'Дыбенко','Ладожская','Новочеркасская','Пл.Александра Невского 2','Лиговский проспект','Достоевская','Спасская','Проспект Большевиков',
-        'Беговая', 'Зенит','Приморская','Василеостровская','Гостиный Двор','Маяковская','Зенит','Пл.Александра Невского 1' ,'Елизаровская' ,'Ломоносовская','Пролетарская','Обухово','Рыбацкое',
-        'Комендантский проспект', 'Старая деревня','Крестовский остров','Чкаловская','Спортивная','Адмиралтейская' ,'Садовая','Звенигородская','Обводной канал','Волковская','Бухаресткая','Международная','Проспект Славы','Дунайская','Шушары'
-    ]
-
     const subway_input_style = {
-        paddingLeft: stations.indexOf(job_offer_data.subway) != -1 ? "3em" : "1.2em",
-    }
-
-    function display_period(period) {
-        let display_period = []
-
-        const start_amount = period === 'hour' ? 100 : period === 'month' ? 15000 : 500
-        const end_amount = start_amount * 10
-        for (let i = 1; i <= 10; i++) {
-            i === 10 ? display_period.push(<h4>{">" + (end_amount-start_amount) / 9 * i}</h4>) : display_period.push(<h4>{(end_amount-start_amount) / 9 * i}</h4>)
-        }
-
-        return display_period
+        paddingLeft: subway_stations.indexOf(job_offer_data.subway) != -1 ? "3em" : "1.2em",
     }
 
     return (
@@ -75,11 +68,11 @@ export default function AdvancedSettings(props) {
                     id='--subway-select'
                     value={job_offer_data.subway}
                     onChange={event => handle_change(event)}
-                    style={errors.includes('address') ? {...error_style, ...subway_input_style} : {...subway_input_style}}
+                    style={errors.includes('subway') ? {...error_style, ...subway_input_style} : {...subway_input_style}}
                 />
                 <img src={select_arrow} className='--select-arrow'/>
                 {
-                    stations.indexOf(job_offer_data.subway) != -1 
+                    subway_stations.indexOf(job_offer_data.subway) != -1 
                     &&
                     <div className='--subway-input-icon'>
                         <Subway station={job_offer_data.subway} text_style="h4" />
@@ -88,7 +81,7 @@ export default function AdvancedSettings(props) {
 
                 <datalist id="subways">
                     {
-                        stations.map((station) => { return <option value={station}>{station}</option> })
+                        subway_stations.map((station) => { return <option value={station}>{station}</option> })
                     }
                 </datalist>
             </div>

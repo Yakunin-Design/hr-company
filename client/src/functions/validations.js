@@ -1,6 +1,7 @@
 /**
  * Validations
 */
+import subway_stations from "../data/subway_stations";
 
 function checkInn(value){
 	if(typeof value !== 'string' ||
@@ -147,14 +148,63 @@ function employer_validation_step2(form_data) {
     return errors
 }
 
-export { worker_validation_step1, 
-         worker_validation_step2,
-         employer_validation_step1,
-         employer_validation_step2,
-         check_day,
-         check_month,
-         check_year,
-         check_full_name,
-         check_phone,
-         check_email
-        }
+function job_offer_validation(job_offer_data) {
+
+    let validation_errors = [];
+    let send_data = {}
+
+    //default
+    send_data.type = 'full_time'
+    send_data.salary = job_offer_data.salary
+    send_data.experience = job_offer_data.experience
+    send_data.citizenship = job_offer_data.citizenship
+    send_data.sex = job_offer_data.sex
+
+    //required
+    job_offer_data.specialty === '' ? validation_errors.push('specialty') : send_data.specialty = job_offer_data.specialty
+    job_offer_data.address === '' ? validation_errors.push('address') : send_data.address = job_offer_data.address
+    subway_stations.indexOf(job_offer_data.subway) === -1 ? validation_errors.push('subway') : send_data.subway = job_offer_data.subway
+
+    //main
+    if (job_offer_data.working_time.start != '' && job_offer_data.working_time.end === '') {
+        validation_errors.push('wt-end')
+    } else if (job_offer_data.working_time.start === '' && job_offer_data.working_time.end != '') {
+        validation_errors.push('wt-start')
+    } else if (job_offer_data.working_time.start && job_offer_data.working_time.end != '') {
+        send_data.working_time = job_offer_data.working_time
+    } 
+
+    if (job_offer_data.schedule.weekdays != '' && job_offer_data.schedule.weekends === '') {
+        validation_errors.push('weekdays')
+    } else if (job_offer_data.schedule.weekdays === '' && job_offer_data.schedule.weekends != '') {
+        validation_errors.push('weekends')
+    } else if (job_offer_data.schedule.weekdays != '' && job_offer_data.schedule.weekends != '') {
+        send_data.schedule = job_offer_data.schedule
+    }
+
+    //advanced
+    if (!isNaN(job_offer_data.age.from) || !isNaN(job_offer_data.age.to != '')) {
+        send_data.age = job_offer_data.age
+    } else if (!isNaN(job_offer_data.age.from) && job_offer_data.age.from != '') {
+        validation_errors.push('age-from')
+    } else if (!isNaN(job_offer_data.age.to) && job_offer_data.age.to != ''){
+        validation_errors.push('age-to')
+    }
+    if (job_offer_data.description != '') send_data.description = job_offer_data.description
+
+    return {validation_errors, send_data}
+}
+
+export {
+    job_offer_validation,
+    worker_validation_step1, 
+    worker_validation_step2,
+    employer_validation_step1,
+    employer_validation_step2,
+    check_day,
+    check_month,
+    check_year,
+    check_full_name,
+    check_phone,
+    check_email
+}

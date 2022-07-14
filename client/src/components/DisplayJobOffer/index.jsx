@@ -7,15 +7,19 @@ import clock from '../../assets/svg/clock.svg'
 
 import get_period from '../../functions/get_created_time'
 
+import EditJobOffer from '../EditJobOffer'
+
 import InfoBlock from './InfoBlock'
 import WorkerCard from '../WorkerCard'
 
 function DisplayJobOffer(props) {
 
-    const { job_offer_data, description } = DisplayJobOfferLogic(props)
+    const { job_offer_data, description, toggle_edit, show_edit } = DisplayJobOfferLogic(props)
 
     return(
         <div className="JobOffer-container">
+            
+            {show_edit && <EditJobOffer old_data={job_offer_data} id={props.id} toggle_new_job_offer={toggle_edit} />}
 
             <CloseIcon handle_click={props.handle_click} />
 
@@ -34,7 +38,7 @@ function DisplayJobOffer(props) {
                             <h4>{get_period(job_offer_data.created)}</h4>
                         </div>
                     </div>
-                    <button className="JobOffer__edit-btn --primary-btn --mt2">Редактировать</button>
+                    <button className="JobOffer__edit-btn --primary-btn --mt2" onClick={toggle_edit}>Редактировать</button>
                 </div>
                 <hr className='JobOffer_hr --top-hr'/>
 

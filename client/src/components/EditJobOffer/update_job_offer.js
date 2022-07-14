@@ -1,8 +1,6 @@
 import axios from 'axios'
 
-export default function update_job_offer(job_offer_data, job_offer_changes, set_job_offer_changes) {
+export default function update_job_offer(changed_data) {
 
-    job_offer_changes.map(change => {
-        // required
-    })
+    console.log(changed_data);
 }
