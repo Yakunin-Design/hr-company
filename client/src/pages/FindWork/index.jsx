@@ -25,9 +25,8 @@ function FindWork(props) {
     }, [])
 
     const job_offers_list = job_offers.map(jo => {
-        console.log(jo._id)
 
-        return <JobOfferCard key={jo._id} data={jo} />
+        return <JobOfferCard key={jo._id} data={jo} id={jo._id}/>
     })
 
     return (

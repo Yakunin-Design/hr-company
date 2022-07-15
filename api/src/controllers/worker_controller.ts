@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { salary, subway } from "../types/worker_types";
+import { ObjectId } from 'mongodb';
 import db from '../lib/idb'
 
 type change = {
@@ -37,6 +38,33 @@ async function basic_edit(req: Request, res: Response): Promise<void> {
     }
 }
 
+async function add_respond(req: Request, res: Response): Promise<void> {
+    try{
+        const worker_id = new ObjectId(req.body.worker_id);
+        const job_offer_id = new ObjectId(req.body.job_offer_id);
+
+        const job_offer = await db.find({_id: job_offer_id}, 'job_offers');
+
+        if (job_offer.Ok === null) {
+            res.status(400).send('Wrong update');
+            return;
+        }
+
+        /**
+         * TODO: Already responded
+         */
+
+        const candidate_count = job_offer.Ok.candidate_count + 1;
+        const candidates = [...job_offer.Ok.candidates , worker_id];
+
+        await db.update({_id: job_offer_id}, {$set: {candidates: candidates, candidate_count: candidate_count}}, 'job_offers');
+
+        res.status(200).send('Updated');
+    } catch (e) {
+        console.log("[EDIT]", e);
+    }
+}
+
 /*
     Check type
     
@@ -47,4 +75,4 @@ async function basic_edit(req: Request, res: Response): Promise<void> {
     
 */
 
-export default { profile, basic_edit };
+export default { profile, basic_edit , add_respond};

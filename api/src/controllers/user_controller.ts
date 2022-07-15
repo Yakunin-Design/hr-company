@@ -113,4 +113,9 @@ async function get_workers(req: Request, res: Response): Promise<void> {
     res.status(200).send(db_result.Ok!);
 }
 
-export default { email_phone_edit_step1, email_phone_edit_step2, get_jobs, get_workers }
+async function get_user(req: Request, res: Response): Promise<void> {
+
+   res.status(200).send({user_type: res.locals.jwt.user_type, id: res.locals.user._id});
+}
+
+export default { email_phone_edit_step1, email_phone_edit_step2, get_jobs, get_workers, get_user }

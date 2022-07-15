@@ -10,12 +10,11 @@ import get_period from '../../functions/get_created_time'
 import EditJobOffer from '../EditJobOffer'
 
 import InfoBlock from './InfoBlock'
-import WorkerCard from '../WorkerCard'
 
 function DisplayJobOffer(props) {
 
-    const { job_offer_data, description, toggle_edit, show_edit } = DisplayJobOfferLogic(props)
-
+    const { job_offer_data, description, toggle_edit, show_edit, jo_respond , responded} = DisplayJobOfferLogic(props)
+    console.log(responded)
     return(
         <div className="JobOffer-container">
             
@@ -38,7 +37,21 @@ function DisplayJobOffer(props) {
                             <h4>{get_period(job_offer_data.created)}</h4>
                         </div>
                     </div>
-                    <button className="JobOffer__edit-btn --primary-btn --mt2" onClick={toggle_edit}>Редактировать</button>
+                    {
+                        props.worker
+                        ?
+                        <>
+                        {
+                            !responded
+                            ?
+                            <button className="JobOffer__edit-btn --primary-btn --mt2" onClick={jo_respond}>Откликнуться</button>
+                            :
+                            <h3 className="--cd --mt1">Вы успешно откликнулись</h3>
+                        }
+                        </>
+                        :
+                        <button className="JobOffer__edit-btn --primary-btn --mt2" onClick={toggle_edit}>Редактировать</button>
+                    }
                 </div>
                 <hr className='JobOffer_hr --top-hr'/>
 

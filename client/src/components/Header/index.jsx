@@ -26,7 +26,7 @@ function Header(props) {
                         <h3 className="logo__title --ld">HR company</h3>
                     </Link>
                     <div className="header__nav nav">
-                        <Link to={'/find-job'}>
+                        <Link to={'/find-work'}>
                             <p className="nav__link">Найти работу</p>
                         </Link>
                         <Link to={'/find-workers'}>
