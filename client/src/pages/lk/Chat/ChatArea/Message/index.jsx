@@ -21,7 +21,7 @@ function Message(props) {
                     </div>
                 </div>
             </div>
-            <hr />
+            <hr className='message__hr'/>
         </>
     )
 }

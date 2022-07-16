@@ -7,11 +7,14 @@ import time_span from '../../../assets/svg/time_span.svg'
 import mark_filled from '../../../assets/svg/mark_filled.svg'
 import man from '../../../assets/svg/man.svg'
 import woman from '../../../assets/svg/woman.svg'
+import question from '../../../assets/svg/question.svg'
 
 export default function InfoBlock({job_offer_data}) {
 
     const { schedule_blocks, citizenships } = InfoBlockLogic(job_offer_data)
     const salary_period = job_offer_data.salary.period === 'hour' ? 'час' : job_offer_data.salary.period === 'month' ? 'месяц' : 'смена'
+
+    const schedule_title = job_offer_data.schedule.weekdays + ' через ' + job_offer_data.schedule.weekends
 
     return (
 
@@ -21,15 +24,18 @@ export default function InfoBlock({job_offer_data}) {
                 <Subway station={job_offer_data.subway} text_style="h4"/>
                 <div className='addres'>
                     <img src={mark_filled} alt="show on map" />
-                    <h4>{job_offer_data.address}</h4>
+                    <h4 title="Показать на карте">{job_offer_data.address}</h4>
                 </div>
             </div>
             {
                 job_offer_data.schedule 
                 ?
                 <div className="info-block__schedule">
-                    <h4>График работы</h4>
-                    <div className="info-block__schedule-container">
+                    <div className="info-block__schedule-title" title={schedule_title}>
+                        <h4>График работы</h4>
+                        <img src={question} alt="question" />
+                    </div>
+                    <div className="info-block__schedule-container" title={schedule_title}>
                         {
                             schedule_blocks.map(schedule_block => {
                                 return <>{schedule_block}</>

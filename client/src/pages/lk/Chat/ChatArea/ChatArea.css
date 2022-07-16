@@ -1,0 +1,60 @@
+.chat-send {
+    background-color: white;
+    border-radius: 0.4em;
+    border: 2px solid rgb(171, 171, 171);
+
+    position: fixed;
+    bottom: 2%;
+    left: 0;
+    right: 0;
+    width: 92%;
+
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+.messages {
+    margin-bottom: 10rem;
+}
+
+.chat-send__input {
+    height: 3rem;
+    width: 80%;
+}
+
+.chat-send__input:focus {
+    outline: none;
+}
+
+.chat-send__input:focus + .chat-send {
+    border: 2px solid var(--accent);
+}
+
+.chat-send__btn {
+    height: 2em;
+    width: 2em;
+    border-radius: 50%;
+    margin-left: auto;
+
+    display: grid;
+    place-items: center;
+
+    background-color: var(--accent);
+}
+
+@media (min-width: 600px) {
+    .chat-send {
+        left: 12%;
+        width: 80%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .chat-send {
+        left: calc(2.5% + 300px);
+        right: 2.5%;
+        width: auto;
+    }
+
+}

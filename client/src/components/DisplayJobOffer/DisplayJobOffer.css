@@ -115,6 +115,14 @@
     margin-bottom: 1.5rem;
 }
 
+.addres {
+    cursor: alias;
+}
+
+.addres:hover h4 {
+    color: var(--accent) !important;
+}
+
 .info-block__address .addres {
     display: flex;
     gap: 0.8em;
@@ -133,6 +141,19 @@
     gap: 1em;
     margin-bottom: 2em;
 
+}
+
+.info-block__schedule-title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: help;
+}
+
+.info-block__schedule-title img{
+    opacity: .7;
+    width: 1em;
+    margin-left: .3em;
 }
 
 .info-block .--v2 {
