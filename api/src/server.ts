@@ -33,18 +33,11 @@ const io = new Server(server, {
 });
 
 io.on('connection', (socket) => {
-    console.log('user connected: ' + socket.id);
-    socket.on('disconnect', () => {
-        console.log('user disconnected' + socket.id);
-    })
-
     socket.on('select_chat', (chat_id) => {
         socket.join(chat_id);
     })
 
     socket.on("send_message", (data) => {
-        console.log(data);
-
         const { chat_id, new_msg_text } = data;
 
         const message = {
