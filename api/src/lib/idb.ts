@@ -48,7 +48,7 @@ class db {
 
     static async save(data: object, collection_name?: string): Promise<Result<ObjectId>> {
         try {
-            await this.start_connection();
+            // await this.start_connection();
             const collection = this.client.db().collection(collection_name ? collection_name : db.collection);
             const id = (await collection.insertOne(data)).insertedId;
             return { Ok: id };
@@ -57,14 +57,11 @@ class db {
             console.log(e);
             return {Ok: null, Err: new Error("err:" + e)}
         }
-        finally {
-            await this.close_connection();
-        }
     }
 
     static async find(filter: object, collection_name?: string): Promise<Result<WithId<Document> | null>> {
         try {
-            await this.start_connection();
+            //await this.start_connection();
             const collection = this.client.db().collection(collection_name ? collection_name : db.collection);
 
             const data = await collection.findOne(filter);
@@ -73,17 +70,13 @@ class db {
         }
         catch (e) {
             console.log(e);
-            throw new Error("err:" + e);
-            // return {Ok: null, Err: new Error("err:" + e)}
-        }
-        finally {
-            await this.close_connection();
+            return {Ok: null, Err: new Error("err:" + e)}
         }
     }
 
     static async find_all(filter?: object, collection_name?: string, limit?: number, skip?: number): Promise<Result<WithId<Document>[] | null>> {
         try {
-            await this.start_connection();
+            //await this.start_connection();
             const collection = this.client.db().collection(collection_name ? collection_name : db.collection);
 
             const cursor = collection.find(filter ? filter : {}).skip(skip ? skip : 0).limit(limit ? limit : db.limit);;
@@ -95,14 +88,11 @@ class db {
             console.log(e)
             return {Ok: null, Err: new Error("err:" + e)}
         }
-        finally {
-            await this.close_connection();
-        }
     }
 
     static async update(filter: object, data: object, collection_name?: string): Promise<Result<UpdateResult | null>> {
         try {
-            await this.start_connection();
+            //await this.start_connection();
             const collection = this.client.db().collection(collection_name ? collection_name : db.collection);
             const test = await collection.updateOne(filter, data);
 
@@ -112,14 +102,11 @@ class db {
             console.log(e);
             return {Ok: null, Err: new Error("err:" + e)}
         }
-        finally {
-            await this.close_connection();
-        }
     }
 
     static async delete(id: string, collection_name?: string): Promise<Result<boolean>> {
         try {
-            await this.start_connection();
+            //await this.start_connection();
             const collection = this.client.db().collection(collection_name ? collection_name : db.collection);
             await collection.deleteOne({_id: new ObjectId(id)});
             return {Ok: true};
@@ -127,9 +114,6 @@ class db {
         catch (e) {
             console.log(e);
             return {Ok: false, Err: new Error("err:" + e)}
-        }
-        finally {
-            await this.close_connection();
         }
     }
 

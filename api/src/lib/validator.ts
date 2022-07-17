@@ -193,7 +193,7 @@ function citizenship(citizenship: string): Result<boolean> {
         return { Ok: null, Err: new Error('Citizenship empty') };
     }
 
-    if (citizenship != 'ru' && citizenship != 'bu/uk' && citizenship != 'sng' && citizenship != 'other') {
+    if (citizenship != 'ru' && citizenship != 'bu/ua' && citizenship != 'sng' && citizenship != 'other') {
         return { Ok: false, Err: new Error('citizenship check failed') };
     }
 

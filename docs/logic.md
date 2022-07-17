@@ -5,11 +5,18 @@ const chat = {
     _id
     user1: ObjectId,
     user2: ObjectId,
-    message: {
-        time: number,
-        sender: "1" || "2",
-        content: string,
-    }
+    message: [
+        {
+            time: number,
+            sender: "1" || "2",
+            content: string,
+        },
+        {
+            time: number,
+            sender: "1" || "2",
+            content: string,
+        }
+    ]
 
     user1_unread_messages_count: number,
     user2_unread_messages_count: number
