@@ -43,3 +43,8 @@
 .--space-between {
     justify-content: space-between;
 }
+
+.--space {
+    height: 200px;
+    width: 100%;
+}

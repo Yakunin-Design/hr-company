@@ -1,74 +1,89 @@
 import React from 'react'
 import axios from 'axios'
+
+import io from "socket.io-client";
+
 import back_arrow_icon from '../../../../assets/svg/back-arrow.svg'
 import send_arrow_icon from '../../../../assets/svg/send_arrow.svg'
 import './ChatArea.css'
 import Message from './Message'
 
+const socket = io.connect("http://localhost:6969");
+const jwt = localStorage.getItem('jwt')
+
+const config = {
+    headers: {
+        "Content-Type": "application/json",
+        "Authorization" : "Bearer " + jwt
+    }
+}
+
 export default function ChatArea(props) {
 
     const {user_name, chat_id} = props.display_chat
+
     const [messages, set_messages] = React.useState({
         user: '',
         msgs: []
     })
+
+    const [new_msg_text, set_new_msg_text] = React.useState('')
     
-    const jwt = localStorage.getItem('jwt')
-
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization" : "Bearer " + jwt
-        }
-    }
-
     const data = { id: chat_id }
-
     React.useEffect(() => {
+
         axios.post('http://localhost:6969/messages', data, config)
         .then(res => {
             if (!res.data) {
                 return console.log('bruh')
             }
-
-            set_messages(res.data)
+            set_messages(() => { return res.data })
         })
         .catch(e => {
             console.log(e)
         })
+
+        socket.emit('select_chat', chat_id)
     }, [])
     
-    const [new_msg_text, set_new_msg_text] = React.useState('')
-
-    function send_message() {
-        
-        const data = {
-            chat_id: chat_id,
-            message: new_msg_text
-        }
-
-        axios.post('http://localhost:6969/send-message', data, config)
-        .then(res => {
-            if (!res.data) {
-                return console.log('bruh')
-            }
-
+    React.useEffect(() => {
+        socket.on("receive_message", (data) => {
             set_messages(prev => {
+                window.scrollTo(0, document.body.scrollHeight);
                 return {
                     ...prev,
-                    msgs: [...prev.msgs, {
-                        time: Math.round(new Date() / 1000),
-                        sender: true,
-                        content: new_msg_text
-                    }] 
+                    msgs: [
+                        ...prev.msgs,
+                        data
+                    ]
                 }
-            })
+            });
+        });
 
-            set_new_msg_text('')
+    }, [socket]);
+
+    function send_message() {
+        socket.emit("send_message", { chat_id, new_msg_text })
+
+        const data = {
+            time: Math.round(Date.now() / 1000),
+            sender: true,
+            content: new_msg_text
+        }
+        
+        set_messages(prev => {
+            return {
+                ...prev,
+                msgs: [
+                    ...prev.msgs,
+                    data
+                ]
+            }
         })
-        .catch(e => {
-            console.log(e)
-        })
+
+        set_new_msg_text('')
+
+        window.scrollTo(0, document.body.scrollHeight);
     }
 
     const msg_array = messages.msgs.map(msg => {
@@ -90,15 +105,18 @@ export default function ChatArea(props) {
         <div className="messages">
             {msg_array}
         </div>
+
+        <div className="--space"></div>
         
         <div className="--page-container chat-send">
             <input 
                 type="text" 
-                className='chat-send__input'
+                className='chat-send__input msg-input'
                 value={new_msg_text}
                 onChange={event => set_new_msg_text(event.target.value)}
+                onKeyPress={event => {(event.key === 'Enter' && new_msg_text != '') && send_message()}}
             />
-            <button className='btn chat-send__btn' title="Enter" onClick={send_message}>
+            <button className='btn chat-send__btn' type="input" id="send-msg-btn" title="Enter" onClick={send_message}>
                 <img src={send_arrow_icon}/>
             </button>
         </div>
