@@ -94,13 +94,14 @@ export default function ChatArea(props) {
 
     return (
         <>
-        <div className="--page-container">
-            <button className="btn --floating-btn --mt3" onClick={() => props.handle_click({user_name: '', chat_id: ''})}>
-                <img src={back_arrow_icon} alt="back-btn" />
-            </button>
-            <h2 className="--cd">{user_name}</h2>
-            <p className="--cd">{chat_id}</p>
+        <div className="chat-header">
+            <div className="--page-container">
+                <button className="btn --floating-btn" onClick={() => props.handle_click({user_name: '', chat_id: ''})}>
+                    <img src={back_arrow_icon} alt="back-btn" />
+                </button>
+                <h2 className="--cl">{user_name}</h2>
 
+            </div>
         </div>
         <div className="messages">
             {msg_array}
