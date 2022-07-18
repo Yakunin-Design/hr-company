@@ -28,7 +28,9 @@ function ChatCard(props) {
                 </div>
                 <div className="--row --space-between">
                     <p className="chat-card__last-msg-text" title={last_msg}>{last_msg}</p>
-                    <div className="chat-card__unread-msg-count --cl">{unread_msg}</div>
+                    {
+                        unread_msg != 0 && <div className="chat-card__unread-msg-count --cl">{unread_msg}</div>
+                    }
                 </div>
             </div> 
         </div>

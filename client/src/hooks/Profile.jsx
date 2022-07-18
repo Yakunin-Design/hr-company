@@ -25,6 +25,7 @@ function Profile(props) {
                     user_type: res.data.specialty ? 'worker' : 'employer',
                     user_data: res.data
                 })
+                localStorage.setItem('user_type', res.data.specialty ? 'worker' : 'employer')
 
             })
             .catch(e => {
