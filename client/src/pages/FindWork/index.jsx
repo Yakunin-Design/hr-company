@@ -8,7 +8,6 @@ import JobOfferCard from '../../components/JobOfferCard'
 import axios from 'axios'
 
 function FindWork(props) {
-
     const [job_offers, set_job_offers] = React.useState([])
 
     React.useEffect(() => {
