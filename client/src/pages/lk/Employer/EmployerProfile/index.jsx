@@ -161,7 +161,7 @@ function EmployerProfile(props) {
                         </div>
                     </section>
 
-                    <h2 className="lk__section-title">Опасная зона</h2>
+                    <h2 className="lk__section-title">Управление аккаунтом</h2>
                     <section className="lk__section">
                         <button className="--secondary-btn --red-btn" onClick={log_out}>Выйти из аккаунта</button>
                     </section>

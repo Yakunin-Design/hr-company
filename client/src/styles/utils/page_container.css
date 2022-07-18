@@ -6,6 +6,10 @@
     padding: 0 1rem;
 }
 
+.--page-content {
+    min-height: 53.49vh;
+}
+
 @media (min-width: 500px) {
     .--page-container {
         padding: 0 2em;

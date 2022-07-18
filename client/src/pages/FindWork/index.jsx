@@ -3,6 +3,7 @@ import LkNav from '../../components/MainNav'
 
 import Footer from '../../components/Footer'
 import '../../styles/utils/lk.css'
+import './FindWork.css'
 import JobOfferCard from '../../components/JobOfferCard'
 import axios from 'axios'
 
@@ -33,9 +34,11 @@ function FindWork(props) {
         <div className="lk">
             <LkNav page="findwork" user_type={props.user.user_type}/>
             <main className="lk__container">
-                <div className="--page-container">
+                <div className="--page-container --page-content">
                     <h2>FindWork</h2>
-                    {job_offers_list}
+                    <div className="job-offers-list">
+                        {job_offers_list}
+                    </div>
                 </div>
                 <Footer />
             </main>

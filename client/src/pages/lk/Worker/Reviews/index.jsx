@@ -10,7 +10,7 @@ function Reviews(props) {
         <div className="lk">
             <LkNav page="reviews" user_type={props.user.user_type}/>
             <main className="lk__container">
-                <div className="--page-container">
+                <div className="--page-container --page-content">
                     <h2>Reviews</h2>
                 </div>
                 <Footer/>

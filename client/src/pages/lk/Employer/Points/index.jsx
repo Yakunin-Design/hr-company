@@ -10,7 +10,7 @@ function Points(props) {
         <div className="lk">
             <LkNav page="points" user_type={props.user.user_type}/>
             <main className="lk__container">
-                <div className="--page-container">
+                <div className="--page-container --page-content">
                     <h2>Points</h2>
                 </div>
                 <Footer/>

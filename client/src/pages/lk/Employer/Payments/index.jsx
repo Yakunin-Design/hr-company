@@ -10,7 +10,7 @@ function Payments(props) {
         <div className="lk">
             <LkNav page="payments" user_type={props.user.user_type}/>
             <main className="lk__container">
-                <div className="--page-container">
+                <div className="--page-container --page-content">
                     <h2>Payments</h2>
                 </div>
                 <Footer/>

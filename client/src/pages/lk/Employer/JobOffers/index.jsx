@@ -21,7 +21,7 @@ function JobOffers(props) {
             <LkNav page="job-offers" user_type={props.user.user_type}/>
             <main className="lk__container job-offers">
 
-                <div className="--page-container">
+                <div className="--page-container --page-content">
                     <div className="job-offers__heading">
                         <h2 className="job-offers__title">Активные вакансии</h2>
                         <button className="job-offers__add --primary-btn" onClick={toggle_new_job_offer}>Создать вакансию</button>

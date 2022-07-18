@@ -115,7 +115,7 @@ function ChatList(props) {
                         display_chat.chat_id === '' 
                         ?
                         <>
-                        <div className="--page-container">
+                        <div className="--page-container --page-content">
                             <h2 className='chat-title'>Ваши чаты</h2>
                             <div className="chat-container">
                                 {chat_cards}

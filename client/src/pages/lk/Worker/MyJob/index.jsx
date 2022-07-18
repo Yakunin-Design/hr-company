@@ -10,7 +10,7 @@ function MyJob(props) {
         <div className="lk">
             <LkNav page="myjob" user_type={props.user.user_type}/>
             <main className="lk__container">
-                <div className="--page-container">
+                <div className="--page-container --page-content">
                     <h2>My Job</h2>
                 </div>
                 <Footer/>
