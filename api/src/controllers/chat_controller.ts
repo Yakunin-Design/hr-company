@@ -161,16 +161,14 @@ async function send_message(req: Request, res: Response) {
 async function read_messages(req: Request, res: Response) {
     try{
         const chat_id = req.body.id;
-        console.log(req.body);
+
         const my_id = res.locals.user._id.toString();
 
         const chat = await db.find({_id: new ObjectId(chat_id)}, 'chats');
 
         if (chat.Err) return res.status(400).send('database error: find_chat');
 
-        console.log(chat)
-
-        const unread_messages = res.locals.user._id.toString() === chat.Ok!.user1.toString() ? {unread_count1: 0} : {unread_count2: 0}
+        const unread_messages = my_id === chat.Ok!.user1.toString() ? {unread_count1: 0} : {unread_count2: 0}
 
         const db_result = await db.update({_id: new ObjectId(chat_id)}, {$set: {...unread_messages}}, 'chats');
 
