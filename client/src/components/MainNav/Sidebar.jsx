@@ -14,8 +14,10 @@ import PointsIcon from '../../assets/svg/sidebar/PointsIcon'
 import back_arrow from '../../assets/svg/back-arrow.svg'
 import WorkerBankIcon from '../../assets/svg/sidebar/WorkerBankIcon'
 
-function Sidebar ({ page , user_type}) {
+function Sidebar (props) {
 
+    const { page , user_type} = props
+    
     const [show_sidebar, set_show_sidebar] = React.useState(false)
 
     function toggle_sidebar() {

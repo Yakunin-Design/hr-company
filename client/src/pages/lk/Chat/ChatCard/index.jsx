@@ -4,7 +4,7 @@ import './ChatCard.css'
 
 function ChatCard(props) {
     const {chat_data, handle_click} = props
-    const {chat_id ,user_name, last_msg, last_msg_time, unread_msg} = chat_data
+    const {chat_id, user_name, last_msg, last_msg_time, unread_msg} = chat_data
 
     // const last_msg = last_msg_text.trim().slice(0, 20);
 

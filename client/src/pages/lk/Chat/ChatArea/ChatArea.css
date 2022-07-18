@@ -1,14 +1,17 @@
 .chat-header {
-    background-color: var(--background-header);
-    position: relative;
-    top: -2px;
+    background-color: white;
+    position: fixed;
+    top: -1px;
+    width: 100%;
 }
 
 .chat-header .--page-container {
     display: flex;
     align-items: center;
     gap: 1em;
-    height: 5.1rem;
+    height: 4rem;
+    margin: 0;
+    margin-left: 5%;
 }
 
 .chat-send {
@@ -63,20 +66,10 @@
     }
 }
 
-@media (min-width: 700px) {
-    .chat-header .--page-container {
-        height: 4.85rem;
-    }
-}
-
 @media (min-width: 1200px) {
     .chat-send {
         left: calc(2.5% + 300px);
         right: 2.5%;
         width: auto;
     }
-    .chat-header .--page-container {
-        height: 7.8rem;
-    }
-
 }

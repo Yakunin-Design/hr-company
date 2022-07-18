@@ -7,6 +7,8 @@ import './MainNav.css'
 // old name - LkNav
 function MainNav({page, user_type}) {
 
+    console.log(user_type);
+
     return (
         <>
             <Sidebar page={page} user_type={user_type} />
