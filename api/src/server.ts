@@ -1,6 +1,8 @@
 import express from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
+import { ObjectId } from 'mongodb';
+import jwt from 'jsonwebtoken';
 import authorization_router from './routers/authorization_router';
 import lk_router from './routers/lk_router';
 import find_router from './routers/find_router';
@@ -38,15 +40,51 @@ io.on('connection', (socket) => {
     })
 
     socket.on("send_message", (data) => {
-        const { chat_id, new_msg_text } = data;
+        const { chat_id, new_msg_text, my_jwt } = data;
 
-        const message = {
-            time: Math.round(Date.now() / 1000),
-            sender: false,
-            content: new_msg_text
-        }
+        let my_id, my_user_type;
+        jwt.verify(my_jwt, 'shhhh', async (error, decoded) => {
+            
+            my_id = decoded.userID;
+            my_user_type = decoded.user_type;
+            
+        });
 
-        socket.in(chat_id).emit("receive_message", message);
+        const chat = db.find({_id: new ObjectId(chat_id)}, 'chats').then(result => {
+
+            const user1 = result.Ok!.user1.toString()
+            const user2 = result.Ok!.user1.toString()
+            const sender = user1 === my_id ? 1 : 2;
+            const time = Math.floor(Date.now() / 1000)
+
+            const new_msg = {
+                time: time,
+                sender: sender,
+                content: new_msg_text
+            };
+            const messages = [...result.Ok!.msgs, new_msg];
+
+            const unread_count1 = sender === 1 ? result.Ok!.unread_count1 : result.Ok!.unread_count1+1;
+            const unread_count2 = sender === 2 ? result.Ok!.unread_count2 : result.Ok!.unread_count2+1;
+
+            const edits = {
+                msgs: messages,
+                unread_count1,
+                unread_count2,
+            }
+
+            const update_result = db.update({_id: new ObjectId(chat_id)}, {$set: {...edits}}, 'chats').then(update_result => {
+                
+                const message = {
+                    time: Math.round(Date.now() / 1000),
+                    sender: false,
+                    content: new_msg_text
+                }
+        
+                socket.in(chat_id).emit("receive_message", message);
+            })
+
+        })
     })
 
 });

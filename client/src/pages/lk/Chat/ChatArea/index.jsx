@@ -48,6 +48,17 @@ export default function ChatArea(props) {
     
     React.useEffect(() => {
         socket.on("receive_message", (data) => {
+
+            axios.post('http://localhost:6969/read-messages', { id: chat_id }, config)
+            .then(res => {
+                if (!res.data) {
+                    return console.log('bruh')
+                }
+            })
+            .catch(e => {
+                console.log(e)
+            })
+
             set_messages(prev => {
                 window.scrollTo(0, document.body.scrollHeight);
                 return {
@@ -63,7 +74,7 @@ export default function ChatArea(props) {
     }, [socket]);
 
     function send_message() {
-        socket.emit("send_message", { chat_id, new_msg_text })
+        socket.emit("send_message", { chat_id, new_msg_text, my_jwt: jwt })
 
         const data = {
             time: Math.round(Date.now() / 1000),
