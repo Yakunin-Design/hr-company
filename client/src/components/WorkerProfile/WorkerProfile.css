@@ -235,14 +235,105 @@
     gap: 2rem;
 }
 
+.wp-main{
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.wp-main__description {
+    background-color: #fff;
+    padding: 2rem 3em;
+    width: 100%;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.wp-main__specialty {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+
+.wp-main__specialty-block {
+    padding: 0.4rem 1.5em;
+    background-color: var(--background-main);
+    border: 1px solid #979797;
+    border-radius: 1.5em;
+}
+
+.wp-main__working-info {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+}
+
+.wp-main__working-info .--row {
+    margin-top: 1rem;
+    gap: 1.5em;
+}
+
+.--icon-square {
+    background-color: var(--background-main);
+    border: 1px solid #979797;
+    width: 3.3em;
+    height: 3.3em;
+    border-radius: 0.5rem;
+}
+
+.wp-main__sidebar {
+    width: 100%;
+}
+
+.wp-main__sidebar-main {
+    background-color: white;
+    padding: 2rem 3em;
+    border-radius: 0.5rem 0.5rem 0 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1em;
+}
+
+.wp-main__sidebar-main .--row {
+    gap: 1em;
+}
+
+.wp-main__sidebar-price {
+    background-color: var(--accent);
+    border-radius: 0 0 0.5rem 0.5rem;
+    padding: 0.5em 0;
+}
+
+.wp-main__sidebar-main .--icon-square {
+    width: 2em;
+    height: 2em;
+    border: none;
+}
+
+.wp-hr {
+    position: relative;
+    width: calc(100% + 8em) !important;
+    left: -4em !important;
+    margin-top: 2rem;
+}
+
 @media (min-width: 400px) {
     .JobOffer__separator {
         display: block;
     }
 }
 
+@media (min-width: 450px) {
+    .wp-main__sidebar-main {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
 
-@media (min-width: 700px) {
+@media (min-width: 800px) {
 
     .JobOffer__main {
         flex-direction: row;
@@ -252,5 +343,29 @@
     .info-block {
         max-width: 22em;
         min-width: 18em;
+    }
+    .wp-main__working-info {
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 2em;
+    }
+}
+
+@media (min-width: 1000px) {
+
+    .wp-main {
+        flex-direction: row;
+    }
+
+    .wp-main__sidebar-main {
+        grid-template-columns: 1fr;
+    }
+
+    .wp-main__description {
+        flex: 7;
+    }
+
+    .wp-main__sidebar {
+        flex: 3;
     }
 }
