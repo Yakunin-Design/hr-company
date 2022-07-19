@@ -1,8 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 
-import WorkerProfile from '../pages/lk/Worker/WorkerProfile'
-import EmployerProfile from '../pages/lk/Employer/EmployerProfile'
+import WorkerAccount from '../pages/lk/Worker/WorkerAccount'
+import EmployerAccount from '../pages/lk/Employer/EmployerAccount'
 
 function Profile(props) {
 
@@ -38,12 +38,10 @@ function Profile(props) {
 
     return (
         <>
-            {props.user.user_type === 'employer' && <EmployerProfile user={props.user} />}
-            {props.user.user_type === 'worker' && <WorkerProfile user={props.user} />}
+            {props.user.user_type === 'employer' && <EmployerAccount user={props.user} />}
+            {props.user.user_type === 'worker' && <WorkerAccount user={props.user} />}
         </>
     )
 }
-
-// props.user.user_data.specialty ? 'worker' : 'employer'
 
 export default Profile

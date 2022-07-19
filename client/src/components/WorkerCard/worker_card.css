@@ -1,6 +1,7 @@
 .worker-card {
     width: 18em;
     padding: 1.5em 2em;
+    cursor: pointer;
 }
 
 .worker-card__logo {

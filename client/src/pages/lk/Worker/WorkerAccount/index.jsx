@@ -14,7 +14,7 @@ import time_span from '../../../../assets/svg/time_span.svg'
 import Experience from '../../../../components/Experience'
 import axios from 'axios'
 
-function WorkerProfile(props) {
+function WorkerAccount(props) {
 
     const [edit_errors, set_edit_errors] = React.useState([])
     const [edits, set_edits] = React.useState([])
@@ -704,4 +704,4 @@ function WorkerProfile(props) {
 
 }
 
-export default WorkerProfile
+export default WorkerAccount

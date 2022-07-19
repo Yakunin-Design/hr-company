@@ -14,7 +14,7 @@ import InfoBlock from './InfoBlock'
 function DisplayJobOffer(props) {
 
     const { job_offer_data, description, toggle_edit, show_edit, jo_respond , responded} = DisplayJobOfferLogic(props)
-    console.log(responded)
+
     return(
         <div className="JobOffer-container">
             

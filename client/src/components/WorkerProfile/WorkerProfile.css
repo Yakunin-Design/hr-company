@@ -1,0 +1,256 @@
+/* 
+    --------Show JobOffer--------
+*/
+
+.JobOffer-container {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding-bottom: 2em;
+    min-height: 100vh;
+}
+
+.JobOffer-container .CloseIcon {
+    position: absolute;
+    right: 2em;
+    top: 1em;
+    cursor: pointer;
+}
+
+.JobOffer-container .CloseIcon #Full-HD-Copy {
+    fill: #ffffffb0;
+}
+
+.JobOffer-container .CloseIcon:hover #Full-HD-Copy {
+    fill: #fff;
+}
+
+.JobOffer {
+    max-width: 75em;
+    margin: 0 auto;
+    margin-top: 5rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-main);
+}
+
+.JobOffer__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.JobOffer__company-logo {
+    position: absolute;
+    top: -3.25em;
+    width: 6em;
+    height: 6em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #78797B;
+    border-radius: 50%;
+}
+
+.company-logo__image {
+    width: 4.5em;
+    height: 4.5em;
+    background-color: blue;
+    border-radius: 50%;
+}
+
+.company-info__created {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+
+.JobOffer__company-info {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    margin: 0 auto;
+    margin-top: 0.4em;
+}
+
+.JobOffer__separator {
+    display: none;
+}
+
+.JobOffer__edit-btn {
+    max-width: 15em;
+    margin: 0 auto;
+    margin-top: 2em;
+}
+
+.JobOffer__main {
+    margin-top: 4em;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 2em;
+}
+
+.JobOffer__info-block {
+    width: 20em;
+    position: relative;
+    margin-top: 0px;
+    width: 100%;
+}
+
+.info-block {
+    padding: 2em;
+}
+
+.info-block__address .subway {
+    margin-top: 0.5rem;
+}
+
+.info-block__address {
+    margin-bottom: 1.5rem;
+}
+
+.addres {
+    cursor: alias;
+}
+
+.addres:hover h4 {
+    color: var(--accent) !important;
+}
+
+.info-block__address .addres {
+    display: flex;
+    gap: 0.8em;
+    margin-top: 0.6rem;
+    margin-left: 0.2em;
+    align-items: center;
+}
+
+.info-block__address .addres img {
+    width: 1em;
+}
+
+.info-block__schedule-container {
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 1em;
+    margin-bottom: 2em;
+
+}
+
+.info-block__schedule-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: help;
+}
+
+.info-block__schedule-title img {
+    opacity: .7;
+    width: 1em;
+    margin-left: .3em;
+}
+
+.info-block .--v2 {
+    margin-bottom: 1em;
+}
+
+.schedule-block {
+    width: 100%;
+    height: 1em;
+    border-radius: 0.3em;
+}
+
+.--weekdays {
+    background-color: var(--accent);
+}
+
+.--weekends {
+    background-color: #D8D8D8;
+}
+
+.info-block__wk-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2em;
+}
+
+.info-block__wk-block p {
+    font-size: 0.625rem;
+}
+
+.info-block__wk-block h3 {
+    margin-top: 0.2rem;
+}
+
+.JobOffer__price {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 0.5em 0;
+    background-color: var(--accent);
+    border-radius: 0 0 11px 11px;
+}
+
+.info-block__citizenships {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1em;
+}
+
+.info-block__citizenships h3 {
+    margin-left: 1em;
+}
+
+.info-block__citizenships-block {
+    padding: 0.5em;
+    background-color: #F5F5F5;
+    border-radius: 0.5rem;
+    margin-right: 1em;
+}
+
+.info-block__sex {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2em;
+}
+
+.info-block__sex-block {
+    padding: 0.7em;
+    background-color: #F5F5F5;
+    border-radius: 0.5rem;
+    margin-right: 1em;
+}
+
+.additional {
+    display: flex;
+    flex-direction: column;
+    margin-top: 6rem;
+    gap: 2rem;
+}
+
+@media (min-width: 400px) {
+    .JobOffer__separator {
+        display: block;
+    }
+}
+
+
+@media (min-width: 700px) {
+
+    .JobOffer__main {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .info-block {
+        max-width: 22em;
+        min-width: 18em;
+    }
+}

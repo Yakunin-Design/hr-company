@@ -2,11 +2,21 @@ import React from 'react'
 import './worker_card.css'
 import star from '../../assets/svg/star.svg'
 import ready from '../../assets/svg/ready.svg'
+import WorkerProfile from '../WorkerProfile'
 
 function WorkerCard(props) {
 
+    const [worker_profile, set_worker_profile] = React.useState(false)
+    function toggle_worker_profile() {
+        window.scrollTo({top: 0})
+        set_worker_profile(prev => !prev)
+    }
+
     return (
-        <div className='card worker-card'>
+        <>
+        {worker_profile && <WorkerProfile handle_click={toggle_worker_profile} user_name={props.data.full_name} />}
+
+        <div className='card worker-card' onClick={toggle_worker_profile}>
             <div className='worker-card__logo'>
                 <h3 className='--cl'>АС</h3>
             </div>
@@ -39,6 +49,7 @@ function WorkerCard(props) {
                 }
             </div>
         </div>
+        </>
     )
 }
 

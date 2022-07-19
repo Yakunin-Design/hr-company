@@ -10,7 +10,7 @@ import edit_pencil from '../../../../assets/svg/edit_pencil.svg'
 import {check_full_name, check_email, check_phone} from '../../../../functions/validations'
 
 
-function EmployerProfile(props) {
+function EmployerAccount(props) {
 
     const [edit_errors, set_edit_errors] = React.useState([])
     const [show_save_btn, set_show_save_btn] = React.useState(false)
@@ -174,4 +174,4 @@ function EmployerProfile(props) {
 
 }
 
-export default EmployerProfile
+export default EmployerAccount
