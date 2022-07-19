@@ -30,6 +30,7 @@
     border-radius: 2rem;
 
     display: flex;
+    align-items: center;
     gap: 2em;
 
     padding: 0.5rem 1.2em;
@@ -37,6 +38,8 @@
 
 .review__grade-number {
     display: flex;
+    align-items: center;
+    gap: 0.3em;
 }
 
 .review__header-time {

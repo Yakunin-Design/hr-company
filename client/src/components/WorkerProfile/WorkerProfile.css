@@ -283,6 +283,8 @@
     width: 3.3em;
     height: 3.3em;
     border-radius: 0.5rem;
+    display: grid;
+    place-items: center;
 }
 
 .wp-main__sidebar {
@@ -309,15 +311,30 @@
 }
 
 .wp-main__sidebar-main .--icon-square {
-    width: 2em;
-    height: 2em;
+    height: auto;
     border: none;
+    width: auto;
+    padding: 0.6rem 0.6em;
+}
+
+.--icon-square .subway p {
+    display: none;
+}
+
+.--icon-square .subway__icon {
+    width: 0.9rem;
+    height: 0.9rem;
+}
+
+.--icon-square .subway__icon img {
+    width: 0.5rem;
+    height: 0.5rem;
 }
 
 .wp-hr {
     position: relative;
-    width: calc(100% + 8em) !important;
-    left: -4em !important;
+    width: calc(100% + 4em) !important;
+    left: -2em !important;
     margin-top: 2rem;
 }
 
@@ -330,6 +347,13 @@
 @media (min-width: 450px) {
     .wp-main__sidebar-main {
         grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 500px) {
+    .wp-hr {
+        width: calc(100% + 8em) !important;
+        left: -4em !important;
     }
 }
 
