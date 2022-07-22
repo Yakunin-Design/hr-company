@@ -27,7 +27,7 @@ export default function DisplayJobOfferLogic(props) {
     })
 
     const [show_edit, set_show_edit] = React.useState(false)
-    const [responded, set_responded] = React.useState(false)
+    const [responded, set_responded] = React.useState('')
 
     // props.id
     function toggle_edit() {
@@ -52,7 +52,11 @@ export default function DisplayJobOfferLogic(props) {
                     return console.log('bruh')
                 }
 
-                set_job_offer_data(res.data)
+                if (res.data.contains) {
+                    set_responded('already')
+                }
+
+                set_job_offer_data(res.data.data)
             })
             .catch(e => {
                 console.log(e)
@@ -101,22 +105,18 @@ export default function DisplayJobOfferLogic(props) {
                     return console.log('bruh')
                 }
 
-                /**
-                 * TODO: 
-                 * Already responded + постоянное отображение
-                 * 
-                 */
-
-                if (res.data === 'Already responded') {}
-
                 if (res.data === 'Updated') {
-                    set_responded(true)
+                    set_responded('ok')
                 }
 
             })
             .catch(e => {
                 if (e.response.status === 401) {
                     window.location.replace('/login')
+                }
+                console.log(e.response)
+                if (e.response.data === 'already_responded') {
+                    set_responded('already')
                 }
             })
     }

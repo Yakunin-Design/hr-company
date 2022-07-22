@@ -42,11 +42,15 @@ function DisplayJobOffer(props) {
                         ?
                         <>
                         {
-                            !responded
+                            responded === ''
                             ?
                             <button className="JobOffer__edit-btn --primary-btn --mt2" onClick={jo_respond}>Откликнуться</button>
                             :
+                            responded === 'ok'
+                            ?
                             <h3 className="--cd --mt1">Вы успешно откликнулись</h3>
+                            :
+                            <h3 className="--cd --mt1">Вы уже откликнулись на эту вакансию</h3>
                         }
                         </>
                         :

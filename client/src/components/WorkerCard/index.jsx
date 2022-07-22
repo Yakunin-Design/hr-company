@@ -6,7 +6,9 @@ import WorkerProfile from '../WorkerProfile'
 
 function WorkerCard(props) {
 
+
     const [worker_profile, set_worker_profile] = React.useState(false)
+
     function toggle_worker_profile() {
         window.scrollTo({top: 0})
         set_worker_profile(prev => !prev)

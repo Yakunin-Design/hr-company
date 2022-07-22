@@ -50,20 +50,54 @@ async function add_respond(req: Request, res: Response): Promise<void> {
             return;
         }
 
-        /**
-         * TODO: Already responded
-         */
+        let already_responded = false;
+        job_offer.Ok.candidates.map((candidate) => {
+            if (candidate.toString() === worker_id.toString()) {
+                already_responded = true;
+            }
+        })
+
+        if (already_responded) {
+            res.status(400).send('already_responded');
+            return;
+        }
 
         const candidate_count = job_offer.Ok.candidate_count + 1;
         const candidates = [...job_offer.Ok.candidates , worker_id];
 
+        const user = await db.find({_id: worker_id}, 'workers');
+        let responds = user.Ok!.responds || [];
+
+        responds.push(job_offer_id)
+
         await db.update({_id: job_offer_id}, {$set: {candidates: candidates, candidate_count: candidate_count}}, 'job_offers');
+        await db.update({_id: worker_id}, {$set: {responds: responds}}, 'workers');
 
         res.status(200).send('Updated');
     } catch (e) {
         console.log("[EDIT]", e);
     }
 }
+
+async function my_job(req: Request, res: Response) {
+
+    let responds
+    if (res.locals.user.responds) {
+
+        const filter = res.locals.user.responds.map(respond => {return ({_id: respond})})
+
+
+        responds = await db.find_all({$or: filter}, 'job_offers')
+    }
+
+
+    const Response = {
+        my_job: [],
+        responds: responds.Ok ? responds.Ok : []
+    }
+
+    res.status(200).send(Response);
+};
 
 /*
     Check type
@@ -75,4 +109,4 @@ async function add_respond(req: Request, res: Response): Promise<void> {
     
 */
 
-export default { profile, basic_edit , add_respond};
+export default { profile, basic_edit , add_respond, my_job};

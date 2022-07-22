@@ -41,4 +41,8 @@ router.post('/new-respond', (req: Request, res: Response) => {
    worker_controller.add_respond(req, res);
 })
 
+router.get('/my-job', auth, (req: Request, res: Response) => {
+    worker_controller.my_job(req, res)
+});
+
 export default router;

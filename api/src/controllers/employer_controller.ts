@@ -1,5 +1,6 @@
 import { NextFunction, Request, response, Response } from 'express';
 import db from '../lib/idb'
+import jwt from 'jsonwebtoken';
 
 import IJobOffer from '../interfaces/IJobOffer';
 import { ObjectId } from 'mongodb';
@@ -148,8 +149,29 @@ async function full_job_offer(req: Request, res: Response): Promise<void> {
             return;
         }
 
+        let contains = false;
+        if (req.headers.authorization) {
+            const token = req.headers.authorization.split(' ')[1];
+            jwt.verify(token, 'shhhh', async (error, decoded) => {
+        
+                const user_data = decoded;
+
+                db_result.Ok!.candidates.map(candidate => {
+                    if (candidate.toString() === user_data!.userID.toString()) {
+                        contains = true
+                    }
+                })
+            });
+        }
+
         // send the response [200]
-        res.status(200).send(db_result.Ok);
+
+        const response = {
+            data: db_result.Ok,
+            contains: contains
+        }
+
+        res.status(200).send(response);
 
     }
     catch (e) {
