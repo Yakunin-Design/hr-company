@@ -48,11 +48,24 @@ function WorkerAccount(props) {
     }
 
     function add_data(data, edit) {
-        data[edit] = user_data[edit]
+
+        if (edit === 'experience') {
+            data[edit] = [...user_data[edit], exp_info]
+        } else {
+            data[edit] = user_data[edit]
+        }
+        
         set_edits(prev => prev.filter(edit => edit != user_data[edit] ))
     }
 
+    /**
+     *  req = {1}
+     *  [{1},{2}]
+     */
+
+
     function save_data() {
+
         const err = []
         let data = {}
 
@@ -81,7 +94,6 @@ function WorkerAccount(props) {
         })
 
         if (Object.keys(exp_info).length > 0) {
-
             let err_count = 0;
 
             if ( exp_info["title"] ) { 
@@ -133,7 +145,6 @@ function WorkerAccount(props) {
             }
 
             if (exp_info["end_year"] < exp_info["start_year"] || (exp_info["end_year"] === exp_info["start_year"] && Number(exp_info["start_month"]) > Number(exp_info["end_month"]))) {
-                
                 err.push('start_year')
                 err.push('end_year')
                 err.push('start_month')
@@ -144,16 +155,18 @@ function WorkerAccount(props) {
              
             if (err_count === 0) {
 
+                add_data(data, 'experience')
+
                 set_user_data(prev_user_data => {
                     const new_experience = prev_user_data.experience
                     new_experience.indexOf(exp_info) === -1 && new_experience.push(exp_info)
 
                     return {
                         ...prev_user_data,
-                        'experience' : new_experience
+                        'experience': new_experience
                     }
                 })
-                add_data(data, 'experience')
+                
             }
 
         }
@@ -185,25 +198,24 @@ function WorkerAccount(props) {
             delete data.year
 
         }
-        console.log(data.experience)
-        const result_data = JSON.stringify({
+        
+        const result_data = {
             ...data,
-            birthday,
-            experience: data.experience
-        })
+            birthday
+        }
 
-        console.log(result_data)
-        birthday && delete result_data.birthday;
+        !birthday && delete result_data.birthday;
 
         const config = {
             headers: {
-                authorization: 'Bearer ' + localStorage.getItem('jwt'),
-                'content-type': 'application/json'
+                authorization: 'Bearer ' + localStorage.getItem('jwt')
             }
         }
 
+        console.log({...result_data})
+
         Object.keys(result_data).length > 0 &&
-        axios.post('http://localhost:6969/profile/edit', result_data, config)
+        axios.post('http://localhost:6969/profile/edit', {...result_data}, config)
             .then(res => {
                 if (!res.data) {
                     return console.log(res)
@@ -578,7 +590,7 @@ function WorkerAccount(props) {
                                             type="text"
                                             name="title"
                                             placeholder="Повар горячего цеха"
-                                            value= {exp_info.title}
+                                            value={exp_info.title}
                                             onChange={event => add_exp_info(event)}
                                             style={edit_errors.includes('title') ? error_style : {}}
                                         />
@@ -589,7 +601,7 @@ function WorkerAccount(props) {
                                             className="card__input --mt1"
                                             type="text"
                                             name="employer"
-                                            value= {exp_info.employer}
+                                            value={exp_info.employer}
                                             onChange={event => add_exp_info(event)}
                                             style={edit_errors.includes('employer') ? error_style : {}}
                                         />
@@ -602,7 +614,7 @@ function WorkerAccount(props) {
                                     type="text"
                                     name="description"
                                     placeholder="Опишите ваши обязанности, объем работы и задачи"
-                                    value= {exp_info.description}
+                                    value={exp_info.description}
                                     onChange={event => add_exp_info(event)}
                                     style={edit_errors.includes('description') ? error_style : {}}
                                 />
@@ -615,7 +627,7 @@ function WorkerAccount(props) {
                                                 <select className="card__input --month --exp-month"
                                                     id="exp-month"
                                                     name="start_month"
-                                                    value= {exp_info.start_month || '00'}
+                                                    value={exp_info.start_month || '00'}
                                                     onChange={event => add_exp_info(event)}
                                                     style={edit_errors.includes('start_month') ? error_style : {}}
                                                 >
@@ -640,7 +652,7 @@ function WorkerAccount(props) {
                                                     maxLength="4"
                                                     placeholder="0000"
                                                     name="start_year"
-                                                    value= {exp_info.start_year}
+                                                    value={exp_info.start_year}
                                                     onChange={event => add_exp_info(event)}
                                                     style={edit_errors.includes('start_year') ? error_style : {}}
                                                 />
@@ -654,7 +666,7 @@ function WorkerAccount(props) {
                                                 <select className="card__input --month --exp-month"
                                                     id="exp-month"
                                                     name="end_month"
-                                                    value= {exp_info.end_month || '00'}
+                                                    value={exp_info.end_month || '00'}
                                                     onChange={event => add_exp_info(event)}
                                                     style={edit_errors.includes('end_month') ? error_style : {}}
                                                 >
@@ -679,7 +691,7 @@ function WorkerAccount(props) {
                                                     maxLength="4"
                                                     placeholder="0000"
                                                     name="end_year"
-                                                    value= {exp_info.end_year}
+                                                    value={exp_info.end_year}
                                                     onChange={event => add_exp_info(event)}
                                                     style={edit_errors.includes('end_year') ? error_style : {}}
                                                 />

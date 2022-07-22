@@ -13,7 +13,7 @@ export default function AdvancedSettings(props) {
 
     return (
         <>
-        <div className='JobOffer__edit-additional additional'>
+        <div>
             <div className='additional__citizenship'>
                 <h3 className="--ld">Гражданство</h3>
                 <div className="citizenships --lk-citizenships --edit-citizenships">

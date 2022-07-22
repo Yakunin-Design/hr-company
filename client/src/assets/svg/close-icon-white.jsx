@@ -1,6 +1,6 @@
 export default function CloseIcon(props) {
     return (
-        <svg width="38px" height="38px" viewBox="0 0 38 38" version="1.1" xmlns="http://www.w3.org/2000/svg" className="CloseIcon" onClick={props.handle_click}>
+        <svg width="38px" height="38px" viewBox="0 0 38 38" version="1.1" xmlns="http://www.w3.org/2000/svg" className="--modal-sheet-close" onClick={props.handle_click}>
             <title>Group 4 Copy</title>
             <g id="06-|-Fild-Job" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                 <g id="Full-HD-Copy" transform="translate(-1844.000000, -27.000000)" fill="#FFFFFF">

@@ -88,7 +88,7 @@ export default function AdvancedSettings(props) {
 
         </div>
 
-        <div className="JobOffer__edit-pricing edit-pricing">
+        <div className="edit-pricing">
             <div className='salary-label'>
                 <h3>Ставка в {job_offer_data.salary.period === 'hour' ? 'час' : job_offer_data.salary.period === 'month' ? 'месяц' : 'смену'},₽</h3>
                 <img src={select_arrow}/>

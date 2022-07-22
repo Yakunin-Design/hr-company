@@ -6,7 +6,6 @@ import WorkerProfile from '../WorkerProfile'
 
 function WorkerCard(props) {
 
-
     const [worker_profile, set_worker_profile] = React.useState(false)
 
     function toggle_worker_profile() {
@@ -16,7 +15,7 @@ function WorkerCard(props) {
 
     return (
         <>
-        {worker_profile && <WorkerProfile handle_click={toggle_worker_profile} data={props.data} />}
+        { worker_profile && <WorkerProfile handle_click={toggle_worker_profile} data={props.data} /> }
 
         <div className='card worker-card' onClick={toggle_worker_profile}>
             <div className='worker-card__logo'>
@@ -39,7 +38,6 @@ function WorkerCard(props) {
                     props.data.status === 'ready'
                     ?
                     <>
-                        {/* ready icon */}
                         <img src={ready}/>
                         <h3>Готов работать</h3>
                     </> 

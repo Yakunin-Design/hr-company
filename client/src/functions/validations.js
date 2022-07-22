@@ -62,9 +62,9 @@ function check_month(month) {
 }
 
 function check_year(year) {
-    const current_year = new Date().getFullYear() - 10;
-    console.log(current_year);
-    if (year < 1900 || year > current_year) {
+    const allowed_year = new Date().getFullYear() - 10;
+
+    if (year < 1900 || year > allowed_year) {
         return false;
     }
     return true

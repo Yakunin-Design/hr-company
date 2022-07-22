@@ -16,6 +16,8 @@ async function basic_edit(req: Request, res: Response): Promise<void> {
     try{
         const data = req.body;
 
+        console.log(data);
+
         const changed_names: Array<string> = Object.keys(data);
         const changed_values: Array<string | object | Array<string>> = Object.values(data);
 
@@ -79,34 +81,18 @@ async function add_respond(req: Request, res: Response): Promise<void> {
     }
 }
 
-async function my_job(req: Request, res: Response) {
+async function get_my_jobs(req: Request, res: Response) {
+    if (!res.locals.user.responds) return res.status(200).send([]);
 
-    let responds
-    if (res.locals.user.responds) {
-
-        const filter = res.locals.user.responds.map(respond => {return ({_id: respond})})
-
-
-        responds = await db.find_all({$or: filter}, 'job_offers')
-    }
-
+    const filter: Object[] = res.locals.user.responds.map((application: ObjectId) => ({ _id: application }));
+    const applications = await db.find_all({ $or: filter }, 'job_offers');
 
     const Response = {
         my_job: [],
-        responds: responds.Ok ? responds.Ok : []
+        responds: applications.Ok ? applications.Ok : []
     }
 
     res.status(200).send(Response);
 };
 
-/*
-    Check type
-    
-    Generating code
-
-    Sending code 
-   
-    
-*/
-
-export default { profile, basic_edit , add_respond, my_job};
+export default { profile, basic_edit , add_respond, get_my_jobs};

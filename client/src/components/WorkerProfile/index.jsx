@@ -8,10 +8,9 @@ import CloseIcon from '../../assets/svg/close-icon-white'
 import ready from '../../assets/svg/ready.svg'
 
 import './WorkerProfile.css'
+import '../../styles/modal_sheet.css'
 
 function WorkerProfile(props) {
-
-    console.log(props)
 
     const exp_data1 = {
         employer: "Макдональдс",
@@ -69,23 +68,24 @@ function WorkerProfile(props) {
 
     const citizenship = props.data.citizenship === 'other' ? 'другое' : props.data.citizenship === 'sng' ? 'СНГ' : props.data.citizenship === 'bu/ua' ? '🇧🇾/🇺🇦' : '🇷🇺'
     const birthday = (new Date()).getFullYear() - props.data.birthday.substr(6,4)
+
     return (
-        <div className="JobOffer-container">
+        <div className="--modal-sheet-overlay">
 
             <CloseIcon handle_click={props.handle_click} />
 
-            <div className="card JobOffer">
-                <div className="JobOffer__header">
-                    <div className="JobOffer__company-logo company-logo">
-                        <div className="company-logo__image"></div>
+            <div className="card modal-sheet">
+                <div className="modal-sheet__header modal-sheet__container">
+                    <div className="modal-sheet__header-logo">
+                        <div className="modal-sheet__header-img"></div>
                     </div>
 
-                    <h2 className="--mt1 --cd">{props.data.full_name}</h2>
-                    <button className="--primary-btn --mt2" onClick={() => console.log('bruh')}>Предложить работу</button>
+                    <h2 className="modal-sheet__title --cd">{props.data.full_name}</h2>
+                    <button className="modal-sheet__cta --primary-btn --mt2" onClick={() => console.log('bruh')}>Предложить работу</button>
                 </div>
-                <hr className='wp-hr' />
+                <hr/>
 
-                <div className="wp-main">
+                <div className="modal-sheet__container wp-main">
                     <div className="JobOffer__description wp-main__description">
 
                         <div className="wp-main__specialty-container">
@@ -137,15 +137,17 @@ function WorkerProfile(props) {
                     </div>
 
                 </div>
-                <hr className='wp-hr' />
-                <div className="JobOffer__experience">
+                <hr/>
+
+                <div className="modal-sheet__container JobOffer__experience">
                     <Experience data={exp_data1} />
                     <Experience data={exp_data2} />
                 </div>
-                <hr className='wp-hr' />
-                <div className="JobOffer__reviews">
-                    <Review data = {review_data1} />
-                    <Review data = {review_data2}/>
+                <hr/>
+
+                <div className="modal-sheet__container JobOffer__reviews">
+                    <Review data={review_data1} />
+                    <Review data={review_data2}/>
                 </div>
 
             </div>
