@@ -179,4 +179,29 @@ async function full_job_offer(req: Request, res: Response): Promise<void> {
     }
 }
 
-export default { profile, basic_edit, create_job_offer, job_offers, full_job_offer }
+async function edit_job_offer (req: Request, res: Response) {
+
+    const job_offer = await db.find({_id: new ObjectId(req.body.id)}, 'job_offers')
+
+    if (job_offer.Err) {
+        res.status(400).send('Job offer not find')
+        return;
+    }
+
+    if (res.locals.user._id.toString() != job_offer.Ok!.employer_id.toString()) {
+        res.status(400).send('not your jo')
+        return;
+    }
+
+    const db_result = await db.update({_id: job_offer.Ok!._id}, {$set: {...req.body.changes}}, 'job_offers');
+
+    if (db_result.Err) {
+        res.status(400).send('update err');
+        return;
+    }
+
+    res.status(200).send('updated');
+
+}
+
+export default { profile, basic_edit, create_job_offer, job_offers, full_job_offer, edit_job_offer }

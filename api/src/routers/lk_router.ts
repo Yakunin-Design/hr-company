@@ -31,6 +31,10 @@ router.post('/new-job-offer', auth, (req: Request, res: Response) => {
     if (res.locals.jwt.user_type === 'employer') employer_controller.create_job_offer(req, res);
 })
 
+router.post('/edit-job-offer', auth, (req: Request, res: Response) => { 
+    if (res.locals.jwt.user_type === 'employer') employer_controller.edit_job_offer(req, res);
+})
+
 router.get('/job-offers', auth, (req: Request, res: Response) => {
     if (res.locals.jwt.user_type === 'employer') employer_controller.job_offers(req, res);
 })
