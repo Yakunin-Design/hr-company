@@ -15,6 +15,7 @@ export default function update_job_offer(changed_data) {
         if (!res.data) {
             return console.log('bruh')
         }
+        document.location.reload()
 
     })
     .catch(e => {

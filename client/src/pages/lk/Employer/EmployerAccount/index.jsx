@@ -14,10 +14,11 @@ function EmployerAccount(props) {
 
     const [edit_errors, set_edit_errors] = React.useState([])
     const [show_save_btn, set_show_save_btn] = React.useState(false)
+    const [change_description, set_change_description] = React.useState(false)
 
     const [emp_data, set_emp_data] = React.useState({
         ...props.user.user_data,
-        description: ''
+        description: props.user.user_data.description ? props.user.user_data.description : ''
     })
 
     const [edits, set_edits] = React.useState([])
@@ -58,18 +59,21 @@ function EmployerAccount(props) {
 
     function save_data() {
         console.log(edits)
+        let data = {}
         const err = []
-        const data = {}
 
         edits.forEach(edit => {
             if (edit === 'full_name') {
-                check_full_name(emp_data[edit]) ? add_data(data, edit) : err.push(edit)
+                check_full_name(emp_data[edit]) ? add_data(data,edit) : err.push(edit)
             }
             if (edit === 'email') {
-                check_email(emp_data[edit]) ? add_data(data, edit) : err.push(edit)
+                check_email(emp_data[edit]) ? add_data(data,edit) : err.push(edit)
             }
             if (edit === 'phone') {
                 check_phone(emp_data[edit]) ? add_data(data, edit) : err.push(edit)
+            }
+            if (edit === 'description') {
+                (emp_data[edit].length >=20 && emp_data[edit].length <=120) ? add_data(data, edit) : err.push(edit)
             }
         })
 
@@ -78,9 +82,12 @@ function EmployerAccount(props) {
         const jwt = localStorage.getItem('jwt') || ''
 
         // send data to api to save changes to db
-        axios.post('http://localhost:6969/profile/edit', JSON.stringify(data), {headers : {authorization : 'Bearer ' + jwt}})
+        axios.post('http://localhost:6969/profile/edit', data, {headers : {authorization : 'Bearer ' + jwt}})
 
-        err.length === 0 && set_show_save_btn(false)
+        if (err.length === 0) {
+            set_show_save_btn(false)
+            set_change_description(false)
+        }
 
         console.log("Err:")
         console.log(err)
@@ -94,6 +101,10 @@ function EmployerAccount(props) {
             localStorage.removeItem('jwt')
             window.location.replace('/login')
         }
+    }
+
+    function on_change_description() {
+        set_change_description(true)
     }
 
     const error_style = {
@@ -114,10 +125,25 @@ function EmployerAccount(props) {
                             <div className="--avatar"></div>
                         </div>
 
-                        <img src={edit_pencil} className='--edit_pencil' alt=''/>
+                        <img src={edit_pencil} className='--edit_pencil' alt='' onClick={on_change_description}/>
 
                         <h2 className="--mt2">{emp_data.company}</h2>
-                        <p className="--mt1">{emp_data.description ? emp_data.description : <span className="documents__add">Добавить описание + </span>}</p>
+                        {
+                            change_description
+                            ?
+                            <textarea
+                                className="card__textarea additional__textarea --mt1"
+                                type="text"
+                                name="description"
+                                placeholder="Опишите работу в вашем заведении"
+                                value= {emp_data.description}
+                                onChange={event => handle_change(event)}
+                                style={edit_errors.includes('description') ? error_style : {}}
+                            />
+                            :
+                            <p className="--mt1">{emp_data.description ? emp_data.description : <span className="documents__add" onClick={on_change_description}>Добавить описание + </span>}</p>
+                        }
+                        
                     </section>
 
                     <h2 className="lk__section-title">Контактное лицо</h2>
