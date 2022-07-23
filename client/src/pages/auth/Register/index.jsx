@@ -50,6 +50,8 @@ function RegisterPage() {
         // validation
         let err = []
 
+        console.log(form_data)
+
         if (step.step === 1 && step.type === 'worker') {
             err = worker_validation_step1(form_data);
         }
@@ -95,14 +97,35 @@ function RegisterPage() {
     }
 
     function handle_change(event) {
-        const { name, value } = event.target
+        const { name, value, files } = event.target
 
-        set_form_data(prev_form_data => { 
-            return {
-                ...prev_form_data,
-                [name]: value
-            }
-        })
+        if (name === 'logo') {
+
+            const reader = new FileReader()
+            reader.addEventListener("load", function () {
+                if (this.result) {
+
+                    console.log(this.result)
+                    set_form_data(prev_form_data => { 
+                        return {
+                            ...prev_form_data,
+                            [name]: this.result
+                        }
+                    })
+                }
+            })
+            reader.readAsDataURL(files[0])
+
+        } else {
+
+            set_form_data(prev_form_data => { 
+                return {
+                    ...prev_form_data,
+                    [name]: value
+                }
+            })
+
+        }
     }
 
     let registration_step;

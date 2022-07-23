@@ -18,15 +18,19 @@ function EmployerStep1(props) {
             <h2 className="card__title --ld">Регистрация</h2>
 
             <div className="card__logo">
-                <input
+            <input
                     className="--hiden"
                     id="logo"
                     type="file"
                     name="logo"
+                    accept="image/*"
+                    onChange={(event) => on_change(event)}
                 />
                 <label className="--photo-label" htmlFor="logo" >
                     <div className="card__photo">
-                        <img className="icon-plus" src={plus_icon} alt=""/>
+                        {
+                            form_data.logo ? <img className="avatar" src={form_data.logo} alt=""/> : <img className="icon-plus" src={plus_icon} alt=""/>
+                        }
                     </div>
                     <h3 className="card__upload --ld">Загрузить фото</h3>
                 </label>

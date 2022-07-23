@@ -64,7 +64,8 @@ async function create_job_offer(req: Request, res: Response): Promise<void> {
             status: 'active',  
             candidates: [],
             candidate_count: 0,
-            created: Math.floor(Date.now() / 1000)
+            created: Math.floor(Date.now() / 1000),
+            logo: res.locals.user.logo
         };
 
         if (!job_offer.point_id) {
@@ -150,6 +151,7 @@ async function full_job_offer(req: Request, res: Response): Promise<void> {
         }
 
         let contains = false;
+        let logo
         if (req.headers.authorization) {
             const token = req.headers.authorization.split(' ')[1];
             jwt.verify(token, 'shhhh', async (error, decoded) => {

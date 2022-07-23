@@ -6,6 +6,8 @@ import DisplayJobOffer from '../DisplayJobOffer';
 
 function JobOfferCard (props) {
 
+    console.log(props)
+
     const [full_job_offer, set_full_job_offer] = React.useState(false)
     function toggle_full_job_offer() {
         window.scrollTo({ top: 0 })
@@ -28,7 +30,7 @@ function JobOfferCard (props) {
         <div className="card JobOfferCard" onClick={toggle_full_job_offer}>
             <div className="JobOfferCard__place">
                 <div className="JobOfferCard__company">
-                    <div className="JobOfferCard__company-logo"></div>
+                    {props.data.logo ? <img src={props.data.logo} className="JobOfferCard__company-logo"/> :<div className="JobOfferCard__company-logo"></div>}
                     <h4>Макдональдс</h4>
                 </div>
                 <Subway station={props.data.subway} text_style="h4" />

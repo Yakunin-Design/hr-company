@@ -43,6 +43,9 @@
 
 .card__photo {
     margin-right: 1.5em;
+    position: relative;
+    width: 3em;
+    height: 3em;
 }
 
 .card__login{
@@ -71,6 +74,13 @@
     border-radius: 50%;
     border: 2px solid black;
     padding: .7em;
+}
+.avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 2px solid black;
+    border-radius: 50%;
 }
 
 .birthday {

@@ -12,60 +12,6 @@ import '../../styles/modal_sheet.css'
 
 function WorkerProfile(props) {
 
-    const exp_data1 = {
-        employer: "Макдональдс",
-        title: "Чистильщик картошки",
-        description: "Sint atque tenetur id. Natus eos et qui sequi. Culpa debitis voluptatum quo fugiat. ♥♥♥♥♥ sed labore ducimus nostrum consequuntur. Sint atque tenetur id. Natus eos et qui sequi. Culpa debitis voluptatum quo fugiat. Ratione sed labore ducimus nostrum consequuntur.",
-        start_month: 12,
-        start_year: 2000,
-        end_month: "02",
-        end_year: 2004
-    }
-
-    const exp_data2 = {
-        employer: "Lou Lou",
-        title: "Администратор",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc lobortis lectus nec lectus maximus consequat. Nunc quis eros dui. Quisque.",
-        start_month: "04",
-        start_year: 2004,
-        end_month: 10,
-        end_year: 2020
-    }
-
-    const review_data1 = {
-        full_name: "Макдональдс",
-        time: "15.02.2004",
-        grades: [
-            {
-                name: 'Ответственность',
-                grade: 4.9
-            },
-            {
-                name: 'Исполнительность',
-                grade: 4.5
-            }
-        ]
-    }
-
-    const review_data2 = {
-        full_name: "Lou Lou",
-        time: "01.11.2020",
-        grades: [
-            {
-                name: 'Пунктуальность',
-                grade: 5
-            },
-            {
-                name: 'Внимательность',
-                grade: 4.1
-            },
-            {
-                name: 'Вежливость',
-                grade: 3.9
-            }
-        ]
-    }
-
     const citizenship = props.data.citizenship === 'other' ? 'другое' : props.data.citizenship === 'sng' ? 'СНГ' : props.data.citizenship === 'bu/ua' ? '🇧🇾/🇺🇦' : '🇷🇺'
     const birthday = (new Date()).getFullYear() - props.data.birthday.substr(6,4)
 
@@ -76,8 +22,8 @@ function WorkerProfile(props) {
 
             <div className="card modal-sheet">
                 <div className="modal-sheet__header modal-sheet__container">
-                    <div className="modal-sheet__header-logo">
-                        <div className="modal-sheet__header-img"></div>
+                <div className="modal-sheet__header-logo">
+                        {props.data.logo ? <img src={props.data.logo} className="modal-sheet__header-img" /> : <div className="modal-sheet__header-img"></div>}
                     </div>
 
                     <h2 className="modal-sheet__title --cd">{props.data.full_name}</h2>
@@ -140,14 +86,14 @@ function WorkerProfile(props) {
                 <hr/>
 
                 <div className="modal-sheet__container JobOffer__experience">
-                    <Experience data={exp_data1} />
-                    <Experience data={exp_data2} />
+                    {/* <Experience data={exp_data1} />
+                    <Experience data={exp_data2} /> */}
                 </div>
                 <hr/>
 
                 <div className="modal-sheet__container JobOffer__reviews">
-                    <Review data={review_data1} />
-                    <Review data={review_data2}/>
+                    {/* <Review data={review_data1} />
+                    <Review data={review_data2}/> */}
                 </div>
 
             </div>

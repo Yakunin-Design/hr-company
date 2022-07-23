@@ -321,7 +321,9 @@ function WorkerAccount(props) {
                         <section className="lk__section lk__basic-info">
 
                             <div className="personal_data__avatar-block">
-                                <div className="--avatar"></div>
+                                {
+                                    user_data.logo ? <img src={user_data.logo} className='avatar --avatar'/> : <div className="--avatar"></div>
+                                }
                             </div>
 
                             <h3 className="--mt2">ФИО</h3>

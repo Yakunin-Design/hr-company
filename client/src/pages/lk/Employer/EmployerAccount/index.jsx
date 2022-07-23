@@ -122,7 +122,9 @@ function EmployerAccount(props) {
 
                     <section className="lk__section lk__basic-info --employer-basic-info">
                         <div className="personal_data__avatar-block --employer-avatar-block">
-                            <div className="--avatar"></div>
+                            {
+                                emp_data.logo ? <img src={emp_data.logo} className='avatar --avatar'/> : <div className="--avatar"></div>
+                            }
                         </div>
 
                         <img src={edit_pencil} className='--edit_pencil' alt='' onClick={on_change_description}/>

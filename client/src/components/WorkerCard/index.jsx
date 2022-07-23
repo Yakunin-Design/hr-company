@@ -18,9 +18,13 @@ function WorkerCard(props) {
         { worker_profile && <WorkerProfile handle_click={toggle_worker_profile} data={props.data} /> }
 
         <div className='card worker-card' onClick={toggle_worker_profile}>
+            {props.data.logo ? 
+            <img src={props.data.logo} className="worker-card__logo" /> 
+            :
             <div className='worker-card__logo'>
                 <h3 className='--cl'>АС</h3>
             </div>
+            }       
             <h3 className='worker-card__full-name'>{props.data.full_name}</h3>
             <p className='worker-card__speciality'>{props.data.specialty}</p>
             <div className='worker-card__rating'>

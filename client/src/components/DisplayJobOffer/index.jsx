@@ -15,6 +15,8 @@ function DisplayJobOffer(props) {
 
     const { job_offer_data, description, toggle_edit, show_edit, jo_respond , responded} = DisplayJobOfferLogic(props)
 
+    console.log(job_offer_data);
+
     return(
         <div className="--modal-sheet-overlay">
             
@@ -25,7 +27,7 @@ function DisplayJobOffer(props) {
             <div className="card modal-sheet JobOffer">
                 <div className="modal-sheet__header modal-sheet__container JobOffer__header">
                     <div className="modal-sheet__header-logo">
-                        <div className="modal-sheet__header-img"></div>
+                        {job_offer_data.logo ? <img src={job_offer_data.logo} className="modal-sheet__header-img" /> : <div className="modal-sheet__header-img"></div>}
                     </div>
 
                     <h2 className="modal-sheet__title --cd">{job_offer_data.specialty}</h2>
