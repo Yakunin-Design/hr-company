@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function AdvancedSettings(props) {
+export default function MainSettings(props) {
 
     const { job_offer_data, handle_change, errors } = props
 

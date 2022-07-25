@@ -17,7 +17,7 @@ function display_period(period) {
     return display_period
 }
 
-export default function AdvancedSettings(props) {
+export default function DefaultSettings(props) {
 
     const { job_offer_data, handle_change, errors } = props
 

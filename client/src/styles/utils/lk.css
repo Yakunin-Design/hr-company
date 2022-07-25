@@ -1,6 +1,7 @@
 .lk {
     position: relative;
 }
+
 .lk__container {
     margin: 0;
     width: 100%;
@@ -157,6 +158,7 @@
 .lk__status, .lk__work-status {
     display: flex;
     gap: 1.5em;
+    flex-wrap: wrap;
     margin-top: 1em;
 }
 

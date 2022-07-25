@@ -7,6 +7,14 @@
     background-color: rgba(0, 0, 0, 0.5);
     padding-bottom: 2em;
     min-height: 100vh;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+@media (min-width: 500px) {
+    .--modal-sheet-overlay {
+        padding: 0 2em;
+    }
 }
 
 .--modal-sheet-close {
@@ -36,9 +44,16 @@
 }
 
 .modal-sheet__container {
-    padding-left: 4em;
-    padding-right: 4em;            
+    padding-left: 2em;
+    padding-right: 2em;            
 }
+
+@media (min-width: 500px) {
+    .modal-sheet__container {
+        padding: 0 4em;
+    }
+}
+
 
 .modal-sheet__header {
     display: flex;

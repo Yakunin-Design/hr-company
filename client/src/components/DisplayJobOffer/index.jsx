@@ -15,8 +15,6 @@ function DisplayJobOffer(props) {
 
     const { job_offer_data, description, toggle_edit, show_edit, jo_respond , responded} = DisplayJobOfferLogic(props)
 
-    console.log(job_offer_data);
-
     return(
         <div className="--modal-sheet-overlay">
             

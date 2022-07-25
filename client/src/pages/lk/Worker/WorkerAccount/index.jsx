@@ -1,4 +1,6 @@
 import React from 'react'
+import axios from 'axios'
+
 import LkNav from '../../../../components/MainNav'
 import Footer from '../../../../components/Footer'
 import { check_day, check_month, check_year, check_full_name, check_phone, check_email } from '../../../../functions/validations'
@@ -10,9 +12,8 @@ import floating_plus from '../../../../assets/svg/floating_plus.svg'
 import ProgressArrow from '../../../../assets/svg/progress_arrow'
 import time_span from '../../../../assets/svg/time_span.svg'
 
-// import exp_data from '../test/data/experiences'
 import Experience from '../../../../components/Experience'
-import axios from 'axios'
+import JobPreference from './JobPreference'
 
 function WorkerAccount(props) {
 
@@ -28,7 +29,12 @@ function WorkerAccount(props) {
         year: props.user.user_data.birthday.slice(6),
         documents: [],
         status: 'ready',
-        experience: props.user.user_data.experience || []
+        experience: props.user.user_data.experience || [],
+        job_type: props.user.user_data.job_type || 'any',
+        salary: props.user.user_data.salary || {
+            amount: 100,
+            period: 'hour'
+        }
     })
 
     const [add_experience, set_add_experience] = React.useState(false)
@@ -236,12 +242,35 @@ function WorkerAccount(props) {
         set_edits(prev => prev.filter(edit => edit != name ))
         set_edits(prev => [...prev, name])
 
-        set_user_data(prev_user_data => {
-            return {
-                ...prev_user_data,
-                [name]: type === 'checkbox' ? checked : value
-            }
-        })
+        if (name === 'amount') {
+            set_user_data(prev => {
+                return {
+                    ...prev,
+                    salary: {
+                        amount: value,
+                        period: prev.salary.period
+                    }
+                }
+            })
+        } else if (name === 'period') {
+            set_user_data(prev => {
+                return {
+                    ...prev,
+                    salary: {
+                        amount: prev.salary.amount,
+                        period: value
+                    }
+                }
+            })
+        } else {
+            set_user_data(prev_user_data => {
+                return {
+                    ...prev_user_data,
+                    [name]: type === 'checkbox' ? checked : value
+                }
+            })
+        }
+
     }
 
     function add_exp_info(event) {
@@ -527,43 +556,7 @@ function WorkerAccount(props) {
                     */}
 
                     <h2 className="lk__section-title">Желаемая работа</h2>
-                    <section className="lk__section">
-                    <h3>Тип работы</h3>
-                        <div className="lk__work-status">
-                            <input 
-                                className="--hiden"
-                                id="work_any"
-                                type="radio"
-                                name="work_status"
-                                value='любая'
-                                checked= {user_data.work_status === 'любая'}
-                                onChange={event => handle_change(event)}
-                            />
-                            <label className="--radio-label --lk-radio --status-radio --cd" htmlFor="work_any">Любая</label>
-
-                            <input 
-                                className="--hiden"
-                                id="work_temporary"
-                                type="radio"
-                                name="work_status"
-                                value='временная'
-                                checked={user_data.work_status === 'временная'}
-                                onChange={event => handle_change(event)}
-                            />
-                            <label className="--radio-label --lk-radio --status-radio --cd" htmlFor="work_temporary">Временная</label>
-
-                            <input 
-                                className="--hiden"
-                                id="work_fulltime"
-                                type="radio"
-                                name="work_status"
-                                value='постоянная'
-                                checked={user_data.work_status === 'постоянная'}
-                                onChange={event => handle_change(event)}
-                            />
-                            <label className="--radio-label --lk-radio --status-radio --cd" htmlFor="work_fulltime">Постоянная</label>
-                        </div> 
-                    </section>
+                    <JobPreference user_data={user_data} handle_change={handle_change} />
 
                     {/* 
                         ------------ EXPERIENCE ------------

@@ -90,18 +90,22 @@ function Subway({ station, text_style }) {
         backgroundColor: backgorund,
     }
 
+    let text = <p>{station}</p>
+
+    if (text_style) {
+        if (text_style === 'h4')
+            text = <h4>{station}</h4>
+                
+        if (text_style === 'h3')
+            text = <h3>{station}</h3>
+    }
+
     return (
         <div className="subway">
             <div className="subway__icon" style={style}>
                 <img className="subway__img" src={subway_icon} alt="metro-icon" />
             </div>
-            {
-                text_style
-                ?
-                text_style === 'h4' && <h4>{station}</h4>
-                :
-                <p>{station}</p>
-            }
+            {text}
         </div>
     )
 }

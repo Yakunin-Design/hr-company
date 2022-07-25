@@ -14,6 +14,22 @@
     margin-top: 5rem;
 }
 
+.--mb1 {
+    margin-bottom: 1rem;
+}
+
+.--mb2 {
+    margin-bottom: 2rem;
+}
+
+.--ml2 {
+    margin-left: 2rem;
+}
+
+.--mla {
+    margin-left: auto;
+}
+
 .--pt1 {
     padding-top: 1rem;
 }
