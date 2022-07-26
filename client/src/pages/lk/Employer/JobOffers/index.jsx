@@ -13,9 +13,8 @@ import useToggle from './hooks/useToggle'
 
 function JobOffers(props) {
 
-    const { active_job_offers, closed_job_offers } = JobOffersLogic()
+    const { active_job_offers, closed_job_offers, points } = JobOffersLogic()
     const { new_job_offer, toggle_new_job_offer } = useToggle()
-
     return (
         <div className="lk">
             <LkNav page="job-offers" user_type={props.user.user_type}/>
@@ -34,7 +33,7 @@ function JobOffers(props) {
                 </div>
                 <Footer />
             </main>
-            {new_job_offer && <EditJobOffer create toggle_new_job_offer={toggle_new_job_offer} /> }
+            {new_job_offer && <EditJobOffer create toggle_new_job_offer={toggle_new_job_offer} points={points}/> }
         </div>
     )
 }

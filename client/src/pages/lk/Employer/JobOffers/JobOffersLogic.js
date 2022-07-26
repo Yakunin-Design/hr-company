@@ -5,6 +5,7 @@ import JobOfferRow from './JobOfferRow'
 
 export default function JobOffersContainer() {
     const [min_job_offers, set_min_job_offers] = React.useState([])
+    const [points, set_points] = React.useState([])
 
     // getting min job_offers
     React.useEffect(() => {
@@ -22,7 +23,8 @@ export default function JobOffersContainer() {
                     return console.log('bruh')
                 }
 
-                set_min_job_offers(res.data)
+                set_points(res.data.points)
+                set_min_job_offers(res.data.job_offers)
             })
             .catch(e => {
                 console.log(e)
@@ -35,6 +37,7 @@ export default function JobOffersContainer() {
 
     return {
         active_job_offers,
-        closed_job_offers
+        closed_job_offers,
+        points
     }
 }

@@ -7,6 +7,7 @@ import Footer from '../../../../components/Footer'
 import '../../../../styles/utils/lk.css'
 
 import edit_pencil from '../../../../assets/svg/edit_pencil.svg'
+import plus_icon from '../../../../assets/svg/logo.svg'
 import {check_full_name, check_email, check_phone} from '../../../../functions/validations'
 
 
@@ -24,33 +25,38 @@ function EmployerAccount(props) {
     const [edits, set_edits] = React.useState([])
 
     function handle_change(event) {
-        const {name, value} = event.target
+        const {name, value, files} = event.target
 
         set_show_save_btn(true)
 
         set_edits(prev => prev.filter(edit => edit != name ))
         set_edits(prev => [...prev, name])
 
-        set_emp_data(prev_emp_data => {
-            return {
-                ...prev_emp_data,
-                [name]: value
-            }
-        })
+        if (name === 'logo') {
+
+            const reader = new FileReader()
+            reader.addEventListener("load", function () {
+                if (this.result) {
+
+                    set_emp_data(prev_emp_data => {
+                        return {
+                            ...prev_emp_data,
+                            [name]: this.result
+                        }
+                    })
+                }
+            })
+            reader.readAsDataURL(files[0])
+
+        } else {
+            set_emp_data(prev_emp_data => {
+                return {
+                    ...prev_emp_data,
+                    [name]: value
+                }
+            })
+        }
     }
-
-    /*
-
-    edits (api): 
-    {
-        "full_name": "petr petrov"
-        "email": "pert@rus.ru"
-    }
-
-    errors-state:
-    ['phone']
-
-    */
 
     function add_data(data, edit) {
         data[edit] = emp_data[edit]
@@ -74,6 +80,9 @@ function EmployerAccount(props) {
             }
             if (edit === 'description') {
                 (emp_data[edit].length >=20 && emp_data[edit].length <=120) ? add_data(data, edit) : err.push(edit)
+            }
+            if (edit === 'logo') {
+                add_data(data, edit)
             }
         })
 
@@ -122,9 +131,19 @@ function EmployerAccount(props) {
 
                     <section className="lk__section lk__basic-info --employer-basic-info">
                         <div className="personal_data__avatar-block --employer-avatar-block">
-                            {
-                                emp_data.logo ? <img src={emp_data.logo} className='avatar --avatar'/> : <div className="--avatar"></div>
-                            }
+                            <input
+                                className="--hiden"
+                                id="logo"
+                                type="file"
+                                name="logo"
+                                accept="image/*"
+                                onChange={(event) => handle_change(event)}
+                            />
+                            <label htmlFor="logo" >
+                                    {
+                                        emp_data.logo ? <img className="avatar --avatar" src={emp_data.logo} alt=""/> : <img className="icon-plus --avatar" src={plus_icon} alt=""/>
+                                    }
+                            </label>
                         </div>
 
                         <img src={edit_pencil} className='--edit_pencil' alt='' onClick={on_change_description}/>

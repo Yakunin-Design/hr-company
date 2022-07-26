@@ -12,6 +12,12 @@ function DisplayPoint(props) {
             <button className="--floating-btn --mt2" onClick={() => props.set_display_point({})}><img src={back_arrow_icon} alt="back-btn"/></button>
             <h2 className="--mt2 --mb1">{props.data.address}</h2>
             <Subway station={props.data.subway} text_style="h3"/>
+            <h2 className="--mt2 --mb1">Сотрудники</h2>
+            <p>Тут будут сотрудники :)</p>
+            <h2 className="--mt2 --mb1">Вакансии</h2>
+            <div className="--row">
+                
+            </div>
         </div>
     )
 }

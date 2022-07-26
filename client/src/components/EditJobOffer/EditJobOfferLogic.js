@@ -141,6 +141,27 @@ export default function EditJobOfferLogic(old_data) {
                 )
                 
             })
+        } else if (name === 'address') {
+
+            for(let i = 0; i < old_data.points.length; i++) {
+                if (old_data.points[i].address === value) {
+                    set_job_offer_data(prev => {
+                        return {
+                            ...prev,
+                            [name]: value,
+                            'subway': old_data.points[i].subway
+                        }
+                    })
+                    return
+                }
+            }
+
+            set_job_offer_data(prev => {
+                return {
+                    ...prev,
+                    [name]: value
+                }
+            })
         } else {
             set_job_offer_data(prev => {
                 return {
@@ -150,13 +171,28 @@ export default function EditJobOfferLogic(old_data) {
             })
         }
 
-        set_job_offer_changes(prev => prev.filter(edit => edit != name ))
-        set_job_offer_changes(prev => [...prev, name])
+        if (name === 'address') {
+            set_job_offer_changes(prev => prev.filter(edit => (edit != name && edit != 'subway') ))
+            set_job_offer_changes(prev => [...prev, name, 'subway'])
+        } else {
+            set_job_offer_changes(prev => prev.filter(edit => edit != name ))
+            set_job_offer_changes(prev => [...prev, name])
+        }
     }
 
     function on_save(job_offer_data) {
         const {validation_errors, send_data} = job_offer_validation(job_offer_data)
         set_errors(validation_errors)
+
+        let data_to_api = send_data
+
+        for(let i = 0; i < old_data.points.length; i++) {
+            if (old_data.points[i].address === send_data.address &&old_data.points[i].subway === send_data.subway) {
+                delete data_to_api.address
+                delete data_to_api.subway
+                data_to_api["point_id"] = old_data.points[i]._id
+            }
+        }
 
         if (validation_errors.length === 0) {
             save_job_offer(send_data)

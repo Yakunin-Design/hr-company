@@ -11,6 +11,7 @@ import drop_document from '../../../../assets/svg/drop_document.svg'
 import floating_plus from '../../../../assets/svg/floating_plus.svg'
 import ProgressArrow from '../../../../assets/svg/progress_arrow'
 import time_span from '../../../../assets/svg/time_span.svg'
+import plus_icon from '../../../../assets/svg/logo.svg'
 
 import Experience from '../../../../components/Experience'
 import JobPreference from './JobPreference'
@@ -57,18 +58,14 @@ function WorkerAccount(props) {
 
         if (edit === 'experience') {
             data[edit] = [...user_data[edit], exp_info]
+        } else if (edit === 'amount' || edit === 'period') {
+            data.salary = user_data.salary
         } else {
             data[edit] = user_data[edit]
         }
         
         set_edits(prev => prev.filter(edit => edit != user_data[edit] ))
     }
-
-    /**
-     *  req = {1}
-     *  [{1},{2}]
-     */
-
 
     function save_data() {
 
@@ -94,7 +91,7 @@ function WorkerAccount(props) {
             if (edit === 'year') {
                 check_year(user_data[edit]) ? add_data(data, edit) : err.push(edit)
             }
-            if (edit === 'citizenship' || edit === 'status') {
+            if (edit === 'citizenship' || edit === 'status' || edit === 'logo' || edit === 'job_type' || edit === 'amount' || edit === 'subway' || edit === 'district') {
                 add_data(data, edit)
             }
         })
@@ -218,8 +215,6 @@ function WorkerAccount(props) {
             }
         }
 
-        console.log({...result_data})
-
         Object.keys(result_data).length > 0 &&
         axios.post('http://localhost:6969/profile/edit', {...result_data}, config)
             .then(res => {
@@ -235,7 +230,7 @@ function WorkerAccount(props) {
     }
 
     function handle_change(event) {
-        const {name, value, type, checked} = event.target
+        const {name, value, type, checked, files} = event.target
 
         set_show_save_btn(true)
 
@@ -262,6 +257,22 @@ function WorkerAccount(props) {
                     }
                 }
             })
+        } else if (name === 'logo') {
+
+            const reader = new FileReader()
+            reader.addEventListener("load", function () {
+                if (this.result) {
+
+                    set_user_data(prev_user_data => { 
+                        return {
+                            ...prev_user_data,
+                            [name]: this.result
+                        }
+                    })
+                }
+            })
+            reader.readAsDataURL(files[0])
+
         } else {
             set_user_data(prev_user_data => {
                 return {
@@ -350,9 +361,19 @@ function WorkerAccount(props) {
                         <section className="lk__section lk__basic-info">
 
                             <div className="personal_data__avatar-block">
-                                {
-                                    user_data.logo ? <img src={user_data.logo} className='avatar --avatar'/> : <div className="--avatar"></div>
-                                }
+                                <input
+                                    className="--hiden"
+                                    id="logo"
+                                    type="file"
+                                    name="logo"
+                                    accept="image/*"
+                                    onChange={(event) => handle_change(event)}
+                                />
+                                <label htmlFor="logo" >
+                                        {
+                                            user_data.logo ? <img className="avatar --avatar" src={user_data.logo} alt=""/> : <img className="icon-plus --avatar" src={plus_icon} alt=""/>
+                                        }
+                                </label>
                             </div>
 
                             <h3 className="--mt2">ФИО</h3>
