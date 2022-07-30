@@ -1,12 +1,12 @@
-import React from 'react'
+import React from 'react';
 
 function PageNotFound() {
     return (
         <>
             <h1>Page doesnt not exists!</h1>
-            <Footer/>
+            <Footer />
         </>
-    )
+    );
 }
 
-export default PageNotFound
+export default PageNotFound;
