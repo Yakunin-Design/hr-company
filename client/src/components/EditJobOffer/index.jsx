@@ -10,7 +10,7 @@ import MainSettings from './settings/MainSettings'
 import AdvancedSettings from './settings/AdvancedSettings'
 
 function EditJobOffer(props) {
-    const { job_offer_data, handle_change, on_save, on_update, errors } = EditJobOfferLogic(props.old_data || {})
+    const { job_offer_data, handle_change, on_save, on_update, errors } = EditJobOfferLogic({...props.old_data, points: props.points} || {})
 
     return(
         <div className="--modal-sheet-overlay">
@@ -27,6 +27,7 @@ function EditJobOffer(props) {
                         job_offer_data={job_offer_data}
                         handle_change={handle_change}
                         errors={errors}
+                        points={props.points}
                     />
                     <h2 className='--cd --mt5'>Основные</h2>
                     <p className='--cd'>Рекомендуем заполнить эти поля для повышения релевантности вакансии</p>

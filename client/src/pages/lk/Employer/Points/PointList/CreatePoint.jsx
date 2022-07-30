@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 
 import '../../../../../styles/modal_sheet.css'
 
@@ -35,7 +36,38 @@ function CreatePoint(props) {
     }
 
     function save() {
-        console.log(point_data)
+
+        const err = []
+
+        if (point_data.address == '') {
+            err.push('address')
+        }
+        if (subway_stations.indexOf(point_data.subway) === -1) {
+            err.push('subway')
+        }
+
+        if (err.length != 0) {
+            set_errors(err)
+        } else {
+            const config = {
+                headers: {
+                    authorization: 'Bearer ' + localStorage.getItem('jwt')
+                }
+            }
+    
+            axios.post ('http://localhost:6969/new-point', point_data, config)
+            .then(res => {
+                if (!res.data) {
+                    return console.log(res)
+                }
+                console.log(res)
+                set_errors([])
+                document.location.reload()
+            })
+            .catch(e => {
+                console.log(e.message)
+            })
+        }
     }
 
     return (

@@ -7,7 +7,7 @@ interface IJobOffer {
     status: 'active' | 'closed';
     created: number;
 
-    point_id?: ObjectId;
+    point_id?: string;
     candidates: ObjectId[];
     candidate_count: number;
 
@@ -15,8 +15,8 @@ interface IJobOffer {
     type: 'full time' | 'part time';
 
     specialty: string;
-    address: string;
-    subway: subway;
+    address?: string;
+    subway?: subway;
     salary: salary;
 
     // General 

@@ -21,7 +21,7 @@ async function basic_edit(req: Request, res: Response): Promise<void> {
         const changed_names: Array<string> = Object.keys(data);
         const changed_values: Array<string | object | Array<string>> = Object.values(data);
 
-        const allowed_edits = ['full_name', 'birthday', 'citizenship', 'status', 'job_type', 'disctrict', 'subway', 'salary', 'specialty', 'experience', 'documents'];
+        const allowed_edits = ['full_name', 'birthday', 'citizenship', 'status', 'job_type', 'district', 'subway', 'salary', 'specialty', 'experience', 'documents', 'logo'];
 
         let edits = {};
         for (let i = 0; i < changed_names.length; i++) {

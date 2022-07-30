@@ -16,7 +16,7 @@ async function basic_edit(req: Request, res: Response): Promise<void> {
         const changed_names: Array<string> = Object.keys(data);
         const changed_values: Array<string | object | Array<string>> = Object.values(data);
 
-        const allowed_edits = ['full_name', 'description'];
+        const allowed_edits = ['full_name', 'description', 'logo'];
 
         let edits = {};
         for (let i = 0; i < changed_names.length; i++) {
@@ -58,18 +58,36 @@ async function create_job_offer(req: Request, res: Response): Promise<void> {
             return;
         }
 
-        const job_offer: IJobOffer = {
+        let job_offer: IJobOffer = {
             ...validated.Ok!,
             employer_id: res.locals.user._id,
             status: 'active',  
             candidates: [],
             candidate_count: 0,
             created: Math.floor(Date.now() / 1000),
-            logo: res.locals.user.logo
+            logo: res.locals.user.logo,
+            address: validated.Ok!.address || '',
+            subway: validated.Ok!.subway || ''
         };
 
         if (!job_offer.point_id) {
             // db.save new point
+            const point = await db.save(
+                {address: job_offer.address, 
+                subway: job_offer.subway, 
+                emp_id: new ObjectId(res.locals.user.emp_id), 
+                job_offers: [], 
+                workers: []
+            },'points');
+
+            const employer_points = res.locals.user.points ? [...res.locals.user.points, point.Ok!] : [point.Ok!];
+
+            const update_employer = await db.update({_id: res.locals.user._id}, {$set: {points: employer_points}}, 'employers');
+
+            job_offer.address && delete job_offer.address;
+            job_offer.subway && delete job_offer.subway;
+            job_offer["point_id"] = point.Ok!.toString();
+
         }
 
         // creating the JO in the database [500]
@@ -79,6 +97,11 @@ async function create_job_offer(req: Request, res: Response): Promise<void> {
             res.status(500).send(db_result.Err.message);
             return;
         }
+
+        const point = await db.find({_id: new ObjectId(job_offer.point_id)},'points');
+        const offers = point.Ok!.job_offers;
+
+        const update_point = await db.update({_id: new ObjectId(job_offer.point_id)},{$set: {job_offers:[...offers, db_result]}}, 'points');
 
         // sending the response [201]
         res.status(201).send('Created');
@@ -93,6 +116,14 @@ async function job_offers(req: Request, res: Response): Promise<void> {
     try {
         // find all job offers (with employer_id from jwt)
         const employer_id = res.locals.user._id;
+        const points_id = res.locals.user.points ? res.locals.user.points.map(point => {return {_id: point}}) : []
+
+        let points
+        if (points_id.length > 0) {
+            const points_result = await db.find_all({$or: [...points_id]}, 'points');
+            points = points_result.Ok ? points_result.Ok : []
+        }
+
 
         const db_result = await db.find_all({ employer_id: employer_id }, 'job_offers');
 
@@ -102,11 +133,14 @@ async function job_offers(req: Request, res: Response): Promise<void> {
         }
 
         const min_job_offers = db_result.Ok!.map(jo => {
+
+            const point = points.filter(point => point._id.toString() === jo.point_id.toString());
+
             return {
                 id: jo._id,
                 specialty: jo.specialty,
-                address: jo.address,
-                subway: jo.subway,
+                address: point[0].address,
+                subway: point[0].subway,
 
                 candidate_count: jo.candidate_count,
                 created: jo.created,
@@ -120,7 +154,7 @@ async function job_offers(req: Request, res: Response): Promise<void> {
         });
 
         // send the response [200]
-        res.status(200).send(min_job_offers);
+        res.status(200).send({points: points, job_offers: min_job_offers});
 
     }
     catch (e) {
@@ -151,7 +185,6 @@ async function full_job_offer(req: Request, res: Response): Promise<void> {
         }
 
         let contains = false;
-        let logo
         if (req.headers.authorization) {
             const token = req.headers.authorization.split(' ')[1];
             jwt.verify(token, 'shhhh', async (error, decoded) => {
@@ -168,10 +201,12 @@ async function full_job_offer(req: Request, res: Response): Promise<void> {
 
         // send the response [200]
 
-        const response = {
-            data: db_result.Ok,
+        let response = {
+            data: {...db_result.Ok},
             contains: contains
         }
+
+        delete response.data.point_id
 
         res.status(200).send(response);
 
@@ -206,4 +241,63 @@ async function edit_job_offer (req: Request, res: Response) {
 
 }
 
-export default { profile, basic_edit, create_job_offer, job_offers, full_job_offer, edit_job_offer }
+async function create_point(req: Request, res: Response) {
+
+    const find = await db.find({...req.body, emp_id: res.locals.user._id}, 'points');
+
+    if (find.Ok) {
+        res.status(400).send('already exists');
+        return;
+    }
+
+    const point_data = {
+        address: req.body.address,
+        subway: req.body.subway,
+        emp_id: res.locals.user._id,
+        job_offers: [],
+        workers: []
+    }
+
+    const point_result = await db.save(point_data, 'points');
+
+    if (point_result.Err) {
+        res.status(400).send('update err');
+        return;
+    }
+
+    const points = res.locals.user.points ? [...res.locals.user.points, point_result.Ok] : [point_result.Ok];
+
+    const emp_result = await db.update({_id: res.locals.user._id}, {$set: {points: points}}, 'employers');
+
+    if (emp_result.Err) {
+        res.status(400).send('update err');
+        return;
+    }
+
+    res.status(200).send('ok');
+
+}
+
+async function get_points(req: Request, res: Response) {
+
+    const points_id = res.locals.user.points ? res.locals.user.points.map(point => {return {_id: point}}) : []
+
+    if (points_id.length === 0) {
+        res.status(200).send([]);
+        return;
+    }
+
+    const db_result = await db.find_all({$or: [...points_id]}, 'points');
+
+    if (db_result.Err) {
+        res.status(400).send('find err');
+        return;
+    }
+
+    // const db_result = await db.find_all({})
+
+    res.status(200).send(db_result.Ok);
+
+}
+
+export default { profile, basic_edit, create_job_offer, job_offers, full_job_offer, edit_job_offer, create_point, get_points }

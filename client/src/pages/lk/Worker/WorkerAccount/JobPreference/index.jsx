@@ -4,6 +4,7 @@ import Graph from '../../../../../components/EditJobOffer/settings/Graph'
 import Subway from '../../../../../components/Subway'
 import select_arrow from '../../../../../assets/svg/select_arrow.svg'
 import subway_stations from '../../../../../data/subway_stations'
+import districts from '../../../../../data/districts'
 
 function display_period(period) {
     let display_period = []
@@ -25,8 +26,6 @@ export default function JobPreference(props) {
     }
 
     const { handle_change } = props
-
-    console.log(props.user_data);
 
     return (
         <>
@@ -121,7 +120,8 @@ export default function JobPreference(props) {
                             className='card__input JobOffer__edit__input --address-input'
                             type="text"
                             name='district'
-                            value={props.user_data.address}
+                            list='districts'
+                            value={props.user_data.district}
                             onChange={event => handle_change(event)}
                             // style={errors.includes('district') ? error_style : {}}
                         />
@@ -150,6 +150,9 @@ export default function JobPreference(props) {
 
                         <datalist id="subways">
                             { subway_stations.map((station) => <option value={station}>{station}</option>) }
+                        </datalist>
+                        <datalist id="districts">
+                            { districts.map((district) => <option value={district}>{district}</option>) }
                         </datalist>
                     </div>
 

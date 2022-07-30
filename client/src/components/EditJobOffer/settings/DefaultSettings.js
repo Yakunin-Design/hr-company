@@ -19,6 +19,8 @@ function display_period(period) {
 
 export default function DefaultSettings(props) {
 
+    const points_address = props.points.map(point => point.address)
+
     const { job_offer_data, handle_change, errors } = props
 
     const error_style = {
@@ -51,7 +53,8 @@ export default function DefaultSettings(props) {
                 <input 
                     className='card__input JobOffer__edit__input --address-input' 
                     type="text"
-                    name='address' 
+                    name='address'
+                    list='points'
                     value={job_offer_data.address}
                     onChange={event => handle_change(event)}
                     style={errors.includes('address') ? error_style : {}}
@@ -82,6 +85,11 @@ export default function DefaultSettings(props) {
                 <datalist id="subways">
                     {
                         subway_stations.map((station) => { return <option value={station}>{station}</option> })
+                    }
+                </datalist>
+                <datalist id="points">
+                    {
+                        points_address.map((point) => { return <option value={point}>{point}</option> })
                     }
                 </datalist>
             </div>

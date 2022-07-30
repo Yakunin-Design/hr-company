@@ -62,7 +62,7 @@
 
 .--save-btn {
     position: fixed;
-    z-index: 1;
+    z-index: 4;
     bottom: 10%;
     right: 10%;
     cursor: pointer;

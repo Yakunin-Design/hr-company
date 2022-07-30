@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 
 import LkNav from '../../../../components/MainNav'
 import Footer from '../../../../components/Footer'
@@ -12,23 +13,30 @@ function Points(props) {
 
     const [poinst_data, set_points_data] = React.useState([])
 
-    const dummy_data = [{
-        id: 'bruh',
-        subway: 'Адмиралтейская',
-        address: 'Улица Ленина',
-        job_offers: [
-            {specialty: 'Повар'},
-            {specialty: 'Повар2'}
-        ],
-        workers: [
-            {full_name: 'Азамат'},
-            {full_name: 'Азалупа'}
-        ]
-    }]
+    const [points_list, set_points_list] = React.useState([])
+
+    React.useEffect(() => {
+
+        const config = {
+            headers: {
+                authorization: 'Bearer ' + localStorage.getItem('jwt')
+            }
+        }
+
+        axios.get('http://localhost:6969/get-points', config)
+        .then(res => {
+            if (!res.data) {
+                return console.log(res)
+            }
+            set_points_list(res.data)
+        })
+        .catch(e => {
+            console.log(e.message)
+        })
+
+    },[])
 
     const [display_point, set_display_point] = React.useState({})
-
-    console.log(display_point)
 
     return (
         <div className="lk">
@@ -37,7 +45,7 @@ function Points(props) {
         
                 { Object.keys(display_point).length != 0
                     ? <DisplayPoint set_display_point={set_display_point} data={display_point}/>
-                    : <PointList data={dummy_data} set_display_point={set_display_point}/>
+                    : <PointList data={points_list} set_display_point={set_display_point}/>
                 }
 
                 <Footer />
