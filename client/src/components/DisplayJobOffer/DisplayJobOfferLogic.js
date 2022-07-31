@@ -77,7 +77,6 @@ export default function DisplayJobOfferLogic(props) {
         if (localStorage.getItem('user_type') === 'employer') {
             // getting candidates
             // [id, id, id] -> req -> [{}, {}, {}]
-
             axios
                 .post(
                     'http://localhost:6969/get-candidates',

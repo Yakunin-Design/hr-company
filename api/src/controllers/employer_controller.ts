@@ -242,8 +242,6 @@ async function get_candidates(req: Request, res: Response) {
     try {
         const candidates = req.body;
 
-        console.log(candidates);
-
         const workers = await Promise.all(
             candidates.map(async candidate => {
                 const db_result = await db.find(

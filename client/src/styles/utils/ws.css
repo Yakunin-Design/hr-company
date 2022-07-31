@@ -1,3 +1,7 @@
+.--mt0 {
+    margin-top: 0 !important;
+}
+
 .--mt1 {
     margin-top: 1rem;
 }
@@ -12,6 +16,10 @@
 
 .--mt5 {
     margin-top: 5rem;
+}
+
+.--mb0 {
+    margin-bottom: 0 !important;
 }
 
 .--mb1 {

@@ -1,8 +1,9 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom'
 
-import './Footer.css'
+import './Footer.css';
 
-function Footer() { 
+function Footer() {
     return (
         <footer className="footer">
             <div className="--page-container">
@@ -11,10 +12,16 @@ function Footer() {
                 </div>
                 <div className="footer__links links">
                     <div className="links__c1">
-                        <p className="--v2 --cl">Ссылка 1</p>
-                        <p className="--v2 --cl">Ссылка 1</p>
-                        <p className="--v2 --cl">Ссылка 1</p>
-                   </div>
+                        <Link to={'/faq'}>
+                            <p className="--v2 --cl">Частые вопросы</p>
+                        </Link>
+                        <Link to={'/contact'}>
+                            <p className="--v2 --cl">Обратная связь</p>
+                        </Link>
+                        <Link to={'/loyalty'}>
+                            <p className="--v2 --cl">Партнерские программы</p>
+                        </Link>
+                    </div>
                     <div className="links__c2">
                         <p className="--v2 --cl">Ссылка 1</p>
                         <p className="--v2 --cl">Ссылка 1</p>
@@ -23,7 +30,7 @@ function Footer() {
                 </div>
             </div>
         </footer>
-    )
+    );
 }
 
-export default Footer
+export default Footer;
