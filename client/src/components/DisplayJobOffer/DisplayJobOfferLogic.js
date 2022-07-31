@@ -1,14 +1,13 @@
-import React from 'react'
+import React from 'react';
 
-import axios from 'axios'
-import description_dipslay from './description_display'
+import axios from 'axios';
+import description_dipslay from './description_display';
 
 export default function DisplayJobOfferLogic(props) {
-
     const [job_offer_data, set_job_offer_data] = React.useState({
         schedule: {
             weekdays: 0,
-            weekends: 0
+            weekends: 0,
         },
         citizenships: 'any',
         specialty: '',
@@ -17,109 +16,140 @@ export default function DisplayJobOfferLogic(props) {
         description: '',
         working_time: {
             start: '00:00',
-            end: '00:00'
+            end: '00:00',
         },
         sex: '',
         salary: {
             period: 'hour',
-            amount: ''
-        }
-    })
+            amount: '',
+        },
+    });
 
-    const [show_edit, set_show_edit] = React.useState(false)
-    const [responded, set_responded] = React.useState('')
+    const [show_edit, set_show_edit] = React.useState(false);
+    const [responded, set_responded] = React.useState('');
+    const [workers, set_workers] = React.useState([]);
 
     // props.id
     function toggle_edit() {
-        set_show_edit(prev => !prev)
+        set_show_edit(prev => !prev);
     }
 
-    let description = description_dipslay(job_offer_data.description)
+    let description = description_dipslay(job_offer_data.description);
+
     // Getting full job offer
     React.useEffect(() => {
-
-        const jwt = localStorage.getItem('jwt') || ''
+        const jwt = localStorage.getItem('jwt') || '';
 
         const config = {
             headers: {
-                authorization: 'Bearer ' + jwt
-            }
-        }
+                authorization: 'Bearer ' + jwt,
+            },
+        };
 
-        axios.get(`http://localhost:6969/job-offers/${props.id}`, config)
+        axios
+            .get(`http://localhost:6969/job-offers/${props.id}`, config)
             .then(res => {
                 if (!res.data) {
-                    return console.log('bruh')
+                    return console.log('bruh');
                 }
 
                 if (res.data.contains) {
-                    set_responded('already')
+                    set_responded('already');
                 }
 
-                set_job_offer_data(res.data.data)
+                set_job_offer_data(res.data.data);
+                get_candidates(res.data.data.candidates);
             })
             .catch(e => {
-                console.log(e)
-            })
+                console.log(e);
+            });
+    }, []);
 
-    }, [])
+    const jwt = localStorage.getItem('jwt') || '';
 
+    const config = {
+        headers: {
+            authorization: 'Bearer ' + jwt,
+        },
+    };
+
+    function get_candidates(candidates) {
+        if (localStorage.getItem('user_type') === 'employer') {
+            // getting candidates
+            // [id, id, id] -> req -> [{}, {}, {}]
+
+            axios
+                .post(
+                    'http://localhost:6969/get-candidates',
+                    candidates,
+                    config
+                )
+                .then(res => {
+                    set_workers(res.data);
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        }
+    }
 
     function jo_respond() {
-        const jwt = localStorage.getItem('jwt') || ''
-
-        const config = {
-            headers: {
-                authorization: 'Bearer ' + jwt
-            }
-        }
-
-        axios.get(`http://localhost:6969/find-user`, config)
+        axios
+            .get(`http://localhost:6969/find-user`, config)
             .then(res => {
                 if (!res.data) {
-                    return console.log('bruh')
+                    return console.log('bruh');
                 }
 
                 if (res.data.user_type === 'worker') {
-                    add_respond(res.data.id)
-                } 
-
+                    add_respond(res.data.id);
+                }
             })
             .catch(e => {
                 if (e.response.status === 401) {
-                    window.location.replace('/login')
+                    window.location.replace('/login');
                 }
-            })
+            });
     }
 
     function add_respond(worker_id) {
-
         const request_data = {
             worker_id,
-            job_offer_id: props.id
-        }
+            job_offer_id: props.id,
+        };
 
-        axios.post('http://localhost:6969/new-respond', request_data)
+        axios
+            .post('http://localhost:6969/new-respond', request_data)
             .then(res => {
                 if (!res.data) {
-                    return console.log('bruh')
+                    return console.log('bruh');
                 }
 
                 if (res.data === 'Updated') {
-                    set_responded('ok')
+                    set_responded('ok');
                 }
-
             })
             .catch(e => {
                 if (e.response.status === 401) {
-                    window.location.replace('/login')
+                    window.location.replace('/login');
                 }
-                console.log(e.response)
+                console.log(e.response);
                 if (e.response.data === 'already_responded') {
-                    set_responded('already')
+                    set_responded('already');
                 }
-            })
+            });
     }
 
-    return {job_offer_data, description, show_edit, toggle_edit, jo_respond, responded}
+    const user_type = localStorage.getItem('user_type') || '';
+
+    return {
+        job_offer_data,
+        description,
+        show_edit,
+        toggle_edit,
+        jo_respond,
+        responded,
+        user_type,
+        workers,
+    };
 }

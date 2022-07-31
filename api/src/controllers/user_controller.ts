@@ -1,11 +1,15 @@
 import { Request, Response } from 'express';
 import Result from '../lib/Result';
 import validator from '../lib/validator';
-import { generate_code, send_sms, send_email} from '../lib/codes';
-import db from '../lib/idb'; 
+import { generate_code, send_sms, send_email } from '../lib/codes';
+import db from '../lib/idb';
+import { ObjectId } from 'mongodb';
 
 // Email / Phone
-async function email_phone_edit_step1(req: Request, res: Response): Promise<void> {
+async function email_phone_edit_step1(
+    req: Request,
+    res: Response
+): Promise<void> {
     try {
         // Parse data
         const { type, new_value } = req.body;
@@ -17,8 +21,7 @@ async function email_phone_edit_step1(req: Request, res: Response): Promise<void
         if (type === 'phone') {
             validate = validator.phone(new_value);
             old_value = res.locals.user.phone;
-        }
-        else {
+        } else {
             validate = validator.email(new_value);
             old_value = res.locals.user.mail;
         }
@@ -39,11 +42,15 @@ async function email_phone_edit_step1(req: Request, res: Response): Promise<void
             _id: res.locals.user._id,
             new_value,
             code,
-            time: Date.now(),           
-            type
-        }
+            time: Date.now(),
+            type,
+        };
 
-        const result = await db.save_unique(filter, unverified_edit, 'unverified_edits');
+        const result = await db.save_unique(
+            filter,
+            unverified_edit,
+            'unverified_edits'
+        );
         if (!result.Ok) {
             res.status(400).send('Wrong');
             return;
@@ -52,25 +59,26 @@ async function email_phone_edit_step1(req: Request, res: Response): Promise<void
         // Send code
         if (type === 'phone') {
             send_sms(res.locals.user.phone, `Your code: ${code}`);
-        }
-        else {
+        } else {
             send_email(res.locals.user.email, `Your code: ${code}`);
         }
 
         res.status(203).send(result.Ok.toString());
-    }
-    catch (e) {
-        console.log("big OOOF [confirm_phone] --> " + e);
+    } catch (e) {
+        console.log('big OOOF [confirm_phone] --> ' + e);
         res.status(500).send('Something went wrong');
     }
 }
 
-async function email_phone_edit_step2(req: Request, res: Response): Promise<void> { 
+async function email_phone_edit_step2(
+    req: Request,
+    res: Response
+): Promise<void> {
     const { code } = req.body;
     const id = res.locals.user._id;
 
     // Finding edit
-    const unverified_edit = await db.find({_id: id}, 'unverified_edits');
+    const unverified_edit = await db.find({ _id: id }, 'unverified_edits');
     if (unverified_edit.Ok === null) {
         res.status(400).send('Invalid data');
         return;
@@ -83,23 +91,51 @@ async function email_phone_edit_step2(req: Request, res: Response): Promise<void
     }
 
     const collection = res.locals.jwt.user_type + 's';
-    await db.update({ _id: id }, { $set: { [unverified_edit.Ok.type]: unverified_edit.Ok.new_value } }, collection);
+    await db.update(
+        { _id: id },
+        { $set: { [unverified_edit.Ok.type]: unverified_edit.Ok.new_value } },
+        collection
+    );
 
     await db.delete(id, 'unverified_edits');
 
     res.status(203).send('ok');
 }
 
-async function get_jobs(req: Request, res: Response): Promise<void> {
-    const db_result = await db.find_all({status: 'active'}, 'job_offers', 30);
+async function get_jobs(req: Request, res: Response) {
+    const db_result = await db.find_all({ status: 'active' }, 'job_offers', 30);
 
-    // send
-    if (db_result.Err) {
-        res.status(400).send(db_result.Err.message);
-        return;
-    }
+    // No job offers || db error
+    if (db_result.Err) return res.status(400).send(db_result.Err.message);
+    if (db_result.Ok === null) return res.status(200).send([]);
 
-    res.status(200).send(db_result.Ok!);
+    // Address & subway are stored in the point collection
+    const resp = await Promise.all(
+        db_result.Ok.map(async job => {
+            const point = await db.find(
+                { _id: new ObjectId(job.point_id) },
+                'points'
+            );
+            if (point.Ok === null || point.Err)
+                return console.log('cant find point');
+
+            // Removing useless data from beeing send to the client
+            delete job.experience;
+            delete job.citizenship;
+            delete job.sex;
+            delete job.age;
+            delete job.candidates;
+            delete job.point_id;
+
+            return {
+                ...job,
+                address: point.Ok.address,
+                subway: point.Ok.subway,
+            };
+        })
+    );
+
+    res.status(200).send(resp);
 }
 
 async function get_workers(req: Request, res: Response): Promise<void> {
@@ -114,8 +150,16 @@ async function get_workers(req: Request, res: Response): Promise<void> {
 }
 
 async function get_user(req: Request, res: Response): Promise<void> {
-
-   res.status(200).send({user_type: res.locals.jwt.user_type, id: res.locals.user._id});
+    res.status(200).send({
+        user_type: res.locals.jwt.user_type,
+        id: res.locals.user._id,
+    });
 }
 
-export default { email_phone_edit_step1, email_phone_edit_step2, get_jobs, get_workers, get_user }
+export default {
+    email_phone_edit_step1,
+    email_phone_edit_step2,
+    get_jobs,
+    get_workers,
+    get_user,
+};

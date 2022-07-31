@@ -46,6 +46,10 @@
     padding-top: 5rem;
 }
 
+.--pb2 {
+    padding-bottom: 2rem !important;
+}
+
 .--row {
     display: flex;
     align-items: center;
