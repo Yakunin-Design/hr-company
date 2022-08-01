@@ -57,6 +57,12 @@ router.post('/get-candidates', auth, (req: Request, res: Response) => {
     else res.status(401).send('unauthorized');
 });
 
+router.post('/get-worker-bank', auth, (req: Request, res: Response) => {
+    if (res.locals.jwt.user_type === 'employer')
+        employer_controller.get_worker_bank(req, res);
+    else res.status(401).send('unauthorized');
+});
+
 //point
 router.post('/new-point', auth, (req: Request, res: Response) => {
     employer_controller.create_point(req, res);

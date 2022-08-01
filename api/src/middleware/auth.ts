@@ -21,9 +21,12 @@ function auth(req: Request, res: Response, next: NextFunction) {
 
         // Store user object in memory
 
-        let db_result = await db.find({_id: new ObjectId(res.locals.jwt.userID)},res.locals.jwt.user_type + 's', );
+        let db_result = await db.find(
+            { _id: new ObjectId(res.locals.jwt.userID) },
+            res.locals.jwt.user_type + 's'
+        );
 
-        if(!db_result.Ok) {
+        if (!db_result.Ok) {
             return res.status(400).send('Wrong jwt');
         }
 
@@ -37,6 +40,5 @@ function auth(req: Request, res: Response, next: NextFunction) {
 
         next();
     });
-
-};
+}
 export default auth;

@@ -238,6 +238,63 @@ async function full_job_offer(req: Request, res: Response) {
     }
 }
 
+async function get_worker_bank(req: Request, res: Response) {
+    try {
+        // find all job offers (with employer_id from jwt)
+        const employer_id = res.locals.user._id;
+        const points_id = res.locals.user.points
+            ? res.locals.user.points.map(point => {
+                  return { _id: point };
+              })
+            : [];
+
+        let points;
+        if (points_id.length > 0) {
+            const points_result = await db.find_all(
+                { $or: [...points_id] },
+                'points'
+            );
+
+            points = points_result.Ok ? points_result.Ok : [];
+        } else {
+            points = [];
+        }
+
+        const db_result = await db.find_all(
+            { employer_id: employer_id },
+            'job_offers'
+        );
+
+        if (db_result.Err) return res.status(500).send(db_result.Err.message);
+
+        const candidates: string[] = [];
+
+        const job_offers = db_result.Ok!.map(jo => {
+            jo.candidates.forEach(candidate => {
+                if (!candidates.includes(candidate.toString()))
+                    candidates.push(candidate.toString());
+            });
+        });
+
+        // [id, id, id] -> [{}, {}, {}]
+        const workers = await Promise.all(
+            candidates.map(async candidate => {
+                const db_result = await db.find(
+                    { _id: new ObjectId(candidate) },
+                    'workers'
+                );
+
+                return db_result.Ok;
+            })
+        );
+
+        // send the response [200]
+        res.status(200).send(workers);
+    } catch (e) {
+        console.log(e.message);
+    }
+}
+
 async function get_candidates(req: Request, res: Response) {
     try {
         const candidates = req.body;
@@ -347,4 +404,5 @@ export default {
     create_point,
     get_points,
     get_candidates,
+    get_worker_bank,
 };

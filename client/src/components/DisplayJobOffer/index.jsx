@@ -26,8 +26,6 @@ function DisplayJobOffer(props) {
 
     const candidates = workers.map(worker => <WorkerCard data={worker} />);
 
-    console.log(candidates);
-
     return (
         <div className="--modal-sheet-overlay">
             {show_edit && (
