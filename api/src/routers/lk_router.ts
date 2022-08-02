@@ -65,11 +65,21 @@ router.post('/get-worker-bank', auth, (req: Request, res: Response) => {
 
 //point
 router.post('/new-point', auth, (req: Request, res: Response) => {
-    employer_controller.create_point(req, res);
+    if (res.locals.jwt.user_type === 'employer')
+        employer_controller.create_point(req, res);
+    else res.status(401).send('unauthorized');
 });
 
 router.get('/get-points', auth, (req: Request, res: Response) => {
-    employer_controller.get_points(req, res);
+    if (res.locals.jwt.user_type === 'employer')
+        employer_controller.get_points(req, res);
+    else res.status(401).send('unauthorized');
+});
+
+router.post('/get-point-data', auth, (req: Request, res: Response) => {
+    if (res.locals.jwt.user_type === 'employer')
+        employer_controller.get_point_data(req, res);
+    else res.status(401).send('unauthorized');
 });
 
 // my job

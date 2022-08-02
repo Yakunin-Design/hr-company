@@ -10,9 +10,6 @@ import DisplayPoint from './DisplayPoint'
 import '../../../../styles/utils/lk.css'
 
 function Points(props) {
-
-    const [poinst_data, set_points_data] = React.useState([])
-
     const [points_list, set_points_list] = React.useState([])
 
     React.useEffect(() => {

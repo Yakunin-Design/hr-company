@@ -5,6 +5,7 @@ import WorkerCard from '../../../../components/WorkerCard';
 
 import Footer from '../../../../components/Footer';
 import '../../../../styles/utils/lk.css';
+import styles from './WorkerBank.module.css';
 
 function WorkerBank(props) {
     const [workers, set_workers] = React.useState([]);
@@ -36,8 +37,10 @@ function WorkerBank(props) {
             <LkNav page="worker-bank" user_type={props.user.user_type} />
             <main className="lk__container">
                 <div className="--page-container --page-content">
-                    <h2>Кандидаты</h2>
-                    {candidates}
+                    <h2 className="--mt2">Кандидаты</h2>
+                    <div className={styles.card_grid}>
+                        {candidates}
+                    </div>
                 </div>
                 <Footer />
             </main>

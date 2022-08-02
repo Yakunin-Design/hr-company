@@ -68,7 +68,7 @@ export default function InfoBlock({job_offer_data}) {
                 </>
             }
             {
-                job_offer_data.citizenships 
+                job_offer_data.citizenship
                 &&
                 <div className="info-block__citizenships">
                     {

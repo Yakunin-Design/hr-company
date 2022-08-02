@@ -14,21 +14,21 @@ export default function InfoBlockLogic(job_offer_data) {
     }
 
     const citizenships = []
-    if (job_offer_data.citizenships) {
-        if (job_offer_data.citizenships === 'ru') {
+    if (job_offer_data.citizenship) {
+        if (job_offer_data.citizenship === 'ru') {
             citizenships.push(<div className="info-block__citizenships-block">🇷🇺</div>)
         }
 
-        if (job_offer_data.citizenships === 'bu/uk') {
+        if (job_offer_data.citizenship === 'bu/ua') {
             citizenships.push(<div className="info-block__citizenships-block">🇷🇺</div>)
             citizenships.push(<div className="info-block__citizenships-block">🇧🇾/🇺🇦</div>)
         }
 
-        if (job_offer_data.citizenships === 'sng') {
+        if (job_offer_data.citizenship === 'sng') {
             citizenships.push(<div className="info-block__citizenships-block">СНГ</div>)
         }
 
-        if (job_offer_data.citizenships === 'other') {
+        if (job_offer_data.citizenship === 'other') {
             citizenships.push(<h3>Любое</h3>)
         }
     }

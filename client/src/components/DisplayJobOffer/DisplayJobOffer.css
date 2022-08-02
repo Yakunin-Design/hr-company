@@ -63,20 +63,19 @@
     display: flex;
     gap: 1em;
     margin-bottom: 2em;
-
 }
 
-.info-block__schedule-title{
+.info-block__schedule-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: help;
 }
 
-.info-block__schedule-title img{
-    opacity: .7;
+.info-block__schedule-title img {
+    opacity: 0.7;
     width: 1em;
-    margin-left: .3em;
+    margin-left: 0.3em;
 }
 
 .info-block .--v2 {
@@ -94,7 +93,7 @@
 }
 
 .--weekends {
-    background-color: #D8D8D8;
+    background-color: #d8d8d8;
 }
 
 .info-block__wk-container {
@@ -121,19 +120,19 @@
     border-radius: 0 0 11px 11px;
 }
 
-.info-block__citizenships{
+.info-block__citizenships {
     display: flex;
     align-items: center;
     margin-bottom: 1em;
 }
 
-.info-block__citizenships h3{
+.info-block__citizenships h3 {
     margin-left: 1em;
 }
 
 .info-block__citizenships-block {
-    padding: 0.5em;
-    background-color: #F5F5F5;
+    padding: 0.7em;
+    background-color: #f5f5f5;
     border-radius: 0.5rem;
     margin-right: 1em;
 }
@@ -146,7 +145,7 @@
 
 .info-block__sex-block {
     padding: 0.7em;
-    background-color: #F5F5F5;
+    background-color: #f5f5f5;
     border-radius: 0.5rem;
     margin-right: 1em;
 }

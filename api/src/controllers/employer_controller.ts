@@ -113,11 +113,12 @@ async function create_job_offer(req: Request, res: Response): Promise<void> {
             { _id: new ObjectId(job_offer.point_id) },
             'points'
         );
+
         const offers = point.Ok!.job_offers;
 
         const update_point = await db.update(
             { _id: new ObjectId(job_offer.point_id) },
-            { $set: { job_offers: [...offers, db_result] } },
+            { $set: { job_offers: [...offers, db_result.Ok!] } },
             'points'
         );
 
@@ -199,20 +200,7 @@ async function full_job_offer(req: Request, res: Response) {
         if (db_result.Ok === null)
             return res.status(404).send('Job offer doest not exist');
 
-        // let contains = false;
         // if (req.headers.authorization) {
-        //     const token = req.headers.authorization.split(' ')[1];
-        //     jwt.verify(token, 'shhhh', async (error, decoded) => {
-
-        //         const user_data = decoded;
-
-        //         db_result.Ok!.candidates.map(candidate => {
-        //             if (candidate.toString() === user_data!.userID.toString()) {
-        //                 contains = true
-        //             }
-        //         })
-        //     });
-        // }
 
         // send the response [200]
 
@@ -316,6 +304,28 @@ async function get_candidates(req: Request, res: Response) {
     }
 }
 
+/*
+        {
+            "job_offers_ids": ["62e939122aa51346eae13ec8"]
+        } 
+
+        MongoServerError: $or/$and/$nor entries need to be full objects
+ */
+
+async function get_point_data(req: Request, res: Response) {
+    const { job_offer_ids } = req.body;
+
+    const filter = job_offer_ids.map(jo => {
+        return {
+            _id: new ObjectId(jo),
+        };
+    });
+
+    const response_data = await db.find_all({ $or: [...filter] }, 'job_offers');
+
+    res.status(200).send(response_data.Ok);
+}
+
 async function edit_job_offer(req: Request, res: Response) {
     const job_offer = await db.find(
         { _id: new ObjectId(req.body.id) },
@@ -405,4 +415,5 @@ export default {
     get_points,
     get_candidates,
     get_worker_bank,
+    get_point_data,
 };

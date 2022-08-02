@@ -20,7 +20,7 @@ function Indicator({ count }) {
     }
 
     return (
-        <h3 className="job-offer-row__indicator" style={style}>{count}</h3>
+        <h3 className="job-offer-row__indicator" title="Кандидаты" style={style}>{count}</h3>
     )
 }
 

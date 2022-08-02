@@ -1,0 +1,29 @@
+.card_grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2em;
+    margin-top: 2rem;
+}
+
+.card_grid > * {
+    margin: 0;
+    width: 100%;
+}
+
+@media (min-width: 500px) {
+    .card_grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 900px) {
+    .card_grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1400px) {
+    .card_grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
