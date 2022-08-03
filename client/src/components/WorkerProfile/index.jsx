@@ -21,15 +21,15 @@ function WorkerProfile(props) {
             <CloseIcon handle_click={props.handle_click} />
 
             <div className="card modal-sheet">
-                <div className="modal-sheet__header modal-sheet__container">
-                <div className="modal-sheet__header-logo">
+                <div className="modal-sheet__container modal-sheet__header">
+                    <div className="modal-sheet__header-logo">
                         {props.data.logo ? <img src={props.data.logo} className="modal-sheet__header-img" /> : <div className="modal-sheet__header-img"></div>}
                     </div>
 
-                    <h2 className="modal-sheet__title --cd">{props.data.full_name}</h2>
+                    <h2 className="modal-sheet__title --cd --mt4">{props.data.full_name}</h2>
                     <button className="modal-sheet__cta --primary-btn --mt2" onClick={() => console.log('bruh')}>Предложить работу</button>
                 </div>
-                <hr/>
+                <hr className='--mt2'/>
 
                 <div className="modal-sheet__container wp-main">
                     <div className="JobOffer__description wp-main__description">
@@ -85,15 +85,17 @@ function WorkerProfile(props) {
                 </div>
                 <hr/>
 
-                <div className="modal-sheet__container JobOffer__experience">
+                <div className="wp__experience modal-sheet__container">
                     {/* <Experience data={exp_data1} />
                     <Experience data={exp_data2} /> */}
+                    experience
                 </div>
                 <hr/>
 
-                <div className="modal-sheet__container JobOffer__reviews">
+                <div className="wp__reviews modal-sheet__container">
                     {/* <Review data={review_data1} />
                     <Review data={review_data2}/> */}
+                    Reviews
                 </div>
 
             </div>

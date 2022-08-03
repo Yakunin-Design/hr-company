@@ -171,6 +171,15 @@
     gap: 1.5em;
 }
 
+.wp-main {
+    padding-bottom: 2rem;
+}
+
+.wp__experience, .wp__reviews {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
 .--icon-square {
     background-color: var(--background-main);
     border: 1px solid #979797;
