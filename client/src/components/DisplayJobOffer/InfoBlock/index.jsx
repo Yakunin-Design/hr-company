@@ -14,7 +14,7 @@ export default function InfoBlock({job_offer_data}) {
     const { schedule_blocks, citizenships } = InfoBlockLogic(job_offer_data)
     const salary_period = job_offer_data.salary.period === 'hour' ? 'час' : job_offer_data.salary.period === 'month' ? 'месяц' : 'смена'
 
-    const schedule_title = job_offer_data.schedule.weekdays + ' через ' + job_offer_data.schedule.weekends
+    const schedule_title = job_offer_data.schedule ? job_offer_data.schedule.weekdays + ' через ' + job_offer_data.schedule.weekends : ''
 
     return (
 
