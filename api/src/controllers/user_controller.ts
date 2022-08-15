@@ -138,6 +138,56 @@ async function get_jobs(req: Request, res: Response) {
     res.status(200).send(resp);
 }
 
+async function find_jobs(req: Request, res: Response) {
+    const filter = req.body;
+
+    const specialty = {specialty: {$regex: new RegExp('^'+ filter.specialty + '.*', 'i')}}
+
+    const db_result = await db.find_all(
+        { status: 'active', ...specialty },
+        'job_offers',
+        30
+    );
+
+    // No job offers || db error
+    if (db_result.Err) return res.status(400).send(db_result.Err.message);
+    if (db_result.Ok === null) return res.status(200).send([]);
+
+    const bubbles = db_result.Ok.map(jo => jo.specialty);
+
+    console.log(bubbles)
+
+    // Address & subway are stored in the point collection
+    const resp = await Promise.all(
+        db_result.Ok.map(async job => {
+            const point = await db.find(
+                { _id: new ObjectId(job.point_id) },
+                'points'
+            );
+            if (point.Ok === null || point.Err)
+                return console.log('cant find point');
+
+            // Removing useless data from beeing send to the client
+            delete job.experience;
+            delete job.citizenship;
+            delete job.sex;
+            delete job.age;
+            delete job.candidates;
+            delete job.point_id;
+
+            return {
+                ...job,
+                address: point.Ok.address,
+                subway: point.Ok.subway,
+            };
+        })
+    );
+
+    // console.log(resp);
+
+    res.status(200).send({bubbles, jo: resp});
+}
+
 async function get_workers(req: Request, res: Response): Promise<void> {
     const db_result = await db.find_all({}, 'workers', 30);
 
@@ -162,4 +212,5 @@ export default {
     get_jobs,
     get_workers,
     get_user,
+    find_jobs,
 };

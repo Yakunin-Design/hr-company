@@ -16,4 +16,8 @@
     .sidebar {
         display: flex;
     }
+
+    .--mobile-sidebar {
+        display: none;
+    }
 }
