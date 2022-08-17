@@ -4,8 +4,15 @@ import filterIcon from '../../assets/svg/filter.svg';
 
 export default function Search(props) {
 
+    function onclick(bubble) {
+        console.log(props.filters.speciality)
+        props.handle_change('specialty', bubble)
+    }
+
+    
+
     const bubbles = props.bubble_list.map(bubble => {
-        return <div className={styles.bubble}>{bubble}</div>
+        return <div className={styles.bubble} onClick={() => {onclick(bubble)}}>{bubble}</div>
     })
 
     return (

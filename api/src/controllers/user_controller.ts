@@ -139,12 +139,15 @@ async function get_jobs(req: Request, res: Response) {
 }
 
 async function find_jobs(req: Request, res: Response) {
-    const filter = req.body;
 
-    const specialty = {specialty: {$regex: new RegExp('^'+ filter.specialty + '.*', 'i')}}
+    const specialty_filter = req.body;
+
+    const specialty = {specialty: {$regex: `${specialty_filter.specialty.trim()}`, $options: 'gi'}}
+
+    const filter = specialty_filter.specialty === '' ? { status: 'active'} : { status: 'active', ...specialty }
 
     const db_result = await db.find_all(
-        { status: 'active', ...specialty },
+        filter,
         'job_offers',
         30
     );

@@ -31,23 +31,9 @@ function FindWork(props) {
             });
     }, []);
 
-    function handle_change(value) {
-
-    }
-
-    const job_offers_list = job_offers.map(jo => {
-        return <JobOfferCard key={jo._id} data={jo} id={jo._id} />;
-    });
-
-    function on_change(event) {
-        const { name, value } = event.target;
-
-        set_filters(prev => {
-            return { ...prev, [name]: value };
-        });
-
+    function find_work(name,value) {
         axios
-            .post('http://localhost:6969/find-job', filters)
+            .post('http://localhost:6969/find-job', {...filters, [name]: value})
             .then(res => {
                 if (!res.data) {
                     return console.log('bruh');
@@ -59,7 +45,24 @@ function FindWork(props) {
             .catch(e => {
                 console.log(e);
             });
+    }
 
+    const job_offers_list = job_offers.map(jo => {
+        return <JobOfferCard key={jo._id} data={jo} id={jo._id} />;
+    });
+
+    function handle_change(name, value) {
+        set_filters(prev => {
+            return { ...prev, [name]: value };
+        })
+
+        find_work(name, value)
+    }
+
+    function on_change(event) {
+        const { name, value } = event.target;
+
+        handle_change(name, value)
     }
 
     return (
@@ -71,6 +74,7 @@ function FindWork(props) {
                         bubble_list={bubble_list}
                         on_change={on_change}
                         filters={filters}
+                        handle_change={handle_change}
                     />
                     <div className="job-offers-list">{job_offers_list}</div>
                 </div>
