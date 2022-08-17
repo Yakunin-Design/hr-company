@@ -142,7 +142,7 @@ async function find_jobs(req: Request, res: Response) {
 
     const specialty_filter = req.body;
 
-    const specialty = {specialty: {$regex: `${specialty_filter.specialty.trim()}`, $options: 'gi'}}
+    const specialty = {...specialty_filter, specialty: {$regex: `${specialty_filter.specialty.trim()}`, $options: 'gi'}}
 
     const filter = specialty_filter.specialty === '' ? { status: 'active'} : { status: 'active', ...specialty }
 
@@ -157,8 +157,6 @@ async function find_jobs(req: Request, res: Response) {
     if (db_result.Ok === null) return res.status(200).send([]);
 
     const bubbles = db_result.Ok.map(jo => jo.specialty);
-
-    console.log(bubbles)
 
     // Address & subway are stored in the point collection
     const resp = await Promise.all(
@@ -202,6 +200,28 @@ async function get_workers(req: Request, res: Response): Promise<void> {
     res.status(200).send(db_result.Ok!);
 }
 
+async function find_workers(req: Request, res: Response): Promise<void> {
+
+    const full_name_input = req.body;
+
+    console.log(full_name_input);
+
+    const full_name = {...full_name_input, full_name: {$regex: `${full_name_input.full_name.trim()}`, $options: 'gi'}}
+
+    const filter = full_name_input.full_name === '' ? {} : { ...full_name }
+
+    const db_result = await db.find_all(filter, 'workers', 30);
+
+    if (db_result.Err) {
+        res.status(400).send(db_result.Err.message);
+        return;
+    }
+
+    const bubbles = db_result.Ok!.map(worker => worker.full_name);
+
+    res.status(200).send({workers: db_result.Ok!, bubbles: bubbles});
+}
+
 async function get_user(req: Request, res: Response): Promise<void> {
     res.status(200).send({
         user_type: res.locals.jwt.user_type,
@@ -216,4 +236,5 @@ export default {
     get_workers,
     get_user,
     find_jobs,
+    find_workers,
 };

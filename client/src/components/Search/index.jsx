@@ -6,7 +6,9 @@ export default function Search(props) {
 
     function onclick(bubble) {
         console.log(props.filters.speciality)
-        props.handle_change('specialty', bubble)
+
+        props.employers ? props.handle_change('specialty', bubble) : props.handle_change('full_name', bubble)
+        
     }
 
     
@@ -21,8 +23,8 @@ export default function Search(props) {
                 <input
                     type="text" 
                     className="card__input"
-                    name='specialty'
-                    value={props.filters.speciality}
+                    name={props.employers ? "full_name" : 'specialty'}
+                    value={props.employers ? props.filters.full_name : props.filters.speciality}
                     onChange={event => props.on_change(event)}
                 />
                 <button className="--primary-btn">

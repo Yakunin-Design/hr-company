@@ -45,6 +45,8 @@ function RegisterPage() {
         company: '',
         inn: ''
     })
+
+    const [accept_tou, set_accept_tou] = React.useState(false);
     
     function next_step() {
         // validation
@@ -131,7 +133,7 @@ function RegisterPage() {
     let registration_step;
 
     if (step.step === 0) {
-        registration_step = <SelectUserType set_step={set_step} />
+        registration_step = <SelectUserType set_step={set_step} accept_tou={accept_tou} />
 
     } else if(step.step === 3){
         registration_step = <ConfirmPhone data={set_data(form_data)}/>
@@ -205,6 +207,8 @@ function RegisterPage() {
         return data
     }
 
+    console.log(accept_tou)
+
 	return (
 		<>
 			<Header/>
@@ -217,6 +221,32 @@ function RegisterPage() {
                     {(step.step === 1 || step.step === 2) && <button className="card__button --primary-btn" onClick={next_step}>Далее</button>}
 
                     {
+                        (step.step === 0) &&
+                        <div className="card__terms-of-use help__register --v2 --mt1 --row">
+
+                            <input
+                                className="--hiden"
+                                id="tou"
+                                type="checkbox"
+                                name="tou"
+                                onChange={() => {set_accept_tou(prev => !prev)}}
+                                checked={accept_tou}
+                            />
+                            <label htmlFor="tou">
+                                <div className='tou__checkbox'></div>
+                            </label>
+
+                            <div>
+                                Я прочитал и принимаю
+                                <Link to={'/terms-of-use'}>
+                                    <span className='--v2'> пользовательское соглашение</span>
+                                </Link>
+                            </div>
+                            
+                        </div>
+                    }
+
+                    {
                         (step.step !== 3) &&
                             <>
                                 <div className="card__registration">
@@ -226,6 +256,7 @@ function RegisterPage() {
                                 </div>
                             </>
                     }
+                    
 
                 </div>
             </div>

@@ -148,8 +148,32 @@
     color: var(--accent);
 }
 
+.card__terms-of-use span {
+    color: var(--accent);
+}
+
+.card__terms-of-use #tou:checked + label {
+    border: none !important;
+}
+
+.card__terms-of-use #tou:checked + label .tou__checkbox {
+    border-color: var(--accent);
+}
+
+.tou__checkbox {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 1em;
+    border: .2rem solid #818181;
+}
+
 .help__register {
     margin-bottom: 0.5em;
+}
+
+.help__tou {
+    position: relative;
+    top: 0.5em;
 }
 
 .card__button {
