@@ -23,6 +23,7 @@ import Points from './pages/lk/Employer/Points';
 import ContactPage from './pages/Contact';
 import FaqPage from './pages/Faq';
 import LoyaltyPage from './pages/Loyalty';
+import TOUpage from './pages/TermsOfUse';
 
 function App() {
     const [user, set_user] = React.useState({
@@ -45,6 +46,7 @@ function App() {
                     <Route path="/loyalty" element={<LoyaltyPage />} />
                     <Route path="/login" exact element={<LoginPage />} />
                     <Route path="/register" exact element={<RegisterPage />} />
+                    <Route path="/terms-of-use" exact element={<TOUpage />} />
                     <Route
                         path="/profile"
                         exact

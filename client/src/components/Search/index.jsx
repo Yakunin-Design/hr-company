@@ -18,7 +18,7 @@ export default function Search(props) {
     })
 
     return (
-        <div className={`${styles.search} --mt3`}>
+        <div className={`${styles.search} --mt3`} style={props.employers ? {padding: 0}: {}}>
             <div className={`${styles.search_bar} --row`}>
                 <input
                     type="text" 
