@@ -1,5 +1,5 @@
 import React from 'react'
-import registration_api_call from '../../../functions/registration_api_call'
+import registration_api_call from '../../../lib/registration_api_call'
 import axios from 'axios'
 
 function ConfirmPhone({data}) {

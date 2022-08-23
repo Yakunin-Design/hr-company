@@ -68,9 +68,6 @@ async function create_job_offer(req: Request, res: Response): Promise<void> {
             candidates: [],
             candidate_count: 0,
             created: Math.floor(Date.now() / 1000),
-            logo: res.locals.user.logo,
-            address: validated.Ok!.address || '',
-            subway: validated.Ok!.subway || '',
         };
 
         if (!job_offer.point_id) {
@@ -79,7 +76,7 @@ async function create_job_offer(req: Request, res: Response): Promise<void> {
                 {
                     address: job_offer.address,
                     subway: job_offer.subway,
-                    emp_id: new ObjectId(res.locals.user.emp_id),
+                    emp_id: res.locals.user._id,
                     job_offers: [],
                     workers: [],
                 },
@@ -327,6 +324,8 @@ async function get_point_data(req: Request, res: Response) {
 }
 
 async function edit_job_offer(req: Request, res: Response) {
+    let changes = { ...req.body.changes };
+
     const job_offer = await db.find(
         { _id: new ObjectId(req.body.id) },
         'job_offers'
@@ -337,15 +336,68 @@ async function edit_job_offer(req: Request, res: Response) {
     if (res.locals.user._id.toString() != job_offer.Ok!.employer_id.toString())
         return res.status(400).send('not your jo');
 
+    if (changes.address || changes.subway) {
+        if (changes.address) {
+            //create new point
+
+            const point = await db.save(
+                {
+                    address: changes.address,
+                    subway: changes.subway,
+                    emp_id: res.locals.user._id,
+                    job_offers: [new ObjectId(req.body.id)],
+                    workers: [],
+                },
+                'points'
+            );
+            const employer_points = res.locals.user.points
+                ? [...res.locals.user.points, point.Ok!]
+                : [point.Ok!];
+
+            const update_employer = await db.update(
+                { _id: res.locals.user._id },
+                { $set: { points: employer_points } },
+                'employers'
+            );
+
+            changes.point_id = point.Ok!;
+
+            // delete jo from old point
+            await delete_jo_from_point(changes.point_id, new ObjectId(req.body.id));
+            
+        } else {
+            const point = await db.update(
+                { _id: new ObjectId(job_offer.Ok!.point_id) },
+                { $set: { subway: changes.subway } },
+                'points'
+            );
+        }
+        delete changes.address && changes.address;
+        delete changes.subway;
+    }
+
     const db_result = await db.update(
         { _id: job_offer.Ok!._id },
-        { $set: { ...req.body.changes } },
+        { $set: { ...changes } },
         'job_offers'
     );
 
     if (db_result.Err) return res.status(400).send('update err');
 
     res.status(200).send('updated');
+}
+
+async function delete_jo_from_point(point_id, job_offer_id) {
+    const point = await db.find({ _id: point_id }, 'points');
+    const job_offer = {_id: job_offer_id}
+    const new_jos = point.Ok!.job_offers.filter(jo => jo != job_offer);
+
+    
+    console.log(new_jos);
+    const db_result = await db.update(
+        { _id: point.Ok!._id },
+        { $set: { job_offers: new_jos } }
+    );
 }
 
 async function create_point(req: Request, res: Response) {
@@ -394,6 +446,8 @@ async function get_points(req: Request, res: Response) {
         res.status(200).send([]);
         return;
     }
+
+    console.log(points_id);
 
     const db_result = await db.find_all({ $or: [...points_id] }, 'points');
 

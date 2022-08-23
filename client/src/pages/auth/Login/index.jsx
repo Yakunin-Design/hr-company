@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import { check_phone,check_email } from '../../../functions/validations'
+import { check_phone,check_email } from '../../../lib/validations'
 
 import Header from '../../../components/Header'
 import Footer from '../../../components/Footer'

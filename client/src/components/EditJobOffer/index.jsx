@@ -20,7 +20,7 @@ function EditJobOffer(props) {
             </div>
 
             <div className="card modal-sheet edit-job-offer">
-                <h2 className='modal-sheet__container --cd'>{props.create ? "Создание" : "Редактирование"} вакансии</h2>
+                <h2 className='modal-sheet__container --cd --mt2'>{props.create ? "Создание" : "Редактирование"} вакансии</h2>
                 <hr/>
                 <div className="modal-sheet__container">
                     <DefaultSettings

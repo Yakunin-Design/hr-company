@@ -2,7 +2,7 @@ import React from 'react'
 
 import save_job_offer from './save_job_offer'
 import update_job_offer from './update_job_offer'
-import { job_offer_validation } from '../../functions/validations'
+import { job_offer_validation } from '../../lib/validations'
 
 export default function EditJobOfferLogic(old_data) {
 

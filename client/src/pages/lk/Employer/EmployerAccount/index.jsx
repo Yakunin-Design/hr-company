@@ -8,7 +8,7 @@ import '../../../../styles/utils/lk.css'
 
 import edit_pencil from '../../../../assets/svg/edit_pencil.svg'
 import plus_icon from '../../../../assets/svg/logo.svg'
-import {check_full_name, check_email, check_phone} from '../../../../functions/validations'
+import {check_full_name, check_email, check_phone} from '../../../../lib/validations'
 
 
 function EmployerAccount(props) {

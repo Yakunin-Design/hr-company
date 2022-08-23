@@ -1,11 +1,11 @@
 import React from 'react';
-import LkNav from '../../components/MainNav';
+import LkNav from 'components/MainNav';
 
-import Footer from '../../components/Footer';
-import '../../styles/utils/lk.css';
+import Footer from 'components/Footer';
+import 'styles/utils/lk.css';
 import './FindWork.css';
-import JobOfferCard from '../../components/JobOfferCard';
-import Search from '../../components/Search';
+import JobOfferCard from 'components/JobOfferCard';
+import Search from 'components/Search';
 import axios from 'axios';
 
 function FindWork(props) {

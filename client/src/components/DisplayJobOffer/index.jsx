@@ -7,7 +7,7 @@ import './DisplayJobOffer.css';
 import CloseIcon from '../../assets/svg/close-icon-white';
 import clock from '../../assets/svg/clock.svg';
 
-import get_period from '../../functions/get_created_time';
+import get_period from '../../lib/get_created_time';
 import EditJobOffer from '../EditJobOffer';
 import InfoBlock from './InfoBlock';
 import WorkerCard from '../WorkerCard';
@@ -21,7 +21,7 @@ function DisplayJobOffer(props) {
         jo_respond,
         responded,
         user_type,
-        workers
+        workers,
     } = DisplayJobOfferLogic(props);
 
     const candidates = workers.map(worker => <WorkerCard data={worker} />);
@@ -33,6 +33,7 @@ function DisplayJobOffer(props) {
                     old_data={job_offer_data}
                     id={props.id}
                     toggle_new_job_offer={toggle_edit}
+                    points={props.points}
                 />
             )}
 
@@ -106,7 +107,7 @@ function DisplayJobOffer(props) {
 
                 {user_type === 'employer' && (
                     <>
-                        <hr />
+                        <hr className="--mt2" />
                         <div className="modal-sheet__container JobOffer__candidates --mt2 --pb2">
                             {job_offer_data.candidate_count === 0 ? (
                                 <h3 className="--mt1 --cd">

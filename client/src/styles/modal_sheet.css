@@ -6,7 +6,7 @@
     width: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     padding-bottom: 2em;
-    min-height: 100vh;
+    min-height: 100%;
     margin: 0 auto;
     padding: 0 1rem;
 }
@@ -35,7 +35,6 @@
 .modal-sheet {
     background-color: var(--background-main);
 
-    position: relative;
     max-width: 75em;
 
     margin: 0 auto;
@@ -45,7 +44,7 @@
 
 .modal-sheet__container {
     padding-left: 2em;
-    padding-right: 2em;            
+    padding-right: 2em;
 }
 
 @media (min-width: 500px) {
@@ -54,7 +53,6 @@
     }
 }
 
-
 .modal-sheet__header {
     display: flex;
     flex-direction: column;
@@ -62,17 +60,18 @@
 }
 
 .modal-sheet__header-logo {
-    background-color: #78797B;
+    background-color: #78797b;
     border-radius: 50%;
 
     position: absolute;
-    top: -3.25em;
+    top: 2em;
     width: 6em;
     height: 6em;
 
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 5;
 }
 
 .modal-sheet__header-img {

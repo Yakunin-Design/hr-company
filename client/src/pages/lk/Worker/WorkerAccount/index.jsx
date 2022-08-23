@@ -3,7 +3,7 @@ import axios from 'axios'
 
 import LkNav from '../../../../components/MainNav'
 import Footer from '../../../../components/Footer'
-import { check_day, check_month, check_year, check_full_name, check_phone, check_email } from '../../../../functions/validations'
+import { check_day, check_month, check_year, check_full_name, check_phone, check_email } from '../../../../lib/validations'
 import '../../../../styles/utils/lk.css'
 
 import eye from '../../../../assets/svg/eye.svg'

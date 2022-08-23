@@ -2,7 +2,7 @@ import React from 'react'
 
 import Indicator from './Indicator'
 import Subway from '../../../../../components/Subway'
-import get_created_time from '../../../../../functions/get_created_time'
+import get_created_time from '../../../../../lib/get_created_time'
 
 import clock from '../../../../../assets/svg/clock.svg'
 
@@ -19,7 +19,7 @@ function JobOfferRow(props) {
 
     return (
         <>
-        { full_job_offer && <DisplayJobOffer id={props.data.id} handle_click={toggle_full_job_offer} /> }
+        { full_job_offer && <DisplayJobOffer id={props.data.id} handle_click={toggle_full_job_offer} points={props.points}/> }
 
         <div className="job-offer-row card" onClick={toggle_full_job_offer}>
             <div className="job-offer-row__important">
