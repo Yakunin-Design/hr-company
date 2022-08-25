@@ -45,28 +45,32 @@ function WorkerStep2(props) {
 
             <div className="card__email">
                 <h3 className="card__label --ld">Создание пароля</h3>
-                <input
-                    className="card__input"
-                    type={eye_pass ? "text" : "password"}
-                    name="password"
-                    style={errors.includes('password') ? error_style : {}}
-                    value={form_data.password}
-                    onChange={(event) => on_change(event)}
-                />
-                <img src={eye_pass ? eye_opened : eye_closed} onClick={() => {set_eye_pass(prev => !prev)}} className="card__pass-eye"/>
+                <div className='password_input'>
+                    <input
+                        className="card__input"
+                        type={eye_pass ? "text" : "password"}
+                        name="password"
+                        style={errors.includes('password') ? error_style : {}}
+                        value={form_data.password}
+                        onChange={(event) => on_change(event)}
+                    />
+                    <img src={eye_pass ? eye_opened : eye_closed} onClick={() => {set_eye_pass(prev => !prev)}} className="card__pass-eye"/>
+                </div>
             </div>
 
             <div className="card__email">
                 <h3 className="card__label --ld">Подтверждение пароля</h3>
-                <input
-                    className="card__input"
-                    type={eye_confirm ? "text" : "password"}
-                    style={errors.includes('password_confirmation') ? error_style : {}}
-                    name="password_confirmation"
-                    value={form_data.password_confirmation}
-                    onChange={(event) => on_change(event)}
-                />
-                <img src={eye_confirm ? eye_opened : eye_closed} onClick={() => {set_eye_confirm(prev => !prev)}} className="card__pass-eye"/>
+                <div className='password_input'>
+                    <input
+                        className="card__input"
+                        type={eye_confirm ? "text" : "password"}
+                        style={errors.includes('password_confirmation') ? error_style : {}}
+                        name="password_confirmation"
+                        value={form_data.password_confirmation}
+                        onChange={(event) => on_change(event)}
+                    />
+                    <img src={eye_confirm ? eye_opened : eye_closed} onClick={() => {set_eye_confirm(prev => !prev)}} className="card__pass-eye"/>
+                </div>
             </div>
 
         </>

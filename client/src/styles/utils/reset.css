@@ -12,6 +12,7 @@
 
 body {
 	background-color: var(--background-main);
+	font-family: 'Gilroy', sans-serif;
 }
 
 html {
