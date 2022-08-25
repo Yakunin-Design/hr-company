@@ -231,3 +231,9 @@
     background-color: var(--accent);
     border-radius: 0.25rem;
 }
+
+.card__pass-eye {
+    position: relative;
+    left: 90%;
+    top: -2rem;
+}

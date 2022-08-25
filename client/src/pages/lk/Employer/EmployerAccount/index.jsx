@@ -81,6 +81,9 @@ function EmployerAccount(props) {
             if (edit === 'description') {
                 (emp_data[edit].length >=20 && emp_data[edit].length <=120) ? add_data(data, edit) : err.push(edit)
             }
+            if (edit === 'company') {
+                (emp_data[edit].length >=3 && emp_data[edit].length <=40) ? add_data(data, edit) : err.push(edit)
+            }
             if (edit === 'logo') {
                 add_data(data, edit)
             }
@@ -89,6 +92,8 @@ function EmployerAccount(props) {
         set_edit_errors(err)
 
         const jwt = localStorage.getItem('jwt') || ''
+
+        
 
         // send data to api to save changes to db
         axios.post('http://localhost:6969/profile/edit', data, {headers : {authorization : 'Bearer ' + jwt}})
@@ -113,7 +118,7 @@ function EmployerAccount(props) {
     }
 
     function on_change_description() {
-        set_change_description(true)
+        set_change_description(prev => !prev)
     }
 
     const error_style = {
@@ -148,21 +153,34 @@ function EmployerAccount(props) {
 
                         <img src={edit_pencil} className='--edit_pencil' alt='' onClick={on_change_description}/>
 
-                        <h2 className="--mt2">{emp_data.company}</h2>
                         {
                             change_description
                             ?
-                            <textarea
-                                className="card__textarea additional__textarea --mt1"
-                                type="text"
-                                name="description"
-                                placeholder="Опишите работу в вашем заведении"
-                                value= {emp_data.description}
-                                onChange={event => handle_change(event)}
-                                style={edit_errors.includes('description') ? error_style : {}}
-                            />
+                            <>
+                                <h3 className="--mt2">Название компании</h3>
+                                <input
+                                    className="card__input --mt1"
+                                    type="text"
+                                    name="company"
+                                    value={emp_data.company}
+                                    onChange={event => handle_change(event)}
+                                    style={edit_errors.includes('company') ? error_style : {}}
+                                />
+                                <textarea
+                                    className="card__textarea additional__textarea --mt1"
+                                    type="text"
+                                    name="description"
+                                    placeholder="Опишите работу в вашем заведении"
+                                    value= {emp_data.description}
+                                    onChange={event => handle_change(event)}
+                                    style={edit_errors.includes('description') ? error_style : {}}
+                                />
+                            </>
                             :
-                            <p className="--mt1">{emp_data.description ? emp_data.description : <span className="documents__add" onClick={on_change_description}>Добавить описание + </span>}</p>
+                            <>
+                                <h2 className="--mt2">{emp_data.company}</h2>
+                                <p className="--mt1">{emp_data.description ? emp_data.description : <span className="documents__add" onClick={on_change_description}>Добавить описание + </span>}</p>
+                            </>
                         }
                         
                     </section>

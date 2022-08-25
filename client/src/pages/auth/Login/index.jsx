@@ -6,6 +6,9 @@ import { check_phone,check_email } from '../../../lib/validations'
 import Header from '../../../components/Header'
 import Footer from '../../../components/Footer'
 
+import eye_closed from 'assets/svg/eye_closed.svg'
+import eye_opened from 'assets/svg/eye.svg'
+
 function LoginPage() {
 
     const error_style = {
@@ -20,6 +23,8 @@ function LoginPage() {
         login: '',
         password: ''
     })
+
+    const [eye_pass, set_eye_pass] = React.useState(false)
 
     const [errors, set_errors] = React.useState([])
 
@@ -95,11 +100,12 @@ function LoginPage() {
                         <h3 className="card__label --ld">Пароль</h3>
                         <input 
                             className="card__input" 
-                            type="password"
+                            type={eye_pass ? "text" : "password"}
                             name = "password"
                             onChange={event => handle_change(event)}
                             style={errors.includes('uncorrected_password') ? error_style : {}}
                         />
+                        <img src={eye_pass ? eye_opened : eye_closed} onClick={() => {set_eye_pass(prev => !prev)}} className="card__pass-eye"/>
                         {errors.includes('wrong_password') && <span className="card__wrong">Неверный пароль</span>}
                     </div>
 

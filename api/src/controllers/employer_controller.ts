@@ -17,7 +17,7 @@ async function basic_edit(req: Request, res: Response): Promise<void> {
         const changed_values: Array<string | object | Array<string>> =
             Object.values(data);
 
-        const allowed_edits = ['full_name', 'description', 'logo'];
+        const allowed_edits = ['full_name', 'description', 'logo', 'company'];
 
         let edits = {};
         for (let i = 0; i < changed_names.length; i++) {
@@ -326,6 +326,8 @@ async function get_point_data(req: Request, res: Response) {
 async function edit_job_offer(req: Request, res: Response) {
     let changes = { ...req.body.changes };
 
+    console.log(changes);
+
     const job_offer = await db.find(
         { _id: new ObjectId(req.body.id) },
         'job_offers'
@@ -362,8 +364,9 @@ async function edit_job_offer(req: Request, res: Response) {
 
             changes.point_id = point.Ok!;
 
+
             // delete jo from old point
-            await delete_jo_from_point(changes.point_id, new ObjectId(req.body.id));
+            await delete_jo_from_point(job_offer.Ok!.point_id, new ObjectId(req.body.id));
             
         } else {
             const point = await db.update(
@@ -388,15 +391,19 @@ async function edit_job_offer(req: Request, res: Response) {
 }
 
 async function delete_jo_from_point(point_id, job_offer_id) {
-    const point = await db.find({ _id: point_id }, 'points');
-    const job_offer = {_id: job_offer_id}
-    const new_jos = point.Ok!.job_offers.filter(jo => jo != job_offer);
 
-    
-    console.log(new_jos);
+    const point = await db.find({ _id: new ObjectId(point_id) }, 'points');
+
+    console.log(point_id);
+
+    const new_jos = point.Ok!.job_offers.filter(jo => {
+        return jo.toString() !== job_offer_id.toString();
+    });
+
     const db_result = await db.update(
         { _id: point.Ok!._id },
-        { $set: { job_offers: new_jos } }
+        { $set: { job_offers: new_jos } },
+        'points'
     );
 }
 
