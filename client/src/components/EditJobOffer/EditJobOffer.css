@@ -255,17 +255,6 @@
     border: none;
 }
 
-#fromSlider::-webkit-slider-thumb {
-    height: 1.2rem;
-    margin-top: 1.2rem;
-    z-index: 2;
-}
-
-#fromSlider::-moz-range-thumb {
-    height: 1.2rem;
-    z-index: 2;
-}
-
 .edit-buttons {
     margin-top: 3rem;
     display: flex;
@@ -275,6 +264,109 @@
 
 .edit-buttons button {
     cursor: pointer;
+}
+
+
+.inverse-left, .inverse-right {
+    width: 100%;
+    background-color: white;
+    height: 1.8rem;
+    border: 1px solid #979797;
+    border-radius: 0.8rem;
+    position: absolute;
+}
+
+.thumb {
+    background-color: var(--accent2);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 8%;
+    height: 1.8rem;
+    border-radius: 0.4rem;
+    gap: 0.4em;
+    position: absolute;
+    top: 0;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.active {
+    background-color: var(--accent);
+}
+
+.thumb span {
+    -webkit-touch-callout: none; 
+    -webkit-user-select: none;   
+    -khtml-user-select: none;    
+    -moz-user-select: none;      
+    -ms-user-select: none;       
+    user-select: none;           
+}
+
+.range {
+    width: 99%;
+    background-color: var(--accent3);
+    height: 1.8rem;
+    border-radius: 0.8rem;
+}
+
+.sliders_control input[type="range"] {
+    width: 100%;
+    height: 1.8rem;
+    position: absolute;
+    top: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+#age_from::-webkit-slider-thumb {
+    width: 3em;
+    padding: 1.4rem;
+}
+
+#age_from::-moz-range-thumb {
+    width: 3em;
+    padding: 1.4rem;
+}
+#age_to::-webkit-slider-thumb {
+    width: 3em;
+    padding: 1.4rem;
+}
+
+#age_to::-moz-range-thumb {
+    width: 3em;
+    padding: 1.4rem;
+}
+
+.sliders_control .label_18 {
+    margin-left: 13%;
+}
+
+.sliders_control .label_21 {
+    margin-left: 7%;
+}
+
+.sliders_control .label_25 {
+    margin-left: 11%;
+}
+
+.sliders_control .label_35 {
+    margin-left: 28%;
+}
+
+.sliders_control .label_45 {
+    margin-left: 24%;
+}
+
+.sliders_control .label_45a {
+    margin-left: auto;
+}
+
+@media (min-width: 400px) {
+    .thumb {
+        border-radius: 0.5rem;
+    }
 }
 
 @media (min-width: 500px) {

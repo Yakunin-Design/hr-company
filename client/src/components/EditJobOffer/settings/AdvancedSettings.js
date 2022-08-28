@@ -11,6 +11,39 @@ export default function AdvancedSettings(props) {
         border: '2px solid red'
     }
 
+    const [inverse_left, set_inverse_left] = React.useState(3)
+    const [inverse_right, set_inverse_right] = React.useState(3)
+
+
+    const [thumb_left, set_thumb_left] = React.useState(99)
+    const [thumb_right, set_thumb_right] = React.useState(0)
+
+    function on_input_from (event) {
+        const input_value = event.target.value
+        event.target.value=Math.min(input_value, (job_offer_data.age.to || 46)-1)
+        set_inverse_left((event.target.value - 13) * 3)
+    }
+
+    function on_input_to (event) {
+        const input_value = event.target.value
+        event.target.value=Math.max(input_value, (job_offer_data.age.from || 14) - (-1))
+        set_inverse_right((event.target.value-48.5) * (-3))
+    }
+
+    function change_z_index(point) {
+        if (point === 1) {
+            set_thumb_left(0)
+            set_thumb_right(99)
+            document.querySelector('#thumb_1').classList.add('active')
+            document.querySelector('#thumb_2').classList.remove('active')
+        } else {
+            set_thumb_left(99)
+            set_thumb_right(0)
+            document.querySelector('#thumb_2').classList.add('active')
+            document.querySelector('#thumb_1').classList.remove('active')
+        }
+    }
+
     return (
         <>
         <div>
@@ -113,7 +146,8 @@ export default function AdvancedSettings(props) {
                     value={job_offer_data.age.from}
                     onChange={event => handle_change(event)}
                     maxLength="2"
-                    style={errors.includes('age_from') ? error_style : {}}
+                    style={errors.includes('age_from') ? {error_style} : {}}
+                    onInput={event => on_input_from(event)}
                 />
                 <h3>до</h3>
                 <input 
@@ -124,31 +158,50 @@ export default function AdvancedSettings(props) {
                     value={job_offer_data.age.to}
                     onChange={event => handle_change(event)}
                     maxLength="2"
-                    style={errors.includes('age_to') ? error_style : {}}
+                    style={errors.includes('age_to') ? {error_style} : {}}
+                    onInput={event => on_input_to(event)}
                 />
             </div>
             <div className="sliders_control">
+                <div className='--mt2'>
+                    <div className='inverse-left' style={{width: inverse_left + '%'}}></div>
+                    <div className='inverse-right' style={{width: inverse_right + '%', left: 99-inverse_right + '%'}}></div>
+                    <div className='range'></div>
+                    <span className='thumb' id='thumb_1' style={{left: inverse_left-3 + '%', zIndex: thumb_left+1}} onClick={()=> {change_z_index(1)}}><span>|</span><span>|</span></span>
+                    <span className='thumb' id='thumb_2' style={{left: 99-inverse_right + '%', zIndex: thumb_right+1}} onClick={()=> {change_z_index(2)}}><span>|</span><span>|</span></span>
+                </div>
                 <input 
-                    className='edit__range --age-range'
-                    id="fromSlider"
-                    name="age_from" 
                     type="range" 
-                    value={job_offer_data.age.from} 
+                    name="age_from"
+                    id='age_from' 
+                    onChange={event => handle_change(event)} 
+                    value={job_offer_data.age.from || 14} 
+                    max="46" 
                     min="14" 
-                    max="46"
-                    onChange={event => handle_change(event)}
-                />
+                    onInput={(event) => {on_input_from(event)}}
+                    style={{zIndex: thumb_right}} />
+
                 <input 
-                    className='edit__range --age-range'
-                    id="toSlider" 
+                    type="range" 
                     name="age_to"
-                    type="range" 
-                    value={job_offer_data.age.to} 
+                    id='age_to' 
+                    onChange={event => handle_change(event)} 
+                    value={job_offer_data.age.to || 45} 
+                    max="46" 
                     min="14" 
-                    max="46"
-                    onChange={event => handle_change(event)}
-                />
+                    onInput={(event) => {on_input_to(event)}}
+                    style={{zIndex: thumb_left}} />
+                <div className='--row --mt1'>
+                    <span>&#60;15</span>
+                    <span className='label_18'>18</span>
+                    <span className='label_21'>21</span>
+                    <span className='label_25'>25</span>
+                    <span className='label_35'>35</span>
+                    <span className='label_45'>45</span>
+                    <span className='label_45a'>&gt;45</span>
+                </div>
             </div>
+
         </div>
 
         <div className='additional__description'>
