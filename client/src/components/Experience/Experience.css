@@ -1,3 +1,10 @@
+.display_experience {
+    display: flex;
+    justify-content: space-between;
+    /* align-items: center; */
+    gap: 2em;
+}
+
 .experience__container {
     display: flex;
     flex-direction: column;
@@ -15,6 +22,9 @@
 
 .experience__data {
     display: flex;
+}
+.experience__content {
+    max-width: 80%;
 }
 
 .experience__add {
@@ -34,4 +44,29 @@
     display: flex;
     flex-direction: column;
     gap: 2em;
+}
+
+.experience__text {
+    /* max-width: 60%; */
+    word-wrap: normal;
+}
+
+.experience__delete {
+    position: relative;
+}
+
+.experience__delete #Group-4-Copy path {
+    fill: #8b8b8b;
+}
+
+.experience__delete #Group-4-Copy rect {
+    fill: #8b8b8b;
+}
+
+.experience__delete:hover #Group-4-Copy path {
+    fill: red;
+}
+
+.experience__delete:hover #Group-4-Copy rect {
+    fill: red;
 }

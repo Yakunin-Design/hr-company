@@ -95,4 +95,25 @@ async function get_my_jobs(req: Request, res: Response) {
     res.status(200).send(Response);
 };
 
-export default { profile, basic_edit , add_respond, get_my_jobs};
+async function delete_experience(req: Request, res: Response) {
+
+    const { user } = res.locals;
+    const experience = req.body;
+
+    const new_exp = user.experience.filter(exp => {
+        if (
+            (exp.tittle == experience.tittle && 
+            exp.employer == experience.employer && 
+            exp.description == experience.description) === false
+            ) {
+                return exp;
+            }
+    })
+
+    const update = await db.update({_id: user._id}, {$set: {experience: new_exp}}, 'workers');
+
+    if (update.Ok) res.status(200).send('ok')
+    else res.status(400).send('smth went wrong');
+}
+
+export default { profile, basic_edit , add_respond, get_my_jobs, delete_experience};

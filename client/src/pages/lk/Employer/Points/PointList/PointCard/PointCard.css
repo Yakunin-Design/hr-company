@@ -1,0 +1,20 @@
+.job-offer-row__close {
+    margin-left: 1.5em;
+    width: 2em;
+}
+
+.job-offer-row__close #Group-4-Copy path {
+    fill: #8b8b8b;
+}
+
+.job-offer-row__close #Group-4-Copy rect {
+    fill: #8b8b8b;
+}
+
+.job-offer-row__close:hover #Group-4-Copy path {
+    fill: red;
+}
+
+.job-offer-row__close:hover #Group-4-Copy rect {
+    fill: red;
+}

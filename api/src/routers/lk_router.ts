@@ -27,6 +27,11 @@ router.post('/profile/verified_edit2', auth, (req: Request, res: Response) => {
     user_controller.email_phone_edit_step2(req, res);
 });
 
+router.post('/delete-exp', auth, (req: Request, res: Response) => {
+    if (res.locals.jwt.user_type === 'worker')
+        worker_controller.delete_experience(req, res);
+});
+
 //job offer
 router.post('/new-job-offer', auth, (req: Request, res: Response) => {
     if (res.locals.jwt.user_type === 'employer')
@@ -67,6 +72,12 @@ router.post('/get-worker-bank', auth, (req: Request, res: Response) => {
 router.post('/new-point', auth, (req: Request, res: Response) => {
     if (res.locals.jwt.user_type === 'employer')
         employer_controller.create_point(req, res);
+    else res.status(401).send('unauthorized');
+});
+
+router.post('/delete-point', auth, (req: Request, res: Response) => {
+    if (res.locals.jwt.user_type === 'employer')
+        employer_controller.delete_point(req, res);
     else res.status(401).send('unauthorized');
 });
 

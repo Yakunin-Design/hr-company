@@ -442,6 +442,22 @@ async function create_point(req: Request, res: Response) {
     res.status(200).send('ok');
 }
 
+async function delete_point (req: Request, res: Response) {
+    const { user } = res.locals;
+
+    const find = await db.find({_id: new ObjectId(req.body.id)}, 'points');
+
+    if (find.Err) return res.status(400).send('wrong id');
+    if (find.Ok!.emp_id.toString() != user._id.toString()) return res.status(400).send('not your point');
+
+    const new_points = user.points.filter(point => {return point.toString() != req.body.id});
+
+    const delete_from_employer = await db.update({_id: user._id}, {$set: {points: [...new_points]}}, 'employers');
+    const delete_jo_from_point = await db.delete(req.body.id, 'points');
+
+    res.status(200).send('Updated');
+}
+
 async function get_points(req: Request, res: Response) {
     const points_id = res.locals.user.points
         ? res.locals.user.points.map(point => {
@@ -473,6 +489,7 @@ export default {
     full_job_offer,
     edit_job_offer,
     create_point,
+    delete_point,
     get_points,
     get_candidates,
     get_worker_bank,

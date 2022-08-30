@@ -1,10 +1,32 @@
 import React from 'react';
+import axios from 'axios';
 
 import Subway from '../../../../../../components/Subway';
 
 import './PointCard.css';
 
+import CloseIcon from 'assets/svg/close-icon-white';
+
 function PointCard(props) {
+
+    function delete_point (e) {
+        e.stopPropagation();
+        console.log(props.data)
+
+        const config = {
+            headers: {
+                authorization: 'Bearer ' + localStorage.getItem('jwt'),
+            },
+        };
+
+        axios
+            .post('http://localhost:6969/delete-point',{id: props.data._id.toString()},config)
+            .then(res => {
+                if (!res.data) { return console.log(res); }
+                window.location.reload();
+            })
+    }
+
     return (
         <>
             <div
@@ -24,6 +46,11 @@ function PointCard(props) {
                     <p className="--v2 --ml2">
                         Сотрудников: {props.data.workers.length}
                     </p>
+                    {props.data.job_offers.length == 0 ? 
+                    <CloseIcon handle_click={delete_point} point />
+                    :
+                    <CloseIcon point hidden/>
+                    }
                 </div>
             </div>
         </>

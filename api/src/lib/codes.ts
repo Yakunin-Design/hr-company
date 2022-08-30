@@ -2,11 +2,24 @@ import Result from "./Result";
 import axios from "axios";
 
 // Sends sms with sms.ru's API
-// https://sms.ru/?panel=api
+// https://https://smsaero.ru/
 function send_sms(phone: string, msg: string): Result<boolean> {
-    const api_id = "2541EBE8-025E-46C7-78F8-6C462D43258A";
-    const url = `https://sms.ru/sms/send?api_id=${api_id}&to=${phone}&msg=${msg}&json=1`;
 
+
+    let send_phone = phone.split('');
+    send_phone = send_phone.filter(val => val != " ")
+    send_phone = send_phone.filter(val => val != "+")
+    send_phone = send_phone.filter(val => val != "(")
+    send_phone = send_phone.filter(val => val != ")")
+
+    if (send_phone[0] === '+') send_phone.shift();
+    else if (send_phone[0] === '8') send_phone[0] = '7';
+
+    console.log(send_phone.join(''));
+
+    const api_id = "2AAPXYuL3YlErxWOZGFlBVk2bhlR";
+    const email =  "andrey.kazako75@gmail.com";
+    const url = `https://${email}:${api_id}@gate.smsaero.ru/v2/sms/send?number=${send_phone.join('')}&text=${msg}&sign=SMS Aero`;
     axios.get(url).then().catch(err => {
         console.log('Error: ', err.message);
         return {Ok: false, Err: new Error('cant send sms')};

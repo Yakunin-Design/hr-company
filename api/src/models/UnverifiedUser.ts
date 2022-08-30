@@ -13,6 +13,7 @@ class UnverifiedUser implements IUnverifiedUser {
     constructor(user_data: IWorker | IEmployer) {
         const time = Date.now();
         const code = generate_code();
+
         send_sms(user_data.phone, `Your code: ${code}`);
         
         let type: 'worker' | 'employer';
