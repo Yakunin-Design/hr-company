@@ -15,6 +15,8 @@ function WorkerProfile(props) {
     const citizenship = props.data.citizenship === 'other' ? 'другое' : props.data.citizenship === 'sng' ? 'СНГ' : props.data.citizenship === 'bu/ua' ? '🇧🇾/🇺🇦' : '🇷🇺'
     const birthday = (new Date()).getFullYear() - props.data.birthday.substr(6,4)
 
+    const experience_list = props.data.experience.map(exp => <Experience data={exp} display/>)
+
     return (
         <div className="--modal-sheet-overlay">
 
@@ -86,9 +88,8 @@ function WorkerProfile(props) {
                 <hr/>
 
                 <div className="wp__experience modal-sheet__container">
-                    {/* <Experience data={exp_data1} />
-                    <Experience data={exp_data2} /> */}
-                    experience
+                    <h3>Опыт работы</h3>
+                    {experience_list}
                 </div>
                 <hr/>
 

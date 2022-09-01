@@ -102,11 +102,24 @@
 .modal-sheet__cta {
     max-width: 18em;
     margin: 0 auto;
-    margin-top: 2em;
+    width: 100%;
 }
 
 @media (min-width: 400px) {
     .modal-sheet__separator {
         display: block;
+    }
+}
+
+.modal-sheet__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+@media (min-width: 550px) {
+    .modal-sheet__actions {
+        flex-direction: row;
+        gap: 2em;
     }
 }

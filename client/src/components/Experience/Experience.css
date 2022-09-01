@@ -1,15 +1,13 @@
-.display_experience {
-    display: flex;
-    justify-content: space-between;
-    /* align-items: center; */
-    gap: 2em;
-}
-
 .experience__container {
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow: hidden;
+}
+
+.experience__header {
+    justify-content: space-between;
+    align-items: center;
 }
 
 .experience__company {
@@ -18,11 +16,17 @@
     border-radius: 0.4rem;
     font-size: 0.8rem;
     font-weight: 600;
+    overflow-wrap: break-word;
 }
 
 .experience__data {
     display: flex;
 }
+
+.experience__tittle {
+    overflow-wrap: break-word;
+}
+
 .experience__content {
     max-width: 80%;
 }
@@ -49,10 +53,12 @@
 .experience__text {
     /* max-width: 60%; */
     word-wrap: normal;
+    overflow-wrap: break-word;
 }
 
 .experience__delete {
-    position: relative;
+    z-index: 10;
+    cursor: pointer;
 }
 
 .experience__delete #Group-4-Copy path {

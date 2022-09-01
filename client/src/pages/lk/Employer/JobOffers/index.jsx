@@ -15,6 +15,7 @@ function JobOffers(props) {
 
     const { active_job_offers, closed_job_offers, points } = JobOffersLogic()
     const { new_job_offer, toggle_new_job_offer } = useToggle()
+
     return (
         <div className="lk">
             <LkNav page="job-offers" user_type={props.user.user_type}/>
@@ -26,9 +27,9 @@ function JobOffers(props) {
                         <button className="job-offers__add --primary-btn" onClick={toggle_new_job_offer}>Создать вакансию</button>
                     </div>
 
-                    { active_job_offers[0] === false ? <p>У вас нет активных вакансий</p> : active_job_offers }
+                    { active_job_offers.length === 0 ? <p>У вас нет активных вакансий</p> : active_job_offers }
 
-                    { closed_job_offers[0] !== false && <h2 className="--mt3">Закрытые вакансии</h2> }
+                    { closed_job_offers.length != 0 && <h2 className="--mt3">Закрытые вакансии</h2> }
                     { closed_job_offers }
                 </div>
                 <Footer />

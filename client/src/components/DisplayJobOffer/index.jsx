@@ -22,6 +22,8 @@ function DisplayJobOffer(props) {
         responded,
         user_type,
         workers,
+        activate_job_offer,
+        close_job_offer,
     } = DisplayJobOfferLogic(props);
 
     const candidates = workers.map(worker => <WorkerCard data={worker} />);
@@ -83,12 +85,31 @@ function DisplayJobOffer(props) {
                             )}
                         </>
                     ) : (
-                        <button
-                            className="modal-sheet__cta --primary-btn --mt2"
-                            onClick={toggle_edit}
-                        >
-                            Редактировать
-                        </button>
+                        <div className="modal-sheet__actions --mt2">
+                            {props.disabled ? (
+                                <button
+                                    className="modal-sheet__cta --primary-btn"
+                                    onClick={activate_job_offer}
+                                >
+                                    Активировать
+                                </button>
+                            ) : (
+                                <>
+                                    <button
+                                        className="modal-sheet__cta --primary-btn"
+                                        onClick={toggle_edit}
+                                    >
+                                        Редактировать
+                                    </button>
+                                    <button
+                                        className="modal-sheet__cta --secondary-btn"
+                                        onClick={close_job_offer}
+                                    >
+                                        Закрыть
+                                    </button>
+                                </>
+                            )}
+                        </div>
                     )}
                 </div>
                 <hr />

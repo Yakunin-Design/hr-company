@@ -141,6 +141,48 @@ export default function DisplayJobOfferLogic(props) {
 
     const user_type = localStorage.getItem('user_type') || '';
 
+    function close_job_offer() {
+        axios
+            .post(
+                'http://localhost:6969/close-job-offer',
+                { id: props.id },
+                config
+            )
+            .then(res => {
+                if (!res.data) {
+                    return console.log('bruh');
+                }
+
+                if (res.status === 200) {
+                    window.location.reload();
+                }
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    }
+
+    function activate_job_offer() {
+        axios
+            .post(
+                'http://localhost:6969/activate-job-offer',
+                { id: props.id },
+                config
+            )
+            .then(res => {
+                if (!res.data) {
+                    return console.log('bruh');
+                }
+
+                if (res.status === 200) {
+                    window.location.reload();
+                }
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    }
+
     return {
         job_offer_data,
         description,
@@ -150,5 +192,7 @@ export default function DisplayJobOfferLogic(props) {
         responded,
         user_type,
         workers,
+        close_job_offer,
+        activate_job_offer,
     };
 }

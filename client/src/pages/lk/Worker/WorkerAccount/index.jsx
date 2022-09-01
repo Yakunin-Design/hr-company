@@ -110,7 +110,7 @@ function WorkerAccount(props) {
             }
 
             if (exp_info["employer"]) {
-                if ( exp_info["employer"].length < 3) {
+                if ( exp_info["employer"].length < 3 || exp_info["employer"].length > 25) {
                     err.push('employer')
                     err_count++;
                 }
