@@ -398,10 +398,11 @@ async function edit_job_offer(req: Request, res: Response) {
 async function activate_job_offer(req: Request, res: Response) {
     try {
         const id = req.body.id;
+        const new_timer = Math.round(Date.now() / 1000);
 
         const db_result = await db.update(
             { _id: new ObjectId(id) },
-            { $set: { status: 'active' } },
+            { $set: { status: 'active', created: new_timer } },
             'job_offers'
         );
 

@@ -2,9 +2,9 @@ export default function get_created_time(created_time) {
 
     const unixTimeNow = Math.floor(Date.now() / 1000)
     
-    const timer = unixTimeNow - created_time
+    const timer = unixTimeNow - created_time + 1
 
-    const min = Math.floor(timer /60);
+    const min = Math.floor(timer / 60);
     const hour = Math.floor(min / 60);
 
     let day_text, hour_text, minute_text, second_text

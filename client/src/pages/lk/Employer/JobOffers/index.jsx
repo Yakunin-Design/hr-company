@@ -12,7 +12,6 @@ import JobOffersLogic from './JobOffersLogic'
 import useToggle from './hooks/useToggle'
 
 function JobOffers(props) {
-
     const { active_job_offers, closed_job_offers, points } = JobOffersLogic()
     const { new_job_offer, toggle_new_job_offer } = useToggle()
 
