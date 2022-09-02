@@ -53,6 +53,11 @@ router.post('/activate-job-offer', auth, (req: Request, res: Response) => {
         employer_controller.activate_job_offer(req, res);
 });
 
+router.post('/job-offer-accept', auth, (req: Request, res: Response) => {
+    if (res.locals.jwt.user_type === 'employer')
+        employer_controller.accept_worker(req, res);
+});
+
 router.get('/job-offers', auth, (req: Request, res: Response) => {
     if (res.locals.jwt.user_type === 'employer')
         employer_controller.job_offers(req, res);
@@ -69,6 +74,12 @@ router.post('/new-respond', (req: Request, res: Response) => {
 router.post('/get-candidates', auth, (req: Request, res: Response) => {
     if (res.locals.jwt.user_type === 'employer')
         employer_controller.get_candidates(req, res);
+    else res.status(401).send('unauthorized');
+});
+
+router.post('/get-workers', auth, (req: Request, res: Response) => {
+    if (res.locals.jwt.user_type === 'employer')
+        employer_controller.get_workers(req, res);
     else res.status(401).send('unauthorized');
 });
 

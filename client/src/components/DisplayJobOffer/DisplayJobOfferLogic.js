@@ -28,6 +28,7 @@ export default function DisplayJobOfferLogic(props) {
     const [show_edit, set_show_edit] = React.useState(false);
     const [responded, set_responded] = React.useState('');
     const [workers, set_workers] = React.useState([]);
+    const [candidates, set_candidates] = React.useState([]);
 
     // props.id
     function toggle_edit() {
@@ -59,6 +60,7 @@ export default function DisplayJobOfferLogic(props) {
 
                 set_job_offer_data(res.data.data);
                 get_candidates(res.data.data.candidates);
+                res.data.data.workers && get_workers(res.data.data.workers);
             })
             .catch(e => {
                 console.log(e);
@@ -81,6 +83,23 @@ export default function DisplayJobOfferLogic(props) {
                 .post(
                     'http://localhost:6969/get-candidates',
                     candidates,
+                    config
+                )
+                .then(res => {
+                    set_candidates(res.data);
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        }
+    }
+
+    function get_workers(workers) {
+        if (localStorage.getItem('user_type') === 'employer') {
+            axios
+                .post(
+                    'http://localhost:6969/get-workers',
+                    workers,
                     config
                 )
                 .then(res => {
@@ -192,6 +211,7 @@ export default function DisplayJobOfferLogic(props) {
         responded,
         user_type,
         workers,
+        candidates,
         close_job_offer,
         activate_job_offer,
     };

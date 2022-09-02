@@ -39,12 +39,10 @@ function Points(props) {
         <div className="lk">
             <LkNav page="points" user_type={props.user.user_type} />
             <main className="lk__container">
-        
                 { Object.keys(display_point).length != 0
                     ? <DisplayPoint set_display_point={set_display_point} data={display_point}/>
                     : <PointList data={points_list} set_display_point={set_display_point}/>
                 }
-
                 <Footer />
             </main>
         </div>

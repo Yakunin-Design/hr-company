@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 
 import Experience from '../Experience'
 import Review from '../Review'
@@ -17,6 +18,32 @@ function WorkerProfile(props) {
 
     const experience_list = props.data.experience.map(exp => <Experience data={exp} display/>)
 
+    function accept() {
+
+        const data = { 
+            jo_id: props.jo_id,
+            worker_id: props.data._id
+        }
+        const config = {
+            headers: {
+                authorization: 'Bearer ' + localStorage.getItem('jwt')
+            }
+        }
+
+        axios
+            .post('http://localhost:6969/job-offer-accept', data, config)
+            .then(res => {
+                if (!res.data) {
+                    console.log('smth wrong');
+                }
+                window.location.reload();
+            })
+            .catch(err => {
+                console.log(err);
+            });
+
+    }
+
     return (
         <div className="--modal-sheet-overlay">
 
@@ -29,7 +56,13 @@ function WorkerProfile(props) {
                     </div>
 
                     <h2 className="modal-sheet__title --cd --mt4">{props.data.full_name}</h2>
-                    <button className="modal-sheet__cta --primary-btn --mt2" onClick={() => console.log('bruh')}>Предложить работу</button>
+                    {
+                        props.candidate
+                        ?
+                        <button className="modal-sheet__cta --primary-btn --mt2" onClick={() => {accept()}}>Принять</button>
+                        :
+                        <button className="modal-sheet__cta --primary-btn --mt2" onClick={() => console.log('bruh')}>Предложить работу</button>
+                    }
                 </div>
                 <hr className='--mt2'/>
 
@@ -88,8 +121,16 @@ function WorkerProfile(props) {
                 <hr/>
 
                 <div className="wp__experience modal-sheet__container">
-                    <h3>Опыт работы</h3>
-                    {experience_list}
+                    {
+                        experience_list.lenght > 0
+                        ?
+                        <>
+                        <h3>Опыт работы</h3>
+                        {experience_list}
+                        </>
+                        :
+                        <h3>Опыт работы отсутствует</h3>
+                    }
                 </div>
                 <hr/>
 

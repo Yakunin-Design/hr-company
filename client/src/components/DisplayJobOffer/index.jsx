@@ -21,12 +21,17 @@ function DisplayJobOffer(props) {
         jo_respond,
         responded,
         user_type,
+        candidates,
         workers,
         activate_job_offer,
         close_job_offer,
     } = DisplayJobOfferLogic(props);
 
-    const candidates = workers.map(worker => <WorkerCard data={worker} />);
+    const candidates_list = candidates.map(worker => <WorkerCard data={worker} candidate jo_id={job_offer_data._id}/>);
+    const workers_list = workers.map(worker => <WorkerCard data={worker} candidate jo_id={job_offer_data._id}/>);
+
+    console.log(job_offer_data)
+
 
     return (
         <div className="--modal-sheet-overlay">
@@ -131,7 +136,7 @@ function DisplayJobOffer(props) {
                         <hr className="--mt2" />
                         <div className="modal-sheet__container JobOffer__candidates --mt2 --pb2">
                             {job_offer_data.candidate_count === 0 ? (
-                                <h3 className="--mt1 --cd">
+                                <h3 className="--mt4 --cd">
                                     Вы увидете кандидатов тут как только кто
                                     нибудь откликнется на вакансию
                                 </h3>
@@ -139,11 +144,23 @@ function DisplayJobOffer(props) {
                                 <>
                                     <h2 className="--cd">Кандидаты</h2>
                                     <div className="JobOffer__candidates_container">
-                                        {candidates}
+                                        {candidates_list}
                                     </div>
                                 </>
                             )}
                         </div>
+                        { job_offer_data.workers_count > 0 
+                          &&
+                          <>
+                            <hr className="--mt2" />
+                            <div className="modal-sheet__container JobOffer__candidates --mt2 --pb2">
+                                <h2 className="--cd">Работники</h2>
+                                <div className="JobOffer__candidates_container">
+                                    {workers_list}
+                                </div>
+                            </div>
+                          </> 
+                        }
                     </>
                 )}
             </div>

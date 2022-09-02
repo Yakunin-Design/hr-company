@@ -15,7 +15,12 @@ function WorkerCard(props) {
 
     return (
         <>
-        { worker_profile && <WorkerProfile handle_click={toggle_worker_profile} data={props.data} /> }
+        {props.candidate 
+        ?
+        worker_profile && <WorkerProfile handle_click={toggle_worker_profile} data={props.data} candidate jo_id={props.jo_id}/> 
+        :
+        worker_profile && <WorkerProfile handle_click={toggle_worker_profile} data={props.data} />
+        }
 
         <div className='card worker-card' onClick={toggle_worker_profile}>
             {props.data.logo ? 

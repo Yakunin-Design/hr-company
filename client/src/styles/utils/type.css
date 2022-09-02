@@ -11,25 +11,25 @@
 @font-face {
 	font-family: 'Gilroy';
 	font-weight: 700;
-	src: local('Gilroy-Bold'), url('../../assets/fonts/Gilroy-Bold.ttf');
+	src: local('Gilroy-Bold'), url('../../assets/fonts/Gilroy-Bold.woff2');
 }
 
 @font-face {
 	font-family: 'Gilroy';
 	font-weight: 600;
-	src: local('Gilroy-SemiBold'), url('../../assets/fonts/Gilroy-SemiBold.ttf');
+	src: local('Gilroy-SemiBold'), url('../../assets/fonts/Gilroy-Semibold.woff2');
 }
 
 @font-face {
 	font-family: 'Gilroy';
 	font-weight: 500;
-	src: local('Gilroy-Medium'), url('../../assets/fonts/Gilroy-Medium.ttf');
+	src: local('Gilroy-Medium'), url('../../assets/fonts/Gilroy-Medium.woff2');
 }
 
 @font-face {
 	font-family: 'Gilroy';
 	font-weight: 400;
-	src: local('Gilroy-Regular'), url('../../assets/fonts/Gilroy-Regular.ttf');
+	src: local('Gilroy-Regular'), url('../../assets/fonts/Gilroy-Regular.woff2');
 }
 
 /* 

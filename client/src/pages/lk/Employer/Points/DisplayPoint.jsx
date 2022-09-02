@@ -65,7 +65,7 @@ function DisplayPoint(props) {
             {/* <h2 className="--mt2 --mb1">Сотрудники</h2>
             <p>Тут будут отображаться сотрудники</p> */}
             <h2 className="--mt2 --mb1">Вакансии</h2>
-            {job_offer_list ? job_offer_list : <p>Тут будут отображаться ваши вакансии</p>}
+            <div className="display-point-row">{job_offer_list ? job_offer_list : <p>Тут будут отображаться ваши вакансии</p>}</div>
         </div>
     );
 }

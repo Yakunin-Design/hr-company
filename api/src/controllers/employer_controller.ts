@@ -301,6 +301,27 @@ async function get_candidates(req: Request, res: Response) {
     }
 }
 
+async function get_workers(req: Request, res: Response) {
+    try {
+        const workers = req.body;
+
+        const workers_list = await Promise.all(
+            workers.map(async worker => {
+                const db_result = await db.find(
+                    { _id: new ObjectId(worker) },
+                    'workers'
+                );
+
+                return db_result.Ok;
+            })
+        );
+
+        res.status(200).send(workers_list);
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 async function get_point_data(req: Request, res: Response) {
     try {
         const { job_offer_ids } = req.body;
@@ -570,6 +591,67 @@ async function get_points(req: Request, res: Response) {
     res.status(200).send(db_result.Ok);
 }
 
+async function accept_worker(req: Request, res: Response) {
+
+    try {
+        const {jo_id, worker_id} = req.body;
+
+        const job_offer = await db.find(
+            { _id: new ObjectId(jo_id) },
+            'job_offers'
+        );
+
+        if (job_offer.Err) {
+            return res.status(400).send('error: wrong jo id');
+        }
+
+        if (
+            job_offer.Ok!.employer_id.toString() !=
+            res.locals.user._id.toString()
+        ) {
+            return res.status(400).send('not your job offer');
+        }
+
+
+        const worker = await db.find(
+            { _id: new ObjectId(worker_id) },
+            'workers'
+        );
+        if (worker.Err) {
+            return res.status(400).send('error: wrong worker id');
+        }
+        if (
+            job_offer.Ok!.candidates.filter(candidate => {return candidate.toString() == worker_id.toString()}) == []
+        ) { return res.status(400).send('error: candidate not found'); }
+        
+
+        const new_candidates = job_offer.Ok!.candidates.filter(candidate => {return candidate.toString() != worker_id.toString()});
+        const new_workers = job_offer.Ok!.workers ? [...job_offer.Ok!.workers, new ObjectId(worker_id)] : [new ObjectId(worker_id)];
+        const new_workers_count = job_offer.Ok!.workers_count ? job_offer.Ok!.workers_count + 1 : 1;
+
+        const jo_update_data = {
+            candidates: new_candidates,
+            candidate_count: job_offer.Ok!.candidate_count - 1,
+            workers: new_workers,
+            workers_count: new_workers_count
+        }
+        const jo_update = await db.update({_id: new ObjectId(jo_id)}, {$set: {...jo_update_data}}, 'job_offers');
+
+
+        const work = worker.Ok!.work ? [...worker.Ok!.work, new ObjectId(jo_id)] : [new ObjectId(jo_id)];
+        const new_responds = worker.Ok!.responds.filter(resp => {return resp.toString() != jo_id.toString()})
+        const worker_update_data = {
+            work,
+            responds: new_responds,
+        }
+        const worker_update = await db.update({_id: new ObjectId(worker_id)}, {$set: {...worker_update_data }}, 'workers');
+
+        return res.status(200).send('accepted successfully');
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 export default {
     profile,
     basic_edit,
@@ -583,6 +665,8 @@ export default {
     delete_point,
     get_points,
     get_candidates,
+    get_workers,
     get_worker_bank,
     get_point_data,
+    accept_worker,
 };
