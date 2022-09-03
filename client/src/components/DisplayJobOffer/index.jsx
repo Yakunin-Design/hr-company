@@ -30,9 +30,6 @@ function DisplayJobOffer(props) {
     const candidates_list = candidates.map(worker => <WorkerCard data={worker} candidate jo_id={job_offer_data._id}/>);
     const workers_list = workers.map(worker => <WorkerCard data={worker} candidate jo_id={job_offer_data._id}/>);
 
-    console.log(job_offer_data)
-
-
     return (
         <div className="--modal-sheet-overlay">
             {show_edit && (

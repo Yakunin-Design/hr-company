@@ -23,9 +23,12 @@ function WorkerProfile(props) {
     const birthday =
         new Date().getFullYear() - props.data.birthday.substr(6, 4);
 
-    const experience_list = props.data.experience.map(exp => (
+    console.log('props: ');
+    console.log(props);
+
+    const experience_list = props.data.experience ? props.data.experience.map(exp => (
         <Experience data={exp} display />
-    ));
+    )) : [];
 
     function accept() {
         const data = {
