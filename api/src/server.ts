@@ -16,7 +16,8 @@ const server = http.createServer(app);
 const PORT = process.env.PORT || 6969
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({limit: '30mb' }));
+app.use(express.urlencoded({limit: '30mb', extended: false}));
 
 app.use(authorization_router);
 app.use(find_router);
