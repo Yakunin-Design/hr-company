@@ -104,6 +104,7 @@ function RegisterPage() {
     }
 
     function handle_change(event) {
+
         const { name, value, files } = event.target;
 
         if (name === 'logo') {

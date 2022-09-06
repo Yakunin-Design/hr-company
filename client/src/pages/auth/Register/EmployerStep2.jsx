@@ -2,6 +2,7 @@ import React from 'react';
 
 import eye_closed from 'assets/svg/eye_closed.svg';
 import eye_opened from 'assets/svg/eye.svg';
+import PhoneInput from 'components/PhoneInput';
 
 function EmployerStep2(props) {
     const { form_data, on_change, errors } = props;
@@ -32,15 +33,7 @@ function EmployerStep2(props) {
 
             <div className="card__phone">
                 <h3 className="card__label --ld">Номер телефона</h3>
-                <input
-                    className="card__input"
-                    type="tel"
-                    placeholder="+7 (911) 123 45 67"
-                    style={errors.includes('phone') ? error_style : {}}
-                    name="phone"
-                    value={form_data.phone}
-                    onChange={event => on_change(event)}
-                />
+                <PhoneInput data={form_data.phone} on_change={on_change} errors={errors}/>
             </div>
 
             <div className="card__email">
