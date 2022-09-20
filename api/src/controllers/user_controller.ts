@@ -229,6 +229,86 @@ async function get_user(req: Request, res: Response): Promise<void> {
     });
 }
 
+async function get_rewiews(req: Request, res: Response) {
+    try {
+        const rewiews = res.locals.user.rewiews || [];
+        let res_rew = [];
+        if (rewiews.length > 0) {
+
+            const user_type = res.locals.jwt.user_type === 'worker' ? 'employers' : 'workers'
+
+            res_rew = rewiews.map(async rewiew => {
+
+                const sender = await db.find({ _id: new ObjectId(rewiew.sender_id), user_type});
+                if (sender.Err) {
+                    res.status(400).send(sender.Err.message);
+                }
+
+                const sender_logo = sender.Ok!.logo;
+                const sender_name = user_type === 'workers' ? sender.Ok!.full_name : sender.Ok!.company;
+
+                const res_rewiew = {
+                    ...rewiew,
+                    sender_logo,
+                    sender_name
+                }
+                delete res_rewiew.sender_id;
+
+                return res_rewiew 
+            })
+        }
+
+        res.status(200).send(res_rew);
+
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+async function send_rewiew(req: Request, res: Response) {
+    try {
+        const {user_id, categories, text} = req.body;
+
+        const user_type = res.locals.jwt.user_type === 'worker' ? 'employers' : 'workers'
+        const user = await db.find({_id: new ObjectId(user_id)}, user_type);
+
+        if (user.Err) {
+            res.status(300).send("Err: Wrong id");
+            return;
+        }
+
+        const old_rewiews = user.Ok!.rewiews || [];
+
+        const new_rewiew = {
+            time: Math.floor(Date.now() / 1000),
+            sender_id: new ObjectId(res.locals.jwt.user_id),
+            categories,
+            text,
+            total : 0
+        }
+
+        let total = 0;
+        for (let key in categories) {
+            total += categories[key];
+        }
+        total = total / Object.keys(categories).length;
+
+        new_rewiew.total = total
+
+        const update = await db.update({_id: new ObjectId(user_id)}, {$set: {rewiews: [...old_rewiews, new_rewiew]}}, user_type)
+
+        if (update.Err) {
+            res.status(400).send("Err: update err");
+            return;
+        }
+
+        res.status(200).send("Updated successfully")
+    } catch (err) {
+        console.error(err);
+    }
+    
+}
+
 export default {
     email_phone_edit_step1,
     email_phone_edit_step2,
@@ -237,4 +317,6 @@ export default {
     get_user,
     find_jobs,
     find_workers,
+    get_rewiews,
+    send_rewiew
 };

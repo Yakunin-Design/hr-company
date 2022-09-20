@@ -119,4 +119,13 @@ router.get('/my-job', auth, (req: Request, res: Response) => {
     worker_controller.get_my_jobs(req, res);
 });
 
+router.get('/get-rewiews', auth, (req: Request, res: Response) => {
+    user_controller.get_rewiews(req, res);
+});
+
+router.post('/send-rewiew', auth, (req: Request, res: Response) => {
+    user_controller.send_rewiew(req, res);
+});
+
+
 export default router;
