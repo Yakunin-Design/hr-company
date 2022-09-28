@@ -23,22 +23,20 @@ function WorkerProfile(props) {
     const birthday =
         new Date().getFullYear() - props.data.birthday.substr(6, 4);
 
-    console.log('props: ');
-    console.log(props);
+    const experience_list = props.data.experience
+        ? props.data.experience.map(exp => <Experience data={exp} display />)
+        : [];
 
-    const experience_list = props.data.experience ? props.data.experience.map(exp => (
-        <Experience data={exp} display />
-    )) : [];
+    const config = {
+        headers: {
+            authorization: 'Bearer ' + localStorage.getItem('jwt'),
+        },
+    };
 
     function accept() {
         const data = {
             jo_id: props.jo_id,
             worker_id: props.data._id,
-        };
-        const config = {
-            headers: {
-                authorization: 'Bearer ' + localStorage.getItem('jwt'),
-            },
         };
 
         axios
@@ -48,6 +46,24 @@ function WorkerProfile(props) {
                     console.log('smth wrong');
                 }
                 window.location.reload();
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+
+    function chat() {
+        console.log('click');
+
+        const data = {
+            another_user_id: props.data._id,
+        };
+
+        axios
+            .post('http://localhost:6969/new-chat', data, config)
+            .then(res => {
+                console.log(res);
+                window.location.replace('/chat');
             })
             .catch(err => {
                 console.log(err);
@@ -75,14 +91,21 @@ function WorkerProfile(props) {
                         {props.data.full_name}
                     </h2>
                     {props.candidate ? (
-                        <button
-                            className="modal-sheet__cta --primary-btn --mt2"
-                            onClick={() => {
-                                accept();
-                            }}
-                        >
-                            Принять
-                        </button>
+                        <div className="--row --mt2">
+                            <button
+                                className="modal-sheet__cta --primary-btn"
+                                onClick={accept}
+                            >
+                                Принять
+                            </button>
+
+                            <button
+                                className="--secondary-btn --ml2"
+                                onClick={chat}
+                            >
+                                Чат
+                            </button>
+                        </div>
                     ) : (
                         <button
                             className="modal-sheet__cta --primary-btn --mt2"
