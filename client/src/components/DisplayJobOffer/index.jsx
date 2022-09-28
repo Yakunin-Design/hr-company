@@ -28,7 +28,7 @@ function DisplayJobOffer(props) {
     } = DisplayJobOfferLogic(props);
 
     const candidates_list = candidates.map(worker => <WorkerCard data={worker} candidate jo_id={job_offer_data._id}/>);
-    const workers_list = workers.map(worker => <WorkerCard data={worker} candidate jo_id={job_offer_data._id}/>);
+    const workers_list = workers.map(worker => <WorkerCard data={worker} worker jo_id={job_offer_data._id}/>);
 
     return (
         <div className="--modal-sheet-overlay">
@@ -60,7 +60,7 @@ function DisplayJobOffer(props) {
                         {job_offer_data.specialty}
                     </h2>
                     <div className="modal-sheet__subtitle">
-                        <h4 className="JobOffer__company-name">Макдональдс</h4>
+                        <h4 className="JobOffer__company-name">{job_offer_data.company}</h4>
                         <h4 className="modal-sheet__separator">|</h4>
                         <div className="JobOffer__time-created">
                             <img src={clock} />

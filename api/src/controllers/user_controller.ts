@@ -118,7 +118,8 @@ async function get_jobs(req: Request, res: Response) {
             );
             if (point.Ok === null || point.Err)
                 return console.log('cant find point');
-
+            
+            
             // Removing useless data from beeing send to the client
             delete job.experience;
             delete job.citizenship;
@@ -127,10 +128,19 @@ async function get_jobs(req: Request, res: Response) {
             delete job.candidates;
             delete job.point_id;
 
+            const employer = await db.find(
+                { _id: new ObjectId(job.employer_id) },
+                'employers'
+            );
+            if (employer.Ok === null || employer.Err)
+                return console.log('cant find employer');
+
+            delete job.employer_id;
             return {
                 ...job,
                 address: point.Ok.address,
                 subway: point.Ok.subway,
+                company: employer.Ok.company,
             };
         })
     );
@@ -167,7 +177,8 @@ async function find_jobs(req: Request, res: Response) {
             );
             if (point.Ok === null || point.Err)
                 return console.log('cant find point');
-
+            
+            
             // Removing useless data from beeing send to the client
             delete job.experience;
             delete job.citizenship;
@@ -176,10 +187,19 @@ async function find_jobs(req: Request, res: Response) {
             delete job.candidates;
             delete job.point_id;
 
+            const employer = await db.find(
+                { _id: new ObjectId(job.employer_id) },
+                'employers'
+            );
+            if (employer.Ok === null || employer.Err)
+                return console.log('cant find employer');
+
+            delete job.employer_id;
             return {
                 ...job,
                 address: point.Ok.address,
                 subway: point.Ok.subway,
+                company: employer.Ok.company,
             };
         })
     );

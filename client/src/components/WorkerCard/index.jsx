@@ -19,6 +19,10 @@ function WorkerCard(props) {
         ?
         worker_profile && <WorkerProfile handle_click={toggle_worker_profile} data={props.data} candidate jo_id={props.jo_id}/> 
         :
+        props.worker
+        ?
+        worker_profile && <WorkerProfile handle_click={toggle_worker_profile} data={props.data} worker/>
+        :
         worker_profile && <WorkerProfile handle_click={toggle_worker_profile} data={props.data} />
         }
 

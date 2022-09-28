@@ -217,6 +217,9 @@ async function full_job_offer(req: Request, res: Response) {
 
         delete response.data.point_id;
 
+        const employer = await db.find({ _id: response.data.employer_id }, 'employers');
+        response.data.company = employer.Ok!.company;
+
         res.status(200).send(response);
     } catch (e) {
         console.log(e.message);

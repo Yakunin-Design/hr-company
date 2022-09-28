@@ -46,7 +46,7 @@ function JobOfferCard(props) {
                         ) : (
                             <div className="JobOfferCard__company-logo"></div>
                         )}
-                        <h4>Макдональдс</h4>
+                        <h4>{props.data.company}</h4>
                     </div>
                     <Subway
                         key={props.id}

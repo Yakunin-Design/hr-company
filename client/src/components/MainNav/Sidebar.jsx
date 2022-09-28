@@ -40,7 +40,7 @@ function Sidebar (props) {
                     <h3 className='link__name --ld'>Профиль</h3>
                 </Link>
 
-                {
+                {/* {
                     user_type === 'worker'
                     ?
                     <Link className={'navigation__link' + (page === 'reviews' ? ' --selected' : '')} to='/reviews'>
@@ -54,14 +54,14 @@ function Sidebar (props) {
                         <h3 className='link__name --ld'>Платежи</h3>
                         <span className="link__notify">2</span>
                     </Link>
-                }
+                } */}
 
                 <hr/>
 
                 <Link className={'navigation__link' + (page === 'chat' ? ' --selected' : '')} to='/chat'>
                     <ChatIcon color="black" />
                     <h3 className='link__name --ld'>Чат</h3>
-                    <span className="link__notify">12</span>
+                    {/* <span className="link__notify">12</span> */}
                 </Link>
 
                 <hr/>
@@ -80,11 +80,11 @@ function Sidebar (props) {
                             <h3 className='link__name --ld'>Поиск работы</h3>
                         </Link>
 
-                        <Link className={'navigation__link' + (page === 'payments' ? ' --selected' : '')} to='/payments'>
+                        {/* <Link className={'navigation__link' + (page === 'payments' ? ' --selected' : '')} to='/payments'>
                             <BillingIcon color="black" />
                             <h3 className='link__name --ld'>Выплаты</h3>
                             <span className="link__notify">5</span>
-                        </Link>
+                        </Link> */}
                     </>
                     :
                     <>
@@ -100,10 +100,10 @@ function Sidebar (props) {
 
                         <hr/>
                         
-                        <Link className={'navigation__link' + (page === 'worker-bank' ? ' --selected' : '')} to='/worker-bank'>
+                        {/* <Link className={'navigation__link' + (page === 'worker-bank' ? ' --selected' : '')} to='/worker-bank'>
                             <WorkerBankIcon color="black" />
                             <h3 className='link__name --ld'>Банк Сотрудников</h3>
-                        </Link>
+                        </Link> */}
                         
                         <Link className={'navigation__link' + (page === 'find-workers' ? ' --selected' : '')} to='/find-workers'>
                             <SearchIcon color="black" />

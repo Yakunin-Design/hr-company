@@ -40,7 +40,10 @@ function FindWork(props) {
                 }
 
                 set_job_offers(res.data.jo)
-                set_bubble_list(res.data.bubbles)
+
+                const bubbles = res.data.bubbles.map(bubble => bubble.toLowerCase())
+                set_bubble_list([...new Set(bubbles)])
+                
             })
             .catch(e => {
                 console.log(e);

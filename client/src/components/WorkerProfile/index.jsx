@@ -106,7 +106,18 @@ function WorkerProfile(props) {
                                 Чат
                             </button>
                         </div>
-                    ) : (
+                    )
+                    :
+                    props.worker ? (
+                        <button
+                            className="--secondary-btn --ml1 --mt1"
+                            onClick={chat}
+                        >
+                        Чат
+                        </button>
+                    ) 
+                    :
+                    (
                         <button
                             className="modal-sheet__cta --primary-btn --mt2"
                             onClick={() => console.log('bruh')}
