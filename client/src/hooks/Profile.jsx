@@ -32,6 +32,10 @@ function Profile(props) {
                 if (e.response.status === 401) {
                     window.location.replace('/login')
                 }
+                if (e.response.status === 404) {
+                    localStorage.removeItem('jwt')
+                    window.location.reload()
+                }
             })
 
     }, [])
