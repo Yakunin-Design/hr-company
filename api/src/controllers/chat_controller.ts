@@ -126,29 +126,34 @@ async function get_messages(req: Request, res: Response) {
 async function new_chat(req: Request, res: Response) {
     const { another_user_id } = req.body;
 
-    const chat_id = await create_chat(
-        res.locals.jwt.user_type,
-        res.locals.user._id,
-        another_user_id
+    const my_user_type = res.locals.jwt.user_type;
+    const my_user_id = res.locals.user._id;
+
+    const user1 = my_user_type === 'employer'
+    ? my_user_id
+    : new ObjectId(another_user_id)
+
+    const user2 = my_user_type != 'employer'
+    ? my_user_id
+    : new ObjectId(another_user_id)
+
+    const find = await db.find({user1: user1, user2: user2}, 'chats');
+
+    console.log(find);
+
+    const chat_id = find.Ok != null ? find.Ok._id : await create_chat(
+        user1, user2
     );
 
     return res.send(chat_id);
 }
 
 async function create_chat(
-    my_user_type: string,
-    my_user_id: string,
-    another_user_id: string
+    user1, user2
 ): Promise<ObjectId | Error> {
     const chat = {
-        user1:
-            my_user_type === 'employer'
-                ? new ObjectId(my_user_id)
-                : new ObjectId(another_user_id),
-        user2:
-            my_user_type != 'employer'
-                ? new ObjectId(my_user_id)
-                : new ObjectId(another_user_id),
+        user1,
+        user2,
         msgs: [],
         unread_count1: 0,
         unread_count2: 0,
@@ -165,11 +170,20 @@ async function send_message(req: Request, res: Response) {
     let { chat_id } = req.body;
 
     if (another_user_id) {
-        chat_id = await create_chat(
-            res.locals.jwt.user_type,
-            res.locals.user._id,
-            another_user_id
-        );
+
+        const my_user_type = res.locals.jwt.user_type;
+        const my_user_id = res.locals.jwt.user_id;
+
+        const user1 = my_user_type === 'employer'
+        ? new ObjectId(my_user_id)
+        : new ObjectId(another_user_id)
+
+        const user2 = my_user_type != 'employer'
+        ? new ObjectId(my_user_id)
+        : new ObjectId(another_user_id)
+
+
+        chat_id = await create_chat(user1, user2);
 
         if (chat_id.Err) return res.status(400).send('wrong data');
     }

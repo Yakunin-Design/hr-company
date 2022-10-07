@@ -2,6 +2,7 @@ import React from 'react'
 import LkNav from '../../../components/MainNav'
 import axios from 'axios'
 import io from "socket.io-client";
+import { useParams } from 'react-router-dom';
 
 import Footer from '../../../components/Footer'
 
@@ -14,7 +15,7 @@ import ChatArea from './ChatArea'
 const socket = io.connect("http://localhost:6969");
 
 function ChatList(props) {
-
+const params = useParams();
     const [display_chat, set_display_chat] = React.useState({
         user_name: '',
         chat_id: ''
@@ -49,7 +50,6 @@ function ChatList(props) {
                 chats.push(chat.chat_id)
             })
             socket.emit('select_chat', chats)
-            
         })
         .catch(e => {
             console.log(e)

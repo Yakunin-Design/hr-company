@@ -68,6 +68,7 @@ function App() {
                         element={<Payments user={user} />}
                     />
                     <Route path="/chat" exact element={<Chat user={user} />} />
+                    <Route path="/chat/:chatId" exact element={<Chat user={user} />} />
                     <Route
                         path="/find-work"
                         exact

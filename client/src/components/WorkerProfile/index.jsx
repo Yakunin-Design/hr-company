@@ -62,8 +62,9 @@ function WorkerProfile(props) {
         axios
             .post('http://localhost:6969/new-chat', data, config)
             .then(res => {
-                console.log(res);
-                window.location.replace('/chat');
+                console.log(res.data);
+                const chat_id = String(res.data);
+                window.location.replace(`/chat/${chat_id}}`);
             })
             .catch(err => {
                 console.log(err);
