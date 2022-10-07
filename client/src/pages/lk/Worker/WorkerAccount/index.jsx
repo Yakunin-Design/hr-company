@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import Compressor from 'compressorjs'
 
 import LkNav from '../../../../components/MainNav'
 import Footer from '../../../../components/Footer'
@@ -260,18 +261,26 @@ function WorkerAccount(props) {
         } else if (name === 'logo') {
 
             const reader = new FileReader()
+
             reader.addEventListener("load", function () {
                 if (this.result) {
 
-                    set_user_data(prev_user_data => { 
+                    set_user_data(prev_emp_data => {
                         return {
-                            ...prev_user_data,
+                            ...prev_emp_data,
                             [name]: this.result
                         }
                     })
                 }
             })
-            reader.readAsDataURL(files[0])
+
+            const file = files[0];
+            new Compressor(file, {
+                quality: 0.6,
+                success(result) {
+                    reader.readAsDataURL(result)
+                }
+            })
 
         } else {
             set_user_data(prev_user_data => {

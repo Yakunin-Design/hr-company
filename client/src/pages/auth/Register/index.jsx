@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Compressor from 'compressorjs';
 
 import Header from 'components/Header';
 import Footer from 'components/Footer';
@@ -108,19 +109,27 @@ function RegisterPage() {
         const { name, value, files } = event.target;
 
         if (name === 'logo') {
-            const reader = new FileReader();
-            reader.addEventListener('load', function () {
+            const reader = new FileReader()
+
+            reader.addEventListener("load", function () {
                 if (this.result) {
-                    console.log(this.result);
-                    set_form_data(prev_form_data => {
+
+                    set_form_data(prev_emp_data => {
                         return {
-                            ...prev_form_data,
-                            [name]: this.result,
-                        };
-                    });
+                            ...prev_emp_data,
+                            [name]: this.result
+                        }
+                    })
                 }
-            });
-            reader.readAsDataURL(files[0]);
+            })
+
+            const file = files[0];
+            new Compressor(file, {
+                quality: 0.6,
+                success(result) {
+                    reader.readAsDataURL(result)
+                }
+            })
         } else {
             set_form_data(prev_form_data => {
                 return {
