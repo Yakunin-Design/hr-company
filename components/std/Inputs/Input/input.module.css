@@ -1,0 +1,17 @@
+.label {
+    font-weight: 700;
+	font-size: 1.05rem;
+	line-height: 120%;
+    letter-spacing: 0.05rem;
+}
+
+.input {
+    width: 100%;
+
+    padding: 0.9em 1.2em;
+
+    border-radius: 0.4rem;
+    border: 2px solid black;
+
+    font-size: 1rem;
+}

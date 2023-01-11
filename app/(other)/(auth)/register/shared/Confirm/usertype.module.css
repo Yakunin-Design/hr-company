@@ -1,0 +1,16 @@
+.err {
+    text-align: center;
+    font-weight: 500;
+    color: red;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    width: 85%;
+}
+
+.tou {
+    font-weight: 500;
+}

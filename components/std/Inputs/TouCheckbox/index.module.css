@@ -1,0 +1,17 @@
+.tou {
+    width: 1.5em;
+    height: 1.5rem;
+    border: 0.15rem solid #818181;
+    border-radius: 0.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.input {
+    display: none;
+}
+
+.input:checked + label .tou {
+    border-color: var(--accent);
+}

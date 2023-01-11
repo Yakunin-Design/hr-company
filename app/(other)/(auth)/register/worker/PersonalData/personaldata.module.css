@@ -1,0 +1,17 @@
+.day {
+    flex: 2;
+    text-align: center;
+    padding: 0.9em 0;
+}
+
+.month {
+    flex: 6;
+    padding: 0.9em 0;
+    margin: 0 1em;
+}
+
+.year {
+    flex: 3;
+    text-align: center;
+    padding: 0.9em 0;
+}

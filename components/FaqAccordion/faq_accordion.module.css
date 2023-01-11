@@ -1,0 +1,14 @@
+.qa {
+    cursor: pointer;
+    width: 100%;
+}
+
+.icon {
+    width: 1.5em;
+    height: 1.5em;
+    transition: all 0.2s ease-out;
+}
+
+.rotated {
+    transform: rotate(180deg);
+}

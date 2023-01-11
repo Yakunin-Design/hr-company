@@ -1,0 +1,15 @@
+.full {
+    display: none;
+}
+.mobile {
+    display: flex;
+}
+
+@media (min-width: 600px) {
+    .full {
+        display: block;
+    }
+    .mobile {
+        display: none;
+    }
+}

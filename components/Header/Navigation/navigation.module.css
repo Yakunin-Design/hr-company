@@ -1,0 +1,11 @@
+.nav {
+    display: none;
+    align-items: center;
+}
+
+@media (min-width: 800px) {
+    .nav {
+        display: flex;
+        align-items: center;
+    }
+}

@@ -1,0 +1,26 @@
+.block {
+    width: 15%;
+}
+
+.input {
+    width: 100%;
+    font-weight: 700;
+    font-size: 4.4rem;
+    line-height: 110%;
+    display: flex;
+    text-align: center;
+}
+
+.input::-moz-placeholder {
+    color: var(--background-main);
+}
+
+.input::-webkit-input-placeholder {
+    color: var(--background-main);
+}
+
+.underline {
+    height: 0.4rem;
+    background-color: var(--accent);
+    border-radius: 0.25rem;
+}

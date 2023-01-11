@@ -1,0 +1,127 @@
+/* 
+----------------------------------------------------------------
+						Typography
+----------------------------------------------------------------
+*/
+
+/* 
+	Font Family 
+*/
+
+@font-face {
+	font-family: 'Gilroy';
+	font-weight: 700;
+	src: local('Gilroy-Bold'), url('../../assets/fonts/Gilroy-Bold.woff2');
+}
+
+@font-face {
+	font-family: 'Gilroy';
+	font-weight: 600;
+	src: local('Gilroy-SemiBold'), url('../../assets/fonts/Gilroy-Semibold.woff2');
+}
+
+@font-face {
+	font-family: 'Gilroy';
+	font-weight: 500;
+	src: local('Gilroy-Medium'), url('../../assets/fonts/Gilroy-Medium.woff2');
+}
+
+@font-face {
+	font-family: 'Gilroy';
+	font-weight: 400;
+	src: local('Gilroy-Regular'), url('../../assets/fonts/Gilroy-Regular.woff2');
+}
+
+/* 
+	Headlines
+*/
+
+h1 {
+	font-weight: 700;
+	font-size: 4.4rem;
+	line-height: 110%;
+}
+
+h2 {
+	font-weight: 700;
+    font-size: 7vmin;
+	line-height: 115%;
+}
+
+h3 {
+	font-weight: 700;
+	font-size: 1.05rem;
+	line-height: 120%;
+    letter-spacing: 0.05rem;
+}
+
+h4 {
+	font-weight: 600;
+	font-size: 0.875rem;
+	color: #000;
+	line-height: 125%;
+}
+
+h5 {
+	font-weight: 600;
+	font-size: 0.6rem;
+	color: #000;
+	line-height: 125%;
+}
+
+@media (min-width: 650px) {
+    h2 {
+        font-size: 2.8rem;
+    }
+}
+
+/* 
+	Body copy 
+*/
+
+p {
+	font-weight: normal;
+	font-size: 1rem;
+	line-height: 23px;
+	color: var(--bodycopy);
+	letter-spacing: 0.07rem;
+}
+
+.--v2 {
+	font-weight: 500 !important;
+	color: var(--bodycopy);
+}
+
+/* 
+	Alignment
+*/
+
+.--ld {
+	text-align: left;
+	color: black;
+}
+
+.--cd {
+	text-align: center;
+	color: black;
+}
+
+.--rd {
+	text-align: right;
+	color: black;
+}
+
+.--ll {
+	text-align: left;
+	color: white;
+}
+
+.--cl {
+	text-align: center;
+	color: white !important;
+}
+
+.--rl {
+	text-align: right;
+	color: white;
+}
