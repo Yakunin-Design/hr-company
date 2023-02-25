@@ -7,14 +7,13 @@ export default function RootLayout({
     params,
 }: {
     children: React.ReactNode;
-    params: {name: string};
+    params: {active_page: string};
 }) {
-
     return (
         <html lang="en">
             <head />
             <body>
-                <Sidebar name={params.name}/>
+                <Sidebar active_page={params.active_page}/>
                 {children}
                 <Footer lk/>
             </body>

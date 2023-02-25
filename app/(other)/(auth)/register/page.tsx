@@ -21,7 +21,6 @@ import Button from "@/components/std/Button";
 import OrgAgent from "./employer/OrgAgent";
 import Confirm from "./shared/Confirm";
 
-
 export default function RegisterPage() {
 
     if (localStorage.getItem("jwt")) {
@@ -50,8 +49,8 @@ export default function RegisterPage() {
             <div className={styles.auth}>
                 {step.step != 0 && (
                     <>
-                    <Spacer top ="2"/>
-                    <IconButton icon="back" onClick={prev_step} />
+                        <Spacer top ="2"/>
+                        <IconButton icon="back" onClick={prev_step} />
                     </>
                 )}
                 <Card>

@@ -1,9 +1,14 @@
+"use client";
 import Button from "@/components/std/Button";
 import Container from "@/components/std/Container";
 import Spacer from "@/components/std/Spacer";
 import Link from "next/link";
 
 export default function Home() {
+    if (localStorage.getItem("jwt")) {
+        window.location.replace("/profile");
+    }
+
     return (
         <Container wrapper>
             <Spacer top="4" />

@@ -41,5 +41,12 @@ export default function Home() {
         })
 
 }, [])
-  return (<h2>Loading</h2>)
+return (
+<html lang="en">
+    <head />
+    <body>
+        <h2>Loading</h2>
+    </body>
+</html>
+)
 }

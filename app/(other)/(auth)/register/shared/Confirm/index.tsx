@@ -6,13 +6,10 @@ import ConfirmInput from "./ConfirmInput";
 import confirm_controller from "./confirm_controller";
 import { useEffect } from "react";
 
-
 export default function Confirm(data: any) {
 
     const {
-        can_resend_code,
         code_data,
-        toggle_resend_code,
         send_code_to_api,
         on_change,
         resend_code,
@@ -20,13 +17,12 @@ export default function Confirm(data: any) {
         registration_api_call
     } = confirm_controller();
 
-
     useEffect(() => {
         registration_api_call(data.data)
             .then((res) => {
                 localStorage.setItem('tmp_id', res.data)
             })
-            .catch((err) => console.log(err))
+            .catch()
     }, []);
 
     return (
