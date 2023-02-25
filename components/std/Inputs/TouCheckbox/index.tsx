@@ -1,4 +1,5 @@
 import styles from "./index.module.css";
+import Spacer from "@/components/std/Spacer";
 import Image from "next/image";
 import checked_icon from "./check.svg"
 

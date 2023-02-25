@@ -1,5 +1,3 @@
-// formats input data to fit api
-
 export default function set_data(form_data, step) {
     let data = {};
 
