@@ -96,6 +96,8 @@ async function signup(req: Request, res: Response): Promise<void> {
         // Get user type
         const { user_type, payload } = req.body;
 
+        console.log(req.body);
+
         // Check user type 
         if (user_type != 'worker' && user_type != 'employer') {
             res.status(400).send('Wrong data');
@@ -157,6 +159,8 @@ async function confirm_phone(req: Request, res: Response): Promise<void> {
     try {
         const id: string = req.body.id;
         const code: number = req.body.code;
+
+        console.log(code)
 
         // Find in NC db
         const user = await db.find({_id: new ObjectId(id)}, 'unverified_users');
