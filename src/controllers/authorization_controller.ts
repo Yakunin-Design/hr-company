@@ -96,8 +96,6 @@ async function signup(req: Request, res: Response): Promise<void> {
         // Get user type
         const { user_type, payload } = req.body;
 
-        console.log(req.body);
-
         // Check user type 
         if (user_type != 'worker' && user_type != 'employer') {
             res.status(400).send('Wrong data');
@@ -118,6 +116,7 @@ async function signup(req: Request, res: Response): Promise<void> {
         const validate: Result<IEmployer | IWorker> = user_type === "worker"
             ? await validator.worker_checks(payload)
             : await validator.employer_checks(payload);
+
         if (validate.Err) {
             res.status(400).send(validate.Err.message);
             return;
@@ -126,7 +125,7 @@ async function signup(req: Request, res: Response): Promise<void> {
             res.status(400).send('Validation error');
             return;
         }
-        
+
         // Encrypting password
         validate.Ok.password = await bcryptjs.hash(validate.Ok.password, 10);
 
@@ -137,7 +136,7 @@ async function signup(req: Request, res: Response): Promise<void> {
                 { "user_data.phone": validate.Ok.phone }
             ]
         };
-        
+
         const unverified_user = new UnverifiedUser(validate.Ok);
         const id = await db.save_unique(filter, unverified_user, 'unverified_users');
 

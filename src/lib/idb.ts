@@ -2,7 +2,7 @@ import { MongoClient, WithId, Document, UpdateResult, ObjectId } from "mongodb";
 import Result from "../lib/Result";
 
 class db {
-    private static connection_uri: string = process.env.DB_CONNECTION_URI || 'mongodb://localhost:27017/test_db';
+    private static connection_uri: string = process.env.DB_CONNECTION_URI || 'mongodb://127.0.0.1:27017/test_db';
     private static collection: string;
     private static limit: number = 100;
     

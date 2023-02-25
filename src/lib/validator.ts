@@ -45,6 +45,8 @@ async function employer_checks(payload: IEmployer): Promise<Result<IEmployer>> {
     }
 
     let checker = await exists('employers', cardentials);
+
+
     if (!checker.Ok) return {Ok: null, Err: checker.Err};
 
     checker = await exists('workers', cardentials);
@@ -212,10 +214,6 @@ function specialty(specialty: string): Result<boolean> {
 
     return { Ok: true };
 }
-    
-
-    // return { Ok: result[0], Err: null };
-
 
 async function exists(collection_name: string, cardentials: cardentials): Promise<Result<boolean>> {
     const result = await db.find_all({$or: [{phone: cardentials.phone}, {email: cardentials.email}]}, collection_name);
