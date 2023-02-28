@@ -1,15 +1,14 @@
-import React from 'react';
-import styles from './container.module.css';
+import React from "react";
+import styles from "./container.module.css";
 
 type props = {
-    children: React.ReactNode,
-    wrapper? : boolean,
-    className?: string,
-    lk?: boolean
-}
+    children: React.ReactNode;
+    wrapper?: boolean;
+    className?: string;
+    lk?: boolean;
+};
 
 export default function Container(props: props) {
-
     let container_styles;
 
     if (props.wrapper) {
@@ -19,16 +18,14 @@ export default function Container(props: props) {
     }
 
     if (props.className) {
-        container_styles +=  " " + props.className;
+        container_styles += " " + props.className;
     }
 
-
-    return (
-    props.lk ? 
-    <div className={styles.lk}>
+    return props.lk ? (
+        <div className={styles.lk}>
+            <div className={container_styles}>{props.children}</div>
+        </div>
+    ) : (
         <div className={container_styles}>{props.children}</div>
-    </div>
-    :
-    <div className={container_styles}>{props.children}</div>
-    )
+    );
 }

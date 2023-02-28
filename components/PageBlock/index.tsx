@@ -38,7 +38,7 @@ export default function PageBlock(props: props) {
 
                     {/* General */}
                     {
-                        props.name == "my" &&
+                        props.name == "profile" &&
                         <>
                             <Image src={props.active ? ProfileIconWhite : ProfileIcon} alt="profile"/>
                             <h3 className={props.show ? styles.show : styles.name}>Профиль</h3>

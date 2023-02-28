@@ -12,7 +12,7 @@ import login_controller from "./login_controller";
 
 export default function LoginPage() {
     if (localStorage.getItem("jwt")) {
-        window.location.replace("/profile");
+        window.location.replace("/lk/profile");
     }
 
     const { form_data, errors, sign_in, handle_change } = login_controller();

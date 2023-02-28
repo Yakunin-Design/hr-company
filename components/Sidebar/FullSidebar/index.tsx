@@ -31,7 +31,7 @@ export default function FullSidebar(props: props) {
                 ?
                 <>
                     <div className={styles.nav_block}>
-                        <PageBlock name="my" active={props.active == "my"} show={props.show}/>
+                        <PageBlock name="profile" active={props.active == "profile"} show={props.show}/>
                         <Spacer top="2"/>
                     </div>
                     <div className={styles.nav_block}>

@@ -43,7 +43,7 @@ export default function login_controller() {
 
                 localStorage.setItem('jwt', res.data);
 
-                window.location.replace('/profile');
+                window.location.replace('/lk');
             })
             .catch(err => {
                 console.log(err);

@@ -1,21 +1,22 @@
 import Footer from '@/components/Footer';
 import '@/styles/global.css';
-import Sidebar from '@/components/Sidebar';
+import Header from '@/components/Header';
 
-export default function RootLayout({
+export default function ServicePagesLayout({
     children,
     params,
 }: {
     children: React.ReactNode;
-    params: {active_page: string};
+    params: any;
 }) {
+
     return (
         <html lang="en">
             <head />
             <body>
-                <Sidebar active_page={params.active_page}/>
+                <Header/>
                 {children}
-                <Footer lk/>
+                <Footer/>
             </body>
         </html>
     );
