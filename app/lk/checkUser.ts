@@ -1,9 +1,9 @@
 "use client";
 import { useEffect } from "react";
 import axios from "axios";
-import user_controller from "../user_controller";
+import user_controller from "./user_controller";
 
-export default function Home() {
+export default function CheckUser() {
     const { set_user } = user_controller();
 
     useEffect(() => {
@@ -26,11 +26,16 @@ export default function Home() {
                     user_type: res.data.specialty ? "worker" : "employer",
                     user_data: res.data,
                 });
-                localStorage.setItem(
-                    "user_type",
-                    res.data.specialty ? "worker" : "employer"
-                );
-                window.location.replace("/lk/profile");
+
+                if (
+                    localStorage.getItem("user_type") != "worker" ||
+                    localStorage.getItem("user_type") != "employer"
+                ) {
+                    localStorage.setItem(
+                        "user_type",
+                        res.data.specialty ? "worker" : "employer"
+                    );
+                }
             })
             .catch(e => {
                 if (e.response.status === 401) {
@@ -39,19 +44,10 @@ export default function Home() {
                 if (e.response.status === 404) {
                     localStorage.removeItem("jwt");
                     window.location.reload();
-                }
-                else {
-                    console.log('e is undefined')
+                } else {
+                    console.log("e is undefined");
                 }
             });
     }, []);
-
-    return (
-        <html lang="en">
-            <head />
-            <body>
-                <h2>Loading</h2>
-            </body>
-        </html>
-    );
+    return true;
 }

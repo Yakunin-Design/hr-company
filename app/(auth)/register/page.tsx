@@ -22,26 +22,69 @@ import OrgAgent from "./employer/OrgAgent";
 import Confirm from "./shared/Confirm";
 
 export default function RegisterPage() {
-
     if (localStorage.getItem("jwt")) {
-        window.location.replace("/profile")
+        window.location.replace("/lk");
     }
 
-    const { step, next_step, prev_step, tou, toggle_tou, errors, form_data, handle_change } = register_controller();
+    const {
+        step,
+        next_step,
+        prev_step,
+        tou,
+        toggle_tou,
+        errors,
+        form_data,
+        handle_change,
+    } = register_controller();
 
     let page;
 
     if (step.step === 0 || step.step === 3) {
-        if (step.step === 0) page = <UserType next_step={next_step} tou={tou} toggle_tou={toggle_tou} err={errors}/>;
-        if (step.step === 3) page = <Confirm data={set_data(form_data, step)}/>
-    }
-    else if (step.type === "employer") {
-        if (step.step === 1) page = <OrgData err={errors} onChange={handle_change} form_data={form_data}/>;
-        if (step.step === 2) page = <OrgAgent err={errors} onChange={handle_change} form_data={form_data}/>
-    } 
-    else if (step.type === "worker") {
-        if (step.step === 1) page = <PersonalData err={errors} onChange={handle_change} form_data={form_data}/>;
-        if (step.step === 2) page = <Contacts err={errors} onChange={handle_change} form_data={form_data} />
+        if (step.step === 0)
+            page = (
+                <UserType
+                    next_step={next_step}
+                    tou={tou}
+                    toggle_tou={toggle_tou}
+                    err={errors}
+                />
+            );
+        if (step.step === 3)
+            page = <Confirm data={set_data(form_data, step)} />;
+    } else if (step.type === "employer") {
+        if (step.step === 1)
+            page = (
+                <OrgData
+                    err={errors}
+                    onChange={handle_change}
+                    form_data={form_data}
+                />
+            );
+        if (step.step === 2)
+            page = (
+                <OrgAgent
+                    err={errors}
+                    onChange={handle_change}
+                    form_data={form_data}
+                />
+            );
+    } else if (step.type === "worker") {
+        if (step.step === 1)
+            page = (
+                <PersonalData
+                    err={errors}
+                    onChange={handle_change}
+                    form_data={form_data}
+                />
+            );
+        if (step.step === 2)
+            page = (
+                <Contacts
+                    err={errors}
+                    onChange={handle_change}
+                    form_data={form_data}
+                />
+            );
     }
 
     return (
@@ -49,33 +92,37 @@ export default function RegisterPage() {
             <div className={styles.auth}>
                 {step.step != 0 && (
                     <>
-                        <Spacer top ="2"/>
+                        <Spacer top="2" />
                         <IconButton icon="back" onClick={prev_step} />
                     </>
                 )}
                 <Card>
                     {page}
 
-                    {
-                        (step.step != 0 && step.step != 3) && 
+                    {step.step != 0 && step.step != 3 && (
                         <>
-                            <Spacer top ="3"/>
-                            <Button onClick={() => {next_step()}} expand>Далее</Button>
+                            <Spacer top="3" />
+                            <Button
+                                onClick={() => {
+                                    next_step();
+                                }}
+                                expand
+                            >
+                                Далее
+                            </Button>
                         </>
-                        
-                    }
-                    
-                    {
-                        step.step !== 3 &&
+                    )}
+
+                    {step.step !== 3 && (
                         <>
-                            <Spacer top ="1"/>
+                            <Spacer top="1" />
                             <Link href="/login">
                                 <div className={styles.login}>
                                     Уже есть аккаунт?
-                                </div>   
+                                </div>
                             </Link>
                         </>
-                    }
+                    )}
                 </Card>
             </div>
         </Container>
