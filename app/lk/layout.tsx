@@ -1,5 +1,4 @@
 import Footer from "@/components/Footer";
-import "@/styles/global.css";
 import Sidebar from "@/components/Sidebar";
 
 export default function LkLayout({

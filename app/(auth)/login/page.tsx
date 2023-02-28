@@ -7,13 +7,16 @@ import PasswordInput from "@/components/std/Inputs/PasswordInput";
 import Spacer from "@/components/std/Spacer";
 
 import Link from "next/link";
+import { useEffect } from "react";
 import styles from "./login.module.css";
 import login_controller from "./login_controller";
 
 export default function LoginPage() {
-    if (localStorage.getItem("jwt")) {
-        window.location.replace("/lk/profile");
-    }
+    useEffect(() => {
+        if (localStorage.getItem("jwt")) {
+            window.location.replace("/lk/profile");
+        }
+    }, []);
 
     const { form_data, errors, sign_in, handle_change } = login_controller();
 
