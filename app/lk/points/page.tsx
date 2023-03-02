@@ -1,10 +1,13 @@
 "use client";
 import Container from "@/components/std/Container";
 import Spacer from "@/components/std/Spacer";
-import CheckUser from "../check_user";
+import { useEffect } from "react";
+import check_user from "../check_user";
 
 export default function Points() {
-    CheckUser();
+    useEffect(() => {
+        check_user();
+    }, []);
 
     return (
         <>

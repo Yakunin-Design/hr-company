@@ -3,14 +3,16 @@ import { useEffect, useState } from "react";
 import FullSidebar from "./FullSidebar";
 import MobileSidebar from "./MobileSidebar";
 import styles from "./sidebar.module.css";
+import { usePathname } from 'next/navigation';
 
-export default function Sidebar({ active_page }: { active_page: string }) {
-
+export default function Sidebar() {
     const [user_type, set_user_type] = useState("");
 
     useEffect(() => {
         set_user_type(localStorage.getItem("user_type") || "");
-    }, [])
+    }, []);
+
+    const active_page = usePathname().substring(4);
 
     const [show, set_Show] = useState(false);
 
