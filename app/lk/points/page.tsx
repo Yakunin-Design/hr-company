@@ -1,7 +1,7 @@
 "use client";
 import Container from "@/components/std/Container";
 import Spacer from "@/components/std/Spacer";
-import CheckUser from "../checkUser";
+import CheckUser from "../check_user";
 
 export default function Points() {
     CheckUser();

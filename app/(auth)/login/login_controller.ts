@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import axios from 'axios';
-import { check_phone, check_email } from '@/functions/validation';
+import { useState } from "react";
+import axios from "axios";
+import { check_phone, check_email } from "@/functions/validation";
 
 export default function login_controller() {
     const [form_data, set_form_data] = useState({
-        login: '',
-        password: '',
+        login: "",
+        password: "",
     });
 
     const [errors, set_errors] = useState<Array<string>>([]);
@@ -23,40 +23,40 @@ export default function login_controller() {
 
     function sign_in() {
         if (!check_email(form_data.login) && !check_phone(form_data.login)) {
-            set_errors(['login']);
-            return console.log('invalid login');
+            set_errors(["login"]);
+            return console.log("invalid login");
         }
 
         if (form_data.password.length < 8) {
-            set_errors(['uncorrected_password']);
-            return console.log('invalid password');
+            set_errors(["uncorrected_password"]);
+            return console.log("invalid password");
         }
 
         set_errors([]);
 
         axios
-            .post('http://localhost:6969/login', form_data)
+            .post("http://localhost:6969/login", form_data)
             .then(res => {
                 if (!res.data) {
-                    console.log('smth wrong');
+                    console.log("smth wrong");
                 }
 
-                localStorage.setItem('jwt', res.data);
+                localStorage.setItem("jwt", res.data);
 
-                window.location.replace('/profile');
+                window.location.replace("/lk/profile");
             })
             .catch(err => {
                 console.log(err);
 
                 if (
                     err.response.data ===
-                    'Account with passed cardentials was not found'
+                    "Account with passed cardentials was not found"
                 ) {
-                    set_errors(['not_found']);
+                    set_errors(["not_found"]);
                 }
 
-                if (err.response.data === 'Wrong password') {
-                    set_errors(['wrong_password']);
+                if (err.response.data === "Wrong password") {
+                    set_errors(["wrong_password"]);
                 }
             });
     }
@@ -65,6 +65,6 @@ export default function login_controller() {
         form_data,
         errors,
         sign_in,
-        handle_change
-    }
+        handle_change,
+    };
 }

@@ -14,8 +14,6 @@ type props = {
 };
 
 export default function FullSidebar(props: props) {
-    console.log(props);
-
     let sidebar_class = styles.sidebar + " " + props.className;
 
     if (props.show) sidebar_class += " " + styles.show_sidebar;

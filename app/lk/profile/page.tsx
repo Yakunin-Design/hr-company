@@ -1,11 +1,13 @@
 "use client";
 import Container from "@/components/std/Container";
 import Spacer from "@/components/std/Spacer";
-import CheckUser from "../checkUser";
+import { useEffect } from "react";
+import check_user from "../check_user";
 
 export default function Profile() {
-    // this is still total BS
-    CheckUser();
+    useEffect(() => {
+        check_user();
+    }, []);
 
     return (
         <>

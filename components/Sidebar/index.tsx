@@ -5,13 +5,16 @@ import MobileSidebar from "./MobileSidebar";
 import styles from "./sidebar.module.css";
 
 export default function Sidebar({ active_page }: { active_page: string }) {
-    // cant use localstorage before component mount
-    const user_type = localStorage.getItem("user_type");
+
+    const [user_type, set_user_type] = useState("");
+
+    useEffect(() => {
+        set_user_type(localStorage.getItem("user_type") || "");
+    }, [])
 
     const [show, set_Show] = useState(false);
 
     const toggle = () => set_Show(!show);
-
 
     return (
         <>

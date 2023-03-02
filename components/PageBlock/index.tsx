@@ -29,7 +29,7 @@ export default function PageBlock(props: props) {
     const href =
         props.name.slice(0, 4) == "find"
             ? props.name
-            : `/profile/${props.name}`;
+            : `/lk/${props.name}`;
 
     return (
         <>
