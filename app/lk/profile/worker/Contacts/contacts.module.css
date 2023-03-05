@@ -1,0 +1,40 @@
+.status {
+    gap: 1.5em;
+    flex-direction: column;
+}
+
+.contacts {
+    flex-direction: column;
+}
+
+.phone {
+    margin-top: 2rem;
+}
+
+.phone,
+.email {
+    width: 100%;
+}
+
+@media (min-width: 600px) {
+    .status {
+        max-width: 300px;
+        flex-direction: row;
+    }
+}
+
+@media (min-width: 800px) {
+    .contacts {
+        flex-direction: row;
+        gap: 4em;
+    }
+
+    .phone {
+        margin-top: 0;
+        flex: 3;
+    }
+
+    .email {
+        flex: 5;
+    }
+}

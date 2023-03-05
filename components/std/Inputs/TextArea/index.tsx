@@ -3,10 +3,11 @@ import Spacer from "@/components/std/Spacer";
 import { ChangeEvent } from "react";
 
 type props = {
-    name: string,
-    onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void,
-    placeholder?: string,
-    label?: string,
+    name: string;
+    onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+    placeholder?: string;
+    label?: string;
+    value?: string;
 };
 
 export default function TextArea(props: props) {
@@ -14,7 +15,7 @@ export default function TextArea(props: props) {
         <>
             {props.label && (
                 <label className={styles.label} htmlFor={props.name}>
-                    {props.label}
+                    <h3>{props.label}</h3>
                 </label>
             )}
             <Spacer top={1} />
@@ -24,6 +25,7 @@ export default function TextArea(props: props) {
                 name={props.name}
                 placeholder={props.placeholder}
                 onChange={props.onChange}
+                value={props.value}
             />
         </>
     );

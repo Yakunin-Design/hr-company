@@ -27,9 +27,7 @@ type props = {
 
 export default function PageBlock(props: props) {
     const href =
-        props.name.slice(0, 4) == "find"
-            ? props.name
-            : `/lk/${props.name}`;
+        props.name.slice(0, 4) == "find" ? props.name : `/lk/${props.name}`;
 
     return (
         <>

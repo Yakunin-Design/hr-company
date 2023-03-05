@@ -17,6 +17,7 @@
 .lk {
     width: 100%;
     margin: 0;
+    padding-top: 1px;
 }
 
 @media (min-width: 600px) {

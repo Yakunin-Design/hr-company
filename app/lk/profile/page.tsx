@@ -1,18 +1,24 @@
 "use client";
 import Container from "@/components/std/Container";
 import Spacer from "@/components/std/Spacer";
-import { useEffect } from "react";
-import check_user from "../check_user";
 
-export default function Profile() {
-    useEffect(() => {
-        check_user();
-    }, []);
+import { CheckUser } from "../checkUser";
+import user_controller from "../user_controller";
+import EmployerProfile from "./employer";
+import WorkerProfile from "./worker";
+
+export default function Page() {
+    const { user, set_user, handleChange } = user_controller();
+    CheckUser(set_user);
 
     return (
         <>
             <Container lk>
-                <h2>This is profile page</h2>
+                {user.user_type === "worker" ? (
+                    <WorkerProfile user={user} handle_change={handleChange} />
+                ) : (
+                    <EmployerProfile />
+                )}
                 <Spacer top="100" />
             </Container>
         </>

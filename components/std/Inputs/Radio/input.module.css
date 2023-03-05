@@ -15,10 +15,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    
+
     width: 100%;
 
     cursor: pointer;
+}
+
+.lk {
+    padding: 0.9rem 0.7em;
 }
 
 .checked {

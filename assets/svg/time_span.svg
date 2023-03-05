@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="47px" height="9px" viewBox="0 0 47 9" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group 10</title>
+    <g id="10-|-Worker-PO" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="account-info" transform="translate(-622.000000, -2721.000000)">
+            <g id="Group-26" transform="translate(437.000000, 2513.000000)">
+                <g id="Group-23" transform="translate(1.000000, 0.000000)">
+                    <g id="Group-22" transform="translate(82.000000, 30.000000)">
+                        <g id="Group-21" transform="translate(0.000000, 171.000000)">
+                            <g id="Group-10" transform="translate(102.000000, 7.500000)">
+                                <circle id="Oval-Copy" fill="#B0C6E5" cx="2.5" cy="4.5" r="2.5"></circle>
+                                <circle id="Oval-Copy-2" fill="#588CD8" cx="12.5" cy="4.5" r="2.5"></circle>
+                                <circle id="Oval-Copy-3" fill="#588CD8" cx="34.5" cy="4.5" r="2.5"></circle>
+                                <circle id="Oval-Copy-4" fill="#B0C6E5" cx="44.5" cy="4.5" r="2.5"></circle>
+                                <path d="M24.8944272,1.78885438 L27.2763932,6.5527864 C27.5233825,7.0467649 27.3231581,7.64743794 26.8291796,7.89442719 C26.6903242,7.96385491 26.5372111,8 26.381966,8 L21.618034,8 C21.0657492,8 20.618034,7.55228475 20.618034,7 C20.618034,6.8447549 20.6541791,6.69164184 20.7236068,6.5527864 L23.1055728,1.78885438 C23.3525621,1.29487588 23.9532351,1.09465154 24.4472136,1.34164079 C24.640741,1.43840449 24.7976635,1.59532698 24.8944272,1.78885438 Z" id="Triangle" fill="#1C5FC3" transform="translate(24.000000, 4.000000) rotate(-270.000000) translate(-24.000000, -4.000000) "></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

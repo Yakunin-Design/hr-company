@@ -1,4 +1,5 @@
 import Footer from "@/components/Footer";
+import "@/styles/global.css";
 import Sidebar from "@/components/Sidebar";
 
 export default function LkLayout({
@@ -10,7 +11,7 @@ export default function LkLayout({
 }) {
     return (
         <>
-            <Sidebar/>
+            <Sidebar active_page="profile" />
             {children}
             <Footer lk />
         </>

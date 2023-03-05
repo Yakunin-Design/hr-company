@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Shape</title>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round">
+        <g id="Floating-add-button" transform="translate(-14.000000, -14.000000)" stroke="#1C5FC3" stroke-width="2.5">
+            <g id="Group">
+                <path d="M26,36 L26,26 M26,26 L26,16 M26,26 L36,26 M26,26 L16,26" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

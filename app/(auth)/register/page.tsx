@@ -20,14 +20,11 @@ import styles from "./register.module.css";
 import Button from "@/components/std/Button";
 import OrgAgent from "./employer/OrgAgent";
 import Confirm from "./shared/Confirm";
-import { useEffect } from "react";
 
 export default function RegisterPage() {
-    useEffect(() => {
-        if (localStorage.getItem("jwt")) {
-            window.location.replace("/lk/profile");
-        }
-    }, []);
+    if (localStorage.getItem("jwt")) {
+        window.location.replace("/lk/profile");
+    }
 
     const {
         step,

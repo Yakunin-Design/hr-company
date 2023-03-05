@@ -23,7 +23,8 @@
             "@/docs/*": ["docs/*"],
             "@/assets/*": ["assets/*"],
             "@/data/*": ["data/*"],
-            "@/functions/*": ["functions/*"]
+            "@/functions/*": ["functions/*"],
+            "@/types/*": ["types/*"]
         },
         "plugins": [
             {
@@ -31,6 +32,13 @@
             }
         ]
     },
-    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "functions/validation.js", "app/(lk)/(auth)/register/set_data.js"],
+    "include": [
+        "next-env.d.ts",
+        "**/*.ts",
+        "**/*.tsx",
+        ".next/types/**/*.ts",
+        "functions/validation.js",
+        "app/(lk)/(auth)/register/set_data.js"
+    ],
     "exclude": ["node_modules"]
 }

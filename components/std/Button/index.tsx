@@ -5,6 +5,7 @@ type props = {
     onClick?: () => void;
     secondary?: boolean;
     expand?: boolean;
+    common?: boolean;
 };
 
 export default function Button(props: props) {
@@ -16,6 +17,10 @@ export default function Button(props: props) {
 
     if (props.expand) {
         button_styles += " " + styles.expand;
+    }
+
+    if (props.common) {
+        button_styles = styles.common;
     }
 
     return (

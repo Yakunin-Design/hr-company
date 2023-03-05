@@ -4,18 +4,17 @@ import {
     worker_validation_step2,
     employer_validation_step1,
     employer_validation_step2,
-} from '@/functions/validation';
+} from "@/functions/validation";
 
 type required = {
-    tou: boolean,
-    set_tou: Function,
-    errors: Array<any>,
-    set_errors: Function,
-    form_data: object
-}
+    tou: boolean;
+    set_tou: Function;
+    errors: Array<any>;
+    set_errors: Function;
+    form_data: object;
+};
 
-export default function step_controller(required : required) {
-
+export default function step_controller(required: required) {
     //step controller
     const [step, set_step] = useState({
         type: "",
@@ -23,24 +22,23 @@ export default function step_controller(required : required) {
     });
 
     function next_step(type?: string) {
-
         let err = [];
 
-        if (step.step == 0 && !required.tou) err.push("tou")
+        if (step.step == 0 && !required.tou) err.push("tou");
 
-        if (step.step === 1 && step.type === 'worker') {
+        if (step.step === 1 && step.type === "worker") {
             err = worker_validation_step1(required.form_data);
         }
 
-        if (step.step === 2 && step.type === 'worker') {
+        if (step.step === 2 && step.type === "worker") {
             err = worker_validation_step2(required.form_data);
         }
 
-        if (step.step === 1 && step.type === 'employer') {
+        if (step.step === 1 && step.type === "employer") {
             err = employer_validation_step1(required.form_data);
         }
 
-        if (step.step === 2 && step.type === 'employer') {
+        if (step.step === 2 && step.type === "employer") {
             err = employer_validation_step2(required.form_data);
         }
 
@@ -68,7 +66,6 @@ export default function step_controller(required : required) {
         required.set_errors([]);
 
         set_step(prev_step => {
-            console.log(prev_step)
             // reset registration user type if user gos back to step 0
             const type = prev_step.step === 1 ? "" : prev_step.type;
 
@@ -77,8 +74,6 @@ export default function step_controller(required : required) {
                 step: prev_step.step - 1,
             };
         });
-
-        console.log(step);
     }
 
     return {

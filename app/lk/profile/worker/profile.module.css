@@ -1,0 +1,11 @@
+.personal_row {
+    gap: 1.75em;
+    flex-direction: column;
+}
+
+@media (min-width: 1300px) {
+    .personal_row {
+        flex-direction: row;
+        align-items: stretch !important;
+    }
+}

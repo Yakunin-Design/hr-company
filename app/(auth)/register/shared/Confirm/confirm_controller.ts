@@ -85,7 +85,7 @@ export default function confirm_controller() {
                 localStorage.removeItem("tmp_id");
                 localStorage.setItem("jwt", res.data);
 
-                window.location.replace("/profile");
+                window.location.replace("/lk/profile");
             });
     }
 
