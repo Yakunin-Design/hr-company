@@ -10,7 +10,7 @@ type WorkerData = {
     specialty: Array<string>;
     status: string;
     logo?: string;
-    experience: Array<Experience | null>;
+    experience?: Array<Experience | null>;
 };
 
 export default WorkerData;
