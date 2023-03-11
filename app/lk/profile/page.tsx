@@ -8,14 +8,20 @@ import EmployerProfile from "./employer";
 import WorkerProfile from "./worker";
 
 export default function Page() {
-    const { user, set_user, handleChange } = user_controller();
+    const { user, set_user, handleChange, save_data, show_save_btn } =
+        user_controller();
     CheckUser(set_user);
 
     return (
         <>
             <Container lk>
                 {user.user_type === "worker" ? (
-                    <WorkerProfile user={user} handle_change={handleChange} />
+                    <WorkerProfile
+                        user={user}
+                        handle_change={handleChange}
+                        save_data={save_data}
+                        show_save_btn={show_save_btn}
+                    />
                 ) : (
                     <EmployerProfile />
                 )}

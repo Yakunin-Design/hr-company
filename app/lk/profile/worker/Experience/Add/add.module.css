@@ -1,0 +1,39 @@
+.time {
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.time_block {
+    width: 100%;
+}
+
+.period_row {
+    gap: 0.5em;
+}
+
+.time_span {
+    margin-top: 2.5rem;
+    display: none;
+}
+
+.month {
+    flex: 6;
+    padding: 0.9rem 0em;
+}
+
+.year {
+    flex: 3;
+    text-align: center;
+}
+
+@media (min-width: 1000px) {
+    .time {
+        flex-direction: row;
+    }
+    .time_block {
+        max-width: 300px;
+    }
+    .time_span {
+        display: block;
+    }
+}

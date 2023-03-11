@@ -11,36 +11,41 @@ type props = {
     className?: string;
     maxLength?: number;
     style?: CSSProperties;
-    options: Array<String>
+    options: Array<String>;
 };
 
 export default function Select(props: props) {
-
-    const options:Array<any> = [];
+    const options: Array<any> = [];
     props.options.map(opt => {
-        const value = options.length < 8 ? `0${options.length}` : options.length
-        options.push(
-            <option value={value}>{opt}</option>
-        );
-    })
+        const value =
+            options.length < 8 ? `0${options.length}` : options.length;
+        options.push(<option value={value}>{opt}</option>);
+    });
 
     return (
         <>
             {props.label && (
-                <label className={styles.label} htmlFor={props.name}>
-                    {props.label}
-                </label>
+                <>
+                    <label className={styles.label} htmlFor={props.name}>
+                        {props.label}
+                    </label>
+                    <Spacer top={1} />
+                </>
             )}
-            <Spacer top={1} />
-            <select 
-                className={props.className ? styles.input + " " + props.className : styles.input}
+
+            <select
+                className={
+                    props.className
+                        ? styles.input + " " + props.className
+                        : styles.input
+                }
                 id={props.name}
                 name={props.name}
                 onChange={props.onChange}
                 value={props.value}
                 style={props.style ? props.style : {}}
             >
-            {options.map(option => option)}
+                {options.map(option => option)}
             </select>
         </>
     );

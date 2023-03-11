@@ -11,6 +11,13 @@ type WorkerData = {
     status: string;
     logo?: string;
     experience?: Array<Experience | null>;
+    job_type?: string;
+    district?: string;
+    subway?: string;
+    salary?: {
+        amount: number;
+        period: string;
+    };
 };
 
 export default WorkerData;

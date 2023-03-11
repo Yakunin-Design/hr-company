@@ -3,6 +3,14 @@
     flex-direction: column;
 }
 
+.save {
+    position: fixed;
+    z-index: 4;
+    bottom: 10%;
+    right: 10%;
+    cursor: pointer;
+}
+
 @media (min-width: 1300px) {
     .personal_row {
         flex-direction: row;

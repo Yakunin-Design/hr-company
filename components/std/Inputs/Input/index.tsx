@@ -12,6 +12,7 @@ type props = {
     className?: string;
     maxLength?: number;
     style?: CSSProperties;
+    list?: string;
 };
 
 export default function Input(props: props) {
@@ -24,7 +25,11 @@ export default function Input(props: props) {
             )}
             <Spacer top={1} />
             <input
-                className={props.className ? styles.input + " " + props.className : styles.input}
+                className={
+                    props.className
+                        ? styles.input + " " + props.className
+                        : styles.input
+                }
                 id={props.name}
                 name={props.name}
                 type={props.type ? props.type : "text"}
@@ -33,6 +38,7 @@ export default function Input(props: props) {
                 value={props.value}
                 maxLength={props.maxLength}
                 style={props.style ? props.style : {}}
+                list={props.list}
             />
         </>
     );
