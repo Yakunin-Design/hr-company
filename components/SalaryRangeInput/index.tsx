@@ -43,6 +43,59 @@ export default function SalaryRangeInput(props: props) {
         if (props.salary.period === "day") return 5000;
     }
 
+    function get_labels() {
+        if (!props.salary) {
+            return "час";
+        }
+
+        if (props.salary.period === "hour")
+            return (
+                <Row>
+                    <h4>50</h4>
+                    <h4>100</h4>
+                    <h4>200</h4>
+                    <h4>300</h4>
+                    <h4>400</h4>
+                    <h4>500</h4>
+                    <h4>600</h4>
+                    <h4>700</h4>
+                    <h4>800</h4>
+                    <h4>900</h4>
+                    <h4>{">1000"}</h4>
+                </Row>
+            );
+        if (props.salary.period === "month")
+            return (
+                <Row>
+                    <h4>15000</h4>
+                    <h4>30000</h4>
+                    <h4>45000</h4>
+                    <h4>60000</h4>
+                    <h4>75000</h4>
+                    <h4>90000</h4>
+                    <h4>105000</h4>
+                    <h4>120000</h4>
+                    <h4>135000</h4>
+                    <h4>{">150000"}</h4>
+                </Row>
+            );
+        if (props.salary.period === "day")
+            return (
+                <Row>
+                    <h4>500</h4>
+                    <h4>1000</h4>
+                    <h4>1500</h4>
+                    <h4>2000</h4>
+                    <h4>2500</h4>
+                    <h4>3000</h4>
+                    <h4>3500</h4>
+                    <h4>4000</h4>
+                    <h4>4500</h4>
+                    <h4>{">5000"}</h4>
+                </Row>
+            );
+    }
+
     const period = get_period();
     const min_range = get_min_range();
     const max_range = get_max_range();
@@ -84,6 +137,7 @@ export default function SalaryRangeInput(props: props) {
                     min={min_range}
                     max={max_range}
                 />
+                {get_labels()}
             </div>
         </>
     );

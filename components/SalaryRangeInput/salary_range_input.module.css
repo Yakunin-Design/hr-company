@@ -1,3 +1,7 @@
+.graph_input {
+    display: none;
+}
+
 .period_select {
     position: absolute;
     margin-top: -1rem;
@@ -8,7 +12,7 @@
 }
 
 .amount_input {
-    max-width: 7em;
+    width: 100%;
     text-align: center;
 }
 
@@ -37,4 +41,16 @@
     background: var(--accent);
     border-radius: 0.7rem;
     cursor: pointer;
+}
+
+@media (min-width: 600px) {
+    .amount_input {
+        max-width: 7em;
+    }
+}
+
+@media (min-width: 1000px) {
+    .graph_input {
+        display: block;
+    }
 }
