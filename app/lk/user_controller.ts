@@ -54,9 +54,12 @@ export default function user_controller() {
             set_user(prev => {
                 return {
                     ...prev,
-                    salary: {
-                        amount: value,
-                        period: prev.user_data.salary.period,
+                    user_data: {
+                        ...prev.user_data,
+                        salary: {
+                            amount: value,
+                            period: prev.user_data.salary.period,
+                        },
                     },
                 };
             });
@@ -64,9 +67,12 @@ export default function user_controller() {
             set_user(prev => {
                 return {
                     ...prev,
-                    salary: {
-                        amount: prev.user_data.salary.amount,
-                        period: value,
+                    user_data: {
+                        ...prev.user_data,
+                        salary: {
+                            amount: prev.user_data.salary.amount,
+                            period: value,
+                        },
                     },
                 };
             });

@@ -1,12 +1,13 @@
 import Card from "@/components/Card";
+import SalaryRangeInput from "@/components/SalaryRangeInput";
 import Radio from "@/components/std/Inputs/Radio";
 import Row from "@/components/std/Row";
 import Spacer from "@/components/std/Spacer";
-import Place from "./Place";
+import JobLocation from "./JobLocation";
 
 import style from "./preferences.module.css";
 
-type Props = {
+type props = {
     job_type?: string;
     district?: string;
     subway?: string;
@@ -17,9 +18,10 @@ type Props = {
     handle_change: (event: any) => void;
 };
 
-export default function Preferences(props: Props) {
+export default function JobPreferences(props: props) {
     return (
         <Card>
+            {/* Part time / full time selection */}
             <h3>Тип работы</h3>
             <Spacer top="1" />
             <Row className={style.type}>
@@ -58,7 +60,14 @@ export default function Preferences(props: Props) {
             </Row>
 
             <Spacer top="2" />
-            <Place
+            <SalaryRangeInput
+                salary={props.salary}
+                handle_change={props.handle_change}
+            />
+
+            {/* JobLocation */}
+            <Spacer top="2" />
+            <JobLocation
                 district={props.district!}
                 subway={props.subway!}
                 onChange={props.handle_change}

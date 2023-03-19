@@ -9,7 +9,7 @@ import Documents from "./Documents";
 import Contacts from "./Contacts";
 import Experiences from "./Experience";
 import Settings from "./Settings";
-import Preferences from "./Preferences";
+import JobPreferences from "./JobPreferences";
 import Button from "@/components/std/Button";
 
 type props = {
@@ -71,7 +71,7 @@ export default function WorkerProfile(props: props) {
             */}
             <Spacer top="6" />
             <h2>Желаемая работа</h2>
-            <Preferences
+            <JobPreferences
                 job_type={user.job_type}
                 district={user.district}
                 subway={user.subway}

@@ -19,7 +19,11 @@ export default function Select(props: props) {
     props.options.map(opt => {
         const value =
             options.length < 8 ? `0${options.length}` : options.length;
-        options.push(<option value={value}>{opt}</option>);
+        options.push(
+            <option value={value} key={options.length}>
+                {opt}
+            </option>
+        );
     });
 
     return (

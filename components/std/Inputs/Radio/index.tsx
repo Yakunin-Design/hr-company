@@ -1,5 +1,5 @@
 import styles from "./input.module.css";
-import Spacer from "@/components/std/Spacer";
+// css interface
 import { CSSProperties } from "react";
 
 type props = {

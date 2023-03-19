@@ -1,0 +1,16 @@
+.district,
+.subway {
+    width: 100%;
+}
+
+.district {
+    flex: 6;
+}
+
+.subway {
+    flex: 4;
+}
+
+.location {
+    gap: 3em;
+}

@@ -1,8 +1,9 @@
 import Input from "@/components/std/Inputs/Input";
+import SubwayInput from "@/components/std/Inputs/SubwayInput";
 import Row from "@/components/std/Row";
 
 import districts from "@/data/districts.js";
-import subway_stations from "@/data/subway_stations.js";
+import style from "./place.module.css";
 
 type props = {
     district: string;
@@ -10,10 +11,10 @@ type props = {
     onChange: (value: string) => void;
 };
 
-export default function Place(props: props) {
+export default function JobLocation(props: props) {
     return (
-        <Row>
-            <div>
+        <Row className={style.location}>
+            <div className={style.district}>
                 <Input
                     name="district"
                     label="Район"
@@ -22,21 +23,10 @@ export default function Place(props: props) {
                     list="districts"
                 />
             </div>
-            <div>
-                <Input
-                    name="subway"
-                    label="Метро"
-                    value={props.subway}
-                    onChange={props.onChange}
-                    list="subways"
-                />
+            <div className={style.subway}>
+                <SubwayInput value={props.subway} onChange={props.onChange} />
             </div>
 
-            <datalist id="subways">
-                {subway_stations.map(station => (
-                    <option value={station}>{station}</option>
-                ))}
-            </datalist>
             <datalist id="districts">
                 {districts.map(district => (
                     <option value={district}>{district}</option>
