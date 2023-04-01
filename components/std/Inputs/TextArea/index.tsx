@@ -8,6 +8,7 @@ type props = {
     placeholder?: string;
     label?: string;
     value?: string;
+    className?: string;
 };
 
 export default function TextArea(props: props) {
@@ -20,7 +21,11 @@ export default function TextArea(props: props) {
             )}
             <Spacer top={1} />
             <textarea
-                className={styles.textarea}
+                className={
+                    props.className
+                        ? styles.textarea + " " + props.className
+                        : styles.textarea
+                }
                 id={props.name}
                 name={props.name}
                 placeholder={props.placeholder}

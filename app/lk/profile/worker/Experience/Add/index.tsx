@@ -11,7 +11,16 @@ import Image from "next/image";
 
 import style from "./add.module.css";
 
-export default function Add() {
+type Props = {
+    edit_errors: Array<string>;
+    handle_change: (event: any) => void;
+};
+
+const error_style = {
+    border: "2px solid red",
+};
+
+export default function Add(props: Props) {
     const options = [
         "Месяц",
         "Января",
@@ -32,7 +41,7 @@ export default function Add() {
         <Card>
             <Input
                 name="title"
-                onChange={e => {}}
+                onChange={props.handle_change}
                 placeholder="Повар горячего цеха"
                 label="Должность"
                 value=""
@@ -41,7 +50,7 @@ export default function Add() {
             <Spacer top="2" />
             <Input
                 name="employer"
-                onChange={e => {}}
+                onChange={props.handle_change}
                 label="Работадатель"
                 value=""
             />
@@ -49,7 +58,7 @@ export default function Add() {
             <Spacer top="2" />
             <TextArea
                 name="description"
-                onChange={e => {}}
+                onChange={props.handle_change}
                 placeholder="Опишите ваши обязанности, объем работы и задачи"
                 label="Какими были ваши обязательства"
                 value=""
@@ -63,18 +72,28 @@ export default function Add() {
                     <Row className={style.period_row}>
                         <Select
                             name="start_month"
-                            onChange={e => {}}
+                            onChange={props.handle_change}
                             value=""
                             options={options}
                             className={style.month}
+                            style={
+                                props.edit_errors.includes("start_month")
+                                    ? error_style
+                                    : {}
+                            }
                         />
                         <Input
                             name="start_year"
                             placeholder="0000"
                             type="tel"
-                            onChange={e => {}}
+                            onChange={props.handle_change}
                             maxLength={4}
                             className={style.year}
+                            style={
+                                props.edit_errors.includes("start_year")
+                                    ? error_style
+                                    : {}
+                            }
                         />
                     </Row>
                 </div>
@@ -89,18 +108,28 @@ export default function Add() {
                     <Row className={style.period_row}>
                         <Select
                             name="end_month"
-                            onChange={e => {}}
+                            onChange={props.handle_change}
                             value=""
                             options={options}
                             className={style.month}
+                            style={
+                                props.edit_errors.includes("end_month")
+                                    ? error_style
+                                    : {}
+                            }
                         />
                         <Input
                             name="end_year"
                             placeholder="0000"
                             type="tel"
-                            onChange={e => {}}
+                            onChange={props.handle_change}
                             maxLength={4}
                             className={style.year}
+                            style={
+                                props.edit_errors.includes("end_year")
+                                    ? error_style
+                                    : {}
+                            }
                         />
                     </Row>
                 </div>

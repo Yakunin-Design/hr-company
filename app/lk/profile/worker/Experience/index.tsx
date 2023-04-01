@@ -12,6 +12,8 @@ import Add from "./Add";
 
 type props = {
     experience?: Array<Experience>;
+    edit_errors: Array<string>;
+    handle_change: (event: any) => void;
 };
 
 export default function Experiences(props: props) {
@@ -45,7 +47,10 @@ export default function Experiences(props: props) {
             {add && (
                 <>
                     <Spacer top="1" />
-                    <Add />
+                    <Add
+                        edit_errors={props.edit_errors}
+                        handle_change={props.handle_change}
+                    />
                 </>
             )}
             <Spacer top="2" />

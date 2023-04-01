@@ -1,5 +1,8 @@
+//@ts-nocheck
 import { useState } from "react";
 import Compressor from "compressorjs";
+import axios from "axios";
+import subway_stations from "@/components/std/Inputs/SubwayInput/subway_stations";
 import {
     check_day,
     check_month,
@@ -37,13 +40,16 @@ export default function user_controller() {
                 amount: 100,
                 period: "month",
             },
+            inn: "",
+            company: "",
+            description: "",
         },
     });
     /**
      * ------------- INPUT CONTROLLERS -------------
      */
     function handleChange(event: any) {
-        const { name, value, type, checked, files } = event.target;
+        const { name, value, files } = event.target;
 
         set_show_save_btn(true);
 
@@ -111,6 +117,28 @@ export default function user_controller() {
                     },
                 };
             });
+        } else if (name === "day") {
+            const birthday = user.user_data.birthday.split(".");
+            set_user(prev_user_data => {
+                return {
+                    ...prev_user_data,
+                    user_data: {
+                        ...prev_user_data.user_data,
+                        birthday: `${value}.${birthday[1]}.${birthday[2]}`,
+                    },
+                };
+            });
+        } else if (name === "year") {
+            const birthday = user.user_data.birthday.split(".");
+            set_user(prev_user_data => {
+                return {
+                    ...prev_user_data,
+                    user_data: {
+                        ...prev_user_data.user_data,
+                        birthday: `${birthday[0]}.${birthday[1]}.${value}`,
+                    },
+                };
+            });
         } else {
             set_user(prev_user_data => {
                 return {
@@ -128,8 +156,189 @@ export default function user_controller() {
      * ------------- SEND TO API -------------
      */
     function save_data() {
-        console.log(user.user_data);
+        let data = {};
+        const err: Array<String> = [];
+
+        if (user.user_type === "employer") {
+            data = employer_valid(edits, err);
+        } else {
+            data = worker_valid(edits, err);
+        }
+
+        set_edit_errors(err);
+
+        if (
+            typeof err["day"] == "undefined" &&
+            typeof err["month"] == "undefined" &&
+            typeof err["year"] == "undefined"
+        ) {
+            if (typeof data["day"] !== "undefined") {
+                if (typeof data["birthday"] !== "undefined") {
+                    const old_birthday = data.birthday.split(".");
+                    data.birthday = `${data.day}.${old_birthday[1]}.${old_birthday[2]}`;
+                } else {
+                    const old_birthday = user.user_data.birthday.split(".");
+                    data.birthday = `${data.day}.${old_birthday[1]}.${old_birthday[2]}`;
+                }
+                delete data.day;
+            }
+
+            if (typeof data["month"] !== "undefined") {
+                if (typeof data["birthday"] !== "undefined") {
+                    const old_birthday = data.birthday.split(".");
+                    data.birthday = `${old_birthday[0]}.${data.month}.${old_birthday[1]}`;
+                } else {
+                    const old_birthday = user.user_data.birthday.split(".");
+                    data.birthday = `${old_birthday[0]}.${data.month}.${old_birthday[1]}`;
+                }
+                delete data.month;
+            }
+
+            if (typeof data["year"] !== "undefined") {
+                if (typeof data["birthday"] !== "undefined") {
+                    const old_birthday = data.birthday.split(".");
+                    data.birthday = `${old_birthday[0]}.${old_birthday[1]}.${data.year}`;
+                } else {
+                    const old_birthday = user.user_data.birthday.split(".");
+                    data.birthday = `${old_birthday[0]}.${old_birthday[1]}.${data.year}`;
+                }
+                delete data.year;
+            }
+        }
+
+        if (err.length == 0) {
+            set_show_save_btn(false);
+        }
+
+        const config = {
+            headers: {
+                authorization: "Bearer " + localStorage.getItem("jwt"),
+            },
+        };
+
+        if (Object.keys(data).length > 0) {
+            console.log(config);
+            axios
+                .post("http://localhost:6969/profile/edit", { ...data }, config)
+                .then(res => {
+                    if (!res.data) {
+                        return console.log(res);
+                    }
+                    console.log(res);
+                })
+                .catch(e => {
+                    console.log(e.message);
+                });
+        }
     }
 
-    return { user, set_user, handleChange, save_data, show_save_btn };
+    /*
+     * ------------- Validation -------------
+     */
+
+    function worker_valid(edits: Array<any>, err: Array<String>) {
+        let data = {};
+        edits.forEach(edit => {
+            if (edit === "full_name") {
+                check_full_name(user.user_data[edit])
+                    ? (data[edit] = user.user_data[edit])
+                    : err.push(edit);
+            }
+            if (edit === "email") {
+                check_email(user.user_data[edit])
+                    ? (data[edit] = user.user_data[edit])
+                    : err.push(edit);
+            }
+            if (edit === "phone") {
+                check_phone(user.user_data[edit])
+                    ? (data[edit] = user.user_data[edit])
+                    : err.push(edit);
+            }
+            if (edit === "day") {
+                check_day(user.user_data.birthday.split(".")[0])
+                    ? (data[edit] = user.user_data.birthday.split(".")[0])
+                    : err.push(edit);
+            }
+            if (edit === "month") {
+                check_month(user.user_data.birthday.split(".")[1])
+                    ? (data[edit] = user.user_data.birthday.split(".")[1])
+                    : err.push(edit);
+            }
+            if (edit === "year") {
+                check_year(user.user_data.birthday.split(".")[2])
+                    ? (data[edit] = user.user_data.birthday.split(".")[2])
+                    : err.push(edit);
+            }
+            if (edit === "amount" || edit === "period") {
+                data.salary = user.user_data.salary;
+            }
+            if (edit === "subway") {
+                subway_stations.includes(user.user_data.subway)
+                    ? (data[edit] = user.user_data[edit])
+                    : err.push(edit);
+            }
+            if (
+                edit === "citizenship" ||
+                edit === "status" ||
+                edit === "logo" ||
+                edit === "job_type" ||
+                edit === "subway" ||
+                edit === "district"
+            ) {
+                data[edit] = user.user_data[edit];
+            }
+        });
+        return data;
+    }
+
+    function employer_valid(edits: Array<any>, err: Array<String>) {
+        let data = {};
+        edits.forEach(edit => {
+            if (edit === "full_name") {
+                check_full_name(user.user_data[edit])
+                    ? (data[edit] = user.user_data[edit])
+                    : err.push(edit);
+            }
+            if (edit === "email") {
+                check_email(user.user_data[edit])
+                    ? (data[edit] = user.user_data[edit])
+                    : err.push(edit);
+            }
+            if (edit === "phone") {
+                //@ts-ignore
+                check_phone(user.user_data[edit])
+                    ? (data[edit] = user.user_data[edit])
+                    : err.push(edit);
+            }
+            if (edit === "description") {
+                //@ts-ignore
+                user.user_data[edit].length >= 20 &&
+                //@ts-ignore
+                user.user_data[edit].length <= 120
+                    ? (data[edit] = user.user_data[edit])
+                    : err.push(edit);
+            }
+            if (edit === "company") {
+                //@ts-ignore
+                user.user_data[edit].length >= 3 &&
+                //@ts-ignore
+                user.user_data[edit].length <= 40
+                    ? (data[edit] = user.user_data[edit])
+                    : err.push(edit);
+            }
+            if (edit === "logo") {
+                data[edit] = user.user_data[edit];
+            }
+        });
+        return data;
+    }
+
+    return {
+        user,
+        set_user,
+        handleChange,
+        save_data,
+        show_save_btn,
+        edit_errors,
+    };
 }

@@ -1,0 +1,7 @@
+.save {
+    position: fixed;
+    z-index: 4;
+    bottom: 10%;
+    right: 10%;
+    cursor: pointer;
+}

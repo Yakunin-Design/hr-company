@@ -16,6 +16,7 @@ type props = {
         period: string;
     };
     handle_change: (event: any) => void;
+    edit_errors: Array<string>;
 };
 
 export default function JobPreferences(props: props) {
@@ -71,6 +72,7 @@ export default function JobPreferences(props: props) {
                 district={props.district!}
                 subway={props.subway!}
                 onChange={props.handle_change}
+                edit_errors={props.edit_errors}
             />
         </Card>
     );

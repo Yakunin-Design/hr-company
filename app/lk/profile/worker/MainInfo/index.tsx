@@ -13,6 +13,7 @@ import Avatar from "@/components/Avatar";
 type props = {
     user_data: WorkerData;
     handle_change: (event: any) => void;
+    edit_errors: Array<string>;
 };
 
 const options = [
@@ -31,7 +32,13 @@ const options = [
     "Декабря",
 ];
 
+const error_style = {
+    border: "2px solid red",
+};
+
 export default function MainInfo(props: props) {
+    console.log(props.edit_errors.includes("full_name"));
+
     return (
         <Card className={style.personal_block}>
             <Avatar
@@ -47,6 +54,9 @@ export default function MainInfo(props: props) {
                 label="ФИО"
                 value={props.user_data.full_name}
                 onChange={props.handle_change}
+                style={
+                    props.edit_errors.includes("full_name") ? error_style : {}
+                }
             />
             <Spacer top="2" />
 
@@ -59,8 +69,8 @@ export default function MainInfo(props: props) {
                     type="tel"
                     onChange={props.handle_change}
                     maxLength={2}
-                    style={{}}
                     value={props.user_data.birthday.split(".")[0]}
+                    style={props.edit_errors.includes("day") ? error_style : {}}
                     className={style.day}
                 />
 
@@ -68,7 +78,9 @@ export default function MainInfo(props: props) {
                 <Select
                     name="month"
                     onChange={props.handle_change}
-                    style={{}}
+                    style={
+                        props.edit_errors.includes("month") ? error_style : {}
+                    }
                     value={props.user_data.birthday.split(".")[1]}
                     options={options}
                     className={style.month}
@@ -81,7 +93,9 @@ export default function MainInfo(props: props) {
                     type="tel"
                     onChange={props.handle_change}
                     maxLength={4}
-                    style={{}}
+                    style={
+                        props.edit_errors.includes("year") ? error_style : {}
+                    }
                     value={props.user_data.birthday.split(".")[2]}
                     className={style.year}
                 />

@@ -8,8 +8,14 @@ import EmployerProfile from "./employer";
 import WorkerProfile from "./worker";
 
 export default function Page() {
-    const { user, set_user, handleChange, save_data, show_save_btn } =
-        user_controller();
+    const {
+        user,
+        set_user,
+        handleChange,
+        save_data,
+        show_save_btn,
+        edit_errors,
+    } = user_controller();
     CheckUser(set_user);
 
     return (
@@ -21,11 +27,17 @@ export default function Page() {
                         handle_change={handleChange}
                         save_data={save_data}
                         show_save_btn={show_save_btn}
+                        edit_errors={edit_errors}
                     />
                 ) : (
-                    <EmployerProfile />
+                    <EmployerProfile
+                        user={user}
+                        handle_change={handleChange}
+                        save_data={save_data}
+                        show_save_btn={show_save_btn}
+                        edit_errors={edit_errors}
+                    />
                 )}
-                <Spacer top="100" />
             </Container>
         </>
     );

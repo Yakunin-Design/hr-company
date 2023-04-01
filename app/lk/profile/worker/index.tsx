@@ -20,6 +20,7 @@ type props = {
     handle_change: (event: any) => void;
     save_data: () => void;
     show_save_btn: boolean;
+    edit_errors: Array<string>;
 };
 
 export default function WorkerProfile(props: props) {
@@ -50,6 +51,7 @@ export default function WorkerProfile(props: props) {
                 <MainInfo
                     user_data={user}
                     handle_change={props.handle_change}
+                    edit_errors={props.edit_errors}
                 />
                 <Documents />
             </Row>
@@ -64,6 +66,7 @@ export default function WorkerProfile(props: props) {
                 handle_change={props.handle_change}
                 email={user.email}
                 phone={user.phone}
+                edit_errors={props.edit_errors}
             />
 
             {/* 
@@ -77,6 +80,7 @@ export default function WorkerProfile(props: props) {
                 subway={user.subway}
                 salary={user.salary}
                 handle_change={props.handle_change}
+                edit_errors={props.edit_errors}
             />
 
             {/* 
@@ -84,8 +88,12 @@ export default function WorkerProfile(props: props) {
             */}
             <Spacer top="6" />
             <h2>Опыт работы</h2>
-            {/*@ts-ignore*/}
-            <Experiences experience={user.experience} />
+            <Experiences
+                /*@ts-ignore*/
+                experience={user.experience}
+                edit_errors={props.edit_errors}
+                handle_change={props.handle_change}
+            />
 
             {/* 
                         ------------ Settings ------------

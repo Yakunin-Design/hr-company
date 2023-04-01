@@ -12,6 +12,11 @@ type props = {
     status: string;
     phone: string;
     email: string;
+    edit_errors: Array<string>;
+};
+
+const error_style = {
+    border: "2px solid red",
 };
 
 export default function Contacts(props: props) {
@@ -52,6 +57,11 @@ export default function Contacts(props: props) {
                         placeholder="email@example.com"
                         label="Почта"
                         value={props.email}
+                        style={
+                            props.edit_errors.includes("email")
+                                ? error_style
+                                : {}
+                        }
                     />
                 </div>
 
@@ -62,6 +72,11 @@ export default function Contacts(props: props) {
                         placeholder="+7 (999) 999-99-99"
                         label="Телефон"
                         value={props.phone}
+                        style={
+                            props.edit_errors.includes("phone")
+                                ? error_style
+                                : {}
+                        }
                     />
                 </div>
             </Row>

@@ -5,22 +5,31 @@ import Image from "next/image";
 
 import subway_icon from "./subway_icon.svg";
 import get_branch_color from "./get_branch_color";
+import { CSSProperties } from "react";
 
 type props = {
     value: string;
     onChange: (value: string) => void;
     label?: string;
+    style?: CSSProperties;
 };
 
 // Only works with metro stations of Saint. P, Russia
 
 export default function SubwayInput(props: props) {
     // padding that changes when icon is set
+
+    console.log(props.style);
+
     const input_padding = subway_stations.includes(props.value)
         ? { paddingLeft: "3em" }
         : { paddingLeft: "1.2em" };
 
     const subway_station_icon_color = get_branch_color(props.value);
+
+    const input_style = props.style || {};
+
+    Object.assign(input_padding, input_style);
 
     return (
         <>
