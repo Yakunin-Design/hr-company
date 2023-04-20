@@ -4,12 +4,15 @@ import Button from "@/components/std/Button";
 import Container from "@/components/std/Container";
 import Spacer from "@/components/std/Spacer";
 import Link from "next/link";
+import { useEffect } from "react";
 
 export default function Home() {
     // shoud be some sort of check if, in case jwt is invalid
-    if (localStorage.getItem("jwt")) {
-        window.location.replace("/lk/profile");
-    }
+    useEffect(() => {
+        if (localStorage.getItem("jwt")) {
+            window.location.replace("/lk/profile");
+        }
+    }, []);
 
     return (
         <>
