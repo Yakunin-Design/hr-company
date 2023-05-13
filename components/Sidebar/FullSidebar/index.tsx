@@ -90,8 +90,8 @@ export default function FullSidebar(props: props) {
                     <>
                         <div className={styles.nav_block}>
                             <PageBlock
-                                name="vacancy"
-                                active={props.active == "vacancy"}
+                                name="job-offers"
+                                active={props.active == "job-offers"}
                                 show={props.show}
                             />
                             <PageBlock

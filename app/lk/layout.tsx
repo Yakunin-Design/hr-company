@@ -11,7 +11,7 @@ export default function LkLayout({
 }) {
     return (
         <>
-            <Sidebar active_page="profile" />
+            <Sidebar />
             {children}
             <Footer lk />
         </>

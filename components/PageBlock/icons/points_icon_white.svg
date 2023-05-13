@@ -1,14 +1,15 @@
-<svg width="24px" height="26px" viewBox="0 0 24 26" version="1.1" xmlns="http://www.w3.org/2000/svg">
-    <title>heroicons-outline:location-marker</title>
-    <g id="Symbols" stroke="none" strokeWidth="1000" fill="none" fillRule="evenodd">
-        <g id="sidebar-empoyer" transform="translate(-48.000000, -478.000000)">
-            <g id="heroicons-outline:location-marker" transform="translate(48.000000, 478.965517)">
-                <rect id="ViewBox" x="0" y="0" width="24" height="24.8275862"></rect>
-                <g id="Group" strokeLinecap="round" strokeLinejoin="round" transform="translate(4.000000, 3.103750)" stroke="#fff" strokeWidth="10000">
-                    <path d="M13.657,14.1276295 L9.414,18.5169398 C9.0392455,18.9050017 8.530746,19.123045 8.0005,19.123045 C7.470254,19.123045 6.9617545,18.9050017 6.587,18.5169398 L2.343,14.1276295 C-0.781075891,10.8956603 -0.780988884,5.65575178 2.34319433,2.42389362 C5.46737755,-0.80796454 10.5326224,-0.80796454 13.6568057,2.42389362 C16.7809889,5.65575178 16.7810759,10.8956603 13.657,14.1276295 Z" id="Path"></path>
-                    <path d="M11,8.27556051 C11,9.98954767 9.65685425,11.3790088 8,11.3790088 C6.34314575,11.3790088 5,9.98954767 5,8.27556051 C5,6.56157336 6.34314575,5.17211224 8,5.17211224 C9.65685425,5.17211224 11,6.56157336 11,8.27556051 L11,8.27556051 Z" id="Path"></path>
-                </g>
-            </g>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 24 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;">
+    <g id="Symbols">
+        <g id="ViewBox" transform="matrix(1,0,0,1,0,0.965517)">
+            <rect x="0" y="0" width="24" height="24.828" style="fill:none;"/>
+        </g>
+        <g id="Path" transform="matrix(1,0,0,1,4,4.06927)">
+            <path d="M13.657,14.128L9.414,18.517C9.039,18.905 8.531,19.123 8.001,19.123C7.47,19.123 6.962,18.905 6.587,18.517L2.343,14.128C-0.781,10.896 -0.781,5.656 2.343,2.424C5.467,-0.808 10.533,-0.808 13.657,2.424C16.781,5.656 16.781,10.896 13.657,14.128Z" style="fill:none;fill-rule:nonzero;stroke:white;stroke-width:2px;"/>
+        </g>
+        <g id="Path1" serif:id="Path" transform="matrix(1,0,0,1,4,4.06927)">
+            <path d="M11,8.276C11,9.99 9.657,11.379 8,11.379C6.343,11.379 5,9.99 5,8.276C5,6.562 6.343,5.172 8,5.172C9.657,5.172 11,6.562 11,8.276Z" style="fill:none;fill-rule:nonzero;stroke:white;stroke-width:2px;"/>
         </g>
     </g>
 </svg>

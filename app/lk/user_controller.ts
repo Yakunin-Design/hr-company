@@ -218,14 +218,12 @@ export default function user_controller() {
         };
 
         if (Object.keys(data).length > 0) {
-            console.log(config);
             axios
                 .post("http://localhost:6969/profile/edit", { ...data }, config)
                 .then(res => {
                     if (!res.data) {
                         return console.log(res);
                     }
-                    console.log(res);
                 })
                 .catch(e => {
                     console.log(e.message);

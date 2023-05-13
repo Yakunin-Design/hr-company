@@ -37,7 +37,6 @@ const error_style = {
 };
 
 export default function MainInfo(props: props) {
-    console.log(props.edit_errors.includes("full_name"));
 
     return (
         <Card className={style.personal_block}>

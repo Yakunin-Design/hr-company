@@ -19,8 +19,6 @@ type props = {
 export default function SubwayInput(props: props) {
     // padding that changes when icon is set
 
-    console.log(props.style);
-
     const input_padding = subway_stations.includes(props.value)
         ? { paddingLeft: "3em" }
         : { paddingLeft: "1.2em" };

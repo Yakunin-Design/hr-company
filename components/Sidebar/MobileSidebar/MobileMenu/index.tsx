@@ -41,8 +41,8 @@ export default function MobileMenu(props: props) {
                 <>
                     <div className={styles.nav_block}>
                         <PageBlock
-                            name="vacancy"
-                            active={props.active == "vacancy"}
+                            name="job-offers"
+                            active={props.active == "job-offers"}
                         />
                         <PageBlock
                             name="points"

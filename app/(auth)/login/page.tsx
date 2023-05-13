@@ -24,8 +24,6 @@ export default function LoginPage() {
         border: "2px solid red",
     };
 
-    console.log(errors);
-
     return (
         <Container>
             <div className={styles.auth}>

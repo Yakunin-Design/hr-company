@@ -5,6 +5,7 @@ import Settings from "../worker/Settings";
 import Contacts from "./Contacts";
 import MainInfo from "./MainInfo";
 import style from "./profile.module.css";
+
 type props = {
     user: {
         user_type: string;
@@ -18,6 +19,7 @@ type props = {
 
 export default function EmployerProfile(props: props) {
     const user = props.user.user_data;
+
     return (
         <div>
             {/* 
@@ -37,6 +39,7 @@ export default function EmployerProfile(props: props) {
                 <MainInfo
                     user_data={user}
                     handle_change={props.handle_change}
+                    errors={props.edit_errors}
                 />
             </div>
 

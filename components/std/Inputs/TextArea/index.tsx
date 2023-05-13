@@ -1,6 +1,6 @@
 import styles from "./textarea.module.css";
 import Spacer from "@/components/std/Spacer";
-import { ChangeEvent } from "react";
+import { CSSProperties, ChangeEvent } from "react";
 
 type props = {
     name: string;
@@ -9,6 +9,7 @@ type props = {
     label?: string;
     value?: string;
     className?: string;
+    style?: CSSProperties;
 };
 
 export default function TextArea(props: props) {
@@ -31,6 +32,7 @@ export default function TextArea(props: props) {
                 placeholder={props.placeholder}
                 onChange={props.onChange}
                 value={props.value}
+                style={props.style}
             />
         </>
     );

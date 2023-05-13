@@ -12,10 +12,16 @@ import { useState } from "react";
 import style from "./mi.module.css";
 
 import edit_pencil from "@/assets/svg/edit_pencil.svg";
+import { error } from "console";
 
 type props = {
     user_data: EmpolyerData;
     handle_change: (event: any) => void;
+    errors: Array<string>;
+};
+
+const error_style = {
+    border: "2px solid red",
 };
 
 export default function MainInfo(props: props) {
@@ -66,6 +72,11 @@ export default function MainInfo(props: props) {
                         placeholder="Опишите вашу компанию"
                         value={props.user_data.description}
                         className={style.description}
+                        style={
+                            props.errors.includes("description")
+                                ? error_style
+                                : {}
+                        }
                     />
                 </>
             )}

@@ -80,7 +80,7 @@ export default function PageBlock(props: props) {
                         )}
 
                         {/* Employer */}
-                        {props.name == "vacancy" && (
+                        {props.name == "job-offers" && (
                             <>
                                 <Image
                                     src={
@@ -88,7 +88,7 @@ export default function PageBlock(props: props) {
                                             ? VacancyIconWhite
                                             : VacancyIcon
                                     }
-                                    alt="vacancy"
+                                    alt="job-offers"
                                 />
                                 <h3
                                     className={
