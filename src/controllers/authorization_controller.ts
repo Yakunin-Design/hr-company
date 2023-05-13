@@ -192,7 +192,8 @@ async function confirm_phone(req: Request, res: Response): Promise<void> {
         let user_id: ObjectId | null = null;
 
         if (collection === 'workers') {
-            const worker = await db.save({...user.Ok?.user_data, status: "ready"}, 'workers');
+            //! HARD CODE CITY VALUE
+            const worker = await db.save({...user.Ok?.user_data, status: "ready", city:"Санкт-Петербург" }, 'workers');
             if (!worker.Ok) {
                 res.status(500).send('Problem adding user to db');
             }
