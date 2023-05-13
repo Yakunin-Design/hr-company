@@ -12,6 +12,7 @@ type WorkerData = {
     logo?: string;
     experience?: Array<Experience | null>;
     job_type?: string;
+    city?: string;
     district?: string;
     subway?: string;
     salary?: {

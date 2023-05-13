@@ -9,6 +9,7 @@ import style from "./preferences.module.css";
 
 type props = {
     job_type?: string;
+    city?: string;
     district?: string;
     subway?: string;
     salary?: {
@@ -69,6 +70,7 @@ export default function JobPreferences(props: props) {
             {/* JobLocation */}
             <Spacer top="2" />
             <JobLocation
+                city={props.city!}
                 district={props.district!}
                 subway={props.subway!}
                 onChange={props.handle_change}

@@ -13,6 +13,7 @@ type props = {
     maxLength?: number;
     style?: CSSProperties;
     list?: string;
+    disabled?: boolean;
 };
 
 export default function Input(props: props) {
@@ -39,6 +40,7 @@ export default function Input(props: props) {
                 maxLength={props.maxLength}
                 style={props.style ? props.style : {}}
                 list={props.list}
+                disabled={props.disabled}
             />
         </>
     );

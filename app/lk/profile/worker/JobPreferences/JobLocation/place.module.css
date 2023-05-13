@@ -3,12 +3,8 @@
     width: 100%;
 }
 
-.district {
-    flex: 6;
-}
-
-.subway {
-    flex: 4;
+.city {
+    width: 100%;
 }
 
 .location {

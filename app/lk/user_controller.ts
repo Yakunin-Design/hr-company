@@ -33,8 +33,9 @@ export default function user_controller() {
             phone: "",
             specialty: [],
             status: "",
-            subway: "",
+            city: "Санкт-Петербург",
             district: "",
+            subway: "",
             job_type: "any",
             salary: {
                 amount: 100,

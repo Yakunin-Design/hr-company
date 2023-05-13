@@ -76,6 +76,7 @@ export default function WorkerProfile(props: props) {
             <h2>Желаемая работа</h2>
             <JobPreferences
                 job_type={user.job_type}
+                city={user.city}
                 district={user.district}
                 subway={user.subway}
                 salary={user.salary}
