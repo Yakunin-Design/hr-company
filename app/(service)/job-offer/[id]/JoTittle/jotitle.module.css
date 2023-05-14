@@ -27,9 +27,6 @@
 }
 
 @media (min-width: 550px) {
-    .subtitle {
-        margin-left: 4.5em;
-    }
     .subtitle_cutter {
         display: block;
     }

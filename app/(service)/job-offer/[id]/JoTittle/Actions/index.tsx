@@ -7,7 +7,7 @@ import Link from "next/link"
 
 export default function Actions({user_type, jo_data}: {user_type: string, jo_data: any}) {
 
-    const {activate_job_offer, close_job_offer} = jo_actions({id: jo_data._id});
+    const {activate_job_offer, close_job_offer, jo_respond} = jo_actions({id: jo_data._id});
 
     if (user_type === "owner") {
         if (jo_data.status === "active") {
@@ -31,6 +31,38 @@ export default function Actions({user_type, jo_data}: {user_type: string, jo_dat
                 </Row>
             </>)
         }
+    }
+    if (user_type === "Unauthorized") {
+        return (
+            <>
+                <Spacer top="1.5"/>
+                <Row className={style.actions}>
+                    <Link href="/login">
+                        <Button className={style.action}>Откликнуться</Button>
+                    </Link>
+                </Row>
+            </>
+        )
+    }
+    if (user_type === "worker") {
+        return (
+            <>
+                <Spacer top="1.5"/>
+                <Row className={style.actions}>
+                    <Button className={style.action} onClick={jo_respond}>Откликнуться</Button>
+                </Row>
+            </>
+        )
+    }
+    if (user_type === "candidate") {
+        return (
+            <>
+                <Spacer top="1.5"/>
+                <Row className={style.actions}>
+                    <h3>Вы уже откликнулись на эту вакансию</h3>
+                </Row>
+            </>
+        )
     }
     return (
         <>

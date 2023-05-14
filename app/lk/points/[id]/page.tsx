@@ -35,11 +35,9 @@ export default function Page({params}: {params: params}) {
         get_point(params.id);
     },[])
 
-    console.log(point)
-
     //@ts-ignore
     const job_offers = point?.job_offers.map(jo => <h3>{jo.specialty}</h3>)
-    console.log(job_offers)
+
     return (
         <Container lk wrapper>
             <Spacer top="2" />
@@ -55,7 +53,7 @@ export default function Page({params}: {params: params}) {
                             </Link>
                         }
                         
-                        <h2>{point?.address}</h2>
+                        <h2 className={style.label}>{point?.address}</h2>
                     </Row>
                     
                     <div className={style.subway}>

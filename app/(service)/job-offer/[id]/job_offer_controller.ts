@@ -83,7 +83,11 @@ export default function job_offers_controller(id: string) {
                 set_user_type(res.data);
             })
             .catch(e => {
-                console.log(e);
+                if (e.response.status === 401) {
+                    set_user_type("Unauthorized");
+                } else {
+                    console.log(e);
+                }
             });
     }, []);
 

@@ -33,11 +33,15 @@
     gap: 1em;
 }
 
+.label {
+    font-size: 2rem;
+}
+
 .floating_btn:hover {
     background-color: #f2f2f2;
 }
 
-@media (min-width: 930px) {
+/* @media (min-width: 930px) {
     .head {
         flex-direction: row;
         gap: 1em;
@@ -54,4 +58,4 @@
     .add_button {
         width: auto !important;
     }
-}
+} */
