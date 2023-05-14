@@ -327,9 +327,19 @@ async function get_workers(req: Request, res: Response) {
 
 async function get_point_data(req: Request, res: Response) {
     try {
-        const { job_offer_ids } = req.body;
+        const { id } = req.body;
 
-        const filter = job_offer_ids.map(jo => {
+        const point = await db.find(
+            { _id: new ObjectId(id) },
+            'points');
+        
+        if (point.Err) {
+            res.status(404).send("not found");
+        }
+
+
+
+        const filter = point.Ok!.job_offers.map((jo: string) => {
             return {
                 _id: new ObjectId(jo),
             };
@@ -340,7 +350,12 @@ async function get_point_data(req: Request, res: Response) {
             'job_offers'
         );
 
-        res.status(200).send(response_data.Ok);
+        const result = {
+            ...point.Ok,
+            job_offers: response_data.Ok
+        }
+
+        res.status(200).send(result);
     } catch (e) {
         console.log(e);
     }
@@ -522,6 +537,7 @@ async function create_point(req: Request, res: Response) {
     if (find.Ok) return res.status(400).send('already exists');
 
     const point_data = {
+        city: req.body.city,
         address: req.body.address,
         subway: req.body.subway,
         emp_id: res.locals.user._id,
@@ -624,7 +640,7 @@ async function accept_worker(req: Request, res: Response) {
             return res.status(400).send('error: wrong worker id');
         }
         if (
-            job_offer.Ok!.candidates.filter(candidate => {return candidate.toString() == worker_id.toString()}) == []
+            job_offer.Ok!.candidates.filter(candidate => candidate.toString() == worker_id.toString())
         ) { return res.status(400).send('error: candidate not found'); }
         
 
