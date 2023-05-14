@@ -244,6 +244,10 @@ async function job_offer_check(req: Request, res: Response) {
         let result;
         if (res.locals.jwt.user_type == "worker") {
             result = "worker"
+            db_result.Ok.candidates.forEach((candidate: any) => {
+                if(candidate.toString() === res.locals.user._id.toString())
+                    result = "candidate"
+            })
         } else if (res.locals.user._id.toString() == db_result.Ok.employer_id.toString()) {
             result = "owner"
         } else {
@@ -545,8 +549,6 @@ async function close_job_offer(req: Request, res: Response) {
 async function delete_jo_from_point(point_id, job_offer_id) {
     const point = await db.find({ _id: new ObjectId(point_id) }, 'points');
 
-    console.log(point_id);
-
     const new_jos = point.Ok!.job_offers.filter(jo => {
         return jo.toString() !== job_offer_id.toString();
     });
@@ -628,8 +630,6 @@ async function get_points(req: Request, res: Response) {
         res.status(200).send([]);
         return;
     }
-
-    console.log(points_id);
 
     const db_result = await db.find_all({ $or: [...points_id] }, 'points');
 

@@ -16,8 +16,6 @@ async function basic_edit(req: Request, res: Response): Promise<void> {
     try{
         const data = req.body;
 
-        console.log(data);
-
         const changed_names: Array<string> = Object.keys(data);
         const changed_values: Array<string | object | Array<string>> = Object.values(data);
 
