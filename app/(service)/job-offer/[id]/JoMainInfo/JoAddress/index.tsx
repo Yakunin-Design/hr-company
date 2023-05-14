@@ -11,6 +11,8 @@ export default function JoAddress({jo_data}: {jo_data: any}) {
     <>
         <h4>Адрес</h4>
         <Spacer top=".5"/>
+        <h4>{jo_data.city}</h4>
+        <Spacer top=".5"/>
         <Subway station={jo_data.subway} text_style="h4"/>
         <Spacer top=".5"/>
         <a href="https://google.com" target="_blank" rel="noopener noreferrer">

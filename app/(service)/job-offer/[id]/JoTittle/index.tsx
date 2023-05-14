@@ -4,8 +4,10 @@ import Image from "next/image";
 import clock from "@/assets/svg/clock.svg"
 import get_created_time from "@/functions/get_created_time";
 import style from "./jotitle.module.css"
+import Button from "@/components/std/Button";
+import Actions from "./Actions";
 
-export default function JoTitle({jo_data}: {jo_data: any}) {
+export default function JoTitle({jo_data, user_type}: {jo_data: any, user_type: string}) {
     return (
     <>
         <Spacer top="2"/>
@@ -19,6 +21,7 @@ export default function JoTitle({jo_data}: {jo_data: any}) {
                 <h4>{get_created_time(jo_data.created)}</h4>
             </Row>
         </Row>
+        <Actions user_type={user_type} jo_data={jo_data}/>
     </>
     )
 }

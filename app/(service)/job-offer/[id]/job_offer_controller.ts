@@ -34,9 +34,7 @@ export default function job_offers_controller(id: string) {
     const [responded, set_responded] = useState(false)
     const [candidates, set_candidates] = useState()
     const [workers, set_workers] = useState()
-    const [user_type, set_user_type] = useState({
-        type: "",
-    })
+    const [user_type, set_user_type] = useState<string>("")
 
     useEffect(() => {
         const jwt = localStorage.getItem('jwt') || '';
@@ -61,6 +59,28 @@ export default function job_offers_controller(id: string) {
                 set_jo_data(res.data.data);
                 get_candidates(res.data.data.candidates, set_candidates);
                 res.data.data.workers && get_workers(res.data.data.workers, set_workers);
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    }, []);
+
+    useEffect(() => {
+        const jwt = localStorage.getItem('jwt') || '';
+
+        const config = {
+            headers: {
+                authorization: 'Bearer ' + jwt,
+            },
+        };
+
+        axios
+            .get(`http://localhost:6969/job-offers/${id}/check`, config)
+            .then(res => {
+                if (!res.data) {
+                    return console.log('bruh');
+                }
+                set_user_type(res.data);
             })
             .catch(e => {
                 console.log(e);
