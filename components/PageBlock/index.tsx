@@ -23,6 +23,7 @@ type props = {
     name: string;
     active: boolean;
     show?: boolean;
+    toggle?: () => void;
 };
 
 export default function PageBlock(props: props) {
@@ -32,7 +33,7 @@ export default function PageBlock(props: props) {
     return (
         <>
             <Spacer top="2" />
-            <Link href={href}>
+            <Link href={href} onClick={props.toggle}>
                 <div
                     className={
                         props.active

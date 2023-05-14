@@ -1,0 +1,19 @@
+.overlay {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    min-height: 100%;
+    margin: 0 auto;
+    padding: 0 2em;
+}
+
+.overlay_card {
+    background-color: var(--background-main);
+    max-width: 75em;
+    margin: 0 auto;
+    margin-top: 5rem !important;
+    padding: 1rem 0 !important;
+}

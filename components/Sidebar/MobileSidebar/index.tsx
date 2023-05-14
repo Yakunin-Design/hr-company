@@ -48,7 +48,7 @@ export default function MobileSidebar(props: props) {
                 </Container>
             </header>
 
-            {props.show && <MobileMenu user_type={props.user_type} active={props.active}/>}
+            {props.show && <MobileMenu user_type={props.user_type} active={props.active} toggle={props.toggle}/>}
         </>
     );
 }

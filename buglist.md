@@ -2,9 +2,9 @@
 
 After page transition via @next/link header is not displayed
 
-# Header
+# Default header
 
-1.  <MobileMenu/> doesn't close when u click a <Link/>
+change login btn when user is logged in
 
 # Forms
 

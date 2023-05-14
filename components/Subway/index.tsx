@@ -4,7 +4,7 @@ import Row from '../std/Row';
 import Image from 'next/image';
 
 type props = {
-    station: string,
+    station: string | undefined,
     text_style?: string
 }
 

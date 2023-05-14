@@ -17,7 +17,7 @@ export default function ExperienceBlock(props: props) {
         <Card>
             <Row>
                 <span className={styles.employer}>{props.employer}</span>
-                {/* <CloseIcon className={styles.close} /> */}
+                {/* <Icon className={styles.close} /> */}
             </Row>
 
             <Spacer top="2" />

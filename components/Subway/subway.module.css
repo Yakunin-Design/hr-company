@@ -1,5 +1,6 @@
 .subway_row {
     gap: 0.5em;
+    justify-content: flex-start !important;
 }
 
 .subway__icon {

@@ -5,18 +5,19 @@ import styles from "./menu.module.css";
 type props = {
     user_type: string | null;
     active: string;
+    toggle: () => void;
 };
 
 export default function MobileMenu(props: props) {
     return (
         <div className={styles.menu}>
             <div className={styles.nav_block}>
-                <PageBlock name="profile" active={props.active == "profile"} />
+                <PageBlock name="profile" active={props.active == "profile"} toggle={props.toggle}/>
                 <Spacer top="2" />
             </div>
 
             <div className={styles.nav_block}>
-                <PageBlock name="chat" active={props.active == "chat"} />
+                <PageBlock name="chat" active={props.active == "chat"} toggle={props.toggle}/>
                 <Spacer top="2" />
             </div>
 
@@ -26,6 +27,7 @@ export default function MobileMenu(props: props) {
                         <PageBlock
                             name="myjob"
                             active={props.active == "myjob"}
+                            toggle={props.toggle}
                         />
                         <Spacer top="2" />
                     </div>
@@ -33,6 +35,7 @@ export default function MobileMenu(props: props) {
                     <PageBlock
                         name="findwork"
                         active={props.active == "findwork"}
+                        toggle={props.toggle}
                     />
                 </>
             )}
@@ -43,10 +46,12 @@ export default function MobileMenu(props: props) {
                         <PageBlock
                             name="job-offers"
                             active={props.active == "job-offers"}
+                            toggle={props.toggle}
                         />
                         <PageBlock
                             name="points"
                             active={props.active == "points"}
+                            toggle={props.toggle}
                         />
                         <Spacer top="2" />
                     </div>
@@ -54,6 +59,7 @@ export default function MobileMenu(props: props) {
                     <PageBlock
                         name="find-workers"
                         active={props.active == "find-workers"}
+                        toggle={props.toggle}
                     />
                 </>
             )}

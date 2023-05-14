@@ -1,0 +1,57 @@
+.head {
+    flex-direction: column;
+    gap: 1em;
+}
+
+.info {
+    justify-content: space-between;
+    gap: 2em;
+    flex-direction: row;
+    width: 100%;
+}
+
+.subway {
+    border-radius: 0.5em;
+    padding: .75em 2em;
+    background-color: white;
+}
+
+.add_button {
+    width: 100%;
+}
+
+.floating_btn {
+    padding: 1rem;
+    border-radius: 50%;
+    background-color: #fff;
+    box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.2);
+    display: grid;
+    align-items: center;
+}
+
+.name {
+    gap: 1em;
+}
+
+.floating_btn:hover {
+    background-color: #f2f2f2;
+}
+
+@media (min-width: 930px) {
+    .head {
+        flex-direction: row;
+        gap: 1em;
+        align-items: center;
+    }
+
+    .info {
+        justify-content: flex-start !important;
+        gap: 2em;
+        width: auto;
+        align-items: center;
+    }
+
+    .add_button {
+        width: auto !important;
+    }
+}

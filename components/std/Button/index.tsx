@@ -6,26 +6,31 @@ type props = {
     secondary?: boolean;
     expand?: boolean;
     common?: boolean;
+    className?: string;
     red?: boolean;
 };
 
 export default function Button(props: props) {
     let button_styles = styles.primary;
 
-    if (props.red) {
-        button_styles += " " + styles.red;
-    }
-
     if (props.secondary) {
         button_styles = styles.secondary;
+    }
+
+    if (props.common) {
+        button_styles = styles.common;
+    }
+
+    if (props.red) {
+        button_styles += " " + styles.red;
     }
 
     if (props.expand) {
         button_styles += " " + styles.expand;
     }
 
-    if (props.common) {
-        button_styles = styles.common;
+    if (props.className) {
+        button_styles += " " + props.className;
     }
 
     return (
