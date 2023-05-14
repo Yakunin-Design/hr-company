@@ -74,6 +74,7 @@ async function create_job_offer(req: Request, res: Response): Promise<void> {
             // db.save new point
             const point = await db.save(
                 {
+                    city: job_offer.city,
                     address: job_offer.address,
                     subway: job_offer.subway,
                     emp_id: res.locals.user._id,

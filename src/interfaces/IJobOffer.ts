@@ -15,6 +15,7 @@ interface IJobOffer {
     type: 'full time' | 'part time';
 
     specialty: string;
+    city?: string;
     address?: string;
     subway?: subway;
     salary: salary;
