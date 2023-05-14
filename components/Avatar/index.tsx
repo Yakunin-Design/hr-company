@@ -5,6 +5,7 @@ type props = {
     input?: boolean;
     value?: string;
     onChange?: (event: any) => void;
+    className?: string;
 };
 
 export default function Avatar(props: props) {
@@ -38,12 +39,12 @@ export default function Avatar(props: props) {
                 <div>
                     {props.value ? (
                         <Image
-                            className={styles.photo}
+                            className={styles.photo + " " + props.className}
                             src={props.value}
                             alt=""
                         />
                     ) : (
-                        <Image className={styles.plug} src={logo} alt="" />
+                        <Image className={styles.plug} src={logo} alt=""/>
                     )}
                 </div>
             )}

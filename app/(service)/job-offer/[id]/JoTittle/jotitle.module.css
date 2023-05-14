@@ -1,0 +1,25 @@
+.title {
+    text-align: center;
+}
+
+.subtitle {
+    justify-content: center !important;
+    gap: 2em;
+}
+
+.subtitle_cutter {
+    display: none;
+}
+
+.subtitle_time {
+    gap: 1em;
+}
+
+@media (min-width: 550px) {
+    .subtitle {
+        margin-left: 4.5em;
+    }
+    .subtitle_cutter {
+        display: block;
+    }
+}

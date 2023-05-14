@@ -11,13 +11,11 @@ export default function ServicePagesLayout({
 }) {
 
     return (
-        <html lang="en">
-            <head />
-            <body>
-                <Header/>
-                {children}
-                <Footer/>
-            </body>
-        </html>
+        <>
+            <Header/>
+            {children}
+            <Footer/>
+        </>
+        
     );
 }

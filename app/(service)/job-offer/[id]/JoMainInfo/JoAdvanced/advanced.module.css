@@ -1,0 +1,10 @@
+.block {
+    padding: 0.7em;
+    background-color: #f5f5f5;
+    border-radius: 0.5rem;
+    margin-right: 1em;
+}
+
+.row {
+    justify-content: flex-start !important;
+}

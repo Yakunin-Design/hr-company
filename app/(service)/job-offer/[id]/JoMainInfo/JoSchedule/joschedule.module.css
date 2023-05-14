@@ -1,0 +1,15 @@
+.row {
+    cursor: help;
+}
+
+.schedule_graph {
+    gap: 1em;
+}
+
+.time_title {
+    font-size: 0.625rem;
+}
+
+.time_value {
+    margin-top: 0.2rem;
+}

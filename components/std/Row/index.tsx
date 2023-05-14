@@ -5,6 +5,7 @@ type props = {
     onClick?: () => void;
     align?: "start" | "end";
     className?: string;
+    title?: string;
 };
 
 export default function Row(props: props) {
@@ -20,7 +21,7 @@ export default function Row(props: props) {
     }
 
     return (
-        <div className={row_styles} onClick={props.onClick}>
+        <div className={row_styles} onClick={props.onClick} title={props.title}>
             {props.children}
         </div>
     );
