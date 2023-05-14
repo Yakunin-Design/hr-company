@@ -1,0 +1,19 @@
+.head {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 2rem;
+}
+
+.create_btn {
+    width: 100%;
+}
+
+@media (min-width: 900px) {
+    .head {
+        flex-direction: row;
+        align-items: center;
+    }
+    .create_btn {
+        width: auto;
+    }
+}

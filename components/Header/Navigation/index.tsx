@@ -6,6 +6,7 @@ import Button from '@/components/std/Button';
 
 type props = {
     hide_button?: boolean;
+    logged_in?: boolean;
 };
 
 export default function Navigation(props: props) {
@@ -22,9 +23,16 @@ export default function Navigation(props: props) {
                 {!props.hide_button && (
                     <>
                         <Spacer left="4" />
-                        <Link href="/login">
-                            <Button>Войти</Button>
-                        </Link>
+                        {props.logged_in ?
+                            <Link href="/lk/profile">
+                                <Button>Личный Кабинет</Button>
+                            </Link>
+                            :
+                            <Link href="/login">
+                                <Button>Войти</Button>
+                            </Link>
+                        }
+                        
                     </>
                 )}
             </Row>

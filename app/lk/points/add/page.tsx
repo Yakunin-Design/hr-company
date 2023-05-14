@@ -41,7 +41,7 @@ export default function Page() {
 
     return (
         <>
-        <Overlay>
+        <Overlay href="/lk/points">
             <PointForm add={add_point} data={form_data} onChange={handle_change} errors={errors}/>
         </Overlay>
         <Container lk wrapper>

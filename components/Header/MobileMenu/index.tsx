@@ -5,6 +5,7 @@ import Spacer from '@/components/std/Spacer';
 
 type props = {
     show_login_button?: boolean;
+    logged_in?: boolean;
 };
 
 export default function ModibleMenu(props: props) {
@@ -19,10 +20,20 @@ export default function ModibleMenu(props: props) {
             </Link>
             <Spacer top="2" />
             {!props.show_login_button && (
-                <Link href="/login">
-                    <Button>Войти</Button>
-                </Link>
-            )}
+                    <>
+                        <Spacer left="4" />
+                        {props.logged_in ?
+                            <Link href="/lk/profile">
+                                <Button>Личный Кабинет</Button>
+                            </Link>
+                            :
+                            <Link href="/login">
+                                <Button>Войти</Button>
+                            </Link>
+                        }
+                        
+                    </>
+                )}
             <Spacer top="2" />
         </section>
     );

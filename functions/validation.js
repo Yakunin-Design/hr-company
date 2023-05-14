@@ -1,4 +1,4 @@
-import subway_stations from "@/data/districts";
+import get_subways from "./get_subways";
 
 function checkInn(value) {
     if (
@@ -182,6 +182,10 @@ function job_offer_validation(job_offer_data) {
     send_data.experience = job_offer_data.experience;
     send_data.citizenship = job_offer_data.citizenship;
     send_data.sex = job_offer_data.sex;
+    send_data.city = job_offer_data.city;
+
+
+    const subways = get_subways(job_offer_data.city);
 
     //required
     job_offer_data.specialty === ""
@@ -190,7 +194,7 @@ function job_offer_validation(job_offer_data) {
     job_offer_data.address === ""
         ? validation_errors.push("address")
         : (send_data.address = job_offer_data.address);
-    subway_stations.indexOf(job_offer_data.subway) === -1
+    subways.indexOf(job_offer_data.subway) === -1
         ? validation_errors.push("subway")
         : (send_data.subway = job_offer_data.subway);
 

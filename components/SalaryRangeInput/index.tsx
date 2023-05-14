@@ -6,7 +6,7 @@ import styles from "./salary_range_input.module.css";
 
 type props = {
     salary?: {
-        amount: number;
+        amount: number | string;
         period: string;
     };
     handle_change: (event: any) => void;

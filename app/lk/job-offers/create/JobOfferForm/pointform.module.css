@@ -1,0 +1,38 @@
+.header {
+    text-align: center;
+}
+
+.form {
+    padding: 0 2em;
+}
+
+.button {
+    width: 100%;
+}
+
+.block_desc {
+    text-align: center;
+}
+
+.buttons {
+    flex-direction: column;
+    gap: 1em;
+}
+
+@media (min-width: 500px) {
+    .form {
+        padding: 0 4em;
+    }
+}
+
+@media (min-width: 600px) {
+    .button {
+        width: auto;
+    }
+
+    .buttons {
+        flex-direction: row;
+        justify-content: flex-end !important;
+        gap: 1em;
+    }
+}
