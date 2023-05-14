@@ -220,8 +220,37 @@ async function full_job_offer(req: Request, res: Response) {
 
         const employer = await db.find({ _id: response.data.employer_id }, 'employers');
         response.data.company = employer.Ok!.company;
+        response.data.avatar = employer.Ok!.logo;
 
         res.status(200).send(response);
+    } catch (e) {
+        console.log(e.message);
+    }
+}
+
+async function job_offer_check(req: Request, res: Response) {
+    try {
+        // get job offer by id form the database
+        if (req.params.id.length != 24)
+            return res.status(400).send('wrong id!');
+
+        const job_id = new ObjectId(req.params.id);
+        const db_result = await db.find({ _id: job_id }, 'job_offers');
+
+        if (db_result.Err) return res.status(500).send(db_result.Err.message);
+        if (db_result.Ok === null)
+            return res.status(404).send('Job offer doest not exist');
+
+        let result;
+        if (res.locals.jwt.user_type == "worker") {
+            result = "worker"
+        } else if (res.locals.user._id.toString() == db_result.Ok.employer_id.toString()) {
+            result = "owner"
+        } else {
+            result = "employer"
+        }
+
+        return res.status(200).send(result);
     } catch (e) {
         console.log(e.message);
     }
@@ -678,6 +707,7 @@ export default {
     create_job_offer,
     job_offers,
     full_job_offer,
+    job_offer_check,
     edit_job_offer,
     close_job_offer,
     activate_job_offer,

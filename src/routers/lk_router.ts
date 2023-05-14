@@ -67,6 +67,10 @@ router.get('/job-offers/:id', (req: Request, res: Response) =>
     employer_controller.full_job_offer(req, res)
 );
 
+router.get('/job-offers/:id/check', auth, (req: Request, res: Response) =>
+    employer_controller.job_offer_check(req, res)
+);
+
 router.post('/new-respond', (req: Request, res: Response) => {
     worker_controller.add_respond(req, res);
 });
