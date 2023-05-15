@@ -15,6 +15,7 @@ import point_controller from "../point_controller";
 import { useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import JobOfferCard from "@/components/JobOfferCard";
 
 
 type params = {
@@ -36,7 +37,7 @@ export default function Page({params}: {params: params}) {
     },[])
 
     //@ts-ignore
-    const job_offers = point?.job_offers.map(jo => <h3>{jo.specialty}</h3>)
+    const job_offers = point?.job_offers.map(jo => <JobOfferCard jo_data={jo} />)
 
     return (
         <Container lk wrapper>

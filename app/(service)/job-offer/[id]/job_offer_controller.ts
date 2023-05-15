@@ -32,7 +32,7 @@ export default function job_offers_controller(id: string) {
     })
     
     const [responded, set_responded] = useState(false)
-    const [candidates, set_candidates] = useState()
+    const [candidates, set_candidates] = useState([])
     const [workers, set_workers] = useState()
     const [user_type, set_user_type] = useState<string>("")
 

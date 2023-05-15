@@ -1,18 +1,18 @@
 "use client"
 import Container from "@/components/std/Container";
-import { CheckUser } from "../../checkUser";
-import user_controller from "../../user_controller";
+import { CheckUser } from "../../../checkUser";
+import user_controller from "../../../user_controller";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Row from "@/components/std/Row";
 import Button from "@/components/std/Button";
-import style from "../joboffers.module.css"
+import style from "../../joboffers.module.css"
 import Spacer from "@/components/std/Spacer";
-import job_offer_controller from "../job_offer_controller";
-import JobOfferRow from "../JobOfferRow";
+import job_offer_controller from "../../job_offer_controller";
+import JobOfferRow from "../../JobOfferRow";
 import Link from "next/link";
 import Overlay from "@/components/Overlay";
-import JobOfferForm from "./JobOfferForm";
+import JobOfferForm from "../JobOfferForm";
 
 type jo = {
     address: string

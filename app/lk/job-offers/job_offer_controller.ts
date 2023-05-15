@@ -2,7 +2,7 @@ import subway_stations from "@/components/std/Inputs/SubwayInput/subway_stations
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { job_offer_validation } from "@/functions/validation";
-import get_prev_data from "./edit/[id]/get_prev_data";
+import get_prev_data from "./(create and edit)/edit/[id]/get_prev_data";
 
 type form_data = {
     specialty: string,

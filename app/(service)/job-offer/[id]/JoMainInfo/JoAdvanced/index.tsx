@@ -10,6 +10,18 @@ export default function JoAdvanced({jo_data}: {jo_data: any}) {
     return(
         <>
             {
+                (jo_data.experience != '')
+                &&
+                <>
+                    <Spacer top="1"/>
+                    <Row className={style.row}>
+                        <div className={style.block}><h3>{jo_data.experience}</h3></div>
+                        <h4>Опыт работы, лет</h4>
+                    </Row>
+                </>
+            }
+        
+            {
                 jo_data.citizenship
                 &&
                 <>
@@ -43,7 +55,6 @@ export default function JoAdvanced({jo_data}: {jo_data: any}) {
                         }
                     </Row>
                 </>
-                
             }
         </>
     )
