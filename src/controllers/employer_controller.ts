@@ -260,6 +260,36 @@ async function job_offer_check(req: Request, res: Response) {
     }
 }
 
+async function job_offer_get_emp_data(req: Request, res: Response) {
+    try {
+        // get job offer by id form the database
+        if (req.params.id.length != 24)
+            return res.status(400).send('wrong id!');
+
+        const job_id = new ObjectId(req.params.id);
+        const db_result = await db.find({ _id: job_id }, 'job_offers');
+
+        if (db_result.Err) return res.status(500).send(db_result.Err.message);
+        if (db_result.Ok === null)
+            return res.status(404).send('Job offer doest not exist');
+
+        const employer = await db.find({_id: db_result.Ok.employer_id}, 'employers');
+        const point = await db.find({_id: new ObjectId(db_result.Ok.point_id)}, 'points');
+        const result = {
+            name: employer.Ok!.company,
+            logo: employer.Ok!.logo,
+            city: point.Ok!.city,
+            subway: point.Ok!.subway
+        }
+
+        
+
+        return res.status(200).send(result);
+    } catch (e) {
+        console.log(e.message);
+    }
+}
+
 async function get_worker_bank(req: Request, res: Response) {
     try {
         // find all job offers (with employer_id from jwt)
@@ -708,6 +738,7 @@ export default {
     job_offers,
     full_job_offer,
     job_offer_check,
+    job_offer_get_emp_data,
     edit_job_offer,
     close_job_offer,
     activate_job_offer,
