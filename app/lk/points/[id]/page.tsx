@@ -30,14 +30,14 @@ export default function Page({params}: {params: params}) {
 
     CheckUser(set_user);
 
-    const { point, get_point } = point_controller();
+    const { point, get_point, delete_point } = point_controller();
 
     useEffect(() => {
         get_point(params.id);
     },[])
 
     //@ts-ignore
-    const job_offers = point?.job_offers.map(jo => <JobOfferCard jo_data={jo} />)
+    const job_offers = (point && point.job_offers) ? point.job_offers.map(jo => <JobOfferCard jo_data={jo} className={style.jo}/>) : <></>
 
     return (
         <Container lk wrapper>
@@ -61,13 +61,25 @@ export default function Page({params}: {params: params}) {
                         <Subway station={point?.subway}/>
                     </div>
                 </Row>
-                <Button className={style.add_button}>Добавить вакансию</Button>
+                <Link href="/lk/job-offers/create" className={style.add_button}>
+                    <Button  expand>Добавить вакансию</Button>
+                    {
+                        point && !point.job_offers && point.workers.length == 0
+                        &&
+                        <>
+                            <Spacer top=".5"/>
+                            <Button onClick={()=>{delete_point(point._id)}} red expand>Удалить точку</Button>
+                        </>
+                        
+                    }
+                </Link>
+                
             </Row>
             <Spacer top="2"/>
             <div className={style.section}>
                 <h2>Вакансии</h2>
                 <Spacer top="1"/>
-                <Row>
+                <Row className={style.job_offers}>
                     {job_offers}
                 </Row>
             </div>

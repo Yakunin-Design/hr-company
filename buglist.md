@@ -21,4 +21,22 @@ Disabled status ?
 1. Phone code api ? (should be XD just the money problem)
 2. Email & phone edits
 
+# Other bugs
+
 Work experience doent funciton
+
+Send code again dosn't work
+Sidebar only displays chat and profile after registration ( and dosn't display any other options )
+
+Ranges: wrong initial values
+Job offer start & end time input mask dosn't work
+
+Single point row component is not adaptive
+Single point layout is not adaptive
+
+lk phone mask dosn't work
+
+Job offer info bar icon frames (grey box) have different width
+Job offer info bar address is not correct
+
+Job prefferences range killes the render

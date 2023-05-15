@@ -53,6 +53,7 @@ export default function defaultSettings(props: props) {
                 currentValue={props.data.citizenship}
                 onChange={props.onChange}
                 style={{}}
+                checked={true}
                 lk
             >
                 🇷🇺
@@ -64,6 +65,7 @@ export default function defaultSettings(props: props) {
                 currentValue={props.data.citizenship}
                 onChange={props.onChange}
                 style={{}}
+                checked={props.data.citizenship != "ru"}
                 lk
             >
                 🇧🇾/🇺🇦
@@ -75,6 +77,7 @@ export default function defaultSettings(props: props) {
                 currentValue={props.data.citizenship}
                 onChange={props.onChange}
                 style={{}}
+                checked={props.data.citizenship != "ru" && props.data.citizenship != "bu/ua"}
                 lk
             >
                 СНГ
@@ -86,9 +89,10 @@ export default function defaultSettings(props: props) {
                 currentValue={props.data.citizenship}
                 onChange={props.onChange}
                 style={{}}
+                checked={props.data.citizenship == "other"}
                 lk
             >
-                Другое
+                Любое
             </Radio>
         </Row>
 

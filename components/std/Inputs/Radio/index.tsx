@@ -12,11 +12,12 @@ type props = {
     className?: string;
     style?: CSSProperties;
     lk?: boolean;
+    checked?: boolean;
 };
 
 export default function Input(props: props) {
     let className = styles.label;
-    if (props.value == props.currentValue) className += " " + styles.checked;
+    if (props.value == props.currentValue || props.checked) className += " " + styles.checked;
     if (props.lk) className += " " + styles.lk;
 
     return (

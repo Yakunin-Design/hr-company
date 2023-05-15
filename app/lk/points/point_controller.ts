@@ -101,7 +101,7 @@ export default function point_controller() {
             .post('http://localhost:6969/delete-point',{id: id},config)
             .then(res => {
                 if (!res.data) { return console.log(res); }
-                window.location.reload();
+                window.location.href="/lk/points";
             })
     }
 

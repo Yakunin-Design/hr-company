@@ -4,7 +4,7 @@ import style from "./joinfo.module.css"
 import description_display from "./description_display"
 import Card from "@/components/Card";
 import JoAddress from "./JoAddress";
-import JoSchedule from "./JoSchedule";
+import JoSchedule from "@/components/JoSchedule";
 import JoAdvanced from "./JoAdvanced";
 
 export default function JoMainInfo({jo_data}: {jo_data: any}) {
@@ -19,7 +19,7 @@ export default function JoMainInfo({jo_data}: {jo_data: any}) {
             <Card className={style.main_info}>
                 <div className={style.card_container}>
                     <JoAddress jo_data={jo_data}/>
-                    <JoSchedule jo_data={jo_data}/>
+                    <JoSchedule schedule={jo_data.schedule} working_time={jo_data.working_time}/>
                     <JoAdvanced jo_data={jo_data}/>
                 </div>
                 <Spacer top="2"/>

@@ -1,10 +1,17 @@
 .card {
-    padding: 1.25rem !important;
-    min-width: 400px;
+    padding: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+    height: 100%;
+}
+
+.container {
+    padding: 1.25rem 1.25em !important;
 }
 
 .header {
     align-items: stretch !important;
+    gap: 1em;
 }
 
 .label {
@@ -12,13 +19,15 @@
     border-radius: .5rem;
     padding: .5rem;
     gap: .5em;
+    overflow: hidden;
 }
 
 .logo {
     border-radius: 50%;
     border: 1px solid black;
-    width: 20px;
-    height: 20px;
+    width: 20px !important;
+    min-width: 20px;
+    height: 20px !important;
     background-color: var(--accent);
 }
 
@@ -31,4 +40,11 @@
 
 .city {
     font-size: 0.8rem;
+}
+
+.specialty, .price {
+    color: black;
+}
+.main_container {
+    height: calc(100% - 70px);
 }
