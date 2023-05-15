@@ -15,7 +15,7 @@ export default function get_candidates(candidates: any, set_candidates: any) {
 
         axios
             .post(
-                'http://localhost:6969/get-candidates',
+                '${process.env.API_ADDRESS}/get-candidates',
                 candidates,
                 config
             )

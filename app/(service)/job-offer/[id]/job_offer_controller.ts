@@ -46,7 +46,7 @@ export default function job_offers_controller(id: string) {
         };
 
         axios
-            .get(`http://localhost:6969/job-offers/${id}`, config)
+            .get(`${process.env.API_ADDRESS}/job-offers/${id}`, config)
             .then(res => {
                 if (!res.data) {
                     return console.log('bruh');
@@ -75,7 +75,7 @@ export default function job_offers_controller(id: string) {
         };
 
         axios
-            .get(`http://localhost:6969/job-offers/${id}/check`, config)
+            .get(`${process.env.API_ADDRESS}/job-offers/${id}/check`, config)
             .then(res => {
                 if (!res.data) {
                     return console.log('bruh');

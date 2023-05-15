@@ -29,7 +29,7 @@ export default function point_controller() {
             }
         }
 
-        axios.get('http://localhost:6969/get-points', config)
+        axios.get('${process.env.API_ADDRESS}/get-points', config)
         .then(res => {
             if (!res.data) {
                 return console.log(res)
@@ -76,7 +76,7 @@ export default function point_controller() {
                 }
             }
     
-            axios.post ('http://localhost:6969/new-point', form_data, config)
+            axios.post ('${process.env.API_ADDRESS}/new-point', form_data, config)
             .then(res => {
                 if (!res.data) {
                     return console.log(res)
@@ -98,7 +98,7 @@ export default function point_controller() {
         };
 
         axios
-            .post('http://localhost:6969/delete-point',{id: id},config)
+            .post('${process.env.API_ADDRESS}/delete-point',{id: id},config)
             .then(res => {
                 if (!res.data) { return console.log(res); }
                 window.location.href="/lk/points";
@@ -114,7 +114,7 @@ export default function point_controller() {
 
         axios
             .post(
-                'http://localhost:6969/get-point-data',
+                '${process.env.API_ADDRESS}/get-point-data',
                 { id: point_id },
                 config
             )

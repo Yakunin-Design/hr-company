@@ -35,7 +35,7 @@ export default function login_controller() {
         set_errors([]);
 
         axios
-            .post("http://localhost:6969/login", form_data)
+            .post(`${process.env.API_ADDRESS}/login`, form_data)
             .then(res => {
                 if (!res.data) {
                     console.log("smth wrong");

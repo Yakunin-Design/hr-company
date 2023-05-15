@@ -53,7 +53,7 @@ export default function JobOfferCard({jo_data, className}: {jo_data: jo_data, cl
     })
     
     useEffect(()=>{
-        axios.get(`http://localhost:6969/job-offers/${jo_data._id}/get-point-data`)
+        axios.get(`${process.env.API_ADDRESS}/job-offers/${jo_data._id}/get-point-data`)
         .then(res => set_point(res.data))
     },[])
 

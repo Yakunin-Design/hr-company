@@ -219,7 +219,7 @@ export default function user_controller() {
 
         if (Object.keys(data).length > 0) {
             axios
-                .post("http://localhost:6969/profile/edit", { ...data }, config)
+                .post(`${process.env.API_ADDRESS}/profile/edit`, { ...data }, config)
                 .then(res => {
                     if (!res.data) {
                         return console.log(res);

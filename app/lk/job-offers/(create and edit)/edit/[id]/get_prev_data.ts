@@ -10,7 +10,7 @@ export default function get_prev_data(set_old_data: any, jo_id: string) {
         };
 
         axios
-            .get(`http://localhost:6969/job-offers/${jo_id}`, config)
+            .get(`${process.env.API_ADDRESS}/job-offers/${jo_id}`, config)
             .then(res => {
                 if (!res.data) {
                     return console.log('bruh');

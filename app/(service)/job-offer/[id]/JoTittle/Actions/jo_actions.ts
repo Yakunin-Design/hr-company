@@ -14,7 +14,7 @@ export default function jo_actions({id}: {id: string}) {
 
         axios
             .post(
-                'http://localhost:6969/close-job-offer',
+                '${process.env.API_ADDRESS}/close-job-offer',
                 { id: id },
                 config
             )
@@ -44,7 +44,7 @@ export default function jo_actions({id}: {id: string}) {
 
         axios
             .post(
-                'http://localhost:6969/activate-job-offer',
+                '${process.env.API_ADDRESS}/activate-job-offer',
                 { id: id },
                 config
             )
@@ -73,7 +73,7 @@ export default function jo_actions({id}: {id: string}) {
         };
 
         axios
-            .get(`http://localhost:6969/find-user`, config)
+            .get(`${process.env.API_ADDRESS}/find-user`, config)
             .then(res => {
                 if (!res.data) {
                     return console.log('bruh');
@@ -97,7 +97,7 @@ export default function jo_actions({id}: {id: string}) {
         };
 
         axios
-            .post('http://localhost:6969/new-respond', request_data)
+            .post('${process.env.API_ADDRESS}/new-respond', request_data)
             .then(res => {
                 if (!res.data) {
                     return console.log('bruh');

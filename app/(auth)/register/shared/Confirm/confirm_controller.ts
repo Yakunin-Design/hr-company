@@ -76,7 +76,7 @@ export default function confirm_controller() {
         };
 
         axios
-            .post("http://localhost:6969/phone-confirmation", data)
+            .post(`${process.env.API_ADDRESS}/phone-confirmation`, data)
             .then(res => {
                 if (!res.data) {
                     return console.log("invalid code");
@@ -97,7 +97,7 @@ export default function confirm_controller() {
             .split(")")
             .join("");
 
-        const response = await axios.post("http://localhost:6969/signup", data);
+        const response = await axios.post(`${process.env.API_ADDRESS}/signup`, data);
 
         return response;
     }

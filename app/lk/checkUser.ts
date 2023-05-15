@@ -13,7 +13,7 @@ export function CheckUser(set_user: any) {
         };
 
         axios
-            .get("http://localhost:6969/profile", config)
+            .get(`${process.env.API_ADDRESS}/profile`, config)
             .then(res => {
                 if (!res.data) {
                     return console.log("bruh");
