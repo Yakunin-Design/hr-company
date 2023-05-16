@@ -1,6 +1,6 @@
 .container {
     width: 100%;
-    padding: 0 2rem;
+    padding: 0 1rem;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -21,6 +21,11 @@
 }
 
 @media (min-width: 600px) {
+
+    .container {
+        padding: 0 2rem;
+    }
+
     .lk {
         margin-left: 86px;
         width: calc(100% - 86px);
