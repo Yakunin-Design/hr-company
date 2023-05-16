@@ -45,9 +45,10 @@ type point = {
 type props = {
     create: () => void,
     data: form_data,
-    points: Array<point>
-    errors: Array<string>
-    onChange: (event: any) => void
+    points: Array<point>,
+    errors: Array<string>,
+    onChange: (event: any) => void,
+    type: "create" | "edit"
 }
 
 const error_style = {
@@ -55,14 +56,14 @@ const error_style = {
 };
 
 export default function PointForm(props: props) {
+
     return(
         <>
-            <h2 className={style.header}>Создание вакансии</h2>
+            <h2 className={style.header}>{props.type === "create" ? "Создание" : "Редактирование"} вакансии</h2>
             <Spacer top="1"/>
             <hr />
             <Spacer top="2"/>
             <div className={style.form}>
-                
                 <DefaultSettings data={props.data} onChange={props.onChange} errors={props.errors} points={props.points}/>
                 <Spacer top="5" />
                 <div className={style.block_desc}>
@@ -76,7 +77,6 @@ export default function PointForm(props: props) {
             <Spacer bottom="6"/>
 
             <div className={style.form}>
-            
                 <MainSettings data={props.data} onChange={props.onChange} errors={props.errors}/>
                 <Spacer top="6" />
                 <div className={style.block_desc}>

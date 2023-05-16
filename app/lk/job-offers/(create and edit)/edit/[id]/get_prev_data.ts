@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default function get_prev_data(set_old_data: any, jo_id: string) {
+export default function get_prev_data(form_data: any, set_old_data: any, jo_id: string) {
     const jwt = localStorage.getItem('jwt') || '';
 
         const config = {
@@ -20,7 +20,10 @@ export default function get_prev_data(set_old_data: any, jo_id: string) {
                 //     set_responded(true);
                 // }
 
-                set_old_data(res.data.data);
+                set_old_data({
+                    ...form_data,
+                    ...res.data.data
+                });
             })
             .catch(e => {
                 console.log(e);

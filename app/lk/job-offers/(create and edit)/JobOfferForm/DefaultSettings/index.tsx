@@ -14,23 +14,7 @@ type form_data = {
     salary: {
         amount: string,
         period: string
-    },
-    experience: string,
-    schedule: {
-        weekdays: string,
-        weekends: string,
-    },
-    working_time: {
-        start: string,
-        end: string,
-    },
-    citizenship: string,
-    sex: string,
-    age: {
-        from: string,
-        to: string,
-    },
-    description: string
+    }
 }
 
 type point = {

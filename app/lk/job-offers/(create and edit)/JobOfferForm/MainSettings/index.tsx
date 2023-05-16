@@ -6,14 +6,6 @@ import style from "./mainS.module.css"
 import ExperienceInput from "./ExperienceInput"
 
 type form_data = {
-    specialty: string,
-    city: string,
-    address: string,
-    subway: string,
-    salary: {
-        amount: string,
-        period: string
-    },
     experience: string,
     schedule: {
         weekdays: string,
@@ -23,13 +15,6 @@ type form_data = {
         start: string,
         end: string,
     },
-    citizenship: string,
-    sex: string,
-    age: {
-        from: string,
-        to: string,
-    },
-    description: string
 }
 
 type props = {
@@ -42,7 +27,7 @@ const error_style = {
     border: "2px solid red",
 };
 
-export default function defaultSettings(props: props) {
+export default function mainSettings(props: props) {
     return(
         <>
             <ExperienceInput 

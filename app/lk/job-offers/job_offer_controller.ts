@@ -95,7 +95,7 @@ export default function job_offer_controller(jo_id?: string) {
                 console.log(e)
             })
 
-        jo_id && get_prev_data(set_form_data, jo_id);
+        jo_id && get_prev_data(form_data, set_form_data, jo_id);
 
     }, [])
 

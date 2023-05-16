@@ -60,7 +60,7 @@ export default function Page() {
     return (
         <>
             <Overlay href="/lk/job-offers">
-                <JobOfferForm data={form_data} errors={errors} onChange={handle_change} points={points} create={create_jo}></JobOfferForm>
+                <JobOfferForm data={form_data} errors={errors} onChange={handle_change} points={points} create={create_jo} type="create"></JobOfferForm>
             </Overlay>
             <Container lk wrapper>
                 <Spacer top="2"/>

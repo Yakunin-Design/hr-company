@@ -9,23 +9,6 @@ import Input from "@/components/std/Inputs/Input"
 import TextArea from "@/components/std/Inputs/TextArea"
 
 type form_data = {
-    specialty: string,
-    city: string,
-    address: string,
-    subway: string,
-    salary: {
-        amount: string,
-        period: string
-    },
-    experience: string,
-    schedule: {
-        weekdays: string,
-        weekends: string,
-    },
-    working_time: {
-        start: string,
-        end: string,
-    },
     citizenship: string,
     sex: string,
     age: {
