@@ -7,7 +7,7 @@
     background-color: rgba(0, 0, 0, 0.5);
     min-height: 100%;
     margin: 0 auto;
-    padding: 0 2em;
+    padding: 0 1em;
     padding-bottom: 14rem;
 }
 
@@ -49,4 +49,10 @@
     content: "";
     width: 63px;
     height: 63px;
+}
+
+@media (min-width: 600px) {
+    .overlay {
+        padding: 0 2em;
+    }
 }
