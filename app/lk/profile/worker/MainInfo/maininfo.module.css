@@ -5,7 +5,8 @@
 
 .month {
     flex: 6 1;
-    padding: 0.9em 0.1em;
+    padding: 0.9rem 0.6em !important;
+    text-indent: 0;
 }
 
 .year {

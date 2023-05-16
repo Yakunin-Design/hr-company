@@ -8,7 +8,7 @@
 
 # Buttons
 
-??Disabled status 
+??Disabled status
 
 # Critical bugs
 
@@ -28,9 +28,9 @@ view on map function doesnt work
 
 # layout bugs:
 
-1. [ ] worker account birthday(month)
+1. [x] worker account birthday(month)
 2. [x] eye button in login
-3. [ ] citizenship in worker registration
+3. [x] citizenship in worker registration
 
 # Need to check on prod
 

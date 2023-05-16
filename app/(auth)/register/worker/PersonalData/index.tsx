@@ -113,7 +113,7 @@ export default function PersonalData(props: props) {
             <Spacer top="2" />
             <h3>Гражданство</h3>
             <Spacer top="1" />
-            <Row>
+            <Row className={style.citizenship}>
                 <Radio
                     name="citizenship"
                     value="ru"
@@ -124,7 +124,6 @@ export default function PersonalData(props: props) {
                     🇷🇺
                 </Radio>
 
-                <Spacer left="2" />
                 <Radio
                     name="citizenship"
                     value="bu/ua"
@@ -135,7 +134,6 @@ export default function PersonalData(props: props) {
                     🇧🇾/🇺🇦
                 </Radio>
 
-                <Spacer left="2" />
                 <Radio
                     name="citizenship"
                     value="sng"
@@ -146,7 +144,6 @@ export default function PersonalData(props: props) {
                     СНГ
                 </Radio>
 
-                <Spacer left="2" />
                 <Radio
                     name="citizenship"
                     value="other"
