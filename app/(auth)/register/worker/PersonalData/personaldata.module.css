@@ -5,9 +5,8 @@
 }
 
 .month {
-    flex: 6;
+    flex: 7;
     padding: 0.9em 0;
-    margin: 0 1em;
 }
 
 .year {
@@ -17,13 +16,5 @@
 }
 
 .citizenship {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr;
     gap: 1em;
-}
-
-@media (min-width: 450px) {
-    .citizenship {
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-    }
 }
