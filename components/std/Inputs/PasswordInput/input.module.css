@@ -16,10 +16,15 @@
     font-size: 1rem;
 }
 
-.eye {
-    cursor: pointer;
-    position: relative;
-    top: -2.1rem;
-    z-index: 999999;
-    left: 92%;
+.icon_wrapper {	
+	position: relative;
 }
+
+.eye {
+	position: absolute;
+	top: 50%;
+	right: 6%;
+	transform: translate(0%, -50%);
+    cursor: pointer;
+}
+

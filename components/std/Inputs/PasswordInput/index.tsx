@@ -33,18 +33,20 @@ export default function Input(props: props) {
                 </label>
             )}
             <Spacer top={1} />
-            <input
-                className={props.className ? styles.input + " " + props.className : styles.input}
-                id={props.name}
-                name={props.name}
-                type={show ? "text" : "password"}
-                placeholder={props.placeholder}
-                onChange={props.onChange}
-                value={props.value}
-                maxLength={props.maxLength}
-                style={props.style ? props.style : {}}
-            />
-            <Image src={show ? eye_opened : eye_closed} alt="eye" className={styles.eye} onClick={toggle_show}/>
+			<div className={styles.icon_wrapper}> 
+				<input
+					className={props.className ? styles.input + " " + props.className : styles.input}
+					id={props.name}
+					name={props.name}
+					type={show ? "text" : "password"}
+					placeholder={props.placeholder}
+					onChange={props.onChange}
+					value={props.value}
+					maxLength={props.maxLength}
+					style={props.style ? props.style : {}}
+				/>
+				<Image src={show ? eye_opened : eye_closed} alt="eye" className={styles.eye} onClick={toggle_show}/>
+			</div>
         </>
     );
 }

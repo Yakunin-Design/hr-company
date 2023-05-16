@@ -1,6 +1,6 @@
 # All links
 
-After page transition via @next/link header is not visible
+[x] After page transition via @next/link header is not visible
 
 # Forms
 
@@ -8,7 +8,7 @@ After page transition via @next/link header is not visible
 
 # Buttons
 
-Disabled status ?
+??Disabled status 
 
 # Critical bugs
 
@@ -17,19 +17,20 @@ Disabled status ?
 3. Send code again dosn't work
 
 4. Work experience doent funciton
+5. ! Autozoom on mobile is still a thing
 
 # Other bugs
 
 Ranges: wrong initial values
 Job offer start & end time input mask dosn't work
 lk phone mask dosn't work
-watch on map function doesnt work
+view on map function doesnt work
 
 # layout bugs:
 
-1. worker account birthday(month)
-2. eye button in login
-3. citizenship in worker registration
+1. [] worker account birthday(month)
+2. [x] eye button in login
+3. [] citizenship in worker registration
 
 # Need to check on prod
 
