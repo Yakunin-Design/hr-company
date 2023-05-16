@@ -13,7 +13,7 @@ export default function get_workers(workers: any, set_workers: any) {
     if (localStorage.getItem('user_type') === 'employer') {
         axios
             .post(
-                '${process.env.API_ADDRESS}/get-workers',
+                `${process.env.API_ADDRESS}/get-workers`,
                 workers,
                 config
             )

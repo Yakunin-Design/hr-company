@@ -14,7 +14,7 @@ export default function jo_actions({id}: {id: string}) {
 
         axios
             .post(
-                '${process.env.API_ADDRESS}/close-job-offer',
+                `${process.env.API_ADDRESS}/close-job-offer`,
                 { id: id },
                 config
             )
@@ -44,7 +44,7 @@ export default function jo_actions({id}: {id: string}) {
 
         axios
             .post(
-                '${process.env.API_ADDRESS}/activate-job-offer',
+                `${process.env.API_ADDRESS}/activate-job-offer`,
                 { id: id },
                 config
             )
@@ -97,7 +97,7 @@ export default function jo_actions({id}: {id: string}) {
         };
 
         axios
-            .post('${process.env.API_ADDRESS}/new-respond', request_data)
+            .post(`${process.env.API_ADDRESS}/new-respond`, request_data)
             .then(res => {
                 if (!res.data) {
                     return console.log('bruh');

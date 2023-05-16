@@ -83,7 +83,7 @@ export default function job_offer_controller(jo_id?: string) {
             }
         }
 
-        axios.get('${process.env.API_ADDRESS}/job-offers', config)
+        axios.get(`${process.env.API_ADDRESS}/job-offers`, config)
             .then(res => {
                 if (!res.data) {
                     return console.log('bruh')
@@ -271,7 +271,7 @@ export default function job_offer_controller(jo_id?: string) {
                 }
             }
 
-            axios.post('${process.env.API_ADDRESS}/new-job-offer', send_data, config)
+            axios.post(`${process.env.API_ADDRESS}/new-job-offer`, send_data, config)
                 .then(res => window.location.href="/lk/job-offers")
                 .catch(e => console.log(e))
                 } else {
@@ -317,7 +317,7 @@ export default function job_offer_controller(jo_id?: string) {
                 changes: changed_data
             }
 
-            axios.post('${process.env.API_ADDRESS}/edit-job-offer', req, config)
+            axios.post(`${process.env.API_ADDRESS}/edit-job-offer`, req, config)
             .then(res => {
                 if (!res.data) {
                     return console.log('bruh')

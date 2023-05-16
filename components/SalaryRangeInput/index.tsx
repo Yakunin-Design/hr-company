@@ -136,6 +136,7 @@ export default function SalaryRangeInput(props: props) {
                     onChange={props.handle_change}
                     min={min_range}
                     max={max_range}
+                    value={props.salary?.amount}
                 />
                 {get_labels()}
             </div>
