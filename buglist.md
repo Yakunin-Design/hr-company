@@ -4,7 +4,7 @@
 
 # Forms
 
-3. We dont use form tag, but use div instead
+1. We dont use form tag, but use div instead
 
 # Buttons
 
@@ -12,19 +12,19 @@
 
 # Critical bugs
 
-1. Phone code api ? (should be XD just the money problem)
-2. Email & phone edits
-3. Send code again dosn't work
+1. [ ] Phone code api ? (should be XD just the money problem)
+2. [ ] Email & phone edits
+3. [ ] Send code again dosn't work
 
-4. Work experience doent funciton
-5. ! Autozoom on mobile is still a thing
+4. [ ] Work experience doent funciton
+5. [ ] ! Autozoom on mobile is still a thing
 
 # Other bugs
 
-Ranges: wrong initial values
-Job offer start & end time input mask dosn't work
-lk phone mask dosn't work
-view on map function doesnt work
+1. [x] Ranges: wrong initial values
+2. [ ] Job offer start & end time input mask dosn't work
+3. [ ] lk phone mask dosn't work
+4. [ ] view on map function doesnt work
 
 # layout bugs:
 
