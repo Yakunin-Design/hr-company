@@ -46,7 +46,7 @@ export default function Page({params}: {params: params}) {
         set_user,
     } = user_controller();
 
-    CheckUser(set_user);
+    CheckUser(user, set_user);
     const router = useRouter()
     useEffect(() => {
         user.user_type === "worker" && router.push("/lk/profile")
