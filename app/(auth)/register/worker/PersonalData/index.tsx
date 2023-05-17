@@ -113,12 +113,13 @@ export default function PersonalData(props: props) {
             <Spacer top="2" />
             <h3>Гражданство</h3>
             <Spacer top="1" />
-            <Row className={style.citizenship}>
+            <Row className={style.citizenships}>
                 <Radio
                     name="citizenship"
                     value="ru"
                     currentValue={props.form_data.citizenship}
                     onChange={props.onChange}
+                    className={style.citizenship}
                     style={props.err.includes("citizenship") ? error_style : {}}
                 >
                     🇷🇺
@@ -130,6 +131,7 @@ export default function PersonalData(props: props) {
                     currentValue={props.form_data.citizenship}
                     onChange={props.onChange}
                     style={props.err.includes("citizenship") ? error_style : {}}
+                    className={style.citizenship}
                 >
                     🇧🇾/🇺🇦
                 </Radio>
@@ -140,6 +142,7 @@ export default function PersonalData(props: props) {
                     currentValue={props.form_data.citizenship}
                     onChange={props.onChange}
                     style={props.err.includes("citizenship") ? error_style : {}}
+                    className={style.citizenship}
                 >
                     СНГ
                 </Radio>
@@ -150,6 +153,7 @@ export default function PersonalData(props: props) {
                     currentValue={props.form_data.citizenship}
                     onChange={props.onChange}
                     style={props.err.includes("citizenship") ? error_style : {}}
+                    className={style.citizenship}
                 >
                     Другое
                 </Radio>

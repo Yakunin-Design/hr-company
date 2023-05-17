@@ -90,6 +90,7 @@ textarea {
 select {
     font-size: 1rem;
     font-family: 'Gilroy';
+    -webkit-appearance: none;
 }
 
 option {
