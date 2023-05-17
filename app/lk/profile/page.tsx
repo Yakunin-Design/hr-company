@@ -16,7 +16,7 @@ export default function Page() {
         show_save_btn,
         edit_errors,
     } = user_controller();
-    CheckUser(set_user);
+    CheckUser(user, set_user);
 
     return (
         <>

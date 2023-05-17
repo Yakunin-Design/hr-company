@@ -12,6 +12,32 @@ import {
     check_email,
 } from "@/functions/validation";
 
+
+type user = {
+    user_type: string,
+    user_data: {
+        _id: string,
+        birthday: string,
+        citizenship: string,
+        email: string,
+        full_name: string,
+        phone: string,
+        specialty: [],
+        status: string,
+        city: "Санкт-Петербург",
+        district: string,
+        subway: string,
+        job_type: string,
+        salary: {
+            amount: number,
+            period: string,
+        },
+        inn: string,
+        company: string,
+        description: string,
+    },
+}
+
 export default function user_controller() {
     /**
      * ------------- UTILITY -------------
@@ -22,7 +48,7 @@ export default function user_controller() {
     /**
      * ------------- DATA -------------
      */
-    const [user, set_user] = useState({
+    const [user, set_user] = useState<user>({
         user_type: "",
         user_data: {
             _id: "",
