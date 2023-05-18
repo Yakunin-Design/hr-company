@@ -31,6 +31,7 @@ export default function WorkerCard(props: props){
 				<p className={styles.initials}>{initials}</p>
 				<Spacer top="1"/>
 				<h3 className={styles.name}>{props.worker_data.name}</h3>
+				<p>{props.worker_data.specialty}</p>
 				<Spacer top="2"/>
 				<Row className={styles.status}>
 					<Image
