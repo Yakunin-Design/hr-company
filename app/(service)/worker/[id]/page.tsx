@@ -14,7 +14,7 @@ type params = {
 export default function Page({params}: {params: params}) {
     //@ts-ignore
     const avatar = "empty";
-    const href = "/find-workers";
+    const href = "/test";
 
     return (
 		<Container wrapper>
