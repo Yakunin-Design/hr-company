@@ -1,5 +1,6 @@
 "use client";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import Button from "@/components/std/Button";
 import Container from "@/components/std/Container";
 import Spacer from "@/components/std/Spacer";
@@ -31,6 +32,7 @@ export default function Home() {
                     <Button>Регистрация</Button>
                 </Link>
             </Container>
+			<Footer />
         </>
     );
 }

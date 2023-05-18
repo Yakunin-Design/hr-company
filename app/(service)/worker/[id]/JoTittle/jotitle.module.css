@@ -1,0 +1,40 @@
+.title {
+    text-align: center;
+}
+
+.subtitle {
+    justify-content: center !important;
+    gap: 2em;
+}
+
+.subtitle_cutter {
+    display: none;
+}
+
+.subtitle_time {
+    gap: 1em;
+}
+
+.actions {
+    padding: 0 2em;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.action {
+    width: 18rem;
+    z-index: 9999;
+}
+
+@media (min-width: 550px) {
+    .subtitle_cutter {
+        display: block;
+    }
+
+    .actions {
+        padding: 0 2em;
+        flex-direction: row;
+        justify-content: center !important;
+        gap: 2em;
+    }
+}

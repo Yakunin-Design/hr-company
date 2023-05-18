@@ -1,0 +1,13 @@
+.candidates {
+    text-align: center;
+}
+
+.candidates_row {
+    padding: 0 2em;
+}
+
+@media (min-width: 500px) {
+    .candidates_row {
+        padding: 0 4em;
+    }
+}
