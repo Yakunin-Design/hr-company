@@ -25,9 +25,37 @@
     border-radius: .43rem !important;
 }
 
+.bubble {
+    background-color: white;
+    padding: .2rem 1.2em;
+    border-radius: .6rem;
+    cursor: pointer;
+}
+
+.actions {
+    justify-content: space-between !important;
+}
+
+.bubbles {
+    overflow: scroll;
+    border-radius: 0 .6rem .6rem 0;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.bubbles::-webkit-scrollbar { 
+    width: 0 !important; 
+    height: 0;
+    background: transparent;
+    display: none !important;
+}
+
+.filter {
+    font-weight: normal !important;
+    padding: .2rem 1.2em !important;
+}
+
 .filters {
-    border-top: 2px solid lightgrey;
-    margin-top: 0rem !important;
-    border-radius: 0rem 0rem .6rem .6rem !important;
+    margin-top: 0 !important;
     padding: 2rem 1em !important;
 }

@@ -3,7 +3,7 @@
     align-items: center;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 870px) {
     .nav {
         display: flex;
         align-items: center;

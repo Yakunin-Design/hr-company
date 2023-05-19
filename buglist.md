@@ -38,3 +38,6 @@
 ??Sidebar only displays chat and profile after registration ( and dosn't display any other options )
 ??Autozoom on focus
 ??Focus default styles should be changed
+
+# Search 
+1. add filters icon

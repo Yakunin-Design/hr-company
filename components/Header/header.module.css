@@ -16,7 +16,7 @@
     background-color: #fff;
 }
 
-@media(min-width: 800px) {
+@media(min-width: 870px) {
     .icon {
         display: none;
     }

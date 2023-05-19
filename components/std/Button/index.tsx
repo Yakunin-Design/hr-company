@@ -8,6 +8,7 @@ type props = {
     common?: boolean;
     className?: string;
     red?: boolean;
+    submit?: boolean;
 };
 
 export default function Button(props: props) {
@@ -34,7 +35,7 @@ export default function Button(props: props) {
     }
 
     return (
-        <button className={button_styles} onClick={props.onClick}>
+        <button className={button_styles} onClick={props.onClick} type={props.submit ? "submit" : "button"}>
             {props.children}
         </button>
     );
