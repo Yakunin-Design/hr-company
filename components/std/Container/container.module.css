@@ -7,7 +7,7 @@
 
 .wrapper {
     width: 100%;
-    padding: 0 2rem;
+    padding: 0 1rem;
     max-width: 1200px;
     margin: 0 auto;
     /* mininal height = page height - header height */
@@ -21,6 +21,10 @@
 }
 
 @media (min-width: 600px) {
+
+    .wrapper {
+        padding: 0 2rem;
+    }
 
     .container {
         padding: 0 2rem;

@@ -21,13 +21,13 @@
 .citizenship {
     display: grid !important;
     grid-template-columns: 1fr 1fr;
-    gap: 1em;
+    gap: 1em !important;
 }
 
 @media (min-width: 600px) {
     .citizenship {
         display: flex !important;
-        gap: 1em;
+        gap: 1em !important;
     }
 }
 

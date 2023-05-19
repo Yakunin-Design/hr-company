@@ -1,7 +1,7 @@
 .addr {
     margin-left: 3px;
     justify-content: flex-start !important;
-    gap: .7em;
+    gap: .7em !important;
     cursor: alias;
 }
 

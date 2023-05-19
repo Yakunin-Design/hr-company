@@ -20,8 +20,7 @@
 }
 
 .row {
-    justify-content: flex-start !important;
-    gap: 1rem;
+    justify-content: flex-start;
 }
 
 @media(max-width:599px) { 

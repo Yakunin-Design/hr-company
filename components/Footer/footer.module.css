@@ -9,7 +9,7 @@
     display: grid;
     grid-template-columns: 2fr 2fr;
     grid-template-rows: 2fr 2fr;
-    gap: 3em;
+    gap: 3em !important;
     width: 50%;
 }
 
@@ -29,12 +29,13 @@
     .content {
         flex-direction: column;
         align-items: center !important;
-        gap: 5rem;
+        gap: 5rem !important;
     }
 
     .grid {
         width: 100%;
         grid-template-columns: 2fr;
         text-align: center;
+        margin-top: 3rem;
     }
 }

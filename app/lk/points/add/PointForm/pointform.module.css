@@ -8,7 +8,7 @@
 
 .inputs {
     flex-direction: column;
-    gap: 1rem;
+    gap: 1rem !important;
 }
 
 .city, .subway {
@@ -39,7 +39,7 @@
 @media (min-width: 900px) {
     .inputs {
         flex-direction: row;
-        gap: 5rem;
+        gap: 5rem !important;
     }
 
     .city {

@@ -1,6 +1,6 @@
 .time {
     flex-direction: column;
-    gap: 2rem;
+    gap: 2rem !important;
 }
 
 .time_block {
@@ -8,7 +8,7 @@
 }
 
 .period_row {
-    gap: 0.5em;
+    gap: 0.5em !important;
 }
 
 .time_span {

@@ -23,5 +23,5 @@
 
 .status {
 	justify-content: flex-start;
-	gap: .5rem;
+	gap: .5rem !important;
 }

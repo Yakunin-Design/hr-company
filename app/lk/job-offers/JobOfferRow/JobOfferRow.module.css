@@ -29,14 +29,14 @@
 }
 
 .time {
-    justify-content: flex-start !important;
-    gap: 1em;
+    justify-content: flex-start;
+    gap: 1em !important;
 }
 
 .info {
     flex-direction: column;
-    justify-content: flex-start !important;
-    gap: 1em;
+    justify-content: flex-start;
+    gap: 1em !important;
     width: 100%;
 }
 
@@ -58,7 +58,7 @@
     .title {
         flex-direction: row-reverse;
         justify-content: flex-start !important;
-        gap: 1em;
+        gap: 1em !important;
         width: min-content;
     }
 
@@ -73,7 +73,7 @@
     .info {
         flex-direction: row;
         justify-content: flex-end !important;
-        gap: 2em;
+        gap: 2em !important;
     }
 
     .location {

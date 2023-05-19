@@ -3,7 +3,7 @@
 }
 
 .schedule_graph {
-    gap: 1em;
+    gap: 1em !important;
 }
 
 .time_title {

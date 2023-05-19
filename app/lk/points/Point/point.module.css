@@ -2,13 +2,11 @@
     background-color: white;
     border-radius: 11px;
     padding: 1.2rem 2em;
-    gap: 2em;
 }
 
 .main {
     width: 100%;
     flex-direction: column;
-    gap: 1em;
 }
 
 .location {
@@ -25,7 +23,6 @@
 }
 
 .point_stats {
-    gap: 2em;
     width: 100%;
     flex: 1;
     justify-content: flex-start !important;

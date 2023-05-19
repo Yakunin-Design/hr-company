@@ -8,13 +8,13 @@
 }
 
 .location {
-    gap: 1em;
+    gap: 1em !important;
     flex-direction: column;
 }
 
 @media (min-width: 1000px) {
     .location {
         flex-direction: row;
-        gap: 3em;
+        gap: 3em !important;
     }
 }

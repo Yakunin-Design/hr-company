@@ -11,5 +11,5 @@
 
 .row {
     justify-content: flex-start !important;
-    gap: .5em;
+    gap: .5em !important;
 }

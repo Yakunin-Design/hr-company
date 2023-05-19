@@ -1,5 +1,5 @@
 .subway_row {
-    gap: 0.5em;
+    gap: 0.5em !important;
     justify-content: flex-start !important;
 }
 

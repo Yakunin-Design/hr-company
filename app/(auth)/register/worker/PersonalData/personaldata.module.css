@@ -16,7 +16,7 @@
 }
 
 .citizenships {
-    gap: 1em;
+    gap: 1em !important;
 }
 
 .citizenship {

@@ -1,6 +1,6 @@
 .schedule {
     flex-direction: column;
-    gap: 2rem;
+    gap: 2rem !important;
 }
 
 .double_input {
@@ -10,7 +10,7 @@
 .double_input_block {
     width: 100%;
     padding: 3em 10%;
-    gap: 1em;
+    gap: 1em !important;
     background-color: white;
     border-radius: 11px;
 }
@@ -32,7 +32,7 @@
 @media (min-width: 800px) {
     .schedule {
         flex-direction: row;
-        gap: 2rem;
+        gap: 2rem !important;
         justify-content: space-between;
     }
 
@@ -44,7 +44,7 @@
 @media (min-width: 1000px) {
     .double_input_block {
         justify-content: center !important;
-        gap: 3.5rem;
+        gap: 3.5rem !important;
         width: 24em;
     }
 

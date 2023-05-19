@@ -58,10 +58,10 @@ export default function Page() {
     return (
         <Container lk wrapper>
             <Spacer top="2"/>
-            <Row className={style.head}>
+            <Row className={style.head} gap={2}>
                 <h2>Активные вакансии</h2>
-                <Link href="/lk/job-offers/create">
-                    <Button className={style.create_btn}>Создать вакансию</Button>
+                <Link href="/lk/job-offers/create"className={style.create_btn}>
+                    <Button expand>Создать вакансию</Button>
                 </Link>
             </Row>
             <Spacer top="2"/>

@@ -1,5 +1,5 @@
 .contact_row {
-    gap: 2em;
+    gap: 2em !important;
     flex-direction: column;
 }
 
@@ -10,7 +10,7 @@
 
 @media (min-width: 800px) {
     .contact_row {
-        gap: 4em;
+        gap: 4em !important;
         flex-direction: row;
     }
 

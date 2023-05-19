@@ -11,14 +11,14 @@
 
 .header {
     align-items: stretch !important;
-    gap: 1em;
+    gap: 1em !important;
 }
 
 .label {
     background-color: var(--background-main);
     border-radius: .5rem;
     padding: .5rem;
-    gap: .5em;
+    gap: .5em !important;
     overflow: hidden;
 }
 
@@ -35,7 +35,7 @@
     flex-direction: column;
     align-items: flex-end !important;
     text-align: right;
-    gap: .2rem;
+    gap: .2rem !important;
 }
 
 .city {

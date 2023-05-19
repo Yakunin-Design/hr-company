@@ -1,5 +1,5 @@
 .status {
-    gap: 1.5em;
+    gap: 1.5em !important;
     flex-direction: column;
 }
 
@@ -26,7 +26,7 @@
 @media (min-width: 800px) {
     .contacts {
         flex-direction: row;
-        gap: 4em;
+        gap: 4em !important;
     }
 
     .phone {

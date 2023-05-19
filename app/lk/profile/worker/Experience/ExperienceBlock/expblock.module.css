@@ -13,7 +13,7 @@
 
 .time_block {
     justify-content: start !important;
-    gap: 1.5em;
+    gap: 1.5em !important;
 }
 
 .time {

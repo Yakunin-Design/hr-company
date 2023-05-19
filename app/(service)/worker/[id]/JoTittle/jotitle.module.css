@@ -4,7 +4,7 @@
 
 .subtitle {
     justify-content: center !important;
-    gap: 2em;
+    gap: 2em !important;
 }
 
 .subtitle_cutter {
@@ -12,13 +12,13 @@
 }
 
 .subtitle_time {
-    gap: 1em;
+    gap: 1em !important;
 }
 
 .actions {
     padding: 0 2em;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1rem !important;
 }
 
 .action {
@@ -35,6 +35,6 @@
         padding: 0 2em;
         flex-direction: row;
         justify-content: center !important;
-        gap: 2em;
+        gap: 2em !important;
     }
 }

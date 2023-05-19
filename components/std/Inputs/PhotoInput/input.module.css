@@ -4,7 +4,7 @@
 
 .row {
     justify-content: flex-start !important;
-    gap: 2em;
+    gap: 2em !important;
 }
 
 .logo_text {

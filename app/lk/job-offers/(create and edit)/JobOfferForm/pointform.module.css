@@ -16,7 +16,7 @@
 
 .buttons {
     flex-direction: column;
-    gap: 1em;
+    gap: 1em !important;
 }
 
 @media (min-width: 500px) {
@@ -33,6 +33,6 @@
     .buttons {
         flex-direction: row;
         justify-content: flex-end !important;
-        gap: 1em;
+        gap: 1em !important;
     }
 }

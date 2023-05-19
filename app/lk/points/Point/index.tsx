@@ -23,13 +23,13 @@ export default function Point(props: props) {
         <>
             <Spacer top="2"/>
             <Link href={"/lk/points/"+props.data._id}>
-                <Row className={style.point}>
-                    <Row className={style.main}>
+                <Row className={style.point} gap={2}>
+                    <Row className={style.main} gap={1} justifyContent="space-between">
                         <div className={style.location}>
                             <h3 className={style.address}>{props.data.address}</h3>
                             <Subway station={props.data.subway}/>
                         </div>
-                        <Row className={style.point_stats}>
+                        <Row className={style.point_stats} gap={2}>
                             <p className="--v2">Вакансий: {props.data.job_offers.length}</p>
                             <p className="--v2">Сотрудников: {props.data.workers.length}</p>
                         </Row>
@@ -37,6 +37,5 @@ export default function Point(props: props) {
                 </Row>
             </Link>
         </>
-        
     )
 }

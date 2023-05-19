@@ -1,9 +1,13 @@
 import Button from "@/components/std/Button";
-import style from "./Search.module.css"
+import style from "./Search.module.css";
 
-export default function FilterButton() {
+type props = {
+    onClick: () => void,
+}
+
+export default function FilterButton(props: props) {
     return (
-        <Button className={style.filter_button}>
+        <Button className={style.filter_button} onClick={props.onClick}>
             <svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg">
                 <g transform="matrix(1,0,0,1,-19,0)">
                     <g id="Artboard3" transform="matrix(1,0,0,1,-0.119407,0)">

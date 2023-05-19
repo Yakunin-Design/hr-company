@@ -39,7 +39,7 @@ export default function UserType(
                 <Spacer top="1" />
                 </>
             }
-            <div className={style.row}>
+            <Row gap={1}>
                 {
                     props.tou
                     ?
@@ -54,7 +54,7 @@ export default function UserType(
                         пользовательское соглашение
                     </Link>
                 </div>
-            </div>
+            </Row>
         </>
     );
 }

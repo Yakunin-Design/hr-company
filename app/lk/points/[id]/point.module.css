@@ -1,17 +1,17 @@
 .head {
     flex-direction: column;
-    gap: 1em;
+    gap: 1em !important;
 }
 
 .info {
     justify-content: space-between;
-    gap: 2em;
+    gap: 2em !important;
     flex-direction: column;
     width: 100%;
 }
 
 .name {
-    gap: 1em;
+    gap: 1em !important;
     width: 100%;
     justify-content: flex-start !important;
 }
@@ -59,7 +59,7 @@
         display: grid !important;
         grid-template-columns: 1fr 1fr;
         align-items: stretch !important;
-        gap: 1em;
+        gap: 1em !important;
     }
 
     .info {

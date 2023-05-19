@@ -41,7 +41,7 @@ export default function PageBlock(props: props) {
                             : styles.block
                     }
                 >
-                    <Row className={styles.row}>
+                    <Row gap={1} className={styles.row}>
                         {/* General */}
                         {props.name == "profile" && (
                             <>

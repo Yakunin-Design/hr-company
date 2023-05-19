@@ -1,7 +1,7 @@
 .container {
     padding: 0 2em;
     flex-direction: column;
-    gap: 2em;
+    gap: 2em !important;
 }
 
 .description, .main_info {

@@ -20,7 +20,7 @@ export default function Footer(props : {lk?: boolean}) {
                         <Link href="/terms-of-use" className={styles.link}>
                             Пользовательское соглашение
                         </Link>
-                        <Link href="/loyalty" className={styles.link}>
+                        <Link href="/test" className={styles.link}>
                             Партнеры
                         </Link>
                     </div>
