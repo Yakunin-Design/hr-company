@@ -79,8 +79,8 @@ export default function FullSidebar(props: props) {
                         </div>
                         <Spacer top="2" />
                         <PageBlock
-                            name="findwork"
-                            active={props.active == "findwork"}
+                            name="find-job"
+                            active={props.active == "find-job"}
                             show={props.show}
                         />
                     </>

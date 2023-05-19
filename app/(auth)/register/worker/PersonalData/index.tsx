@@ -162,7 +162,7 @@ export default function PersonalData(props: props) {
             <Spacer top="2" />
             <Input
                 name="specialty"
-                label="Специальнсть"
+                label="Специальность"
                 placeholder="Повар-универсал"
                 onChange={props.onChange}
                 style={props.err.includes("specialty") ? error_style : {}}

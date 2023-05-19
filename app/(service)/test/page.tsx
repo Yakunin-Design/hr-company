@@ -1,5 +1,6 @@
 import Container from "@/components/std/Container";
 import Spacer from "@/components/std/Spacer";
+import Row from "@/components/std/Row";
 import WorkerCard from "@/components/WorkerCard";
 
 export default function TestPage() {
@@ -8,7 +9,7 @@ export default function TestPage() {
 		id: "123",
 		name: "Савилов Андрей",
 		specialty: "Повар",
-		is_ready: true
+		is_ready: false
 	}
 
     return (

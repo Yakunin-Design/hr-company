@@ -13,11 +13,11 @@ export default function Navigation(props: props) {
     return (
         <nav className={styles.nav}>
             <Row>
-                <Link href="/faq">
+                <Link href="/find-job">
                     <p>Найти работу</p>
                 </Link>
                 <Spacer left="3" />
-                <Link href="/">
+                <Link href="/find-workers">
                     <p>Найти сотрудников</p>
                 </Link>
                 {!props.hide_button && (

@@ -157,7 +157,7 @@ export default function PageBlock(props: props) {
                                 </h3>
                             </>
                         )}
-                        {props.name == "findwork" && (
+                        {props.name == "find-job" && (
                             <>
                                 <Image
                                     src={

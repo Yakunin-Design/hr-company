@@ -11,11 +11,11 @@ type props = {
 export default function ModibleMenu(props: props) {
     return (
         <section className={styles.menu}>
-            <Link href="/faq">
+            <Link href="/find-job">
                 <p>Найти работу</p>
             </Link>
             <Spacer top="2" />
-            <Link href="/">
+            <Link href="/find-workers">
                 <p>Найти сотрудников</p>
             </Link>
             <Spacer top="2" />

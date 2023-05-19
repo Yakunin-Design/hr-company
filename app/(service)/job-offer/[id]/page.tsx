@@ -19,7 +19,7 @@ export default function Page({params}: {params: params}) {
 
     //@ts-ignore
     const avatar = jo_data ? (jo_data.avatar != "" ? jo_data.avatar : "empty") : "empty";
-    const href = (user_type == "owner" || user_type == "employer") ? "/lk/job-offers" : "/search";
+    const href = (user_type == "owner" || user_type == "employer") ? "/lk/job-offers" : "/find-job";
     
     const candidate_blocks = candidates.map((candidate) => {
         //@ts-ignore
