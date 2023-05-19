@@ -1,7 +1,20 @@
 import Container from "@/components/std/Container";
 import Search from "../Search";
 import Spacer from "@/components/std/Spacer";
-export default function FindJobPage() {
+import axios from "axios";
+
+async function get_jobs() {
+    // return axios.post();
+    return {}
+}
+
+export default async function FindJobPage() {
+    const res = await get_jobs();
+
+    console.log(res);
+
+    // jobOffers = map(res.body)
+
     return (
         <Container wrapper>
             <Spacer top={3} bottom={1}>
@@ -9,5 +22,6 @@ export default function FindJobPage() {
             </Spacer>
             <Search/>
         </Container>
+        // {jobOffers}
     )
 }

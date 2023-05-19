@@ -8,6 +8,11 @@ import Button from "@/components/std/Button";
 import search_icon from "./icons/search_icon_white.svg";
 import Image from "next/image";
 
+/**
+ * fetch(action, form_data)
+ * 
+ */
+
 export default function Search() {
     const [show_filters, set_show_filters] = useState(false)
 
