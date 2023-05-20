@@ -30,6 +30,7 @@
     padding: .2rem 1.2em;
     border-radius: .6rem;
     cursor: pointer;
+    white-space: nowrap;
 }
 
 .actions {
@@ -53,6 +54,7 @@
 .filter {
     font-weight: normal !important;
     padding: .2rem 1.2em !important;
+    display: none;
 }
 
 .filters {

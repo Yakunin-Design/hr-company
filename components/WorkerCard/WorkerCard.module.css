@@ -1,5 +1,10 @@
+.link {
+	display: block;
+	width: 100%;
+}
+
 .card {
-    max-width: 280px;
+	width: 100%;
 }
 
 .name {
@@ -21,7 +26,11 @@
 	font-weight: bold;
 }
 
-.status {
-	justify-content: flex-start;
-	gap: .5rem !important;
-}
+/* @media (min-width: 600px) {
+	.link {
+		max-width: 300px;
+	}
+	.card {
+		max-width: 300px;
+	}
+} */

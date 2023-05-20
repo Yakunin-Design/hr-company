@@ -8,24 +8,45 @@ import Button from "@/components/std/Button";
 import search_icon from "./icons/search_icon_white.svg";
 import Image from "next/image";
 
-/**
- * fetch(action, form_data)
- * 
- */
+type query = {
+    string: string,
+    filters: Object
+}
 
-export default function Search() {
+type props = {
+    query: query,
+    handle_change: (event: any) => void
+    search: () => void,
+    bubbles: Array<string>
+    append_bubble: (value: string) => void
+    type: "job" | "worker"
+}
+
+export default function Search(props: props) {
     const [show_filters, set_show_filters] = useState(false)
 
     function toggle_filters() {
         set_show_filters(prev => !prev);
     }
 
+    const bubbles = props.bubbles.length > 0 ? 
+    props.bubbles.map(bubble => {
+        return <div key={bubble} className={style.bubble} onClick={() => {props.append_bubble(bubble)}}><p>{bubble}</p></div>
+    }).slice(0,5)
+    :
+    <></>
+
     return (
         <>
-            <form className={style.search_block} method="GET">
+            <form className={style.search_block}>
                 <Row gap={1}>
-                    <input name="q" onChange={() => {}} className={style.search_bar} placeholder="Повар-Кондитер"/>
-                    <Button className={style.filter_button} submit>
+                    <input 
+                    name="query" 
+                    value={props.query.string} 
+                    onChange={props.handle_change} 
+                    className={style.search_bar} 
+                    placeholder={props.type == "job" ? "Повар-Кондитер" : "ФИО или Специальность"}/>
+                    <Button className={style.filter_button} onClick={props.search}>
                         <Image src={search_icon} alt="search" width={19} height={19}/>
                     </Button>
                 </Row>
@@ -34,10 +55,7 @@ export default function Search() {
             <Spacer top=".5" bottom=".5">
                 <Row className={style.actions} gap={1}>
                     <Row gap={1} className={style.bubbles}>
-                        <div className={style.bubble}><p>Повар</p></div>
-                        <div className={style.bubble}><p>Повар</p></div>
-                        <div className={style.bubble}><p>Повар</p></div>
-                        <div className={style.bubble}><p>Повар</p></div>
+                        {bubbles}
                     </Row>
                     <Button secondary className={style.filter} onClick={toggle_filters}>Фильтры</Button>
                 </Row>

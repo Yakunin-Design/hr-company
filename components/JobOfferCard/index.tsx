@@ -43,7 +43,7 @@ interface response {
     city: string,
 }
 
-export default function JobOfferCard({jo_data, className}: {jo_data: jo_data, className: string}){
+export default function JobOfferCard({jo_data, className}: {jo_data: jo_data, className?: string}){
 
     const [point, set_point] = useState<response>({
         logo: "",
