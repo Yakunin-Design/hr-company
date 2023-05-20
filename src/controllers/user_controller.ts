@@ -103,64 +103,7 @@ async function email_phone_edit_step2(
 }
 
 async function get_jobs(req: Request, res: Response) {
-    const db_result = await db.find_all({ status: 'active' }, 'job_offers', 30);
-
-    // No job offers || db error
-    if (db_result.Err) return res.status(400).send(db_result.Err.message);
-    if (db_result.Ok === null) return res.status(200).send([]);
-
-    // Address & subway are stored in the point collection
-    const resp = await Promise.all(
-        db_result.Ok.map(async job => {
-            const point = await db.find(
-                { _id: new ObjectId(job.point_id) },
-                'points'
-            );
-            if (point.Ok === null || point.Err)
-                return console.log('cant find point');
-            
-            
-            // Removing useless data from beeing send to the client
-            delete job.experience;
-            delete job.citizenship;
-            delete job.sex;
-            delete job.age;
-            delete job.candidates;
-            delete job.point_id;
-
-            const employer = await db.find(
-                { _id: new ObjectId(job.employer_id) },
-                'employers'
-            );
-            if (employer.Ok === null || employer.Err)
-                return console.log('cant find employer');
-
-            delete job.employer_id;
-            return {
-                ...job,
-                address: point.Ok.address,
-                subway: point.Ok.subway,
-                company: employer.Ok.company,
-            };
-        })
-    );
-
-    res.status(200).send(resp);
-}
-
-async function find_jobs(req: Request, res: Response) {
-
-    const specialty_filter = req.body;
-
-    const specialty = {...specialty_filter, specialty: {$regex: `${specialty_filter.specialty.trim()}`, $options: 'gi'}}
-
-    const filter = specialty_filter.specialty === '' ? { status: 'active'} : { status: 'active', ...specialty }
-
-    const db_result = await db.find_all(
-        filter,
-        'job_offers',
-        30
-    );
+    const db_result = await db.find_all({ status: 'active' }, 'job_offers');
 
     // No job offers || db error
     if (db_result.Err) return res.status(400).send(db_result.Err.message);
@@ -204,13 +147,101 @@ async function find_jobs(req: Request, res: Response) {
         })
     );
 
-    // console.log(resp);
-
     res.status(200).send({bubbles, jo: resp});
 }
 
+async function find_jobs(req: Request, res: Response) {
+
+    const specialty_filter = req.body;
+    const specialty = {$regex: `${specialty_filter.string.trim()}`, $options: 'i'}
+    const filters = specialty_filter.string === '' ? { status: 'active'} : { status: 'active', specialty, ...specialty_filter.filters }
+
+    const db_result = await db.find_all(
+        filters,
+        'job_offers',
+    );
+
+    // No job offers || db error
+    if (db_result.Err) return res.status(400).send(db_result.Err.message);
+    if (db_result.Ok === null) return res.status(200).send([]);
+
+    // Address & subway are stored in the point collection
+    const resp = await Promise.all(
+        db_result.Ok.map(async job => {
+            const point = await db.find(
+                { _id: new ObjectId(job.point_id) },
+                'points'
+            );
+            if (point.Ok === null || point.Err)
+                return console.log('cant find point');
+            
+            
+            // Removing useless data from beeing send to the client
+            delete job.experience;
+            delete job.citizenship;
+            delete job.sex;
+            delete job.age;
+            delete job.candidates;
+            delete job.point_id;
+
+            const employer = await db.find(
+                { _id: new ObjectId(job.employer_id) },
+                'employers'
+            );
+            if (employer.Ok === null || employer.Err)
+                return console.log('cant find employer');
+
+            delete job.employer_id;
+            return {
+                ...job,
+                address: point.Ok.address,
+                subway: point.Ok.subway,
+                company: employer.Ok.company,
+            };
+        })
+    );
+
+    // console.log(resp);
+
+    res.status(200).send(resp);
+}
+
 async function get_workers(req: Request, res: Response): Promise<void> {
-    const db_result = await db.find_all({}, 'workers', 30);
+    const db_result = await db.find_all({}, 'workers');
+
+    if (db_result.Err) {
+        res.status(400).send(db_result.Err.message);
+        return;
+    }
+    const specialty = [];
+    db_result.Ok!.map(worker => {
+        //@ts-ignore
+        worker.specialty.map(spec => {
+            //@ts-ignore
+            !specialty.includes(spec) && specialty.push(spec);
+        });
+    })
+    const bubbles = [...specialty,...db_result.Ok!.map(worker => worker.full_name)];
+
+    const workers = db_result.Ok!.map(worker => {
+        return {
+            _id: worker._id,
+            full_name: worker.full_name,
+		    specialty: worker.specialty,
+		    is_ready: worker.is_ready,
+            logo: worker.logo || "none"
+        }
+    })
+
+    res.status(200).send({bubbles, workers});
+}
+
+async function find_workers(req: Request, res: Response): Promise<void> {
+
+    const webapp_filters = req.body;
+    const selector = {$regex: `${webapp_filters.string.trim()}`, $options: 'i'};
+    const filter = webapp_filters.string.trim() != "" ? {$or:[{full_name: selector},{specialty: selector}], ...webapp_filters.filters} : {}
+    const db_result = await db.find_all(filter, 'workers');
 
     if (db_result.Err) {
         res.status(400).send(db_result.Err.message);
@@ -218,28 +249,6 @@ async function get_workers(req: Request, res: Response): Promise<void> {
     }
 
     res.status(200).send(db_result.Ok!);
-}
-
-async function find_workers(req: Request, res: Response): Promise<void> {
-
-    const full_name_input = req.body;
-
-    console.log(full_name_input);
-
-    const full_name = {...full_name_input, full_name: {$regex: `${full_name_input.full_name.trim()}`, $options: 'gi'}}
-
-    const filter = full_name_input.full_name === '' ? {} : { ...full_name }
-
-    const db_result = await db.find_all(filter, 'workers', 30);
-
-    if (db_result.Err) {
-        res.status(400).send(db_result.Err.message);
-        return;
-    }
-
-    const bubbles = db_result.Ok!.map(worker => worker.full_name);
-
-    res.status(200).send({workers: db_result.Ok!, bubbles: bubbles});
 }
 
 async function get_user(req: Request, res: Response): Promise<void> {
