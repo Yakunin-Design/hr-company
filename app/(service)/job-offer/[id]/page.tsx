@@ -8,6 +8,7 @@ import JoTitle from "./JoTittle";
 import JoMainInfo from "./JoMainInfo";
 import style from "./jo.module.css"
 import Row from "@/components/std/Row";
+import WorkerCard from "@/components/WorkerCard";
 
 type params = {
     id: string;
@@ -21,10 +22,14 @@ export default function Page({params}: {params: params}) {
     const avatar = jo_data ? (jo_data.avatar != "" ? jo_data.avatar : "empty") : "empty";
     const href = (user_type == "owner" || user_type == "employer") ? "/lk/job-offers" : "/find-job";
     
-    const candidate_blocks = candidates.map((candidate) => {
+    console.log(candidates)
+    const candidate_blocks = candidates.length > 0 ? 
+    candidates.map((candidate) => {
         //@ts-ignore
-        return <h3>{candidate.full_name}</h3>
+        return <WorkerCard worker_data={candidate}/>
     })
+    :
+    <></>
 
     return (
     <Container wrapper>
@@ -43,10 +48,11 @@ export default function Page({params}: {params: params}) {
                         (candidates.length > 0) ?
                         <>
                             <h2>Кандидаты</h2>
+                            <p>{candidates.length} {(candidates.length > 1 && candidates.length < 5) ? "человека" : "человек"}</p>
                             <Spacer top="2"/>
-                            <Row className={style.candidates_row}>
+                            <div className={style.candidates_row}>
                                 {candidate_blocks}
-                            </Row>
+                            </div>
                         </>
                         :
                         <>

@@ -4,10 +4,26 @@
 
 .candidates_row {
     padding: 0 2em;
+    display: grid;
+    grid-template-columns: 1fr;
+    text-align: left;
+    gap: 1em;
 }
 
 @media (min-width: 500px) {
     .candidates_row {
         padding: 0 4em;
+    }
+}
+
+@media (min-width: 820px) {
+    .candidates_row {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (min-width: 1200px) {
+    .candidates_row {
+        grid-template-columns: 1fr 1fr 1fr;
     }
 }
