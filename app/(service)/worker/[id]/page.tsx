@@ -13,17 +13,16 @@ type params = {
 }
 
 export default async function Page({params}: {params: params}) {
-	const worker_data = await get_data();
-	const worker = worker_data[0];
+	const worker = await get_data(params.id);
+	console.log(worker);
 
     //@ts-ignore
-    const avatar = "empty";
-    const href = "/test";
+    const avatar = worker.logo || "empty";
 
     return (
 		<Container wrapper>
-			<Overlay href={href} avatar={avatar}>
-				<h2>{worker.full_name}</h2>
+			<Overlay href="/test" avatar={avatar}>
+				<h2 className="--cd">{worker.full_name}</h2>
 				<Spacer top="3"/>
 				<hr />
 				<Spacer top="3"/>

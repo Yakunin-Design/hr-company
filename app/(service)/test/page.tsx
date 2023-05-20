@@ -6,10 +6,10 @@ import WorkerCard from "@/components/WorkerCard";
 export default function TestPage() {
 	
 	const worker_data = {
-		id: "123",
+		id: "64620d718869ec1e6d04d1cb",
 		name: "Савилов Андрей",
 		specialty: "Повар",
-		is_ready: false
+		is_ready: true
 	}
 
     return (
