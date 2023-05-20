@@ -1,0 +1,16 @@
+.auth {
+    min-height: calc(100vh - 10rem);
+    width: 100%;
+    max-width: 580px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 0 auto;
+}
+
+.login {
+    text-align: center;
+    font-weight: 500;
+}

@@ -1,0 +1,31 @@
+.citizenship {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 1em !important;
+}
+
+.sex {
+    gap: 1em !important;
+    max-width: 30em;
+}
+
+.age {
+    gap: 1em !important;
+    justify-content: flex-start !important;
+}
+.age_input {
+    max-width: 10em;
+}
+
+.textarea {
+    padding: 2.5rem 2em !important;
+    min-height: 16rem !important;
+}
+
+@media (min-width: 600px) {
+
+    .citizenship {
+        display: flex !important;
+        gap: 1em !important;
+    }
+}

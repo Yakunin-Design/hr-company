@@ -1,0 +1,15 @@
+
+.label {
+	text-transform: uppercase;
+	font-weight: 500;
+
+	padding: 1em 0;
+}
+
+.title {
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+@media (min-width: 500px) {
+}

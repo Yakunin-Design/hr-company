@@ -1,0 +1,43 @@
+.point {
+    background-color: white;
+    border-radius: 11px;
+    padding: 1.2rem 2em;
+}
+
+.main {
+    width: 100%;
+    flex-direction: column;
+}
+
+.location {
+    background-color: var(--background-main);
+    border-radius: 0.7rem;
+    padding: .7rem 2em;
+    flex: 1;
+    width: 100%;
+}
+
+.address {
+    margin-bottom: .5rem;
+    color: black;
+}
+
+.point_stats {
+    width: 100%;
+    flex: 1;
+    justify-content: flex-start !important;
+}
+
+@media (min-width: 800px) {
+    .main {
+        flex-direction: row;
+    }
+    .location {
+        width: auto;
+        flex: inherit;
+    }
+    .point_stats {
+        width: auto;
+        flex: inherit;
+    }
+}

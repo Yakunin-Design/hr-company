@@ -1,0 +1,52 @@
+.header {
+    text-align: center;
+}
+
+.form {
+    padding: 0 2em;
+}
+
+.inputs {
+    flex-direction: column;
+    gap: 1rem !important;
+}
+
+.city, .subway {
+    width: 100%;
+}
+
+.address {
+    margin-top: 1rem;
+}
+
+.button {
+    width: 100%;
+}
+
+@media (min-width: 500px) {
+    .form {
+        padding: 0 4em;
+    }
+}
+
+@media (min-width: 600px) {
+    .button {
+        width: auto;
+        margin-left: auto;
+    }
+}
+
+@media (min-width: 900px) {
+    .inputs {
+        flex-direction: row;
+        gap: 5rem !important;
+    }
+
+    .city {
+        flex: 2;
+    }
+
+    .subway {
+        flex: 3;
+    }
+}

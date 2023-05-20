@@ -1,0 +1,39 @@
+.block {
+    padding: 0.6rem 1.2em;
+    border-radius: 0.5em;
+    margin: 0 0.75em;
+    cursor: pointer;
+    color: black;
+}
+
+.active {
+    background-color: var(--accent);
+    color: white;
+}
+
+.name {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+.row {
+    justify-content: flex-start;
+}
+
+@media(max-width:599px) { 
+    .name {
+        display: block;
+    }
+    .block {
+        margin: 0 2em;
+    }
+}
+
+@media (min-width: 1200px) {
+    .name {
+        display: block;
+    }
+}

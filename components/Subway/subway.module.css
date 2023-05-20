@@ -1,0 +1,17 @@
+.subway_row {
+    gap: 0.5em !important;
+    justify-content: flex-start !important;
+}
+
+.subway__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.4rem;
+    border-radius: 50%;
+}
+
+.subway__img {
+    height: 0.7rem;
+    width: 0.7rem;
+}

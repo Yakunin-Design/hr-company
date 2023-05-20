@@ -1,0 +1,24 @@
+.day {
+    flex: 2;
+    text-align: center;
+    padding: 0.9em 0;
+}
+
+.month {
+    flex: 7;
+    padding: 0.9em 0;
+}
+
+.year {
+    flex: 3;
+    text-align: center;
+    padding: 0.9em 0;
+}
+
+.citizenships {
+    gap: 1em !important;
+}
+
+.citizenship {
+    height: 100%;
+}

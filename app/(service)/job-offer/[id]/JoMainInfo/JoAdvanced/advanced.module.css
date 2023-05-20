@@ -1,0 +1,15 @@
+.block {
+    padding: 0.7em;
+    background-color: #f5f5f5;
+    border-radius: 0.5rem;
+    margin-right: 1em;
+    min-width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.row {
+    justify-content: flex-start !important;
+    gap: .5em !important;
+}

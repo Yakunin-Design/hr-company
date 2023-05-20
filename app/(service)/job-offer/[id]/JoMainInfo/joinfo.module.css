@@ -1,0 +1,42 @@
+.container {
+    padding: 0 2em;
+    flex-direction: column;
+    gap: 2em !important;
+}
+
+.description, .main_info {
+    width: 100%;
+    padding: 0 !important;
+    padding-top: 2em !important;
+}
+
+.price {
+    background-color: var(--accent);
+    border-radius: 0 0 11px 11px;
+    text-align: center;
+    padding: .5rem 0;
+}
+
+.card_container {
+    padding: 0 2em;
+}
+
+.price_text {
+    color: white !important;
+}
+
+@media (min-width: 500px) {
+    .container {
+        padding: 0 4em;
+    }
+}
+
+@media (min-width: 700px) {
+    .container {
+        flex-direction: row-reverse;
+    }
+    .main_info {
+        max-width: 22em;
+        min-width: 18em;
+    }
+}

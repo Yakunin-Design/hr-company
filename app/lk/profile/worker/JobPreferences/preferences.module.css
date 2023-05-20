@@ -1,0 +1,11 @@
+.type {
+    gap: 1.5em !important;
+    flex-direction: column;
+}
+
+@media (min-width: 600px) {
+    .type {
+        max-width: 400px;
+        flex-direction: row;
+    }
+}

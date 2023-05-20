@@ -1,0 +1,87 @@
+.primary {
+    background: var(--accent);
+    border: 2px solid var(--accent);
+    color: white;
+
+    padding: 0.7em 3.2em;
+    border-radius: 0.4rem;
+
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.05rem;
+    text-align: center;
+}
+
+.primary:hover {
+    background: rgb(22, 73, 150);
+}
+
+.secondary {
+    background: transparent;
+    color: var(--accent);
+
+    border: 2px solid var(--accent);
+    padding: 0.7em 3.2em;
+    border-radius: 0.4rem;
+
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.05rem;
+    text-align: center;
+}
+
+.red {
+    background: transparent;
+    border-color: red;
+    color: red;
+}
+
+.secondary:hover {
+    background-color: var(--background-main);
+}
+
+.red:hover {
+    background-color: red;
+    color: white;
+}
+
+.floating {
+    padding: 1rem;
+    border-radius: 50%;
+    background-color: #fff;
+    box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.2);
+    display: grid;
+    align-items: center;
+}
+
+.floating img {
+    height: 1.3rem;
+}
+
+.floating:hover {
+    background-color: #f2f2f2;
+}
+
+.save-btn {
+    position: fixed;
+    z-index: 4;
+    bottom: 10%;
+    right: 10%;
+    cursor: pointer;
+}
+
+.expand {
+    width: 100%;
+}
+
+.common {
+    color: var(--accent);
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 23px;
+    letter-spacing: 0.07rem;
+}
+
+.common:hover {
+    text-decoration: underline;
+}

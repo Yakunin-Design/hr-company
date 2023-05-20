@@ -1,0 +1,25 @@
+.block {
+    background-color: var(--background-main);
+    border-radius: 0.6rem;
+    padding: 1rem;
+    cursor: pointer;
+    justify-content: flex-start !important;
+}
+
+.block:hover {
+    background-color: rgb(238, 239, 245);
+}
+
+.icon {
+    width: 2em;
+    height: 2em;
+
+    background-color: var(--accent3);
+    border-radius: 50%;
+
+    margin-right: 0.8rem;
+}
+
+.active {
+    margin-left: auto;
+}

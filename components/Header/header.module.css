@@ -1,0 +1,23 @@
+.icon {
+    cursor: pointer;
+    transition: all .2s ease-out; 
+    width: 2rem;
+    height: 2rem;
+}
+
+.rotated {
+    transform: rotate(180deg);
+}
+
+.header {
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+}
+
+@media(min-width: 870px) {
+    .icon {
+        display: none;
+    }
+}

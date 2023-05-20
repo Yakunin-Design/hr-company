@@ -1,0 +1,83 @@
+.job_offer {
+    background-color: white;
+    border-radius: 11px;
+    padding: 1.2rem 2em;
+    gap: 2em;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.address {
+    margin-bottom: .5rem;
+}
+
+.location {
+    background-color: var(--background-main);
+    border-radius: 0.7rem;
+    padding: .7rem 2em;
+    flex: 1;
+    width: 100%;
+}
+
+.indicator {
+    min-width: 4em;
+    height: 4em;
+    border-radius: 18%;
+    display: grid;
+    place-items: center;
+    margin-left: 1em;
+}
+
+.time {
+    justify-content: flex-start;
+    gap: 1em !important;
+}
+
+.info {
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 1em !important;
+    width: 100%;
+}
+
+.title, .location, .time {
+    width: 100%;
+}
+
+.title_text, .address {
+    color: black;
+}
+
+
+@media (min-width: 900px) {
+    .job_offer {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .title {
+        flex-direction: row-reverse;
+        justify-content: flex-start !important;
+        gap: 1em !important;
+        width: min-content;
+    }
+
+    .indicator {
+        margin: 0;
+    }
+
+    .title, .location, .time {
+        width: auto;
+    }
+
+    .info {
+        flex-direction: row;
+        justify-content: flex-end !important;
+        gap: 2em !important;
+    }
+
+    .location {
+        width: auto;
+        flex: inherit;
+    }
+}

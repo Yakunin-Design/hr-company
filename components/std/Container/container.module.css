@@ -1,0 +1,44 @@
+.container {
+    width: 100%;
+    padding: 0 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.wrapper {
+    width: 100%;
+    padding: 0 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    /* mininal height = page height - header height */
+    min-height: calc(100vh - 10rem);
+}
+
+.lk {
+    width: 100%;
+    margin: 0;
+    padding-top: 1px;
+}
+
+@media (min-width: 600px) {
+
+    .wrapper {
+        padding: 0 2rem;
+    }
+
+    .container {
+        padding: 0 2rem;
+    }
+
+    .lk {
+        margin-left: 86px;
+        width: calc(100% - 86px);
+    }
+}
+
+@media (min-width: 1200px) {
+    .lk {
+        width: calc(100% - 300px);
+        margin-left: 300px;
+    }
+}

@@ -1,0 +1,38 @@
+.day {
+    flex: 2 1;
+    text-align: center;
+}
+
+.month {
+    flex: 6 1;
+    padding: 0.9rem 0.6em !important;
+    text-indent: 0;
+}
+
+.year {
+    flex: 3 1;
+    text-align: center;
+}
+
+.radio {
+    padding: 0.9rem 0.7em;
+}
+
+.citizenship {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 1em !important;
+}
+
+@media (min-width: 600px) {
+    .citizenship {
+        display: flex !important;
+        gap: 1em !important;
+    }
+}
+
+@media (min-width: 1300px) {
+    .personal_block {
+        flex: 5 1;
+    }
+}

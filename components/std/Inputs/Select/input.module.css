@@ -1,0 +1,10 @@
+.input {width: 100%;
+
+    padding: 0.9em 1.2em;
+
+    border-radius: 0.4rem;
+    border: 2px solid black;
+
+    font-size: 1rem;
+    text-indent: .3em;
+}

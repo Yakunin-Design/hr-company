@@ -1,0 +1,31 @@
+.input {
+    display: none;
+}
+
+.label {
+    color: #979797;
+    border: 2px solid #979797;
+    border-radius: 0.4rem;
+
+    font-size: 0.9rem;
+    user-select: none;
+
+    padding: 0.7rem 0.7em;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+
+    cursor: pointer;
+}
+
+.lk {
+    padding: 0.9rem 0.7em;
+}
+
+.checked {
+    border-color: var(--accent) !important;
+    color: var(--accent) !important;
+}

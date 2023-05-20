@@ -1,0 +1,44 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "lib": ["dom", "dom.iterable", "esnext"],
+        "allowJs": true,
+        "skipLibCheck": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "noEmit": true,
+        "esModuleInterop": true,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "jsx": "preserve",
+        "incremental": true,
+        "baseUrl": "./",
+        "paths": {
+            "@/components/*": ["components/*"],
+            "@/styles/*": ["styles/*"],
+            "@/public/*": ["public/*"],
+            "@/lib/*": ["lib/*"],
+            "@/docs/*": ["docs/*"],
+            "@/assets/*": ["assets/*"],
+            "@/data/*": ["data/*"],
+            "@/functions/*": ["functions/*"],
+            "@/types/*": ["types/*"]
+        },
+        "plugins": [
+            {
+                "name": "next"
+            }
+        ]
+    },
+    "include": [
+        "next-env.d.ts",
+        "**/*.ts",
+        "**/*.tsx",
+        ".next/types/**/*.ts",
+        "functions/validation.js",
+        "app/(lk)/(auth)/register/set_data.js"
+    ],
+    "exclude": ["node_modules"]
+}

@@ -1,0 +1,17 @@
+.pencil_row {
+    width: 100%;
+    justify-content: flex-end !important;
+}
+
+.pencil {
+    filter: brightness(-40%);
+    cursor: pointer;
+}
+
+.pencil:hover {
+    filter: brightness(0%);
+}
+
+.description {
+    padding: 2.5rem 2em !important;
+}

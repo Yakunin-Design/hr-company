@@ -1,0 +1,58 @@
+.overlay {
+    position: absolute;
+    z-index: 15;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    min-height: 100%;
+    margin: 0 auto;
+    padding: 0 1em;
+    padding-bottom: 14rem;
+}
+
+.overlay_card {
+    background-color: var(--background-main) !important;
+    max-width: 75em;
+    margin: 0 auto;
+    margin-top: 5rem !important;
+    padding: 1rem 0 !important;
+}
+
+.avatar {
+    position: relative;
+    overflow: hidden;
+    margin-top: 8rem !important;
+}
+
+.avatar::before {
+    content:" ";
+    background:rgba(0, 0, 0, 0.5);
+    display: block;
+    width:80px;
+    height: 42px;
+    border-radius: 0 0 40px 40px;
+    margin: 0 auto;
+    margin-top: -20px;
+}
+
+.logo {
+    position: absolute;
+    border-radius: 50%;
+    object-fit: cover;
+    left: 0; 
+    right: 0;
+    margin: 0 auto;
+    margin-top: 5.5rem;
+    z-index: 9999;
+    background-color: blue;
+    content: "";
+    width: 63px;
+    height: 63px;
+}
+
+@media (min-width: 600px) {
+    .overlay {
+        padding: 0 2em;
+    }
+}

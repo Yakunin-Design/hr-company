@@ -1,0 +1,10 @@
+.addr {
+    margin-left: 3px;
+    justify-content: flex-start !important;
+    gap: .7em !important;
+    cursor: alias;
+}
+
+.addr:hover .addr_text {
+    color: var(--accent);
+}

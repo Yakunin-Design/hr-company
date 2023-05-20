@@ -1,0 +1,54 @@
+.schedule {
+    flex-direction: column;
+    gap: 2rem !important;
+}
+
+.double_input {
+    width: 100%;
+}
+
+.double_input_block {
+    width: 100%;
+    padding: 3em 10%;
+    gap: 1em !important;
+    background-color: white;
+    border-radius: 11px;
+}
+
+.span {
+    margin-top: 2rem;
+}
+
+.week_input {
+    text-align: center;
+    max-width: 4em;
+}
+
+.time_input {
+    text-align: center;
+    max-width: 6em;
+}
+
+@media (min-width: 800px) {
+    .schedule {
+        flex-direction: row;
+        gap: 2rem !important;
+        justify-content: space-between;
+    }
+
+    .double_input_block {
+        max-width: 24em;
+    }
+}
+
+@media (min-width: 1000px) {
+    .double_input_block {
+        justify-content: center !important;
+        gap: 3.5rem !important;
+        width: 24em;
+    }
+
+    .double_input {
+        width: auto;
+    }
+}

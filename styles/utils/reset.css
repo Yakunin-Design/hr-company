@@ -1,0 +1,133 @@
+/* 
+----------------------------------------------------------------
+						Style reset	
+----------------------------------------------------------------
+*/
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+    font-family: 'Gilroy', sans-serif;
+}
+
+body {
+	background-color: var(--background-main);
+	font-family: 'Gilroy', sans-serif;
+}
+
+html {
+	font-size: 12px;
+	font-family: 'Gilroy', sans-serif;
+}
+
+@media (min-width: 350px) {
+    html {
+        font-size: 14px;
+    }
+}
+
+@media (min-width: 700px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+a {
+	text-decoration: none;
+    color: var(--accent);
+}
+
+a:visited {
+    color: var(--accent);
+}
+
+hr {
+    border: 1px solid #d8d8d8;
+}
+
+button {
+    color: #26589F;
+    background: transparent;
+
+    outline: none;
+    border: none;
+    border-spacing: 0;
+    box-shadow: none;
+    text-shadow: none;
+
+    font-family: inherit;
+    text-decoration: none;
+    text-indent: 0;
+
+    cursor: pointer;
+}
+
+input {
+    outline: none;
+    border: none;
+    box-shadow: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+input::-moz-placeholder {
+    font-family: 'Gilroy';
+    font-size: 1rem;
+}
+
+textarea::-moz-placeholder {
+    font-family: 'Gilroy';
+    font-size: 1rem;
+}
+
+textarea {
+    font-size: 1rem;
+    font-family: 'Gilroy';
+}
+
+select {
+    font-size: 1rem;
+    font-family: 'Gilroy';
+    -webkit-appearance: none;
+}
+
+option {
+    font-size: 1rem;
+    font-family: 'Gilroy';
+}
+
+input[type="text"] {
+    -webkit-appearance: none;
+}
+
+select {
+    outline: none;
+    border: none;
+    box-shadow: none;
+    text-indent: 0.5em;
+    /* -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none; */
+    background-color: transparent;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    background-color: transparent;
+    -webkit-box-shadow: 0 0 0px 1000px rgba(0,0,0,0) inset;
+    box-shadow: 0 0 0px 1000px rgba(0,0,0,0) inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
