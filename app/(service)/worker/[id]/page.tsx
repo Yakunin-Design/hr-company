@@ -1,20 +1,24 @@
 import Overlay from "@/components/Overlay";
 import Container from "@/components/std/Container";
 import Spacer from "@/components/std/Spacer";
+import Padding from "@/components/std/Padding";
 import Row from "@/components/std/Row";
-import JoTitle from "./JoTittle";
-import JoMainInfo from "./JoMainInfo";
-import style from "./jo.module.css"
 
+import style from "./worker.module.css";
+import RatingPlate from "./RatingPlate";
+import MainInfo from "./MainInfo";
 import get_data from "./get_data";
 
 type params = {
     id: string;
 }
 
-export default async function Page({params}: {params: params}) {
+export default async function WorkerPage({params}: {params: params}) {
 	const worker = await get_data(params.id);
-	console.log(worker);
+	
+	// const log = {...worker};
+	// delete log.logo;
+	// console.log(log);
 
     //@ts-ignore
     const avatar = worker.logo || "empty";
@@ -22,10 +26,28 @@ export default async function Page({params}: {params: params}) {
     return (
 		<Container wrapper>
 			<Overlay href="/test" avatar={avatar}>
-				<h2 className="--cd">{worker.full_name}</h2>
-				<Spacer top="3"/>
-				<hr />
-				<Spacer top="3"/>
+				<Padding horisontal={1}>
+					<Spacer top={1} bottom={3}>
+						<h2 className="--cd">{worker.full_name}</h2>
+					</Spacer>
+					
+					<RatingPlate rating={4.7} review_count={127}/>	
+
+					<Spacer top="2"/>
+					<p className={style.label}>Специальности</p>
+					
+
+				</Padding>
+
+				<Spacer top="2"/>
+
+				<MainInfo {...worker.main_info}/>
+
+				<Spacer top="2"/>
+				<Padding horisontal={1}>
+					<p className={style.label}>Документы</p>
+				</Padding>
+
 			</Overlay>
 		</Container>
     )

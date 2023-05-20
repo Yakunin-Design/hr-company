@@ -1,13 +1,15 @@
-.candidates {
-    text-align: center;
+
+.label {
+	text-transform: uppercase;
+	font-weight: 500;
+
+	padding: 1em 0;
 }
 
-.candidates_row {
-    padding: 0 2em;
+.title {
+	text-transform: uppercase;
+	font-weight: bold;
 }
 
 @media (min-width: 500px) {
-    .candidates_row {
-        padding: 0 4em;
-    }
 }
