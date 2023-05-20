@@ -249,6 +249,36 @@ async function get_user(req: Request, res: Response): Promise<void> {
     });
 }
 
+async function get_worker_by_id(req: Request, res: Response): Promise<void> {
+	try {
+		const id = req.params.id;	
+		const filter = {_id: new ObjectId(id)}
+
+		const db_result = await db.find(filter, "workers");
+
+		if(db_result.Err)
+			return res.status(500).send("FAIL: Cant find worker by id");
+
+		if (db_result.Ok === null) 
+			return res.status(404).send("worker with id: " + id + " was not found.");
+
+		let worker = {
+			...db_result.Ok
+		}
+
+		delete worker._id;
+		delete worker.password;
+		delete worker.phone;
+
+		res.status(200).send(worker);
+	}
+	catch(e) {
+		console.log("[ ERROR ]: Get worker by id fn failed with error: ");
+		console.log(e);
+		res.status(400).send("wrong id");
+	}
+}
+
 async function get_rewiews(req: Request, res: Response) {
     try {
         const rewiews = res.locals.user.rewiews || [];
@@ -338,5 +368,6 @@ export default {
     find_jobs,
     find_workers,
     get_rewiews,
-    send_rewiew
+    send_rewiew,
+	get_worker_by_id
 };
