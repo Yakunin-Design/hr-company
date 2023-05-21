@@ -2,7 +2,6 @@ import Overlay from "@/components/Overlay";
 import Container from "@/components/std/Container";
 import Spacer from "@/components/std/Spacer";
 import Padding from "@/components/std/Padding";
-import Row from "@/components/std/Row";
 
 import style from "./worker.module.css";
 import RatingPlate from "./RatingPlate";
