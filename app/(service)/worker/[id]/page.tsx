@@ -25,7 +25,7 @@ export default async function WorkerPage({params}: {params: params}) {
 
     return (
 		<Container wrapper>
-			<Overlay href="/test" avatar={avatar}>
+			<Overlay href="/find-workers" avatar={avatar}>
 				<Padding horisontal={1}>
 					<Spacer top={1} bottom={3}>
 						<h2 className="--cd">{worker.full_name}</h2>

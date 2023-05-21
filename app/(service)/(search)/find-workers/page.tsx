@@ -31,9 +31,6 @@ export default function FindWorkersPage() {
                 type="worker"/>
             <div className={style.workers}>
                 {workers}
-                {workers}
-                {workers}
-                {workers}
             </div>
         </Container>
     )
