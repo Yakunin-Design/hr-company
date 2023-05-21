@@ -11,10 +11,7 @@ export default function FindJobPage() {
     const {query, results, bubbles, handle_change, search, append_bubble} = search_controller("job");
 
     const job_offers = results.length > 0 ? 
-    results.map(jo => {
-        //@ts-ignore
-        return <JobOfferCard jo_data={jo} key={jo._id}/>
-    })
+    results.map(jo => <JobOfferCard jo_data={jo} key={jo._id}/>)
     :
     <></>
 

@@ -41,3 +41,6 @@
 
 # Search 
 1. add filters icon
+
+# Ready
+status texts dont support sex related word forms

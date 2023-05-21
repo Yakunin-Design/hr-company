@@ -35,7 +35,7 @@ export default async function get_data(id: string): Promise<worker_page_data> {
     };
 
     const worker_page_data: worker_page_data = {
-        avatar: worker.logo || "none",
+        avatar: worker.logo || "empty",
         full_name: worker.full_name,
         main_info: main,
         specialtes: worker.specialty,

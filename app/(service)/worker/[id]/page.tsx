@@ -15,17 +15,10 @@ type params = {
 
 export default async function WorkerPage({params}: {params: params}) {
 	const worker = await get_data(params.id);
-	
-	// const log = {...worker};
-	// delete log.logo;
-	// console.log(log);
-
-    //@ts-ignore
-    const avatar = worker.logo || "empty";
 
     return (
 		<Container wrapper>
-			<Overlay href="/find-workers" avatar={avatar}>
+			<Overlay href="/find-workers" avatar={worker.avatar}>
 				<Padding horisontal={1}>
 					<Spacer top={1} bottom={3}>
 						<h2 className="--cd">{worker.full_name}</h2>
