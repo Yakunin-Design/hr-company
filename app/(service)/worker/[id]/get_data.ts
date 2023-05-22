@@ -37,8 +37,7 @@ export default async function get_data(id: string): Promise<worker_data> {
         avatar: worker.logo || "empty",
         full_name: worker.full_name,
         main_info: main,
-        // specialtes: worker.specialty,
-        specialtes: ["one", "long second spec"],
+        specialtes: worker.specialty,
         documents: ["Паспорт РФ", "Мед книжка"],
     };
 

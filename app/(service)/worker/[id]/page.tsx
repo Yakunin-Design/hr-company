@@ -8,7 +8,7 @@ import RatingPlate from "./RatingPlate";
 import MainInfo from "./MainInfo";
 import get_data from "./get_data";
 import Documents from "./Documents";
-import Specialty from "./Specialy";
+import Specialty from "./Specialty/Specialy";
 
 type params = {
     id: string;
@@ -24,8 +24,7 @@ export default async function WorkerPage({params}: {params: params}) {
 					<Spacer top={1} bottom={3}>
 						<h2 className="--cd">{worker.full_name}</h2>
 					</Spacer>
-					
-					<RatingPlate rating={4.7} review_count={127}/>	
+					{/* <RatingPlate rating={4.7} review_count={127}/>	 */}
 					<Specialty specialties={worker.specialtes} />
 				</Padding>
 

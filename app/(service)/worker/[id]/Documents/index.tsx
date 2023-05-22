@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Spacer from "@/components/std/Spacer";
 import Padding from "@/components/std/Padding";
 import Row from "@/components/std/Row";
 import Card from "@/components/Card";
@@ -16,7 +15,7 @@ export default function Documents(props: props) {
 
 	return (
 		<Padding className={style.card_padding}>
-			<p className={style.label}>Документы</p>
+			<p className={style.label}>Документы (в разработке)</p>
 			{document_list}
 		</Padding>
 	)

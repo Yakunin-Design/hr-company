@@ -1,6 +1,4 @@
 import Image from "next/image";
-import Spacer from "@/components/std/Spacer";
-import Padding from "@/components/std/Padding";
 import Row from "@/components/std/Row";
 import Card from "@/components/Card";
 
