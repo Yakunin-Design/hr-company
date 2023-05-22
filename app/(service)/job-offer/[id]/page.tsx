@@ -22,7 +22,6 @@ export default function Page({params}: {params: params}) {
     const avatar = jo_data ? (jo_data.avatar != "" ? jo_data.avatar : "empty") : "empty";
     const href = (user_type == "owner" || user_type == "employer") ? "/lk/job-offers" : "/find-job";
     
-    console.log(candidates)
     const candidate_blocks = candidates.length > 0 ? 
     candidates.map((candidate) => {
         //@ts-ignore

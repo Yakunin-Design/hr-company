@@ -68,6 +68,7 @@ export default function search_controller(type: "job" | "workers") {
         axios
         .post(url,query)
         .then(res => {
+            console.log(res.data);
             set_results(res.data)
         })
     }

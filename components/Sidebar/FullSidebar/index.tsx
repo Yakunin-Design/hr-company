@@ -58,14 +58,14 @@ export default function FullSidebar(props: props) {
                     <Spacer top="2" />
                 </div>
 
-                <div className={styles.nav_block}>
+                {/* <div className={styles.nav_block}>
                     <PageBlock
                         name="chat"
                         active={props.active == "chat"}
                         show={props.show}
                     />
                     <Spacer top="2" />
-                </div>
+                </div> */}
 
                 {props.user_type == "worker" && (
                     <>

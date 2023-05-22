@@ -2,11 +2,38 @@ import subway_stations from "@/components/std/Inputs/SubwayInput/subway_stations
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+type jo_data = {
+    _id: string
+    point_id: string
+    employer_id: string
+
+    candidates: Array<string>
+    candidate_count: number
+    created: number
+
+    specialty: string
+    salary: { amount: string, period: string }
+    
+    citizenship: string
+    description: string
+    experience: string
+    sex: string
+    age: { from: string, to: string }
+
+
+    status: string
+    type: string
+
+    schedule?: { weekends: string, weekdays: string }
+    working_time?: { start: string, end: string }
+    city?: string
+}
+
 type point = {
     _id: string
     address: string
     emp_id: string
-    job_offers: Array<Object | null>
+    job_offers: Array<jo_data>
     subway: string
     workers: Array<Object | null>
 } | null

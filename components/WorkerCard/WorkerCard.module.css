@@ -26,11 +26,14 @@
 	font-weight: bold;
 }
 
-/* @media (min-width: 600px) {
-	.link {
-		max-width: 300px;
-	}
-	.card {
-		max-width: 300px;
-	}
-} */
+.avatar {
+	border-radius: 50%;
+	object-position: center;
+	width: 2.6rem;
+	height: 2.6rem;
+}
+
+.avatar_img {
+	object-fit: cover;
+	border-radius: 50%;
+}

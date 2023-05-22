@@ -28,7 +28,6 @@ export default function JoMainInfo({jo_data}: {jo_data: any}) {
                 </div>
             </Card>
             
-            
             <div className={style.description}>
                 {description ? (
                     <p>{description}</p>

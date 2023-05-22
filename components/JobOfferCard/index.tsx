@@ -8,7 +8,7 @@ import Subway from "../Subway";
 import Spacer from "../std/Spacer";
 import JoSchedule from "../JoSchedule";
 
-type jo_data = {
+export type jo_data = {
     _id: string
     point_id: string
     employer_id: string

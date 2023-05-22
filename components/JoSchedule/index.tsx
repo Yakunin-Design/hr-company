@@ -25,7 +25,6 @@ export default function JoSchedule({schedule, working_time}: {schedule: any, wor
         </>)
     }
 
-    console.log(working_time)
     let working_time_block = <></>
     if(working_time && working_time.start != "" && working_time.end != "") {
         working_time_block = (

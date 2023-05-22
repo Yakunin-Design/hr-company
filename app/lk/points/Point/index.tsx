@@ -2,7 +2,6 @@ import Row from "@/components/std/Row"
 import style from "./point.module.css"
 import Subway from "@/components/Subway"
 import Spacer from "@/components/std/Spacer"
-import CloseIcon from "@/components/CloseIcon"
 import Link from "next/link"
 
 type props = {

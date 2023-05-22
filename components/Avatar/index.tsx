@@ -42,6 +42,8 @@ export default function Avatar(props: props) {
                             className={styles.photo + " " + props.className}
                             src={props.value}
                             alt=""
+                            width={22}
+                            height={22}
                         />
                     ) : (
                         <Image className={styles.plug} src={logo} alt=""/>

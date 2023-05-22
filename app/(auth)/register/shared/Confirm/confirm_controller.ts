@@ -110,7 +110,6 @@ export default function confirm_controller() {
 
             // resend code
             await registration_api_call(data);
-            console.log("code send");
         }
     }
 
