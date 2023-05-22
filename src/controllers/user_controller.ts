@@ -228,7 +228,7 @@ async function get_workers(req: Request, res: Response): Promise<void> {
             _id: worker._id,
             full_name: worker.full_name,
 		    specialty: worker.specialty,
-		    is_ready: worker.is_ready,
+		    is_ready: worker.status === "ready" ? true : false,
             logo: worker.logo || "none"
         }
     })
@@ -248,7 +248,17 @@ async function find_workers(req: Request, res: Response): Promise<void> {
         return;
     }
 
-    res.status(200).send(db_result.Ok!);
+    const workers = db_result.Ok!.map(worker => {
+        return {
+            _id: worker._id,
+            full_name: worker.full_name,
+		    specialty: worker.specialty,
+		    is_ready: worker.status === "ready" ? true : false,
+            logo: worker.logo || "none"
+        }
+    })
+
+    res.status(200).send(workers);
 }
 
 async function get_user(req: Request, res: Response): Promise<void> {
@@ -258,7 +268,7 @@ async function get_user(req: Request, res: Response): Promise<void> {
     });
 }
 
-async function get_worker_by_id(req: Request, res: Response): Promise<void> {
+async function get_worker_by_id(req: Request, res: Response) {
 	try {
 		const id = req.params.id;	
 		const filter = {_id: new ObjectId(id)}
@@ -275,7 +285,6 @@ async function get_worker_by_id(req: Request, res: Response): Promise<void> {
 			...db_result.Ok
 		}
 
-		delete worker._id;
 		delete worker.password;
 		delete worker.phone;
 
