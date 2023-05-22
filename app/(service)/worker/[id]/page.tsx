@@ -7,6 +7,8 @@ import style from "./worker.module.css";
 import RatingPlate from "./RatingPlate";
 import MainInfo from "./MainInfo";
 import get_data from "./get_data";
+import Documents from "./Documents";
+import Specialty from "./Specialy";
 
 type params = {
     id: string;
@@ -24,22 +26,13 @@ export default async function WorkerPage({params}: {params: params}) {
 					</Spacer>
 					
 					<RatingPlate rating={4.7} review_count={127}/>	
-
-					<Spacer top="2"/>
-					<p className={style.label}>Специальности</p>
-					
-
+					<Specialty specialties={worker.specialtes} />
 				</Padding>
-
-				<Spacer top="2"/>
 
 				<MainInfo {...worker.main_info}/>
+				<Documents documents={worker.documents}/>
 
-				<Spacer top="2"/>
-				<Padding className={style.card_padding}>
-					<p className={style.label}>Документы</p>
-				</Padding>
-
+				<Spacer top={5} />
 			</Overlay>
 		</Container>
     )

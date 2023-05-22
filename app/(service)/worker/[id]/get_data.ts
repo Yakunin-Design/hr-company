@@ -1,9 +1,8 @@
 import axios from "axios";
-import { worker_page_data } from "./types/worker_page_data";
-import { main_info } from "./types/main_info";
+import { worker_data, main_info } from "./worker_data";
 import get_age from "@/functions/get_age";
 
-export default async function get_data(id: string): Promise<worker_page_data> {
+export default async function get_data(id: string): Promise<worker_data> {
     const uri = `${process.env.API_ADDRESS}/get-worker-by-id/${id}`;
     const res = await axios.get(uri);
 
@@ -34,12 +33,13 @@ export default async function get_data(id: string): Promise<worker_page_data> {
         city: worker.city,
     };
 
-    const worker_page_data: worker_page_data = {
+    const worker_page_data: worker_data = {
         avatar: worker.logo || "empty",
         full_name: worker.full_name,
         main_info: main,
-        specialtes: worker.specialty,
-        documents: [],
+        // specialtes: worker.specialty,
+        specialtes: ["one", "long second spec"],
+        documents: ["Паспорт РФ", "Мед книжка"],
     };
 
     return worker_page_data;

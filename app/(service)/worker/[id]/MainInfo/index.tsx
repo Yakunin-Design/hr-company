@@ -27,7 +27,7 @@ export default function MainInfo(props: main_info) {
 		citizenship_emoji = "";
 	
     return (
-		<>
+		<Spacer top={2} bottom={2}>
 			<hr/>
 			<Spacer top={1}/>
 			<Padding className={style.card_padding}>
@@ -50,10 +50,12 @@ export default function MainInfo(props: main_info) {
 			<Spacer top={1}/>
 
 			<Padding className={style.card_padding}>
+				{/*
 				<Row>
 					<p className={style.label}>Образование</p>
 					<h3 className={style.title}>{props.education || "Не указано"}</h3>
 				</Row>
+				*/}
 				<Row>
 					<p className={style.label}>Возраст</p>
 					<h3 className={style.title}>{props.age} полных лет</h3>
@@ -74,6 +76,6 @@ export default function MainInfo(props: main_info) {
 					<Subway station={props.subway || "Не указанно"} text_style="h3"/>
 				</Row>
 			</Padding>
-		</>
+		</Spacer>
     )
 }

@@ -5,7 +5,7 @@ import Row from "@/components/std/Row";
 import Card from "@/components/Card";
 
 import star_icon from "./star_icon.svg";
-import style from "./RatingPlate.module.css";
+import style from "../worker.module.css";
 
 type props = {	
 	rating: number,
@@ -14,7 +14,7 @@ type props = {
 
 export default function RatingPlate(props: props) {
     return (
-		<Card className={style.rating}>
+		<Card className={style.plate}>
 			<Row>
 				<Row gap={1}>
 					<Image
