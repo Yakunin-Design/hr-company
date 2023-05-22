@@ -4,7 +4,7 @@ export default function Head() {
             <title>HR company</title>
             <meta
                 name="viewport"
-                content="width=device-width, initial-scale=1, maximum-scale=1"
+                content="width=device-width, minimal-scale=1, initial-scale=1, maximum-scale=1"
             ></meta>
             <meta
                 name="description"
