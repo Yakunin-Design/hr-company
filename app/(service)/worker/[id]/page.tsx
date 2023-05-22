@@ -18,7 +18,7 @@ export default async function WorkerPage({params}: {params: params}) {
     return (
 		<Container wrapper>
 			<Overlay href="/find-workers" avatar={worker.avatar}>
-				<Padding horisontal={1}>
+				<Padding className={style.card_padding}>
 					<Spacer top={1} bottom={3}>
 						<h2 className="--cd">{worker.full_name}</h2>
 					</Spacer>
@@ -36,7 +36,7 @@ export default async function WorkerPage({params}: {params: params}) {
 				<MainInfo {...worker.main_info}/>
 
 				<Spacer top="2"/>
-				<Padding horisontal={1}>
+				<Padding className={style.card_padding}>
 					<p className={style.label}>Документы</p>
 				</Padding>
 

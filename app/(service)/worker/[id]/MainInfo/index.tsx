@@ -30,7 +30,7 @@ export default function MainInfo(props: main_info) {
 		<>
 			<hr/>
 			<Spacer top={1}/>
-			<Padding horisontal={1}>
+			<Padding className={style.card_padding}>
 				<Row>
 					<p className={style.label}>Статус</p>
 					<Row gap={.5}>
@@ -49,7 +49,7 @@ export default function MainInfo(props: main_info) {
 			<hr/>
 			<Spacer top={1}/>
 
-			<Padding horisontal={1}>
+			<Padding className={style.card_padding}>
 				<Row>
 					<p className={style.label}>Образование</p>
 					<h3 className={style.title}>{props.education || "Не указано"}</h3>
