@@ -1,0 +1,19 @@
+.specialty {
+	display: grid;
+	align-items: center;
+	padding: 1rem 2em !important;
+	margin: 0 0 !important;
+}
+
+.grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1em;
+	align-items: stretch;
+}
+
+@media (min-width: 800px) {
+	.specialty_grid {
+		grid-template-columns: 1fr 1fr 1fr;
+	}
+}

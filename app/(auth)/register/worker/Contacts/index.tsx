@@ -49,6 +49,7 @@ export default function Contacts(props: props) {
             <Input 
                 name="email"
                 label="Email"
+                type="email"
                 value={props.form_data.email}
                 style={props.err.includes('email') ? error_style : {}}
                 onChange={props.onChange}

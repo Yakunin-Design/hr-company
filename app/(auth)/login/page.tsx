@@ -36,6 +36,7 @@ export default function LoginPage() {
                         onChange={handle_change}
                         style={errors.includes("login") ? error_style : {}}
                         value={form_data.login}
+                        type="email"
                     />
 
                     {errors.includes("not_found") && (

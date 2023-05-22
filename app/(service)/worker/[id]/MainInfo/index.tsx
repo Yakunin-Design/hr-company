@@ -1,14 +1,13 @@
 import Spacer from "@/components/std/Spacer";
 import Padding from "@/components/std/Padding";
 import Row from "@/components/std/Row";
-import Card from "@/components/Card";
 
 import Subway from "@/components/Subway";
 
 import StatusIcon from "./StatusIcon";
 import style from "../worker.module.css";
 
-import { main_info } from "../types/main_info";
+import { main_info } from "../worker_data";
 
 export default function MainInfo(props: main_info) {
 
@@ -27,10 +26,10 @@ export default function MainInfo(props: main_info) {
 		citizenship_emoji = "";
 	
     return (
-		<>
+		<Spacer top={2} bottom={1}>
 			<hr/>
 			<Spacer top={1}/>
-			<Padding horisontal={1}>
+			<Padding className={style.card_padding}>
 				<Row>
 					<p className={style.label}>Статус</p>
 					<Row gap={.5}>
@@ -49,11 +48,13 @@ export default function MainInfo(props: main_info) {
 			<hr/>
 			<Spacer top={1}/>
 
-			<Padding horisontal={1}>
+			<Padding className={style.card_padding}>
+				{/*
 				<Row>
 					<p className={style.label}>Образование</p>
 					<h3 className={style.title}>{props.education || "Не указано"}</h3>
 				</Row>
+				*/}
 				<Row>
 					<p className={style.label}>Возраст</p>
 					<h3 className={style.title}>{props.age} полных лет</h3>
@@ -74,6 +75,8 @@ export default function MainInfo(props: main_info) {
 					<Subway station={props.subway || "Не указанно"} text_style="h3"/>
 				</Row>
 			</Padding>
-		</>
+			<Spacer top={1}/>
+			<hr/>
+		</Spacer>
     )
 }

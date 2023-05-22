@@ -17,7 +17,6 @@ import Link from "next/link";
 import Image from "next/image";
 import JobOfferCard from "@/components/JobOfferCard";
 
-
 type params = {
     id: string,
 }
@@ -36,8 +35,10 @@ export default function Page({params}: {params: params}) {
         get_point(params.id);
     },[])
 
-    //@ts-ignore
-    const job_offers = (point && point.job_offers) ? point.job_offers.map(jo => <JobOfferCard jo_data={jo} className={style.jo}/>) : <></>
+    const job_offers = (point && point.job_offers) ? 
+
+    point.job_offers.map(jo => <JobOfferCard jo_data={jo} className={style.jo} key={jo._id}/>) : 
+    <></>
 
     return (
         <Container lk wrapper>

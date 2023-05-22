@@ -1,0 +1,22 @@
+.responds {
+    flex-direction: column;
+}
+
+.respond {
+    width: 100%;
+}
+
+@media (min-width: 880px) {
+    .responds {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        align-items: stretch !important;
+        gap: 1em !important;
+    }
+}
+
+@media (min-width: 1450px) {
+    .responds {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}

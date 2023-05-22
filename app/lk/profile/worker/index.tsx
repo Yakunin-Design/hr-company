@@ -26,7 +26,6 @@ type props = {
 export default function WorkerProfile(props: props) {
     const user = props.user.user_data;
 
-    console.log(user)
     return (
         <div>
             {/* 
