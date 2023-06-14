@@ -24,7 +24,7 @@ export default function PositionsIndicator(props: props) {
 				src={position_icon}
 				alt="person icon"
 			/>
-			<div>{counter_text}</div>
+			<p>{counter_text}</p>
 		</Row>
 	)
 }

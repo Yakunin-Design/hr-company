@@ -7,8 +7,8 @@ type props = {
 	school: string,
 	address: string,
 	subway?: string,
-	positions?: number,
-	available?: number,
+	positions: number,
+	available: number,
 };
 
 export default function AddressPlate(props: props) {
@@ -21,8 +21,8 @@ export default function AddressPlate(props: props) {
 					<p>{props.address}</p>
 				</div>	
 				<PositionsIndicator
-					positions={5}
-					available={3}
+					positions={props.positions}
+					available={props.available}
 				/>
 			</Row>
 		</Card>
