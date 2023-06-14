@@ -1,14 +1,3 @@
-# Buglist
-[here](./buglist.md)
+# HRC | School meal program 
 
-## Getting Started
-
-Dev server:
-
-```bash
-yarn dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-
+SMP - stands for school meal program
