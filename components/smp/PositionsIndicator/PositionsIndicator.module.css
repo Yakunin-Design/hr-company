@@ -1,4 +1,11 @@
 .indicator {
-    background-color: var(--backround-main);
 	padding: 1em 2em;
+
+    background-color: var(--background-main);
+	border-radius: 500px;
 }
+
+.light {
+    background-color: white;
+}
+

@@ -17,6 +17,7 @@ export default function TestPage() {
 			/>
 			<PositionsIndicator 
 				positions={5}
+				light
 			/>
 		</Container>
 	)
