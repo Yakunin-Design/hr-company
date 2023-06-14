@@ -1,12 +1,15 @@
 import Link from "next/link";
-import Card from "../Card";
-import style from "./jocard.module.css"
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Row from "../std/Row";
-import Subway from "../Subway";
-import Spacer from "../std/Spacer";
+
+import style from "./jocard.module.css"
 import JoSchedule from "../JoSchedule";
+
+import Row from "@/components/std/Row";
+import Card from "@/components/Card";
+import Spacer from "@/components/std/Spacer";
+
+import Subway from "../Subway";
 
 export type jo_data = {
     _id: string
