@@ -13,10 +13,9 @@ export default function TestPage() {
 			<p>for test purposes</p>
 			<AddressPlate 
 				school="Школа 486" 
-				address="Дворцовая"
+				address="Дворцовая площадь д1"
 				positions={5}
-				available={5}
-				subway="Адмиралтейская"
+				available={2}
 			/>
 		</Container>
 	)
