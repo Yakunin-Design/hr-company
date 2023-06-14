@@ -16,6 +16,7 @@ export default function TestPage() {
 				address="Дворцовая"
 				positions={5}
 				available={5}
+				subway="Адмиралтейская"
 			/>
 		</Container>
 	)
