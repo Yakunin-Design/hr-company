@@ -11,6 +11,13 @@ export default function TestPage() {
 			<Spacer top="2"/>
 			<h2>Welcome to the test page</h2>
 			<p>for test purposes</p>
+			<Spacer top={2}/>
+			<AddressPlate 
+				school="Школа 486" 
+				address="Дворцовая площадь д1"
+				positions={5}
+				available={2}
+			/>
 			<AddressPlate 
 				school="Школа 486" 
 				address="Дворцовая площадь д1"

@@ -14,9 +14,8 @@ type props = {
 };
 
 export default function AddressPlate(props: props) {
-
     return (
-		<Card>
+		<Card className={styles.card}>
 			<Row>
 				<div>
 					<h3>{props.school}</h3>
