@@ -26,7 +26,7 @@ export default function TicketInfo(props: props) {
     return (
 		<div className={styles.info_block}>
 			<Container>
-				<Padding vertical={5}>
+				<Padding vertical={5} horisontal={1}>
 					<h2>{props.title} ({props.goal}чел)</h2>
 					<Spacer top={1} />
 					<ProgressBar
