@@ -21,20 +21,20 @@ export default function TicketInfo(props: props) {
 	// for not only 2 icons are available
 	const icon = props.status === "active" ? true : false;
 
-	const status_text = props.status === "active" ? "Заявка активка" : "Заявка закрыта";
+	const status_text = props.status === "active" ? "Заявка активна" : "Заявка закрыта";
 	
     return (
 		<div className={styles.info_block}>
 			<Container>
 				<Padding vertical={5}>
-					<h2>{props.title}</h2>
+					<h2>{props.title} ({props.goal}чел)</h2>
 					<Spacer top={1} />
 					<ProgressBar
 						progress={props.progress}
 						goal={props.goal}
 						light
 					/>
-					<Spacer top={1} />
+					<Spacer top={2} />
 					<Row gap={.5}>
 						<StatusIcon is_ready={icon} />
 						<p>{status_text}</p>

@@ -11,6 +11,15 @@ import TicketInfo from "@/components/smp/TicketInfo";
 
 export default function TestPage() {
     return (
+	<>
+			<TicketInfo 
+				title="Заявка №08052023-1"	
+				progress={5}
+				goal={7}
+				status="active"
+				created="8 Июня 2023, 12:45"
+				description="this is very long desctiption text lmao"
+			/>
 		<Container wrapper>
 			<Spacer top="2"/>
 			<h2>Welcome to the test page</h2>
@@ -57,15 +66,8 @@ export default function TestPage() {
 			</Card>
 
 			<Spacer top={2} />
-			<TicketInfo 
-				title="bruh"	
-				progress={5}
-				goal={7}
-				status="active"
-				created="8 Июня 2023, 12:45"
-				description="this is very long desctiption text lmao"
-			/>
 			
 		</Container>
+		</>
 	)
 }
