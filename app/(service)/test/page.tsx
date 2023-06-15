@@ -7,6 +7,7 @@ import PositionsIndicator from "@/components/smp/PositionsIndicator";
 import AddressPlate from "@/components/smp/AddressPlate";
 import SchoolManagerPlate from "@/components/smp/SchoolManagerPlate";
 import ProgressBar from "@/components/smp/ProgressBar";
+import TicketInfo from "@/components/smp/TicketInfo";
 
 export default function TestPage() {
     return (
@@ -54,6 +55,16 @@ export default function TestPage() {
 					light
 				/>
 			</Card>
+
+			<Spacer top={2} />
+			<TicketInfo 
+				title="bruh"	
+				progress={5}
+				goal={7}
+				status="active"
+				created="8 Июня 2023, 12:45"
+				description="this is very long desctiption text lmao"
+			/>
 			
 		</Container>
 	)

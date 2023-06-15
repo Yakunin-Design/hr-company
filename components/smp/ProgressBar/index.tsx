@@ -13,7 +13,7 @@ function calculate_progress_procent(progress: number, goal: number): number {
 
 export default function ProgressBar(props: props) {
 	const procent = calculate_progress_procent(props.progress, props.goal);
-	const text = props.progress + " из " + props.goal + "(" + procent + "%)";
+	const text = props.progress + " из " + props.goal + " (" + procent + "%)";
 
 	const progress_length = {
 		width: procent + "%"
