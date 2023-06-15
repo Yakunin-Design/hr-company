@@ -15,7 +15,7 @@ export default function SchoolManagerPlate(props: props) {
 
     return (
 		<a href={tel_link} className={styles.plate}>
-			<Card>
+			<Card className={styles.card}>
 				<Row>
 					<div>
 						<h3>{props.position ? props.position : "Заведующий"}</h3>

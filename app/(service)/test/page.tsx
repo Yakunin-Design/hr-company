@@ -1,10 +1,12 @@
 import Container from "@/components/std/Container";
 import Spacer from "@/components/std/Spacer";
 import Row from "@/components/std/Row";
+import Card from "@/components/Card";
 
-import AddressPlate from "@/components/smp/AddressPlate";
 import PositionsIndicator from "@/components/smp/PositionsIndicator";
+import AddressPlate from "@/components/smp/AddressPlate";
 import SchoolManagerPlate from "@/components/smp/SchoolManagerPlate";
+import ProgressBar from "@/components/smp/ProgressBar";
 
 export default function TestPage() {
     return (
@@ -13,6 +15,17 @@ export default function TestPage() {
 			<h2>Welcome to the test page</h2>
 			<p>for test purposes</p>
 			<Spacer top={2}/>
+
+			<Row>
+				<PositionsIndicator
+					positions={10}	
+					light
+				/>
+				<PositionsIndicator
+					positions={10}
+					available={3}
+				/>
+			</Row>
 
 			<AddressPlate 
 				school="Школа 486" 
@@ -27,6 +40,21 @@ export default function TestPage() {
 				position="Директор"
 			/>	
 
+			<Spacer top={1} />
+			<ProgressBar
+				progress={3}
+				goal={7}
+			/>
+			
+			<Spacer top={2} />
+			<Card>
+				<ProgressBar
+					progress={3}
+					goal={7}
+					light
+				/>
+			</Card>
+			
 		</Container>
 	)
 }

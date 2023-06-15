@@ -1,3 +1,7 @@
 .plate {
 	color: inherit;
 }
+
+.card {
+    margin-top: 1em !important;
+}

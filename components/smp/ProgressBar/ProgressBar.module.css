@@ -1,0 +1,18 @@
+.bar {
+	background: white;
+	height: 1rem;
+	width: 100%;
+	border-radius: 100px;
+}
+
+.progress {
+	background: var(--accent);
+	height: 1rem;
+	width: 10%;
+
+	border-radius: 100px;
+}
+
+.light {
+	background: var(--background-main);
+}
