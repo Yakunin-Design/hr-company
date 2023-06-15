@@ -24,6 +24,7 @@ export default function TestPage() {
 			<SchoolManagerPlate
 				full_name="Смирнов Василий Александрович"
 				phone="+79876543221"
+				position="Директор"
 			/>	
 
 		</Container>

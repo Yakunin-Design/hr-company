@@ -18,7 +18,7 @@ export default function SchoolManagerPlate(props: props) {
 			<Card>
 				<Row>
 					<div>
-						<h3>{props.position ? position : "Заведующий"}</h3>
+						<h3>{props.position ? props.position : "Заведующий"}</h3>
 						<p>{props.full_name}</p>
 					</div>
 					<Image 
