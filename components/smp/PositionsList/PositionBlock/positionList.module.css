@@ -3,6 +3,12 @@
     color: black;
 }
 
+.empty_position {
+    padding: 1em 2em;
+    color: black;
+    border: 2px dashed #797979;
+}
+
 .logo {
     width: 2em;
     height: 2em;

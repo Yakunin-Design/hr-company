@@ -46,7 +46,10 @@ function parse_candidates(count: number) {
 
 export default function PositionBlock(props: props) {
     const type = !isUser(props.position_data) ? "empty" : "user";
+
     const textstyle = type === "empty" ? style.empty : "";
+    const position_style =
+        type === "empty" ? style.empty_position : style.position;
 
     function get_actions(type: string) {
         if (type === "empty") {
@@ -105,7 +108,7 @@ export default function PositionBlock(props: props) {
     const actions = get_actions(type);
     const image = get_image(info.avatar);
     const card = (
-        <Card className={style.position}>
+        <Card className={position_style}>
             <Row>
                 <div className={style.info}>
                     {image}
