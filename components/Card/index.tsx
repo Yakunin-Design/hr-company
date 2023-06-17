@@ -7,8 +7,8 @@ type props = {
 
 export default function Card(props: props) {
     const card_styles = props.className
-        ? styles.card + " " + props.className
+        ? props.className + " " + styles.card
         : styles.card;
-			
+
     return <div className={card_styles}>{props.children}</div>;
 }

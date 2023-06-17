@@ -1,0 +1,24 @@
+.position {
+    padding: 1em 2em;
+    color: black;
+}
+
+.logo {
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    background-color: blue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.image {
+    width: 2em;
+    height: 2em;
+}
+
+.empty {
+    color: #797979;
+}
