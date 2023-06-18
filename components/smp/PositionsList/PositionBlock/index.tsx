@@ -4,6 +4,7 @@ import Card from "@/components/Card";
 import { candidate } from "../index";
 import Row from "@/components/std/Row";
 import EmptyPosition from "./empty_position.svg";
+import replace_icon from "./replace_icon.svg";
 import Spacer from "@/components/std/Spacer";
 
 import style from "./positionList.module.css";
@@ -63,7 +64,7 @@ export default function PositionBlock(props: props) {
                 <Row className={style.actions}>
                     <Image
                         className={style.image}
-                        src={EmptyPosition}
+                        src={replace_icon}
                         alt="switch"
                     />
                 </Row>
