@@ -7,6 +7,7 @@ import Spacer from "@/components/std/Spacer";
 import Image from "next/image";
 import JoSchedule from "@/components/JoSchedule";
 import PositionsIndicator from "../PositionsIndicator";
+import address_icon from "./address_icon.svg";
 
 type props = {
     jo_data: {
@@ -46,7 +47,11 @@ export default function SmpJoCard(props: props) {
                             text_style="h4"
                         />
                         <Spacer top=".4" />
-                        <Row>
+                        <Row gap={.5}>
+							<Image
+								src={address_icon}
+								alt="address icon"
+							/>
                             <h4 className={style.specialty}>
                                 {props.jo_data.address}
                             </h4>

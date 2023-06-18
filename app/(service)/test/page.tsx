@@ -12,23 +12,22 @@ import SmpJoCard from "@/components/smp/SmpJoCard";
 import PositionList from "@/components/smp/PositionsList";
 
 export default function TestPage() {
-    // const jo_data = {
-    //     id: "",
-    //     specialty: "Повар универсал",
-    //     positions: 2,
+    const jo_data = {
+     id: "",
+         specialty: "Повар универсал",
+       positions: 2,
+     subway: "Адмиралтейская",
+     address: "Дворцовая площадь, дом 1",
 
-    //     subway: "Адмиралтейская",
-    //     address: "Дворцовая площадь, дом 1",
-
-    //     working_time: {
-    //         start: "13:00",
-    //         end: "21:00",
-    //     },
-    //     salary: {
-    //         amount: 2800,
-    //         period: "day",
-    //     },
-    // };
+     working_time: {
+         start: "13:00",
+         end: "21:00",
+     },
+     salary: {
+         amount: 2800,
+         period: "day",
+     },
+ };
 
     const candidates = [
         {
@@ -102,7 +101,7 @@ export default function TestPage() {
 					light
 				/>
 			</Card> */}
-                {/* <SmpJoCard jo_data={jo_data} /> */}
+                <SmpJoCard jo_data={jo_data} />
                 <PositionList positions={position_data} />
 
                 <Spacer top={2} />

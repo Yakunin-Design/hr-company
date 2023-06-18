@@ -6,7 +6,6 @@ import styles from "./TicketInfo.module.css";
 import StatusIcon from "./StatusIcon.tsx";
 import ProgressBar from "../ProgressBar";
 
-
 type props = {
 	title: string,
 	progress: number,
