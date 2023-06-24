@@ -1,4 +1,5 @@
 export type ticket_data = {
+    company_id: string;
     date: string;
     comment: string;
     addresses: ticket_addres[];

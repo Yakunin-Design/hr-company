@@ -3,12 +3,12 @@ import Container from "@/components/std/Container";
 import Spacer from "@/components/std/Spacer";
 import styles from "../newTicket.module.css";
 import { useState, useEffect, ChangeEvent } from "react";
-import { ticket_state } from "../logic/ticket_state";
 import Button from "@/components/std/Button";
 import Input from "@/components/std/Inputs/Input";
 import TextArea from "@/components/std/Inputs/TextArea";
 import { ticket_data } from "../logic/ticket_types";
 import AddressPlate from "@/components/smp/AddressPlate";
+import axios from "axios";
 
 type props = {
     handleForm: (
@@ -48,6 +48,9 @@ export default function TicketForm(props: props) {
         if (props.ticket_data.addresses.length === 0) {
             errors.push("addresses");
         }
+        if (props.ticket_data.company_id.length === 0) {
+            errors.push("company_id");
+        }
         if (
             props.ticket_data.date.trim() === "" ||
             !check_date(props.ticket_data.date)
@@ -78,6 +81,19 @@ export default function TicketForm(props: props) {
         if (errors.length > 0) {
             set_errors(errors);
         } else {
+            set_errors([]);
+            const jwt = localStorage.getItem("jwt") || "";
+            const config = {
+                headers: {
+                    authorization: "Bearer " + jwt,
+                },
+            };
+
+            axios.post(
+                `${process.env.API_ADDRESS}/new-ticket`,
+                props.ticket_data,
+                config
+            );
         }
     }
 
@@ -114,6 +130,16 @@ export default function TicketForm(props: props) {
                 <Container>
                     <Spacer top={2} />
                     <h2>Создание заявки</h2>
+                    <Spacer top={1} />
+                    <Input
+                        name="company_id"
+                        label="Название компании*"
+                        onChange={props.handleForm}
+                        value={props.ticket_data.company_id}
+                        style={
+                            errors.includes("company_id") ? error_styles : {}
+                        }
+                    />
                     <Spacer top={1} />
                     <Input
                         name="date"

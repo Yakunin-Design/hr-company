@@ -26,6 +26,7 @@ const empty_position = <ticket_position>{
 
 export default function ticket_controller() {
     const [ticket_data, set_ticket_data] = useState<ticket_data>({
+        company_id: "",
         date: "",
         comment: "",
         addresses: [],
