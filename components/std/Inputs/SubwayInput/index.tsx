@@ -5,11 +5,11 @@ import Image from "next/image";
 
 import subway_icon from "./subway_icon.svg";
 import get_branch_color from "./get_branch_color";
-import { CSSProperties } from "react";
+import { CSSProperties, ChangeEvent } from "react";
 
 type props = {
     value: string;
-    onChange: (value: string) => void;
+    onChange: ((value: string) => void) | ((event: ChangeEvent<HTMLInputElement>) => void);
     label?: string;
     style?: CSSProperties;
 };
@@ -55,7 +55,7 @@ export default function SubwayInput(props: props) {
 
             <datalist id="subways">
                 {subway_stations.map(station => (
-                    <option value={station}>{station}</option>
+                    <option value={station} key={station}>{station}</option>
                 ))}
             </datalist>
         </>

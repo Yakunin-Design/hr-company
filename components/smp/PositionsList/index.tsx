@@ -9,15 +9,20 @@ export type candidate = {
 };
 
 type position = {
-    specialty: string;
-    count: number;
-    time: number;
+    position: string;
+    quontity: number;
+    working_hours: {
+        from: string;
+        to: string;
+    };
     candidates: candidate[];
     accepted: string[];
 };
 
 type props = {
     positions: position[];
+    add_position: boolean;
+    delete_position?: (position: string) => void;
 };
 
 const get_workers = (position: position) => {
@@ -32,23 +37,56 @@ const get_workers = (position: position) => {
         }
         const position_data = {
             ...userdata,
-            specialty: position.specialty,
+            position: position.position,
         };
         workers.push(<PositionBlock position_data={position_data} />);
     }
     return workers;
 };
 
-const get_empty_cards = (position: position) => {
-    const count = position.count - position.accepted.length;
+const get_empty_cards = (
+    position: position,
+    add_position: boolean,
+    delete_position?: (position: string) => void
+) => {
+    const quontity = position.quontity - position.accepted.length;
     const cards = [];
-    for (let i = 0; i < count; i++) {
+    if (add_position) {
         const position_data = {
             candidates: position.candidates,
-            specialty: position.specialty,
-            time: position.time,
+            position: position.position,
+            quontity: position.quontity,
+            time: `c ${position.working_hours.from} ${
+                position.working_hours.to && `до ${position.working_hours.to}`
+            }`,
         };
-        cards.push(<PositionBlock position_data={position_data} />);
+
+        cards.push(
+            <PositionBlock
+                position_data={position_data}
+                add_position
+                onClick={delete_position}
+            />
+        );
+    } else {
+        for (let i = 0; i < quontity; i++) {
+            const position_data = {
+                candidates: position.candidates,
+                position: position.position,
+                quontity: position.quontity,
+                time: `c ${position.working_hours.from} ${
+                    position.working_hours.to &&
+                    `до ${position.working_hours.to}`
+                }`,
+            };
+            cards.push(
+                <PositionBlock
+                    position_data={position_data}
+                    add_position
+                    onClick={delete_position}
+                />
+            );
+        }
     }
     return cards;
 };
@@ -56,7 +94,11 @@ const get_empty_cards = (position: position) => {
 export default function PositionList(props: props) {
     const positions = props.positions.map(position => {
         const workers = get_workers(position);
-        const cards = get_empty_cards(position);
+        const cards = get_empty_cards(
+            position,
+            props.add_position,
+            props.delete_position
+        );
         return [...workers, ...cards];
     });
     return <Column className={style.list}>{positions}</Column>;

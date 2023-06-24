@@ -49,14 +49,14 @@ export default function TestPage() {
 
     return (
         <>
-            {/* <TicketInfo 
+            <TicketInfo 
 				title="Заявка №08052023-1"	
 				progress={5}
 				goal={7}
 				status="active"
 				created="8 Июня 2023, 12:45"
 				description="this is very long desctiption text lmao"
-			/> */}
+			/>
             <Container wrapper>
                 <Spacer top="2" />
                 <h2>Welcome to the test page</h2>
@@ -102,7 +102,7 @@ export default function TestPage() {
 				/>
 			</Card> */}
                 <SmpJoCard jo_data={jo_data} />
-                <PositionList positions={position_data} />
+                {/* <PositionList positions={position_data} /> */}
 
                 <Spacer top={2} />
             </Container>

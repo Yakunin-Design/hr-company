@@ -3,7 +3,7 @@ import Row from "@/components/std/Row";
 import Padding from "@/components/std/Padding";
 import Container from "@/components/std/Container";
 import styles from "./TicketInfo.module.css";
-import StatusIcon from "./StatusIcon.tsx";
+import StatusIcon from "./StatusIcon";
 import ProgressBar from "../ProgressBar";
 
 type props = {

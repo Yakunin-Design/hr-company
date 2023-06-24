@@ -10,40 +10,52 @@ import Spacer from "@/components/std/Spacer";
 import style from "./positionList.module.css";
 import Link from "next/link";
 
+import delete_icon from "./drop_document.svg"
+
 interface userdata {
     id: string;
     avatar: string;
     fullname: string;
-    specialty: string;
+    position: string;
 }
 
 interface position_data {
     candidates: candidate[];
-    specialty: string;
-    time: number;
+    quontity: number;
+    position: string;
+    time: number | string;
 }
 
-type props = { position_data: userdata | position_data };
+type props = {
+    position_data: userdata | position_data,
+    add_position?: boolean,
+    onClick?: (position: string) => void
+};
 
 function isUser(data: any): data is userdata {
     return "id" in data;
 }
 
-function parse_candidates(count: number) {
-    if (count < 2) {
-        return `${count} кандидат`;
-    } else if (count < 5) {
-        return `${count} кандидата`;
+function parse_candidates(count: number, add_position?: boolean) {
+    if (add_position) {
+        if (count < 2) {
+            return `${count} человек`;
+        } else if (count < 5) {
+            return `${count} человека`;
+        } else {
+            return `${count} человек`;
+        }
     } else {
-        return `${count} кандидатов`;
+        if (count < 2) {
+            return `${count} кандидат`;
+        } else if (count < 5) {
+            return `${count} кандидата`;
+        } else {
+            return `${count} кандидатов`;
+        }
     }
+    
 }
-
-/**
- * 1 кандидат
- * 2-4 кандидата
- * 5- кандидатов
- */
 
 export default function PositionBlock(props: props) {
     const type = !isUser(props.position_data) ? "empty" : "user";
@@ -53,10 +65,13 @@ export default function PositionBlock(props: props) {
         type === "empty" ? style.empty_position : style.position;
 
     function get_actions(type: string) {
+        if (props.add_position) {
+            return <Image src={delete_icon} alt={""} className={style.delete_icon} onClick={() => {props.onClick && props.onClick(props.position_data.position)}}/>
+        }
         if (type === "empty") {
             return (
                 <h4 className={textstyle}>
-                    {parse_candidates(props.position_data.specialty.length)}
+                    {!isUser(props.position_data) && parse_candidates(props.position_data.quontity, props.add_position)}
                 </h4>
             );
         } else {
@@ -94,13 +109,13 @@ export default function PositionBlock(props: props) {
             return {
                 avatar: props.position_data.avatar,
                 title: props.position_data.fullname,
-                subtitle: props.position_data.specialty,
+                subtitle: props.position_data.position,
             };
         } else {
             return {
                 avatar: EmptyPosition,
-                title: props.position_data.specialty,
-                subtitle: `к ${props.position_data.time} утра`,
+                title: `${props.position_data.position} (${props.position_data.quontity})`,
+                subtitle: props.add_position ? `${props.position_data.time}` : `к ${props.position_data.time} утра`,
             };
         }
     }
@@ -123,5 +138,5 @@ export default function PositionBlock(props: props) {
         </Card>
     );
 
-    return type === "empty" ? <Link href="/test">{card}</Link> : card;
+    return !props.add_position && type === "empty" ? <Link href="/test">{card}</Link> : card;
 }

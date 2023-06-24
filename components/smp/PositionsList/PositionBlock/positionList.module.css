@@ -28,3 +28,7 @@
 .empty {
     color: #797979;
 }
+
+.delete_icon {
+    cursor: pointer;
+}
