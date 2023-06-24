@@ -7,6 +7,7 @@ import authorization_router from './routers/authorization_router';
 import lk_router from './routers/lk_router';
 import find_router from './routers/find_router';
 import chat_router from './routers/chat_router';
+import smp_router from './routers/smp_router';
 import cors from 'cors';
 import db from './lib/idb';
 
@@ -23,6 +24,7 @@ app.use(authorization_router);
 app.use(find_router);
 app.use(lk_router);
 app.use(chat_router);
+app.use(smp_router);
 
 (async () => { 
     await db.start_connection()
