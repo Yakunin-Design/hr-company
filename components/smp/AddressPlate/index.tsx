@@ -11,25 +11,28 @@ type props = {
 	subway?: string,
 	positions: number,
 	available: number,
+	onClick: () => void
 };
 
 export default function AddressPlate(props: props) {
     return (
-		<Card className={styles.card}>
-			<Row>
-				<div>
-					<h3>{props.school}</h3>
-					{props.subway && <>
-						<Spacer top={1} />
-						<Subway station={props.subway}/>
-					</>}
-					<p>{props.address}</p>
-				</div>	
-				<PositionsIndicator
-					positions={props.positions}
-					available={props.available}
-				/>
-			</Row>
-		</Card>
+		<div onClick={props.onClick}>
+			<Card className={styles.card}>
+				<Row>
+					<div>
+						<h3>{props.school}</h3>
+						{props.subway && <>
+							<Spacer top={1} />
+							<Subway station={props.subway}/>
+						</>}
+						<p>{props.address}</p>
+					</div>	
+					<PositionsIndicator
+						positions={props.positions}
+						available={props.available}
+					/>
+				</Row>
+			</Card>
+		</div>
 	)
 }

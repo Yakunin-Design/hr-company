@@ -39,7 +39,7 @@ const get_workers = (position: position) => {
             ...userdata,
             position: position.position,
         };
-        workers.push(<PositionBlock position_data={position_data} />);
+        workers.push(<PositionBlock key={position.position + i} position_data={position_data} />);
     }
     return workers;
 };
@@ -63,6 +63,7 @@ const get_empty_cards = (
 
         cards.push(
             <PositionBlock
+                key={position.position}
                 position_data={position_data}
                 add_position
                 onClick={delete_position}
@@ -81,6 +82,7 @@ const get_empty_cards = (
             };
             cards.push(
                 <PositionBlock
+                    key={position.position + i}
                     position_data={position_data}
                     add_position
                     onClick={delete_position}

@@ -30,9 +30,30 @@ type props = {
 };
 
 export default function PositionForm(props: props) {
+    const [errors, set_errors] = useState<string[]>([]);
+    const error_styles = {
+        borderColor: "red"
+    }
+
+    function check_errors(): string[] {
+        let errors = [];
+        if (props.position_data.position.trim() === "") {
+            errors.push("position");
+        }
+        if (props.position_data.working_hours.from.trim() === "") {
+            errors.push("from");
+        }
+        return errors;
+    }
+
     function save_position() {
-        props.add_position();
-        props.prev_form();
+        const errors = check_errors();
+        if (errors.length > 0) {
+            set_errors(errors);
+        } else {
+            props.add_position();
+            props.prev_form();
+        }
     }
 
     return (
@@ -50,6 +71,7 @@ export default function PositionForm(props: props) {
                                 placeholder="Повар универсал"
                                 onChange={props.handlePosition}
                                 value={props.position_data.position}
+                                style={errors.includes('position') ? error_styles : {}}
                             />
                         </div>
                         <div>
@@ -71,6 +93,7 @@ export default function PositionForm(props: props) {
                                 placeholder="7:00"
                                 onChange={props.handlePosition}
                                 value={props.position_data.working_hours.from}
+                                style={errors.includes('from') ? error_styles : {}}
                             />
                         </div>
                         <div>

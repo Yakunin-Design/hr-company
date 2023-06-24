@@ -8,6 +8,8 @@ import SubwayInput from "@/components/std/Inputs/SubwayInput";
 import { ticket_addres } from "../logic/ticket_types";
 import IconButton from "@/components/IconButton";
 import PositionList from "@/components/smp/PositionsList";
+import { useState } from "react";
+import PhoneInput from "@/components/std/Inputs/PhoneInput";
 
 type props = {
     address_data: ticket_addres;
@@ -19,9 +21,37 @@ type props = {
 };
 
 export default function AddressForm(props: props) {
+    const [errors, set_errors] = useState<string[]>([]);
+    const error_styles = {
+        borderColor: "red"
+    }
+
+    function check_errors(): string[] {
+        let errors = [];
+        if (props.address_data.positions.length === 0) {
+            errors.push("positions");
+        }
+        if (props.address_data.school_number.trim() === "") {
+            errors.push("school_number");
+        }
+        if (props.address_data.address.trim() === "") {
+            errors.push("address");
+        }
+        if (props.address_data.subway.trim() === "") {
+            errors.push("subway");
+        }
+        return errors;
+    }
+    
     function save_address() {
-        props.add_address();
-        props.prev_form();
+        const errors = check_errors();
+        if (errors.length > 0) {
+            set_errors(errors);
+        }
+        else {
+            props.add_address();
+            props.prev_form();
+        }
     }
 
     return (
@@ -37,6 +67,7 @@ export default function AddressForm(props: props) {
                         placeholder="Школа №488"
                         onChange={props.handleAdress}
                         value={props.address_data.school_number}
+                        style={errors.includes('school_number') ? error_styles : {}}
                     />
                     <Spacer top={1} />
                     <Input
@@ -44,12 +75,14 @@ export default function AddressForm(props: props) {
                         label="Адрес*"
                         onChange={props.handleAdress}
                         value={props.address_data.address}
+                        style={errors.includes('address') ? error_styles : {}}
                     />
                     <Spacer top={1} />
                     <SubwayInput
                         label="Ближайшее метро*"
                         onChange={props.handleAdress}
                         value={props.address_data.subway}
+                        style={errors.includes('subway') ? error_styles : {}}
                     />
                     <Spacer top={1} />
                     <Input
@@ -59,7 +92,7 @@ export default function AddressForm(props: props) {
                         value={props.address_data.contact}
                     />
                     <Spacer top={1} />
-                    <Input
+                    <PhoneInput
                         name="phone"
                         label="Номер телефон"
                         onChange={props.handleAdress}
@@ -75,6 +108,11 @@ export default function AddressForm(props: props) {
                     add_position
                     delete_position={props.delete_position}
                 />
+
+                {
+                    errors.includes('positions') && <h3 className={styles.error_title}>Добавьте позицию</h3>
+                }
+                
                 <Spacer top={3} />
                 <Button onClick={props.next_form} expand secondary>
                     Добавить позицию +

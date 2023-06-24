@@ -5,3 +5,8 @@
     border-top: 2px solid var(--background-main);
     padding-bottom: 1rem;
 }
+
+.error_title {
+    color: red !important;
+	text-align: center;
+}

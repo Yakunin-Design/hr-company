@@ -34,7 +34,6 @@ export default function ticket_controller() {
         useState<ticket_addres>(empty_addres);
     const [position_data, set_position_data] =
         useState<ticket_position>(empty_position);
-    const [errors, set_errors] = useState([]);
 
     function handle_form(
         event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -90,7 +89,7 @@ export default function ticket_controller() {
         set_ticket_data(prev => {
             return {
                 ...prev,
-                addresses: [...prev.addresses, address_data],
+                addresses: [...prev.addresses.filter(adr => adr.address != address_data.address), address_data],
             };
         });
 
@@ -119,6 +118,13 @@ export default function ticket_controller() {
         })
     }
 
+    function open_address(address_name: string) {
+        ticket_data.addresses.forEach(address => {
+            if (address.address === address_name)
+                set_address_data(address)
+        })
+    }
+
     return {
         ticket_data,
         address_data,
@@ -129,6 +135,6 @@ export default function ticket_controller() {
         add_address,
         add_position,
         delete_position,
-        errors,
+        open_address
     };
 }

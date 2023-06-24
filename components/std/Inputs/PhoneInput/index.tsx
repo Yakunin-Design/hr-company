@@ -15,11 +15,9 @@ type props = {
 export default function PhoneInput(props: props) {
 
     function phone_change(event: React.ChangeEvent<HTMLInputElement>) {
-
         let value = String(event.target.value);
         const now_data = String(props.value);
         value = value.trim();
-        
         
         if (/[a-zа-яё]/i.test(value.slice(-1))){
             value = value.slice(0, -1);

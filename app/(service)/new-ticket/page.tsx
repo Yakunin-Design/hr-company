@@ -18,6 +18,7 @@ export default function NewTicketPage() {
         add_address,
         add_position,
         delete_position,
+        open_address
     } = ticket_controller();
 
     return (
@@ -27,6 +28,7 @@ export default function NewTicketPage() {
                     next_form={next_form}
                     handleForm={handle_form}
                     ticket_data={ticket_data}
+                    open_address={open_address}
                 />
             )}
             {ticket_form === page_state.address && (
