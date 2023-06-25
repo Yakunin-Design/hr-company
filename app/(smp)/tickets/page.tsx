@@ -7,12 +7,13 @@ import Row from "@/components/std/Row";
 import Button from "@/components/std/Button";
 import Link from "next/link";
 import styles from "./tickets.module.css";
+import { ticket_status, convert_status } from "@/types/ticket_status";
 
 type plate_ticket_data = {
     _id: string;
     accepted: number;
     total_workers_count: number;
-    status: "active" | "inactive" | "pending";
+    status: ticket_status;
     realization_date: string;
 };
 
@@ -39,7 +40,7 @@ export default async function TicketsPage() {
             id={ticket._id}
             accepted={ticket.accepted}
             total_workers_count={ticket.total_workers_count}
-            status={ticket.status === "pending" ? "active" : "inactive"}
+            status={ticket.status}
             realization_date={ticket.realization_date}
         />
     ));
@@ -50,7 +51,9 @@ export default async function TicketsPage() {
             <Row className={styles.head}>
                 <h2>Ваши заявки</h2>
                 <Link href={"/new-ticket"}>
-                    <Button secondary expand>Добавить заявку &#65291;</Button>
+                    <Button secondary expand>
+                        Добавить заявку &#65291;
+                    </Button>
                 </Link>
             </Row>
             <Spacer top="2" />

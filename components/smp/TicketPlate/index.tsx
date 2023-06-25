@@ -5,22 +5,27 @@ import StatusIcon from "./StatusIcon";
 import ProgressBar from "../ProgressBar";
 import Card from "@/components/Card";
 import Link from "next/link";
+import { ticket_status, convert_status } from "@/types/ticket_status";
 
 type props = {
     id: string;
-	accepted: number,
-	total_workers_count: number,
-    status: "active" | "inactive";
-	realization_date: string,
+    accepted: number;
+    total_workers_count: number;
+    status: ticket_status;
+    realization_date: string;
 };
 
 export default function TicketPlate(props: props) {
     // for not only 2 icons are available
-    const icon = props.status === "active" ? true : false;
+    const icon = props.status != "pending" ? true : false;
 
-    const status_text =
-        props.status === "active" ? "Заявка активна" : "Заявка закрыта";
-    const title = "Заяка №" + props.id.slice(-7) + " (" + props.total_workers_count + ") чел";
+    const status_text = convert_status(props.status);
+    const title =
+        "Заяка №" +
+        props.id.slice(-7) +
+        " (" +
+        props.total_workers_count +
+        ") чел";
 
     return (
         <Link href={`/tickets/${props.id}`}>

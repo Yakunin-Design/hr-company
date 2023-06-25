@@ -60,9 +60,7 @@ export default async function TicketPage({ params }: { params: params }) {
                 id={params.id}
                 accepted={ticket_data.accepted}
                 total_workers_count={ticket_data.total_workers_count}
-                status={
-                    ticket_data.status === "pending" ? "inactive" : "active"
-                }
+                status={ticket_data.status}
                 realization_date={ticket_data.realization_date}
             />
             <Container wrapper>

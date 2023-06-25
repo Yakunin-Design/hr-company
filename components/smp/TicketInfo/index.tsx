@@ -7,21 +7,23 @@ import StatusIcon from "./StatusIcon";
 import ProgressBar from "../ProgressBar";
 import IconButton from "@/components/IconButton";
 import Link from "next/link";
+import { convert_status, ticket_status } from "@/types/ticket_status";
+import ActivateTicketButton from "./ActivateTicketButton";
 
 type props = {
 	id: string,
 	accepted: number,
 	total_workers_count: number,
-	status: "active" | "inactive" | "pending",
+	status: ticket_status,
 	realization_date: string,
 	description?: string,
 };
 
 export default function TicketInfo(props: props) {
 	// for not only 2 icons are available
-	const status = (props.status === "active" || props.status === "pending") ? true : true;
-	const icon = status;
-	const status_text = status ? "Заявка активна" : "Заявка закрыта";
+	const status = props.status;
+	const icon = props.status !== "pending" ? true : false;
+	const status_text = convert_status(status)
     const title = "Заяка №" + props.id.slice(-7) + " (" + props.total_workers_count + ") чел";
 	
     return (
@@ -40,9 +42,12 @@ export default function TicketInfo(props: props) {
 						light
 					/>
 					<Spacer top={2} />
-					<Row gap={.5}>
-						<StatusIcon is_ready={icon} />
-						<p>{status_text}</p>
+					<Row>
+						<Row gap={.5}>
+							<StatusIcon is_ready={icon} />
+							<p>{status_text}</p>
+						</Row>
+						{status === "pending" && <ActivateTicketButton ticket_id={props.id} />}
 					</Row>
 					<Spacer top={1} />
 					<p>Дата реализации {props.realization_date}</p>

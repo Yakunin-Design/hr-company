@@ -11,7 +11,7 @@ type props = {
 export default function ModibleMenu(props: props) {
     return (
         <section className={styles.menu}>
-            <Link href="/find-job">
+            <Link href="/job-offers">
                 <p>Найти работу</p>
             </Link>
             <Spacer top="2" />

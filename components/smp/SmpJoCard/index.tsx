@@ -32,7 +32,7 @@ type props = {
 
 export default function SmpJoCard(props: props) {
     return (
-        <Link href={"/job-offer/" + props.jo_data.id}>
+        <Link href={"/job-offers/" + props.jo_data.id}>
             <Card className={style.card}>
                 <div className={style.container + " " + style.main_container}>
                     <Row className={style.header}>
