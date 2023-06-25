@@ -79,7 +79,7 @@ async function login(req: Request, res: Response): Promise<void> {
         
         // Sign JWT
         const jwt = sign_jwt(user_id!, user_type!);
-
+        
         // Send jwt to client
         res.status(200).send(jwt.Ok);
     

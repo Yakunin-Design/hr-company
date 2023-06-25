@@ -1,5 +1,6 @@
 import express from 'express';
 import http from 'http';
+import db from './lib/idb';
 import { Server } from 'socket.io';
 import { ObjectId } from 'mongodb';
 import jwt from 'jsonwebtoken';
@@ -9,7 +10,6 @@ import find_router from './routers/find_router';
 import chat_router from './routers/chat_router';
 import smp_router from './routers/smp_router';
 import cors from 'cors';
-import db from './lib/idb';
 
 const app = express();
 const server = http.createServer(app);

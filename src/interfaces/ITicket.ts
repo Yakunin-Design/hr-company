@@ -1,3 +1,5 @@
+import { ObjectId } from "mongodb";
+
 export interface ITicketCandidate {
     id: string;
     avatar: string;
@@ -28,8 +30,14 @@ export interface ITicketAddress {
 }
 
 export interface ITicket {
-    company_id: string;
-    date: string;
+    company_id: ObjectId;
+    company_name: string;
+    date_of_creation: Date;
+    realization_date: string;
+    status: "pending" | "active" | "inactive";
+    city: string;
+    total_workers_count: number;
+    accepted: number;
     comment: string;
     addresses: ITicketAddress[];
 }
