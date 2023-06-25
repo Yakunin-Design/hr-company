@@ -1,4 +1,9 @@
 .card {
     margin-top: 1em !important;
     cursor: pointer;
+    color: var(--bodycopy);
+}
+
+.headers {
+    color: #000;
 }

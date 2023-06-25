@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { setCookie } from "cookies-next";
 
 export default function confirm_controller() {
     const [can_resend_code, set_can_resend_code] = useState(true);
@@ -84,6 +85,7 @@ export default function confirm_controller() {
 
                 localStorage.removeItem("tmp_id");
                 localStorage.setItem("jwt", res.data);
+                setCookie("jwt", res.data);
 
                 window.location.replace("/lk/profile");
             });

@@ -90,7 +90,12 @@ export default function ticket_controller() {
         set_ticket_data(prev => {
             return {
                 ...prev,
-                addresses: [...prev.addresses.filter(adr => adr.address != address_data.address), address_data],
+                addresses: [
+                    ...prev.addresses.filter(
+                        adr => adr.address != address_data.address
+                    ),
+                    address_data,
+                ],
             };
         });
 
@@ -109,21 +114,21 @@ export default function ticket_controller() {
     }
 
     function delete_position(position: string) {
-
-        const positions = address_data.positions.filter(pos => pos.position !== position);
+        const positions = address_data.positions.filter(
+            pos => pos.position !== position
+        );
         set_address_data(prev => {
             return {
                 ...prev,
-                positions
-            }
-        })
+                positions,
+            };
+        });
     }
 
     function open_address(address_name: string) {
         ticket_data.addresses.forEach(address => {
-            if (address.address === address_name)
-                set_address_data(address)
-        })
+            if (address.address === address_name) set_address_data(address);
+        });
     }
 
     return {
@@ -136,6 +141,6 @@ export default function ticket_controller() {
         add_address,
         add_position,
         delete_position,
-        open_address
+        open_address,
     };
 }

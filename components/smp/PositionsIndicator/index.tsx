@@ -10,7 +10,7 @@ type props = {
 };
 
 export default function PositionsIndicator(props: props) {
-	const counter_text = props.available 
+	const counter_text = (props.available === 0 || props.available)
 		? props.available + " из " + props.positions
 		: props.positions;
 

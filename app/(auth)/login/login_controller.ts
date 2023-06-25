@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { check_phone, check_email } from "@/functions/validation";
+import { setCookie } from 'cookies-next';
 
 export default function login_controller() {
     const [form_data, set_form_data] = useState({
@@ -41,6 +42,7 @@ export default function login_controller() {
                     console.log("smth wrong");
                 }
 
+                setCookie("jwt", res.data);
                 localStorage.setItem("jwt", res.data);
 
                 window.location.replace("/lk/profile");

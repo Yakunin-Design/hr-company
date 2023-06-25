@@ -93,7 +93,8 @@ export default function TicketForm(props: props) {
                 `${process.env.API_ADDRESS}/new-ticket`,
                 props.ticket_data,
                 config
-            );
+            ).then(res => window.location.href = "/tickets");
+                
         }
     }
 
@@ -109,8 +110,7 @@ export default function TicketForm(props: props) {
                 key={address.school_number}
                 school={address.school_number}
                 address={address.address}
-                positions={positions}
-                available={0}
+                worker_count={positions}
                 onClick={() => handle_address_plate_click(address.address)}
             />
         );
@@ -143,7 +143,7 @@ export default function TicketForm(props: props) {
                     <Spacer top={1} />
                     <Input
                         name="date"
-                        label="Дата*"
+                        label="Дата реализации*"
                         type="tel"
                         maxLength={10}
                         placeholder={display_date}
