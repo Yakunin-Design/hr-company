@@ -18,7 +18,6 @@ type props = {
 };
 
 export default function TicketInfo(props: props) {
-
 	// for not only 2 icons are available
 	const status = (props.status === "active" || props.status === "pending") ? true : true;
 	const icon = status;

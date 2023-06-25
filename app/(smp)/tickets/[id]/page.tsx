@@ -5,6 +5,7 @@ import Row from "@/components/std/Row";
 import { cookies } from "next/headers";
 import TicketInfo from "@/components/smp/TicketInfo";
 import AddressPlate from "@/components/smp/AddressPlate";
+import Link from "next/link";
 
 type params = {
     id: string;
@@ -37,16 +38,19 @@ async function get_ticket(id: string) {
 
 export default async function TicketPage({ params }: { params: params }) {
     const ticket_data = await get_ticket(params.id);
-    console.log(ticket_data);
 
+    let address_index = 0;
     const address_list = ticket_data.addresses.map((adr: address) => {
+        address_index += 1;
         return (
-            <AddressPlate
-                school={adr.number}
-                address={adr.address}
-                worker_count={adr.worker_count}
-                accepted={adr.accepted}
-            />
+            <Link href={`/tickets/${params.id}/${address_index - 1}`}>
+                <AddressPlate
+                    school={adr.number}
+                    address={adr.address}
+                    worker_count={adr.worker_count}
+                    accepted={adr.accepted}
+                />
+            </Link>
         );
     });
 

@@ -48,7 +48,7 @@ export default async function TicketsPage() {
         <Container wrapper>
             <Spacer top="2" />
             <Row className={styles.head}>
-                <h1>Ваши заявки</h1>
+                <h2>Ваши заявки</h2>
                 <Link href={"/new-ticket"}>
                     <Button secondary expand>Добавить заявку &#65291;</Button>
                 </Link>

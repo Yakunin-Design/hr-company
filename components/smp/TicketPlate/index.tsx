@@ -25,7 +25,7 @@ export default function TicketPlate(props: props) {
     return (
         <Link href={`/tickets/${props.id}`}>
             <Card className={styles.ticket_plate}>
-                <h2>{title}</h2>
+                <h2 className={styles.headers}>{title}</h2>
                 <Spacer top={1} />
                 <ProgressBar
                     progress={props.accepted}
