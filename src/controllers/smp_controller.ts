@@ -179,7 +179,7 @@ async function get_address(req: Request, res: Response) {
     const db_ticket = await db.find({ _id: ticket_id }, "tickets");
     if (db_ticket.Err) return res.status(500).send("db failed");
     
-    if (db_ticket.Ok === null) return res.status(404).send("ticket not found :(");
+    if (db_ticket.Ok === null) return res.status(404).send("ticket was not found :(");
 
     // getting data setup for frontend (school data + worker_count & accepted)
     if (adress_number > db_ticket.Ok.addresses.length) {
@@ -198,4 +198,87 @@ async function get_address(req: Request, res: Response) {
     res.status(200).send(response_data);
 }
 
-export default { new_ticket, get_all_tickets, get_ticket_by_id, get_address };
+async function activate_ticket(req: Request, res: Response) {
+    try {
+        const id = new ObjectId(req.params.id);
+        const ticket = await db.find({_id: id}, "tickets");
+        if (!ticket.Ok || ticket.Ok.length == 0) return res.status(404).send("ticket was not found :(");
+
+        if (ticket.Ok.status != "pending") return res.status(402).send("already activated");
+        
+        let counter = 0;
+        await ticket.Ok.addresses.forEach(async adr => {
+            adr.positions.forEach(async pos => {
+                const jo_data = {
+                    creation_time: new Date(),
+                    position: pos.position,
+                    working_hours: pos.working_hours,
+                    price: pos.price,
+                    comment: pos.comment,
+                    city: ticket.Ok!.city,
+                    quontity: pos.quontity,
+                    sex: pos.sex,
+                    school_id: adr.school_id,
+                    ticket_id: ticket.Ok!._id
+                }
+
+                const new_jo = await db.save(jo_data, 'smp_job_offers');
+                if (new_jo.Err) return res.status(500).send("smp job offer activation failed");
+
+                counter++;
+            })
+        });
+
+        await db.update({_id: ticket.Ok._id}, {$set: {status: 'in progress'}}, "tickets");
+
+        return res.status(200).send(counter + " Job offers was created.")
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send(err.message);
+    }
+    
+}
+
+async function get_job_offers(req: Request, res: Response) {
+    try {
+        const job_offers = await db.find_all({}, 'smp_job_offers');
+        if (!job_offers.Ok) return res.status(500).send("job offers was not found :(");
+
+        const return_data = await Promise.all(job_offers.Ok.map(async jo => {
+            const school_id = new ObjectId(jo.school_id);
+            const db_school = await db.find({_id: school_id}, "schools");
+
+            const new_data = {
+                ...db_school.Ok,
+                ...jo
+            }
+
+            return new_data;
+        }));
+
+        return res.status(200).send(return_data);
+    } catch (err) { 
+        console.log(err.message);
+        res.status(500).send(err.message);
+    }
+}
+
+async function get_job_offer_by_id(req: Request, res: Response) {
+    try {
+        const job_offer = await db.find({_id: new ObjectId(req.params.id)}, 'smp_job_offers');
+        if (!job_offer.Ok) return res.status(500).send("job offer was not found :(");
+            const school_id = new ObjectId(job_offer.Ok.school_id);
+            const db_school = await db.find({_id: school_id}, "schools");
+            const new_data = {
+                ...db_school.Ok,
+                ...job_offer.Ok
+            }
+
+        return res.status(200).send(new_data);
+    } catch (err) { 
+        console.log(err.message);
+        res.status(500).send(err.message);
+    }
+}
+
+export default { new_ticket, get_all_tickets, get_ticket_by_id, get_address, activate_ticket, get_job_offers, get_job_offer_by_id };
