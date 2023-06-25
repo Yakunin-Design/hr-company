@@ -35,7 +35,7 @@ export default function MobileSidebar(props: props) {
                             <Row>
                                 <Image src={logo} alt="logo" />
                                 <Spacer left="1" />
-                                <h3 className="--ld">HR company</h3>
+                                <h3 className="--ld">HRC | ДШП</h3>
                             </Row>
                         </Link>
                         <Image

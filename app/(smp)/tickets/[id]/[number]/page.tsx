@@ -7,10 +7,18 @@ import TicketInfo from "@/components/smp/TicketInfo";
 import AddressPlate from "@/components/smp/AddressPlate";
 import IconButton from "@/components/IconButton";
 import Link from "next/link";
+import styles from "./AddressPage.module.css";
+import Card from "@/components/Card";
+import SchoolManagerPlate from "@/components/smp/SchoolManagerPlate";
+import AddressCard from "@/components/AddressCard";
+import Padding from "@/components/std/Padding";
+import PositionBlock from "@/components/smp/PositionsList/PositionBlock";
+import PositionsIndicator from "@/components/smp/PositionsIndicator";
+import PositionList from "@/components/smp/PositionsList";
 
 type params = {
-    id: string,
-    number: number,
+    id: string;
+    number: number;
 };
 
 async function get_address(id: string, number: number) {
@@ -32,13 +40,57 @@ async function get_address(id: string, number: number) {
 export default async function AddressPage({ params }: { params: params }) {
     const address_data = await get_address(params.id, params.number);
 
+    let positions = 0;
+    let accepted = 0;
+    address_data.positions.forEach((pos: any) => {
+        positions += Number(pos.quontity);
+        accepted += pos.accepted.length;
+    });
+
     return (
-        <Container wrapper>
-            <Link href={`/tickets/${params.id}`}>
-                <IconButton icon="back"/>
-            </Link>
-            <h1>{address_data.number}</h1>
-            <p>{address_data.address}</p>
-        </Container>
+        <>
+            <div className={styles.overlay}></div>
+            <Spacer top={2} />
+            <Container>
+                <Link href={`/tickets/${params.id}`} className={styles.link}>
+                    <IconButton icon="back" />
+                </Link>
+            </Container>
+            <Spacer top={2} />
+            <Padding
+                vertical={2}
+                horisontal={0.5}
+                className={styles.address_card}
+            >
+                <Container>
+                    <h2>{address_data.number}</h2>
+                    <Card>
+                        <AddressCard
+                            subway={address_data.subway}
+                            address={address_data.address}
+                        />
+                    </Card>
+                    <SchoolManagerPlate
+                        full_name={address_data.contact}
+                        phone={address_data.phone}
+                    />
+                    <Spacer top={2} />
+                    <Row>
+                        <h2>Позиции</h2>
+                        <PositionsIndicator
+                            positions={positions}
+                            available={accepted}
+                            light
+                        />
+                    </Row>
+
+                    <Spacer top={1} />
+                    <PositionList positions={address_data.positions} add_position={false} />
+
+                    <Spacer top={20} />
+                </Container>
+            </Padding>
+            <Spacer top={-5} />
+        </>
     );
 }

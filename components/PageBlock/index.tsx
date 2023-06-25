@@ -28,7 +28,7 @@ type props = {
 
 export default function PageBlock(props: props) {
     const href =
-        props.name.slice(0, 4) == "find" ? props.name : `/lk/${props.name}`;
+        props.name.slice(0, 4) == "find" ? props.name : `/${props.name}`;
 
     return (
         <>
@@ -173,6 +173,27 @@ export default function PageBlock(props: props) {
                                     }
                                 >
                                     Поиск работы
+                                </h3>
+                            </>
+                        )}
+
+                        {/* Manager */}
+                        {props.name == "tickets" && (
+                            <>
+                                <Image
+                                    src={
+                                        props.active
+                                            ? VacancyIconWhite
+                                            : VacancyIcon
+                                    }
+                                    alt="tickets"
+                                />
+                                <h3
+                                    className={
+                                        props.show ? styles.show : styles.name
+                                    }
+                                >
+                                    Заявки
                                 </h3>
                             </>
                         )}

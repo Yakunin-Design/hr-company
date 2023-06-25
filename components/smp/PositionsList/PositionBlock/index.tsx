@@ -1,3 +1,4 @@
+"use clien"
 import Image from "next/image";
 
 import Card from "@/components/Card";
@@ -46,7 +47,9 @@ function parse_candidates(count: number, add_position?: boolean) {
             return `${count} человек`;
         }
     } else {
-        if (count < 2) {
+        if (count == 0) {
+            return `${count} кандидатов`;
+        } else if (count < 2) {
             return `${count} кандидат`;
         } else if (count < 5) {
             return `${count} кандидата`;
@@ -71,7 +74,7 @@ export default function PositionBlock(props: props) {
         if (type === "empty") {
             return (
                 <h4 className={textstyle}>
-                    {!isUser(props.position_data) && parse_candidates(props.position_data.quontity, props.add_position)}
+                    {!isUser(props.position_data) && parse_candidates(props.position_data.candidates.length, props.add_position)}
                 </h4>
             );
         } else {
@@ -114,8 +117,8 @@ export default function PositionBlock(props: props) {
         } else {
             return {
                 avatar: EmptyPosition,
-                title: `${props.position_data.position} (${props.position_data.quontity})`,
-                subtitle: props.add_position ? `${props.position_data.time}` : `к ${props.position_data.time} утра`,
+                title: `${props.position_data.position} ${props.add_position ? `(${props.position_data.quontity})` : ""}`,
+                subtitle: props.position_data.time,
             };
         }
     }

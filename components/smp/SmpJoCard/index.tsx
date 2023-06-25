@@ -8,6 +8,7 @@ import Image from "next/image";
 import JoSchedule from "@/components/JoSchedule";
 import PositionsIndicator from "../PositionsIndicator";
 import address_icon from "./address_icon.svg";
+import AddressCard from "@/components/AddressCard";
 
 type props = {
     jo_data: {
@@ -41,23 +42,7 @@ export default function SmpJoCard(props: props) {
                         />
                     </Row>
                     <Spacer top="1" />
-                    <div>
-                        <Subway
-                            station={props.jo_data.subway}
-                            text_style="h4"
-                        />
-                        <Spacer top=".4" />
-                        <Row gap={.5}>
-							<Image
-								src={address_icon}
-								alt="address icon"
-							/>
-                            <h4 className={style.specialty}>
-                                {props.jo_data.address}
-                            </h4>
-                        </Row>
-                    </div>
-
+                    <AddressCard subway={props.jo_data.subway} address={props.jo_data.address}/>
                     <JoSchedule
                         schedule={false}
                         working_time={props.jo_data.working_time}

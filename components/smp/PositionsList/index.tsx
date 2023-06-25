@@ -84,8 +84,6 @@ const get_empty_cards = (
                 <PositionBlock
                     key={position.position + i}
                     position_data={position_data}
-                    add_position
-                    onClick={delete_position}
                 />
             );
         }

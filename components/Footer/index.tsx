@@ -9,7 +9,7 @@ export default function Footer(props : {lk?: boolean}) {
         <footer className={styles.footer}>
             <Container lk={props.lk}>
                 <Row className={styles.content}>
-                    <h3>Hr company</h3>
+                    <h3>HRC | Школьное питание</h3>
                     <div className={styles.grid}>
                         <Link href="/faq" className={styles.link}>
                             Частые вопросы

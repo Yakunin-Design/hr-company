@@ -35,7 +35,7 @@ export default function FullSidebar(props: props) {
                             : styles.name
                     }
                 >
-                    HR Company
+                    HRC | Школьное питание
                 </h3>
                 <div
                     className={
@@ -90,13 +90,8 @@ export default function FullSidebar(props: props) {
                     <>
                         <div className={styles.nav_block}>
                             <PageBlock
-                                name="job-offers"
-                                active={props.active == "job-offers"}
-                                show={props.show}
-                            />
-                            <PageBlock
-                                name="points"
-                                active={props.active == "points"}
+                                name="tickets"
+                                active={props.active == "tickets"}
                                 show={props.show}
                             />
                             <Spacer top="2" />

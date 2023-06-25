@@ -4,6 +4,7 @@
 }
 
 .empty_position {
+    margin-top: 1rem;
     padding: 1em 2em;
     color: black;
     border: 2px dashed #797979;
