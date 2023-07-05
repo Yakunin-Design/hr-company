@@ -13,6 +13,7 @@ import get_data from "./get_data";
 import Row from "@/components/std/Row";
 import PositionsIndicator from "@/components/smp/PositionsIndicator";
 import Subway from "@/components/Subway";
+import RespondButton from "./RespondButton";
 
 type params = {
     id: string;
@@ -20,20 +21,22 @@ type params = {
 
 export default async function JobOffers({params}: {params: params}) {
 	const jo_data = await get_data(params.id);
-
-	/**
-  price: 100,
-
-	 */
-
+	const formated_created_time = jo_data.creating_time;
 
     return (
 		<Container wrapper>
 			<Overlay href="/job-offers">
 				<Padding vertical={1} horisontal={1}>
-					<Spacer top={1} bottom={3}>
+					<Spacer top={1} bottom={2}>
 						<h2 className="--cd">{jo_data.position}</h2>
 					</Spacer>
+
+					<RespondButton 
+						ticket_id={jo_data.ticket_id} 
+						school_id={jo_data.school_id} 
+						position={jo_data.position} 
+					/>
+					<Spacer top={1}/>
 
 					<Row>
 						<p>Позиции:</p>
@@ -43,7 +46,7 @@ export default async function JobOffers({params}: {params: params}) {
 
 					<Row>
 						<p>Создана:</p>	
-						<h3>{jo_data.creation_time}</h3>
+						<h3>{formated_created_time}</h3>
 					</Row>
 					<Spacer top={1}/>
 

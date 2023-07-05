@@ -81,7 +81,7 @@ export default function PageBlock(props: props) {
                         )}
 
                         {/* Employer */}
-                        {props.name == "job-offers" && (
+                        {props.name == "find-job" && (
                             <>
                                 <Image
                                     src={
@@ -89,7 +89,7 @@ export default function PageBlock(props: props) {
                                             ? VacancyIconWhite
                                             : VacancyIcon
                                     }
-                                    alt="job-offers"
+                                    alt="find-job"
                                 />
                                 <h3
                                     className={
@@ -157,7 +157,7 @@ export default function PageBlock(props: props) {
                                 </h3>
                             </>
                         )}
-                        {props.name == "find-job" && (
+                        {props.name == "job-offers" && (
                             <>
                                 <Image
                                     src={

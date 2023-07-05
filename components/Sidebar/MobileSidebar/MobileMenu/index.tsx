@@ -33,8 +33,8 @@ export default function MobileMenu(props: props) {
                     </div>
                     <Spacer top="2" />
                     <PageBlock
-                        name="find-job"
-                        active={props.active == "find-job"}
+                        name="job-offers"
+                        active={props.active == "job-offers"}
                         toggle={props.toggle}
                     />
                 </>

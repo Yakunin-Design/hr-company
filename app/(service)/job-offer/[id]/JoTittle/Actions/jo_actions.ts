@@ -3,7 +3,6 @@ import axios from "axios";
 export default function jo_actions({id}: {id: string}) {
     
     function close_job_offer() {
-
         const jwt = localStorage.getItem('jwt') || '';
 
         const config = {
@@ -33,7 +32,6 @@ export default function jo_actions({id}: {id: string}) {
     }
 
     function activate_job_offer() {
-
         const jwt = localStorage.getItem('jwt') || '';
 
         const config = {
@@ -63,7 +61,6 @@ export default function jo_actions({id}: {id: string}) {
     }
 
     function jo_respond() {
-
         const jwt = localStorage.getItem('jwt') || '';
 
         const config = {
