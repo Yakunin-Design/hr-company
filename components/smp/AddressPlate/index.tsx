@@ -29,6 +29,7 @@ export default function AddressPlate(props: props) {
 						)}
 						<p>{props.address}</p>
 					</div>
+
 					<PositionsIndicator
 						available={props.accepted}
 						positions={props.worker_count}

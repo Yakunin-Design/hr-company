@@ -75,7 +75,7 @@ export default function JobOffers() {
             },
         };
 
-        return <SmpJoCard jo_data={jo_data} />;
+        return <SmpJoCard jo_data={jo_data} key={jo_data.id} />;
     });
 
     return (
