@@ -13,4 +13,7 @@ router.get('/address/:id/:number', auth, smp_controller.get_address);
 router.get("/smp-job-offers", smp_controller.get_job_offers);
 router.get("/smp-job-offers/:id", smp_controller.get_job_offer_by_id);
 
+router.post("/smp-respond", auth, smp_controller.respond);
+router.post("/smp-respond-status", auth, smp_controller.respond_status);
+
 export default router;

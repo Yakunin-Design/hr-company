@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
 import db from '../lib/idb'
 import { ITicket } from '../interfaces/ITicket';
-import Result from '../lib/Result';
 
 async function new_ticket(req: Request, res: Response) { 
     try {
@@ -281,4 +280,132 @@ async function get_job_offer_by_id(req: Request, res: Response) {
     }
 }
 
-export default { new_ticket, get_all_tickets, get_ticket_by_id, get_address, activate_ticket, get_job_offers, get_job_offer_by_id };
+async function respond_status(req: Request, res: Response) {
+    try {
+        // get data form body
+        const position = req.body.position;
+        const school_id = req.body.school_id;
+        const ticket_id = new ObjectId(req.body.ticket_id);
+
+        if (res.locals.jwt.user_type != "worker") return res.status(400).send("u are not a worker");
+
+        const worker_id = new ObjectId(res.locals.user._id);
+
+        // find ticket by id
+        const db_ticket = await db.find({_id: ticket_id}, "tickets");
+        if (db_ticket.Err || db_ticket.Ok === null) return res.status(400).send("respond failed: db ticket");
+
+        // to update candidates field on ticket we need address index & positions index
+        const addresses = db_ticket.Ok.addresses;
+        let address_index = 9;
+        for(let i = 0; i < addresses.length; i++) {
+            if (addresses[i].school_id == school_id) {
+                address_index = i;
+                break;
+            }
+        }
+
+        const positions = addresses[address_index].positions;
+        let position_index = 9;
+        for(let i = 0; i < positions.length; i++) {
+            if (positions[i].position == position) {
+                position_index = i;
+                break;
+            }
+        }
+
+        const old_candidates = db_ticket.Ok.addresses[address_index].positions[position_index].candidates;
+
+        // check if worker is already in the array
+        let duplicate: boolean = false;
+        old_candidates.forEach(candidate => {
+            if(candidate.toString() == worker_id) duplicate = true;
+        })
+
+        if(duplicate) return res.status(200).send({status: true});
+
+        return res.status(200).send({status: false});
+    } catch (err) { 
+        console.log(err.message);
+        res.status(500).send(err.message);
+    }
+}
+
+async function respond(req: Request, res: Response) {
+    try {
+        // get data form body
+        const position = req.body.position;
+        const school_id = req.body.school_id;
+        const ticket_id = new ObjectId(req.body.ticket_id);
+
+        if (res.locals.jwt.user_type != "worker") return res.status(400).send("u are not a worker");
+
+        const worker_id = new ObjectId(res.locals.user._id);
+
+        // find ticket by id
+        const db_ticket = await db.find({_id: ticket_id}, "tickets");
+        if (db_ticket.Err || db_ticket.Ok === null) return res.status(400).send("respond failed: db ticket");
+
+        // to update candidates field on ticket we need address index & positions index
+        const addresses = db_ticket.Ok.addresses;
+        let address_index = 9;
+        for(let i = 0; i < addresses.length; i++) {
+            if (addresses[i].school_id == school_id) {
+                address_index = i;
+                break;
+            }
+        }
+
+        const positions = addresses[address_index].positions;
+        let position_index = 9;
+        for(let i = 0; i < positions.length; i++) {
+            if (positions[i].position == position) {
+                position_index = i;
+                break;
+            }
+        }
+
+        const old_candidates = db_ticket.Ok.addresses[address_index].positions[position_index].candidates;
+
+        // check if worker is already in the array
+        let duplicate: boolean = false;
+        old_candidates.forEach(candidate => {
+            if(candidate.toString() == worker_id) duplicate = true;
+        })
+
+        if(duplicate) return res.status(200).send("You are already a candidate");
+
+        // push worker id
+        const new_candidates = [
+            ...old_candidates,
+            worker_id
+        ]
+
+        const new_ticket_data = {
+            ...db_ticket.Ok,
+        }
+
+        new_ticket_data.addresses[address_index].positions[position_index].candidates = new_candidates;
+
+        // update ticket
+        const updated_db = await db.update({_id: ticket_id}, {$set: {...new_ticket_data}}, "tickets");
+        if (updated_db.Err || updated_db.Ok === null) return res.status(400).send("respond update failed");
+
+        return res.status(200).send("respond success");
+    } catch (err) { 
+        console.log(err.message);
+        res.status(500).send(err.message);
+    }
+}
+
+export default { 
+    new_ticket, 
+    get_all_tickets, 
+    get_ticket_by_id, 
+    get_address, 
+    activate_ticket, 
+    get_job_offers, 
+    get_job_offer_by_id, 
+    respond, 
+    respond_status 
+};
