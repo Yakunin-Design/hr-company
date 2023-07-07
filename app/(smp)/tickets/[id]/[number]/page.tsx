@@ -47,6 +47,8 @@ export default async function AddressPage({ params }: { params: params }) {
         accepted += pos.accepted.length;
     });
 
+    console.log(address_data);
+
     return (
         <>
             <div className={styles.overlay}></div>

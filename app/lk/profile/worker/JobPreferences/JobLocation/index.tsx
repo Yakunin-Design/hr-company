@@ -55,7 +55,7 @@ export default function JobLocation(props: props) {
                 */}
                 <datalist id="districts">
                     {districts.map(district => (
-                        <option value={district}>{district}</option>
+                        <option value={district} key={district}>{district}</option>
                     ))}
                 </datalist>
             </Row>

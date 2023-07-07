@@ -10,7 +10,7 @@ type props = {
 }
 
 export default function RespondButton(props: props) {
-    const [respond, set_respond] = useState(false);
+    const [respond, set_respond] = useState<"worker" | "candidate" | "hidden">("hidden");
 
     useEffect(() => {
         const jwt = localStorage.getItem("jwt") || "";
@@ -80,5 +80,10 @@ export default function RespondButton(props: props) {
             });
     }
 
-    return !respond ? <Button onClick={onClick} expand>Откликнуться</Button> : <div className="--cd"><b>Вы откликнулись на эту вакансию.</b></div>;
+    return (
+        <>
+            { respond === "worker" && <Button onClick={onClick} expand>Откликнуться</Button> }
+            { respond === "candidate" && <div className="--cd"><b>Вы откликнулись на эту вакансию 👌</b></div> }
+        </>
+    )
 }

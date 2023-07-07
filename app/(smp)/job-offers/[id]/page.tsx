@@ -8,7 +8,7 @@ import man from "@/assets/svg/man.svg"
 import woman from "@/assets/svg/woman.svg"
 import time_span from "@/assets/svg/time_span.svg";
 
-import style from "./jobOffer.module.css";
+import styles from "./jobOffer.module.css";
 import get_data from "./get_data";
 import Row from "@/components/std/Row";
 import PositionsIndicator from "@/components/smp/PositionsIndicator";
@@ -21,12 +21,12 @@ type params = {
 
 export default async function JobOffers({params}: {params: params}) {
 	const jo_data = await get_data(params.id);
-	const formated_created_time = jo_data.creating_time;
+	const formated_created_time = jo_data.creation_time;
 
     return (
 		<Container wrapper>
 			<Overlay href="/job-offers">
-				<Padding vertical={1} horisontal={1}>
+				<Padding className={styles.card_padding}>
 					<Spacer top={1} bottom={2}>
 						<h2 className="--cd">{jo_data.position}</h2>
 					</Spacer>
@@ -85,8 +85,8 @@ export default async function JobOffers({params}: {params: params}) {
 						<Spacer top="1" />
 						<Row>
 							<div>
-								<p className={style.time_title}>Начало</p>
-								<h3 className={style.time_value}>
+								<p>Начало</p>
+								<h3>
 									{jo_data.working_hours.from}
 								</h3>
 							</div>
@@ -94,15 +94,15 @@ export default async function JobOffers({params}: {params: params}) {
 							<Image src={time_span} alt="time_span" />
 
 							<div>
-								<p className={style.time_title}>Окончание</p>
-								<h3 className={style.time_value}>{jo_data.working_hours.to}</h3>
+								<p>Окончание</p>
+								<h3>{jo_data.working_hours.to}</h3>
 							</div>
 						</Row>
 						</>              
 						:
 						<Row>
-							<p className={style.time_title}>Начало</p>
-							<h3 className={style.time_value}>
+							<p>Начало</p>
+							<h3>
 								{jo_data.working_hours.from}
 							</h3>
 						</Row>
@@ -111,17 +111,17 @@ export default async function JobOffers({params}: {params: params}) {
 					{ jo_data.sex != 'any' &&
 						<>
 							<Spacer top="1"/>
-							<Row className={style.row}>
+							<Row>
 								{
 									jo_data.sex === 'male' 
 									?
 									<>
-										<div className={style.block}><Image src={man} alt="man"/></div>
+										<div><Image src={man} alt="man"/></div>
 										<h3>Только мужчины</h3>
 									</>
 									:
 									<>
-										<div className={style.block}><Image src={woman} alt ="women"/></div>
+										<div><Image src={woman} alt ="women"/></div>
 										<h3>Только женщины</h3>
 									</>
 								}
@@ -129,6 +129,18 @@ export default async function JobOffers({params}: {params: params}) {
 							<Spacer top={1}/>
 						</>
 					}
+
+
+					{ jo_data.visitors_count != null &&
+					<>
+						<Row>
+							<p>Готовить на</p>	
+							<h3>{jo_data.visitors_count} человек</h3>
+						</Row>
+						<Spacer top={1}/>
+					</>
+					}
+
 
 					{ jo_data.comment != "" &&
 					<>
