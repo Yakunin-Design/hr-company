@@ -6,7 +6,6 @@ import { ITicket } from '../interfaces/ITicket';
 async function new_ticket(req: Request, res: Response) { 
     try {
         const data = req.body;
-        const user_type = res.locals.jwt.user_type;
 
         // Data prep for ticket creation
         const comment = data.comment;
@@ -217,6 +216,7 @@ async function activate_ticket(req: Request, res: Response) {
                     city: ticket.Ok!.city,
                     quontity: pos.quontity,
                     sex: pos.sex,
+                    visitors_count: pos.visitors_count,
                     school_id: adr.school_id,
                     ticket_id: ticket.Ok!._id
                 }
@@ -266,12 +266,13 @@ async function get_job_offer_by_id(req: Request, res: Response) {
     try {
         const job_offer = await db.find({_id: new ObjectId(req.params.id)}, 'smp_job_offers');
         if (!job_offer.Ok) return res.status(500).send("job offer was not found :(");
-            const school_id = new ObjectId(job_offer.Ok.school_id);
-            const db_school = await db.find({_id: school_id}, "schools");
-            const new_data = {
-                ...db_school.Ok,
-                ...job_offer.Ok
-            }
+
+        const school_id = new ObjectId(job_offer.Ok.school_id);
+        const db_school = await db.find({_id: school_id}, "schools");
+        const new_data = {
+            ...db_school.Ok,
+            ...job_offer.Ok
+        }
 
         return res.status(200).send(new_data);
     } catch (err) { 
@@ -287,7 +288,7 @@ async function respond_status(req: Request, res: Response) {
         const school_id = req.body.school_id;
         const ticket_id = new ObjectId(req.body.ticket_id);
 
-        if (res.locals.jwt.user_type != "worker") return res.status(400).send("u are not a worker");
+        if (res.locals.jwt.user_type != "worker") return res.status(200).send({status: "hidden"});
 
         const worker_id = new ObjectId(res.locals.user._id);
 
@@ -322,9 +323,9 @@ async function respond_status(req: Request, res: Response) {
             if(candidate.toString() == worker_id) duplicate = true;
         })
 
-        if(duplicate) return res.status(200).send({status: true});
+        if(duplicate) return res.status(200).send({status: "candidate"});
 
-        return res.status(200).send({status: false});
+        return res.status(200).send({status: "worker"});
     } catch (err) { 
         console.log(err.message);
         res.status(500).send(err.message);
