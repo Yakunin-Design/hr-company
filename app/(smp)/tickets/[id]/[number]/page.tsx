@@ -3,8 +3,6 @@ import Container from "@/components/std/Container";
 import Spacer from "@/components/std/Spacer";
 import Row from "@/components/std/Row";
 import { cookies } from "next/headers";
-import TicketInfo from "@/components/smp/TicketInfo";
-import AddressPlate from "@/components/smp/AddressPlate";
 import IconButton from "@/components/IconButton";
 import Link from "next/link";
 import styles from "./AddressPage.module.css";
@@ -12,7 +10,6 @@ import Card from "@/components/Card";
 import SchoolManagerPlate from "@/components/smp/SchoolManagerPlate";
 import AddressCard from "@/components/AddressCard";
 import Padding from "@/components/std/Padding";
-import PositionBlock from "@/components/smp/PositionsList/PositionBlock";
 import PositionsIndicator from "@/components/smp/PositionsIndicator";
 import PositionList from "@/components/smp/PositionsList";
 
