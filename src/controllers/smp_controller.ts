@@ -196,6 +196,65 @@ async function get_address(req: Request, res: Response) {
     res.status(200).send(response_data);
 }
 
+async function get_position(req: Request, res: Response) {
+    // get ticket id
+    
+    const ticket_id = new ObjectId(req.params.id);
+    const adress_number = req.params.number;
+    const position_index = req.params.position_index;
+
+    // find ticket in db
+    const db_ticket = await db.find({ _id: ticket_id }, "tickets");
+    if (db_ticket.Err) return res.status(500).send("db failed");
+    
+    if (db_ticket.Ok === null) return res.status(404).send("ticket was not found :(");
+
+    // getting data setup for frontend (school data + worker_count & accepted)
+    if (adress_number > db_ticket.Ok.addresses.length) {
+        return res.status(404).send("address not found :(");
+    }
+    const address_data = db_ticket.Ok.addresses[adress_number];
+    const position = address_data.positions[position_index];
+    
+    const candidates = await Promise.all(position.candidates.map(async candidate => {
+        const candidate_data = await db.find({_id: candidate}, "workers");
+        
+        if (!candidate_data.Ok) {
+            return res.status(401).send("Worker find err");
+        }
+
+        return {
+            id: candidate_data.Ok._id,
+            name: candidate_data.Ok.full_name,
+            status: candidate_data.Ok.status
+        }
+    }))
+
+    const accepted = await Promise.all(position.accepted.map(async accepted_worker => {
+        const worker_data = await db.find({_id: accepted_worker}, "workers");
+        
+        if (!worker_data.Ok) {
+            return res.status(401).send("Worker find err");
+        }
+
+        return {
+            id: worker_data.Ok._id.toString,
+            name: worker_data.Ok.full_name,
+            status: worker_data.Ok.status
+        }
+    }))
+
+    // send the ticket
+    const response_data = {
+        position: position.position,
+        quontity: position.quontity,
+        candidates,
+        accepted
+    }
+
+    return res.status(200).send(response_data);
+}
+
 async function activate_ticket(req: Request, res: Response) {
     try {
         const id = new ObjectId(req.params.id);
@@ -414,7 +473,7 @@ async function accept_candidate(req: Request, res: Response) {
     // for now we use moderator middleware bc we dont have smp client support yet
     
     const {candidates, accepted, position_index } = req.body;
-    const school_id = new ObjectId(req.body.school_id);
+    const school = req.body.school;
     const ticket_id = new ObjectId(req.body.ticket_id);
 
     // find ticket    
@@ -427,14 +486,9 @@ async function accept_candidate(req: Request, res: Response) {
         return res.status(400).send("Ticket not found: accept candidate failed");
     }
 
-    const new_addresses = ticket.Ok.addresses.map(address => {
-        if (address.school_id === school_id) {
-            const position = address.positions[position_index];
-            position.candidates = candidates;
-            position.accepted = accepted;
-        }
-        return address;    
-    });
+    const new_addresses = ticket.Ok.addresses;
+    new_addresses[school].candidates = candidates;
+    new_addresses[school].accepted = accepted;
 
     // create new addresses object
     const new_data = {
@@ -586,7 +640,8 @@ export default {
     new_ticket, 
     get_all_tickets, 
     get_ticket_by_id, 
-    get_address, 
+    get_address,
+    get_position,
     activate_ticket, 
     get_job_offers, 
     get_job_offer_by_id, 

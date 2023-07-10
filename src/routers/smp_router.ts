@@ -10,6 +10,7 @@ router.get('/tickets', auth, smp_controller.get_all_tickets);
 router.get('/tickets/:id', auth, smp_controller.get_ticket_by_id);
 router.get('/activate-ticket/:id', auth, smp_controller.activate_ticket);
 router.get('/address/:id/:number', auth, smp_controller.get_address);
+router.get('/address/:id/:number/:position_index', auth, smp_controller.get_position);
 
 router.get("/smp-job-offers", smp_controller.get_job_offers);
 router.get("/smp-job-offers/:id", smp_controller.get_job_offer_by_id);
