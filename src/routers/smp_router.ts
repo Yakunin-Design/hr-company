@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import smp_controller from "../controllers/smp_controller";
 import auth from '../middleware/auth';
+import auth_moderator from "../middleware/auth_moderator";
 
 const router = Router();
 
@@ -15,5 +16,7 @@ router.get("/smp-job-offers/:id", smp_controller.get_job_offer_by_id);
 
 router.post("/smp-respond", auth, smp_controller.respond);
 router.post("/smp-respond-status", auth, smp_controller.respond_status);
+
+router.post("/smp-accept", auth, auth_moderator, smp_controller.accept_candidate);
 
 export default router;

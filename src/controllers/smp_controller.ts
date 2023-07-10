@@ -358,7 +358,7 @@ async function respond(req: Request, res: Response) {
         }
 
         const positions = addresses[address_index].positions;
-        let position_index = 9;
+        let position_index = 9; // it should not be 9 btw
         for(let i = 0; i < positions.length; i++) {
             if (positions[i].position == position) {
                 position_index = i;
@@ -399,6 +399,189 @@ async function respond(req: Request, res: Response) {
     }
 }
 
+async function accept_candidate(req: Request, res: Response) {
+    
+    /**
+     * req: {
+     *  ticket_id: string,
+     *  school_id: string,
+     *  position_index: number,
+     *  candidates: string[],
+     *  accepted: string[]
+     * }
+     */
+
+    // for now we use moderator middleware bc we dont have smp client support yet
+    
+    const {candidates, accepted, position_index } = req.body;
+    const school_id = new ObjectId(req.body.school_id);
+    const ticket_id = new ObjectId(req.body.ticket_id);
+
+    // find ticket    
+    const ticket = await db.find({_id: ticket_id}, "tickets");
+    if (ticket.Err) {
+        return res.status(401).send(ticket.Err.message);
+    }
+
+    if (!ticket.Ok) {
+        return res.status(400).send("Ticket not found: accept candidate failed");
+    }
+
+    const new_addresses = ticket.Ok.addresses.map(address => {
+        if (address.school_id === school_id) {
+            const position = address.positions[position_index];
+            position.candidates = candidates;
+            position.accepted = accepted;
+        }
+        return address;    
+    });
+
+    // create new addresses object
+    const new_data = {
+        ...ticket,
+        addresses: new_addresses
+    }
+    
+    const update_ticket = await db.update({_id: ticket_id}, {$set: {...new_data}}, "tickets");
+
+    if (update_ticket.Err) {
+        return res.status(401).send("accept update failed");
+    }
+    
+    return res.status(200).send("accepted[] updated successfully");
+/**
+   
+    address (school)
+    we have a school with {
+        candidates: id[],
+        accepted: [],
+    }
+
+    // yes
+    when we accept a candidate we just transfer his id from candidates into accepted
+    and we can do this in frontend, when select workers, 
+    then we can send api call with new candidates and accepted arr's ????
+
+    !not really
+
+    we just merge old accepted[] and new accepted[] and send this asj
+    wait
+    actually we just need to use our 
+
+    i think we dont need to send just id's, we can send theese 2 arrs and just update them
+
+    or we can send only accepted arr and check id's in candidates into backend
+    nah that is just extra complexity, why should we care
+
+    like a: 
+
+    just use this object, it will work just fine: 
+    changes: { 
+        candidates: [],
+        accepted: []
+    }
+
+    how do we know what to update tho ????????????????????????????
+    ! we need to send ticket id and address index as well
+
+    XD
+
+    i try to say same
+
+    frontend: fetch to accept_candidates() with changes object
+
+
+    where do we store the candidates and workers, in ticket or in address ????
+
+    we have this:
+
+    THAT IS A REAL OBJECT FROM DB 
+
+    ok, we just have new array's of candidates and workers, yes? mhm!
+    on a specific address in the specific ticket
+
+
+    req: {
+        candidates: [],
+        accepted: [],
+        address_id: id
+    }
+
+    db.update(address_id, {....}), yes?
+
+    yeah
+
+    ok!! :D
+
+    ok!! :)
+
+
+    {
+  "_id": {
+    "$oid": "64a581081225dc8e5fc57c78"
+  },
+  "company_id": {
+    "$oid": "64a572fe1225dc8e5fc57c71"
+  },
+  "company_name": "test",
+  "date_of_creation": {
+    "$date": "2023-07-05T14:41:12.106Z"
+  },
+  "realization_date": "08.07.2023",
+  "status": "in progress",
+  "city": "Санкт-Петербург",
+  "total_workers_count": 3,
+  "accepted": 0,
+  "comment": "",
+  "addresses": [
+    {
+      "school_id": {
+        "$oid": "64a581081225dc8e5fc57c77"
+      },
+      "positions": [
+        {
+          "position": "Работник зала",
+          "quontity": "2",
+          "working_hours": {
+            "from": "8:00",
+            "to": "18:00"
+          },
+          "visitors_count": "10",
+          "sex": "male",
+          "comment": "",
+          "candidates": [
+            {
+              "$oid": "64a5d6a8ae1c74d889cbb8d5"
+            }
+          ],
+          "accepted": [],
+          "price": 100
+        },
+        {
+          "position": "Повар-кондитер",
+          "quontity": 1,
+          "working_hours": {
+            "from": "9",
+            "to": ""
+          },
+          "visitors_count": null,
+          "sex": "female",
+          "comment": "стаж 2 года",
+          "candidates": [
+            {
+              "$oid": "64a5d6a8ae1c74d889cbb8d5"
+            }
+          ],
+          "accepted": [],
+          "price": 100
+        }
+      ]
+    }
+  ]
+}
+ */
+}
+
 export default { 
     new_ticket, 
     get_all_tickets, 
@@ -408,5 +591,6 @@ export default {
     get_job_offers, 
     get_job_offer_by_id, 
     respond, 
-    respond_status 
+    respond_status,
+    accept_candidate,
 };
