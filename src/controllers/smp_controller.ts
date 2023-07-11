@@ -197,62 +197,67 @@ async function get_address(req: Request, res: Response) {
 }
 
 async function get_position(req: Request, res: Response) {
-    // get ticket id
-    
-    const ticket_id = new ObjectId(req.params.id);
-    const adress_number = req.params.number;
-    const position_index = req.params.position_index;
-
-    // find ticket in db
-    const db_ticket = await db.find({ _id: ticket_id }, "tickets");
-    if (db_ticket.Err) return res.status(500).send("db failed");
-    
-    if (db_ticket.Ok === null) return res.status(404).send("ticket was not found :(");
-
-    // getting data setup for frontend (school data + worker_count & accepted)
-    if (adress_number > db_ticket.Ok.addresses.length) {
-        return res.status(404).send("address not found :(");
-    }
-    const address_data = db_ticket.Ok.addresses[adress_number];
-    const position = address_data.positions[position_index];
-    
-    const candidates = await Promise.all(position.candidates.map(async candidate => {
-        const candidate_data = await db.find({_id: candidate}, "workers");
+    try {
+        // get ticket id
         
-        if (!candidate_data.Ok) {
-            return res.status(401).send("Worker find err");
-        }
+        const ticket_id = new ObjectId(req.params.id);
+        const adress_number = req.params.number;
+        const position_index = req.params.position_index;
 
-        return {
-            id: candidate_data.Ok._id,
-            name: candidate_data.Ok.full_name,
-            status: candidate_data.Ok.status
-        }
-    }))
-
-    const accepted = await Promise.all(position.accepted.map(async accepted_worker => {
-        const worker_data = await db.find({_id: accepted_worker}, "workers");
+        // find ticket in db
+        const db_ticket = await db.find({ _id: ticket_id }, "tickets");
+        if (db_ticket.Err) return res.status(500).send("db failed");
         
-        if (!worker_data.Ok) {
-            return res.status(401).send("Worker find err");
+        if (db_ticket.Ok === null) return res.status(404).send("ticket was not found :(");
+
+        // getting data setup for frontend (school data + worker_count & accepted)
+        if (adress_number > db_ticket.Ok.addresses.length) {
+            return res.status(404).send("address not found :(");
+        }
+        const address_data = db_ticket.Ok.addresses[adress_number];
+        const position = address_data.positions[position_index];
+        
+        const candidates = await Promise.all(position.candidates.map(async candidate => {
+            const candidate_data = await db.find({_id: candidate}, "workers");
+            
+            if (!candidate_data.Ok) {
+                return res.status(401).send("Worker find err");
+            }
+
+            return {
+                id: candidate_data.Ok._id,
+                name: candidate_data.Ok.full_name,
+                status: candidate_data.Ok.status
+            }
+        }))
+
+        const accepted = await Promise.all(position.accepted.map(async accepted_worker => {
+            const worker_data = await db.find({_id: accepted_worker}, "workers");
+            
+            if (!worker_data.Ok) {
+                return res.status(401).send("Worker find err");
+            }
+
+            return {
+                id: worker_data.Ok._id.toString(),
+                name: worker_data.Ok.full_name,
+                status: worker_data.Ok.status
+            }
+        }))
+
+        // send the ticket
+        const response_data = {
+            position: position.position,
+            quontity: position.quontity,
+            candidates,
+            accepted
         }
 
-        return {
-            id: worker_data.Ok._id.toString,
-            name: worker_data.Ok.full_name,
-            status: worker_data.Ok.status
-        }
-    }))
-
-    // send the ticket
-    const response_data = {
-        position: position.position,
-        quontity: position.quontity,
-        candidates,
-        accepted
+        return res.status(200).send(response_data);
+    } catch(err) {
+        console.log(err.message);
+        res.status(500).send(err.message);
     }
-
-    return res.status(200).send(response_data);
 }
 
 async function activate_ticket(req: Request, res: Response) {
@@ -472,8 +477,7 @@ async function accept_candidate(req: Request, res: Response) {
 
     // for now we use moderator middleware bc we dont have smp client support yet
     
-    const {candidates, accepted, position_index } = req.body;
-    const school = req.body.school;
+    const {candidates, accepted, position_index, address_index } = req.body;
     const ticket_id = new ObjectId(req.body.ticket_id);
 
     // find ticket    
@@ -487,15 +491,20 @@ async function accept_candidate(req: Request, res: Response) {
     }
 
     const new_addresses = ticket.Ok.addresses;
-    new_addresses[school].candidates = candidates;
-    new_addresses[school].accepted = accepted;
+
+    const position = new_addresses[address_index].positions[position_index];
+    position.candidates = candidates.map(candidate => new ObjectId(candidate));
+    position.accepted = accepted.map(worker => new ObjectId(worker));
+
+    new_addresses[address_index].positions[position_index] = position;
 
     // create new addresses object
     const new_data = {
-        ...ticket,
+        ...ticket.Ok,
         addresses: new_addresses
     }
     
+    console.log(new_data);
     const update_ticket = await db.update({_id: ticket_id}, {$set: {...new_data}}, "tickets");
 
     if (update_ticket.Err) {
@@ -503,137 +512,6 @@ async function accept_candidate(req: Request, res: Response) {
     }
     
     return res.status(200).send("accepted[] updated successfully");
-/**
-   
-    address (school)
-    we have a school with {
-        candidates: id[],
-        accepted: [],
-    }
-
-    // yes
-    when we accept a candidate we just transfer his id from candidates into accepted
-    and we can do this in frontend, when select workers, 
-    then we can send api call with new candidates and accepted arr's ????
-
-    !not really
-
-    we just merge old accepted[] and new accepted[] and send this asj
-    wait
-    actually we just need to use our 
-
-    i think we dont need to send just id's, we can send theese 2 arrs and just update them
-
-    or we can send only accepted arr and check id's in candidates into backend
-    nah that is just extra complexity, why should we care
-
-    like a: 
-
-    just use this object, it will work just fine: 
-    changes: { 
-        candidates: [],
-        accepted: []
-    }
-
-    how do we know what to update tho ????????????????????????????
-    ! we need to send ticket id and address index as well
-
-    XD
-
-    i try to say same
-
-    frontend: fetch to accept_candidates() with changes object
-
-
-    where do we store the candidates and workers, in ticket or in address ????
-
-    we have this:
-
-    THAT IS A REAL OBJECT FROM DB 
-
-    ok, we just have new array's of candidates and workers, yes? mhm!
-    on a specific address in the specific ticket
-
-
-    req: {
-        candidates: [],
-        accepted: [],
-        address_id: id
-    }
-
-    db.update(address_id, {....}), yes?
-
-    yeah
-
-    ok!! :D
-
-    ok!! :)
-
-
-    {
-  "_id": {
-    "$oid": "64a581081225dc8e5fc57c78"
-  },
-  "company_id": {
-    "$oid": "64a572fe1225dc8e5fc57c71"
-  },
-  "company_name": "test",
-  "date_of_creation": {
-    "$date": "2023-07-05T14:41:12.106Z"
-  },
-  "realization_date": "08.07.2023",
-  "status": "in progress",
-  "city": "Санкт-Петербург",
-  "total_workers_count": 3,
-  "accepted": 0,
-  "comment": "",
-  "addresses": [
-    {
-      "school_id": {
-        "$oid": "64a581081225dc8e5fc57c77"
-      },
-      "positions": [
-        {
-          "position": "Работник зала",
-          "quontity": "2",
-          "working_hours": {
-            "from": "8:00",
-            "to": "18:00"
-          },
-          "visitors_count": "10",
-          "sex": "male",
-          "comment": "",
-          "candidates": [
-            {
-              "$oid": "64a5d6a8ae1c74d889cbb8d5"
-            }
-          ],
-          "accepted": [],
-          "price": 100
-        },
-        {
-          "position": "Повар-кондитер",
-          "quontity": 1,
-          "working_hours": {
-            "from": "9",
-            "to": ""
-          },
-          "visitors_count": null,
-          "sex": "female",
-          "comment": "стаж 2 года",
-          "candidates": [
-            {
-              "$oid": "64a5d6a8ae1c74d889cbb8d5"
-            }
-          ],
-          "accepted": [],
-          "price": 100
-        }
-      ]
-    }
-  ]
-}
- */
 }
 
 export default { 
