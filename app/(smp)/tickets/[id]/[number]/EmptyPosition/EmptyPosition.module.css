@@ -1,0 +1,15 @@
+.empty_position {
+    margin-top: 1rem;
+    padding: 1em 2em;
+    color: black;
+    border: 2px dashed #797979;
+}
+
+.empty_headline {
+    color: #797979;
+}
+
+.icon {
+    width: 2em;
+    height: 2em;
+}

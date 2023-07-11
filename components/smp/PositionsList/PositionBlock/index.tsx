@@ -1,6 +1,4 @@
-"use clien"
 import Image from "next/image";
-
 import Card from "@/components/Card";
 import { candidate } from "../index";
 import Row from "@/components/std/Row";

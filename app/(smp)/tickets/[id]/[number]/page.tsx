@@ -12,6 +12,7 @@ import AddressCard from "@/components/AddressCard";
 import Padding from "@/components/std/Padding";
 import PositionsIndicator from "@/components/smp/PositionsIndicator";
 import PositionList from "@/components/smp/PositionsList";
+import EmptyPosition from "./EmptyPosition/EmptyPosition";
 
 type params = {
     id: string;
@@ -82,7 +83,12 @@ export default async function AddressPage({ params }: { params: params }) {
                     </Row>
 
                     <Spacer top={1} />
-                    <PositionList positions={address_data.positions} add_position={false} />
+                    {/* <PositionList positions={address_data.positions} add_position={false} /> */}
+                    <EmptyPosition 
+                        title={"this is test"} 
+                        subtitle={"hello threr"}
+                        candidates={5}
+                    />
 
                     <Spacer top={20} />
                 </Container>
