@@ -1,6 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import axios from "axios";
+import { setCookie } from 'cookies-next';
 
 type user = {
     user_type: string,
@@ -51,6 +52,8 @@ export function CheckUser(user: user, set_user: any) {
                         ...res.data
                     },
                 });
+
+                setCookie("jwt", jwt);
 
                 if (
                     localStorage.getItem("user_type") != "worker" ||

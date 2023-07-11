@@ -92,6 +92,7 @@ const get_empty_cards = (
 };
 
 export default function PositionList(props: props) {
+    console.log(props.positions)
     const positions = props.positions.map(position => {
         const workers = get_workers(position);
         const cards = get_empty_cards(

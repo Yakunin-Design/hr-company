@@ -51,7 +51,7 @@ export default function PositionPage({ params }: { params: params }) {
                 authorization: "Bearer " + jwt,
             },
         };
-        const db_tickets = axios
+        axios
             .get(
                 `${process.env.API_ADDRESS}/address/${params.id}/${params.number}/${params.position}`,
                 config
@@ -101,7 +101,7 @@ export default function PositionPage({ params }: { params: params }) {
         });
     }
 
-    const worker_row = (worker: worker, accepted?: boolean) => {
+    function WorkerRow({worker, accepted}: {worker: worker, accepted?: boolean}) {
         return (
             <Card>
                 <Row>
@@ -154,26 +154,23 @@ export default function PositionPage({ params }: { params: params }) {
 
         const data = {
             ticket_id: params.id,
-            school: params.number,
+            address_index: params.number,
             position_index: params.position,
-            candidates: position_data.candidates,
-            accepted: position_data.accepted,
+            candidates: position_data.candidates.map(candidate => candidate.id),
+            accepted: position_data.accepted.map(accepted_worker => accepted_worker.id),
         };
 
-        const db_tickets = axios
+        axios
             .post(`${process.env.API_ADDRESS}/smp-accept`, data, config)
             .then(res => {
                 window.location.href = `/tickets/${params.id}/${params.number}`;
             });
     }
 
-    const accepted_workers = position_data.accepted.map(worker => {
-        return worker_row(worker, true);
-    });
-
-    const candidates = position_data.candidates.map(worker => {
-        return worker_row(worker);
-    });
+    const accepted_workers = position_data.accepted
+        .map(worker => <WorkerRow worker={worker} accepted key={worker.id}/>);
+    const candidates = position_data.candidates
+        .map(candidate => <WorkerRow worker={candidate} key={candidate.id}/>);
 
     return (
         <>

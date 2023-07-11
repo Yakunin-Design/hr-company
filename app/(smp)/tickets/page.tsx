@@ -25,6 +25,7 @@ async function get_tickets() {
             authorization: "Bearer " + jwt,
         },
     };
+
     const db_tickets = await axios.get(
         `${process.env.API_ADDRESS}/tickets`,
         config

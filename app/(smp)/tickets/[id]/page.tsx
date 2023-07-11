@@ -1,7 +1,5 @@
 import axios from "axios";
 import Container from "@/components/std/Container";
-import Spacer from "@/components/std/Spacer";
-import Row from "@/components/std/Row";
 import { cookies } from "next/headers";
 import TicketInfo from "@/components/smp/TicketInfo";
 import AddressPlate from "@/components/smp/AddressPlate";
