@@ -32,8 +32,8 @@ type props = {
 export default function PositionForm(props: props) {
     const [errors, set_errors] = useState<string[]>([]);
     const error_styles = {
-        borderColor: "red"
-    }
+        borderColor: "red",
+    };
 
     function check_errors(): string[] {
         let errors = [];
@@ -71,7 +71,11 @@ export default function PositionForm(props: props) {
                                 placeholder="Повар универсал"
                                 onChange={props.handlePosition}
                                 value={props.position_data.position}
-                                style={errors.includes('position') ? error_styles : {}}
+                                style={
+                                    errors.includes("position")
+                                        ? error_styles
+                                        : {}
+                                }
                             />
                         </div>
                         <div>
@@ -93,7 +97,9 @@ export default function PositionForm(props: props) {
                                 placeholder="7:00"
                                 onChange={props.handlePosition}
                                 value={props.position_data.working_hours.from}
-                                style={errors.includes('from') ? error_styles : {}}
+                                style={
+                                    errors.includes("from") ? error_styles : {}
+                                }
                             />
                         </div>
                         <div>
@@ -166,7 +172,7 @@ export default function PositionForm(props: props) {
             <Spacer top={3} />
             <Container>
                 <Button onClick={save_position} expand>
-                    Добавить
+                    Добавить позицию
                 </Button>
             </Container>
         </>

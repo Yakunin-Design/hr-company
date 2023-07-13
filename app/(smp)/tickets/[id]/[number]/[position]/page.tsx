@@ -101,14 +101,20 @@ export default function PositionPage({ params }: { params: params }) {
         });
     }
 
-    function WorkerRow({worker, accepted}: {worker: worker, accepted?: boolean}) {
+    function WorkerRow({
+        worker,
+        accepted,
+    }: {
+        worker: worker;
+        accepted?: boolean;
+    }) {
         return (
             <Card>
                 <Row>
                     <Column>
                         <h3>{worker.name}</h3>
                         <Spacer top={0.25} />
-                        <Link href={`/profile/${worker.id}`} target="_blank">
+                        <Link href={`/worker/${worker.id}`} target="_blank">
                             <Row justifyContent="flex-start" gap={1}>
                                 {StatusIcon({
                                     is_ready: worker.status === "ready",
@@ -142,7 +148,7 @@ export default function PositionPage({ params }: { params: params }) {
                 </Row>
             </Card>
         );
-    };
+    }
 
     function send_data() {
         const jwt = localStorage.getItem("jwt");
@@ -157,7 +163,9 @@ export default function PositionPage({ params }: { params: params }) {
             address_index: params.number,
             position_index: params.position,
             candidates: position_data.candidates.map(candidate => candidate.id),
-            accepted: position_data.accepted.map(accepted_worker => accepted_worker.id),
+            accepted: position_data.accepted.map(
+                accepted_worker => accepted_worker.id
+            ),
         };
 
         axios
@@ -167,10 +175,12 @@ export default function PositionPage({ params }: { params: params }) {
             });
     }
 
-    const accepted_workers = position_data.accepted
-        .map(worker => <WorkerRow worker={worker} accepted key={worker.id}/>);
-    const candidates = position_data.candidates
-        .map(candidate => <WorkerRow worker={candidate} key={candidate.id}/>);
+    const accepted_workers = position_data.accepted.map(worker => (
+        <WorkerRow worker={worker} accepted key={worker.id} />
+    ));
+    const candidates = position_data.candidates.map(candidate => (
+        <WorkerRow worker={candidate} key={candidate.id} />
+    ));
 
     return (
         <>

@@ -23,8 +23,8 @@ type props = {
 export default function AddressForm(props: props) {
     const [errors, set_errors] = useState<string[]>([]);
     const error_styles = {
-        borderColor: "red"
-    }
+        borderColor: "red",
+    };
 
     function check_errors(): string[] {
         let errors = [];
@@ -42,13 +42,12 @@ export default function AddressForm(props: props) {
         }
         return errors;
     }
-    
+
     function save_address() {
         const errors = check_errors();
         if (errors.length > 0) {
             set_errors(errors);
-        }
-        else {
+        } else {
             props.add_address();
             props.prev_form();
         }
@@ -67,7 +66,9 @@ export default function AddressForm(props: props) {
                         placeholder="Школа №488"
                         onChange={props.handleAdress}
                         value={props.address_data.school_number}
-                        style={errors.includes('school_number') ? error_styles : {}}
+                        style={
+                            errors.includes("school_number") ? error_styles : {}
+                        }
                     />
                     <Spacer top={1} />
                     <Input
@@ -75,14 +76,14 @@ export default function AddressForm(props: props) {
                         label="Адрес*"
                         onChange={props.handleAdress}
                         value={props.address_data.address}
-                        style={errors.includes('address') ? error_styles : {}}
+                        style={errors.includes("address") ? error_styles : {}}
                     />
                     <Spacer top={1} />
                     <SubwayInput
                         label="Ближайшее метро*"
                         onChange={props.handleAdress}
                         value={props.address_data.subway}
-                        style={errors.includes('subway') ? error_styles : {}}
+                        style={errors.includes("subway") ? error_styles : {}}
                     />
                     <Spacer top={1} />
                     <Input
@@ -109,17 +110,17 @@ export default function AddressForm(props: props) {
                     delete_position={props.delete_position}
                 />
 
-                {
-                    errors.includes('positions') && <h3 className={styles.error_title}>Добавьте позицию</h3>
-                }
-                
+                {errors.includes("positions") && (
+                    <h3 className={styles.error_title}>Добавьте позицию</h3>
+                )}
+
                 <Spacer top={3} />
                 <Button onClick={props.next_form} expand secondary>
                     Добавить позицию +
                 </Button>
                 <Spacer top={2} />
                 <Button onClick={save_address} expand>
-                    Сохранить
+                    Сохранить адрес
                 </Button>
             </Container>
         </>

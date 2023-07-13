@@ -12,7 +12,9 @@ import AddressCard from "@/components/AddressCard";
 import Padding from "@/components/std/Padding";
 import PositionsIndicator from "@/components/smp/PositionsIndicator";
 import PositionList from "@/components/smp/PositionsList";
-import EmptyPosition from "./EmptyPosition/EmptyPosition";
+import EmptyPosition from "./EmptyPosition";
+import TakenPosition from "./TakenPosition";
+import { usePathname } from "next/navigation";
 
 type params = {
     id: string;
@@ -38,11 +40,43 @@ async function get_address(id: string, number: number) {
 export default async function AddressPage({ params }: { params: params }) {
     const address_data = await get_address(params.id, params.number);
 
-    let positions = 0;
-    let accepted = 0;
+    let total_positions = 0;
+    let total_accepted = 0;
     address_data.positions.forEach((pos: any) => {
-        positions += Number(pos.quontity);
-        accepted += pos.accepted.length;
+        total_positions += Number(pos.quontity);
+        total_accepted += pos.accepted.length;
+    });
+
+    let empty_positions: JSX.Element[] = [];
+    let accepted_positions: JSX.Element[] = [];
+
+    let position_index = 0;
+
+    address_data.positions.forEach((position: any) => {
+        position.accepted.forEach((accepted: any) => {
+            accepted_positions.push(
+                <TakenPosition
+                    key={accepted.id}
+                    id={accepted.id}
+                    position={position.position}
+                    full_name={accepted.full_name}
+                />
+            );
+        });
+
+        for (let i = 0; i < position.quontity - position.accepted.length; i++) {
+            empty_positions.push(
+                <EmptyPosition
+                    key={position}
+                    position={position.position}
+                    link={position_index}
+                    working_time={position.working_hours}
+                    candidates={position.candidates.length}
+                />
+            );
+        }
+
+        position_index++;
     });
 
     return (
@@ -68,27 +102,28 @@ export default async function AddressPage({ params }: { params: params }) {
                             address={address_data.address}
                         />
                     </Card>
-                    <SchoolManagerPlate
-                        full_name={address_data.contact}
-                        phone={address_data.phone}
-                    />
+                    {address_data.contact && (
+                        <SchoolManagerPlate
+                            full_name={address_data.contact}
+                            phone={address_data.phone}
+                        />
+                    )}
+
                     <Spacer top={2} />
                     <Row>
                         <h2>Позиции</h2>
                         <PositionsIndicator
-                            positions={positions}
-                            available={accepted}
+                            positions={total_positions}
+                            available={total_accepted}
                             light
                         />
                     </Row>
 
                     <Spacer top={1} />
                     {/* <PositionList positions={address_data.positions} add_position={false} /> */}
-                    <EmptyPosition 
-                        title={"this is test"} 
-                        subtitle={"hello threr"}
-                        candidates={5}
-                    />
+
+                    {accepted_positions}
+                    {empty_positions}
 
                     <Spacer top={20} />
                 </Container>

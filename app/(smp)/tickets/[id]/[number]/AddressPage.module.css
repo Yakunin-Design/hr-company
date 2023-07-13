@@ -42,3 +42,7 @@
 .input:checked + label .tou {
     border-color: var(--accent);
 }
+
+.link_text {
+    color: black !important;
+}
