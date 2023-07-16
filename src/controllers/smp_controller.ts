@@ -615,15 +615,42 @@ async function accept_candidate(req: Request, res: Response) {
     position.candidates = candidates.map(candidate => new ObjectId(candidate));
     position.accepted = accepted.map(worker => new ObjectId(worker));
 
-    new_addresses[address_index].positions[position_index] = position;
+    const position_users = position.candidates.map(user => user.toString());
+    const accepted_users = ticket.Ok.addresses[address_index].positions[
+        position_index
+    ].candidates
+        .filter(user => !position_users.includes(user.toString()))
+        .map(user => user.toString());
+
+    console.log(
+        ticket.Ok.addresses[address_index].positions[position_index].candidates
+    );
+    console.log(position_users);
+
+    let accepted_count = 0;
+    const result_address = new_addresses.map(adr => {
+        const positions = adr.positions.map(pos => {
+            accepted_count += pos.accepted.length;
+            const new_candidates = pos.candidates.filter(
+                candidate => !accepted_users.includes(candidate.toString())
+            );
+            const new_pos_data = {
+                ...pos,
+                candidates: new_candidates,
+            };
+            return new_pos_data;
+        });
+
+        return { ...adr, positions };
+    });
 
     // create new addresses object
     const new_data = {
         ...ticket.Ok,
-        addresses: new_addresses,
+        accepted: accepted_count,
+        addresses: result_address,
     };
 
-    console.log(new_data);
     const update_ticket = await db.update(
         { _id: ticket_id },
         { $set: { ...new_data } },
@@ -634,6 +661,7 @@ async function accept_candidate(req: Request, res: Response) {
         return res.status(401).send("accept update failed");
     }
 
+    //
     return res.status(200).send("accepted[] updated successfully");
 }
 
