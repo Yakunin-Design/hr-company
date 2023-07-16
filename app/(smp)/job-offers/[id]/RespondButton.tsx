@@ -1,40 +1,42 @@
 "use client";
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import Button from "@/components/std/Button";
 
 type props = {
-    ticket_id: string,
-    school_id: string,
-    position: string,
-}
+    ticket_id: string;
+    school_id: string;
+    position: string;
+};
 
 export default function RespondButton(props: props) {
-    const [respond, set_respond] = useState<"worker" | "candidate" | "hidden">("hidden");
+    const [respond, set_respond] = useState<
+        "accepted_worker" | "worker" | "candidate" | "hidden"
+    >("hidden");
 
     useEffect(() => {
         const jwt = localStorage.getItem("jwt") || "";
 
         const config = {
             headers: {
-                authorization: 'Bearer ' + jwt,
+                authorization: "Bearer " + jwt,
             },
         };
 
         axios
             .post(
                 `${process.env.API_ADDRESS}/smp-respond-status`,
-                { 
+                {
                     ticket_id: props.ticket_id,
                     school_id: props.school_id,
                     position: props.position,
-                    worker: jwt 
+                    worker: jwt,
                 },
                 config
             )
             .then(res => {
                 if (!res.data) {
-                    return console.log('bruh');
+                    return console.log("bruh");
                 }
 
                 if (res.status === 200) {
@@ -51,24 +53,24 @@ export default function RespondButton(props: props) {
 
         const config = {
             headers: {
-                authorization: 'Bearer ' + jwt,
+                authorization: "Bearer " + jwt,
             },
         };
 
         axios
             .post(
                 `${process.env.API_ADDRESS}/smp-respond`,
-                { 
+                {
                     ticket_id: props.ticket_id,
                     school_id: props.school_id,
                     position: props.position,
-                    worker: jwt 
+                    worker: jwt,
                 },
                 config
             )
             .then(res => {
                 if (!res.data) {
-                    return console.log('bruh');
+                    return console.log("bruh");
                 }
 
                 if (res.status === 200) {
@@ -82,8 +84,21 @@ export default function RespondButton(props: props) {
 
     return (
         <>
-            { respond === "worker" && <Button onClick={onClick} expand>Откликнуться</Button> }
-            { respond === "candidate" && <div className="--cd"><b>Вы откликнулись на эту вакансию 👌</b></div> }
+            {respond === "worker" && (
+                <Button onClick={onClick} expand>
+                    Откликнуться
+                </Button>
+            )}
+            {respond === "candidate" && (
+                <div className="--cd">
+                    <b>Вы откликнулись на эту вакансию 👌</b>
+                </div>
+            )}
+            {respond === "accepted_worker" && (
+                <div className="--cd">
+                    <b>Вы уже работаете по этой заявке 🔥</b>
+                </div>
+            )}
         </>
-    )
+    );
 }
