@@ -666,7 +666,35 @@ async function accept_candidate(req: Request, res: Response) {
         return res.status(401).send("accept update failed");
     }
 
-    //
+    const jo_filter ={$and: [{ticket_id}, {school_id: new_addresses[address_index].school_id}, {position: position.position}]}
+    const jo_data = await db.find(jo_filter, "smp_job_offers");
+    if (!jo_data.Ok) {
+        return res.status(400).send("can't find jo")
+    }
+
+    if (new_workers.length > 0) {
+        const update_workers = await new_workers.forEach(async (worker) => {
+            const worker_id = new ObjectId(worker);
+            
+            const worker_data = await db.find({_id: worker_id}, "workers");
+            if (!worker_data.Ok) {
+                return res.status(400).send("Wrong worker id")
+            }
+
+            const work = worker_data.Ok.work ? [...worker_data.Ok!.work, jo_data.Ok?._id] : [jo_data.Ok?._id];
+            const new_responds = worker_data.Ok!.responds.filter(resp => {return resp.toString() != jo_data.Ok?._id.toString()})
+            const worker_update_data = {
+                work,
+                responds: new_responds,
+            }
+
+            const update_worker = await db.update({ _id: worker_id}, { $set: {...worker_update_data} }, "workers");
+            if (!update_worker.Ok) {
+                return res.status(500).send("worker update err");
+            }
+        });
+    }
+    
     return res.status(200).send("accepted[] updated successfully");
 }
 
