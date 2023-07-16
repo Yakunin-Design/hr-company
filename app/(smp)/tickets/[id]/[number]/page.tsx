@@ -60,6 +60,8 @@ export default async function AddressPage({ params }: { params: params }) {
                     id={accepted.id}
                     position={position.position}
                     full_name={accepted.full_name}
+                    avatar={accepted.avatar}
+                    link={position_index}
                 />
             );
         });

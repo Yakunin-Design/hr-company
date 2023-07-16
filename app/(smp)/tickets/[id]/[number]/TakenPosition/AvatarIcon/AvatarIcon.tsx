@@ -14,6 +14,8 @@ export default function AvatarIcon(props: props) {
                     className={style.image}
                     src={props.avatar}
                     alt="avatar icon"
+                    width={40}
+                    height={40}
                 />
             ) : (
                 <div className={style.icon}>
