@@ -547,12 +547,24 @@ async function respond(req: Request, res: Response) {
 
         // check if worker is already in the array
         let duplicate: boolean = false;
+        let already_in_work:boolean = false;
         old_candidates.forEach(candidate => {
             if (candidate.toString() == worker_id) duplicate = true;
         });
 
+        addresses.forEach(address => {
+            address.positions.forEach(position => {
+                const accepted = position.accepted.map(worker => worker.toString());
+                if (accepted.includes(worker_id.toString())) already_in_work = true;
+            })
+            
+        });
+
         if (duplicate)
             return res.status(200).send("You are already a candidate");
+
+        if (already_in_work)
+            return res.status(200).send("You are already work in this ticket");
 
         // push worker id
         const new_candidates = [...old_candidates, worker_id];
@@ -609,46 +621,29 @@ async function accept_candidate(req: Request, res: Response) {
             .send("Ticket not found: accept candidate failed");
     }
 
-    const new_addresses = ticket.Ok.addresses;
-
+    let new_addresses = ticket.Ok.addresses;
     const position = new_addresses[address_index].positions[position_index];
+    const new_workers = accepted.filter(worker => !position.accepted.includes(worker)).map(worker => worker.toString());
+
     position.candidates = candidates.map(candidate => new ObjectId(candidate));
     position.accepted = accepted.map(worker => new ObjectId(worker));
 
-    const position_users = position.candidates.map(user => user.toString());
-    const accepted_users = ticket.Ok.addresses[address_index].positions[
-        position_index
-    ].candidates
-        .filter(user => !position_users.includes(user.toString()))
-        .map(user => user.toString());
-
-    console.log(
-        ticket.Ok.addresses[address_index].positions[position_index].candidates
-    );
-    console.log(position_users);
-
     let accepted_count = 0;
-    const result_address = new_addresses.map(adr => {
-        const positions = adr.positions.map(pos => {
+    new_addresses = new_addresses.map(adr => {
+        const new_positions = adr.positions.map(pos => {
             accepted_count += pos.accepted.length;
-            const new_candidates = pos.candidates.filter(
-                candidate => !accepted_users.includes(candidate.toString())
-            );
-            const new_pos_data = {
-                ...pos,
-                candidates: new_candidates,
-            };
-            return new_pos_data;
-        });
-
-        return { ...adr, positions };
+            const old_candidates = pos.candidates.map(candidate => candidate.toString());
+            const new_candidates = old_candidates.filter(worker => !new_workers.includes(worker)).map(worker => new ObjectId(worker));
+            return {...pos, candidates: new_candidates}
+        })
+        return {...adr, positions: new_positions}
     });
 
     // create new addresses object
     const new_data = {
         ...ticket.Ok,
         accepted: accepted_count,
-        addresses: result_address,
+        addresses: new_addresses,
     };
 
     const update_ticket = await db.update(
