@@ -492,11 +492,21 @@ async function respond_status(req: Request, res: Response) {
 
         // check if worker is already in the array
         let duplicate: boolean = false;
+        let already_in_work: boolean = false;
         old_candidates.forEach(candidate => {
             if (candidate.toString() == worker_id) duplicate = true;
         });
 
+        addresses.forEach(address => {
+            address.positions.forEach(position => {
+                const accepted = position.accepted.map(worker => worker.toString());
+                if (accepted.includes(worker_id.toString())) already_in_work = true;
+            })
+            
+        });
+
         if (duplicate) return res.status(200).send({ status: "candidate" });
+        if (already_in_work) return res.status(200).send({ status: "accepted_worker" });
 
         return res.status(200).send({ status: "worker" });
     } catch (err) {
