@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import TicketInfo from "@/components/smp/TicketInfo";
 import AddressPlate from "@/components/smp/AddressPlate";
 import Link from "next/link";
+import TicketActions from "./TicketActions";
 
 type params = {
     id: string;
@@ -63,6 +64,8 @@ export default async function TicketPage({ params }: { params: params }) {
             />
             <Container wrapper>
                 {address_list}
+
+                <TicketActions ticket_id={params.id} />
             </Container>
         </>
     );
