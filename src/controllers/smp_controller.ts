@@ -401,54 +401,71 @@ async function activate_ticket(req: Request, res: Response) {
     }
 }
 
-async function close_ticket_logic(ticket: Result<WithId<Document> | null>, res: Response) {
+async function close_ticket_logic(
+    ticket: Result<WithId<Document> | null>,
+    res: Response
+) {
     //@ts-ignore
-    await ticket.Ok!.address.forEach(async address => {
+    await ticket.Ok!.addresses.forEach(async address => {
         await address.positions.forEach(async position => {
             const filter = {
                 ticket_id: ticket.Ok?._id,
                 school_id: address.school_id,
-                position: position.position
+                position: position.position,
             };
 
-            const job_offer = await db.find(filter, 'smp_job_offers');
+            const job_offer = await db.find(filter, "smp_job_offers");
 
             if (job_offer.Ok) {
                 const workers = position.accepted;
 
                 await workers.forEach(async worker => {
-                    const db_worker = await db.find({_id: worker}, 'workers');
+                    const db_worker = await db.find({ _id: worker }, "workers");
 
                     if (db_worker.Err)
-                        return res.status(400).send('find worker error');
+                        return res.status(400).send("find worker error");
 
                     if (db_worker.Ok) {
                         const old_worker_work = db_worker.Ok.work;
-                        const new_worker_work = old_worker_work.filter(work => work.toString() != job_offer.Ok?._id);
-                        const update_worker = await db.update({_id: worker}, { $set: { work: new_worker_work } }, 'workers');
+                        console.log(old_worker_work);
+                        const new_worker_work = old_worker_work.filter(
+                            work => work.toString() != job_offer.Ok?._id
+                        );
+                        const update_worker = await db.update(
+                            { _id: worker },
+                            { $set: { work: new_worker_work } },
+                            "workers"
+                        );
 
                         if (update_worker.Err)
-                            return res.status(400).send('update error');
+                            return res.status(400).send("update error");
                     }
-                })
+                });
 
-                const delete_job_offer = await db.delete(job_offer.Ok._id.toString(), 'smp_job_offers');
+                const delete_job_offer = await db.delete(
+                    job_offer.Ok._id.toString(),
+                    "smp_job_offers"
+                );
 
                 if (delete_job_offer.Err)
-                    return res.status(400).send('delete job offer error');
+                    return res.status(400).send("delete job offer error");
             }
+        });
+    });
 
-            const update_ticket = await db.update({_id: ticket.Ok?._id}, { $set: { status: "closed" } });
+    const update_ticket = await db.update(
+        { _id: ticket.Ok?._id },
+        { $set: { status: "closed" } },
+        "tickets"
+    );
 
-            if (update_ticket.Err)
-                return res.status(400).send('update ticket error');
-        })
-    })
+    if (update_ticket.Err) return res.status(400).send("update ticket error");
 }
 
 async function close_ticket(req: Request, res: Response) {
     try {
         const id = new ObjectId(req.params.id);
+
         const ticket = await db.find({ _id: id }, "tickets");
 
         if (!ticket.Ok || ticket.Ok.length == 0)
@@ -457,13 +474,13 @@ async function close_ticket(req: Request, res: Response) {
         if (ticket.Ok.status != "in progress")
             return res.status(402).send("ticket not in progress");
 
-        if (ticket.Ok.company_id.toString() != res.locals._id)
+        if (res.locals.jwt.user_type != "employer")
             return res.status(401).send("Not your ticket");
 
         //@ts-ignore
         await close_ticket_logic(ticket, res);
 
-        return res.status(200).send('ticket closed');
+        return res.status(200).send("ticket closed");
     } catch (err) {
         console.log(err.message);
         res.status(500).send(err.message);
@@ -484,23 +501,29 @@ async function prolong_ticket(req: Request, res: Response) {
         //@ts-ignore
         await close_ticket_logic(ticket, res);
 
-        const realization_date_parts = ticket.Ok.realization_date.split('.');
-        const realization_date = new Date(+realization_date_parts[2], realization_date_parts[1] - 1, +realization_date_parts[0]);
-        const new_realization_date = (new Date(realization_date)).setDate(realization_date.getDate() + 1);
+        const realization_date_parts = ticket.Ok.realization_date.split(".");
+        const realization_date = new Date(
+            +realization_date_parts[2],
+            realization_date_parts[1] - 1,
+            +realization_date_parts[0]
+        );
+        const new_realization_date = new Date(realization_date).setDate(
+            realization_date.getDate() + 1
+        );
 
         const new_addresses = ticket.Ok.addresses.map(address => {
             const new_positions = address.positions.map(position => {
                 return {
                     ...position,
                     candidates: [],
-                    accepted: []
-                }
+                    accepted: [],
+                };
             });
 
             return {
                 ...address,
-                positions: new_positions
-            }
+                positions: new_positions,
+            };
         });
 
         const new_ticket_data = {
@@ -509,15 +532,15 @@ async function prolong_ticket(req: Request, res: Response) {
             realization_date: new_realization_date,
             status: "pending",
             accepted: 0,
-            addresses: new_addresses
-        }
+            addresses: new_addresses,
+        };
 
-        const new_ticket = await db.save(new_ticket_data, 'tickets');
+        const new_ticket = await db.save(new_ticket_data, "tickets");
 
         if (new_ticket.Err)
-            return res.status(500).send('create new ticket error');
-        
-        return res.status(200).send('ticket prolonged');
+            return res.status(500).send("create new ticket error");
+
+        return res.status(200).send("ticket prolonged");
     } catch (err) {
         console.log(err.message);
         res.status(500).send(err.message);
@@ -623,14 +646,17 @@ async function respond_status(req: Request, res: Response) {
 
         addresses.forEach(address => {
             address.positions.forEach(position => {
-                const accepted = position.accepted.map(worker => worker.toString());
-                if (accepted.includes(worker_id.toString())) already_in_work = true;
-            })
-            
+                const accepted = position.accepted.map(worker =>
+                    worker.toString()
+                );
+                if (accepted.includes(worker_id.toString()))
+                    already_in_work = true;
+            });
         });
 
         if (duplicate) return res.status(200).send({ status: "candidate" });
-        if (already_in_work) return res.status(200).send({ status: "accepted_worker" });
+        if (already_in_work)
+            return res.status(200).send({ status: "accepted_worker" });
 
         return res.status(200).send({ status: "worker" });
     } catch (err) {
@@ -681,17 +707,19 @@ async function respond(req: Request, res: Response) {
 
         // check if worker is already in the array
         let duplicate: boolean = false;
-        let already_in_work:boolean = false;
+        let already_in_work: boolean = false;
         old_candidates.forEach(candidate => {
             if (candidate.toString() == worker_id) duplicate = true;
         });
 
         addresses.forEach(address => {
             address.positions.forEach(position => {
-                const accepted = position.accepted.map(worker => worker.toString());
-                if (accepted.includes(worker_id.toString())) already_in_work = true;
-            })
-            
+                const accepted = position.accepted.map(worker =>
+                    worker.toString()
+                );
+                if (accepted.includes(worker_id.toString()))
+                    already_in_work = true;
+            });
         });
 
         if (duplicate)
@@ -757,7 +785,9 @@ async function accept_candidate(req: Request, res: Response) {
 
     let new_addresses = ticket.Ok.addresses;
     const position = new_addresses[address_index].positions[position_index];
-    const new_workers = accepted.filter(worker => !position.accepted.includes(worker)).map(worker => worker.toString());
+    const new_workers = accepted
+        .filter(worker => !position.accepted.includes(worker))
+        .map(worker => worker.toString());
 
     position.candidates = candidates.map(candidate => new ObjectId(candidate));
     position.accepted = accepted.map(worker => new ObjectId(worker));
@@ -766,11 +796,15 @@ async function accept_candidate(req: Request, res: Response) {
     new_addresses = new_addresses.map(adr => {
         const new_positions = adr.positions.map(pos => {
             accepted_count += pos.accepted.length;
-            const old_candidates = pos.candidates.map(candidate => candidate.toString());
-            const new_candidates = old_candidates.filter(worker => !new_workers.includes(worker)).map(worker => new ObjectId(worker));
-            return {...pos, candidates: new_candidates}
-        })
-        return {...adr, positions: new_positions}
+            const old_candidates = pos.candidates.map(candidate =>
+                candidate.toString()
+            );
+            const new_candidates = old_candidates
+                .filter(worker => !new_workers.includes(worker))
+                .map(worker => new ObjectId(worker));
+            return { ...pos, candidates: new_candidates };
+        });
+        return { ...adr, positions: new_positions };
     });
 
     // create new addresses object
@@ -790,35 +824,49 @@ async function accept_candidate(req: Request, res: Response) {
         return res.status(401).send("accept update failed");
     }
 
-    const jo_filter ={$and: [{ticket_id}, {school_id: new_addresses[address_index].school_id}, {position: position.position}]}
+    const jo_filter = {
+        $and: [
+            { ticket_id },
+            { school_id: new_addresses[address_index].school_id },
+            { position: position.position },
+        ],
+    };
     const jo_data = await db.find(jo_filter, "smp_job_offers");
     if (!jo_data.Ok) {
-        return res.status(400).send("can't find jo")
+        return res.status(400).send("can't find jo");
     }
 
     if (new_workers.length > 0) {
-        const update_workers = await new_workers.forEach(async (worker) => {
+        const update_workers = await new_workers.forEach(async worker => {
             const worker_id = new ObjectId(worker);
-            
-            const worker_data = await db.find({_id: worker_id}, "workers");
+
+            const worker_data = await db.find({ _id: worker_id }, "workers");
             if (!worker_data.Ok) {
-                return res.status(400).send("Wrong worker id")
+                return res.status(400).send("Wrong worker id");
             }
 
-            const work = worker_data.Ok.work ? [...worker_data.Ok!.work, jo_data.Ok?._id] : [jo_data.Ok?._id];
-            const new_responds = worker_data.Ok!.responds.filter(resp => {return resp.toString() != jo_data.Ok?._id.toString()})
+            const work = worker_data.Ok.work
+                ? [...worker_data.Ok!.work, jo_data.Ok?._id]
+                : [jo_data.Ok?._id];
+            const new_responds = worker_data.Ok!.responds.filter(resp => {
+                return resp.toString() != jo_data.Ok?._id.toString();
+            });
             const worker_update_data = {
                 work,
                 responds: new_responds,
-            }
+            };
 
-            const update_worker = await db.update({ _id: worker_id}, { $set: {...worker_update_data} }, "workers");
+            const update_worker = await db.update(
+                { _id: worker_id },
+                { $set: { ...worker_update_data } },
+                "workers"
+            );
             if (!update_worker.Ok) {
                 return res.status(500).send("worker update err");
             }
         });
     }
-    
+
     return res.status(200).send("accepted[] updated successfully");
 }
 
