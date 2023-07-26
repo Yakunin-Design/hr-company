@@ -9,6 +9,8 @@ router.post('/new-ticket', auth, smp_controller.new_ticket);
 router.get('/tickets', auth, smp_controller.get_all_tickets);
 router.get('/tickets/:id', auth, smp_controller.get_ticket_by_id);
 router.get('/activate-ticket/:id', auth, smp_controller.activate_ticket);
+router.get('/close-ticket/:id', auth, smp_controller.close_ticket);
+router.get('/prolong-ticket/:id', auth, smp_controller.prolong_ticket);
 router.get('/address/:id/:number', auth, smp_controller.get_address);
 router.get('/address/:id/:number/:position_index', auth, smp_controller.get_position);
 

@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
-import { ObjectId } from "mongodb";
+import { ObjectId, WithId } from "mongodb";
 import db from "../lib/idb";
 import { ITicket } from "../interfaces/ITicket";
+import Result from "../lib/Result";
 
 async function new_ticket(req: Request, res: Response) {
     try {
@@ -400,6 +401,129 @@ async function activate_ticket(req: Request, res: Response) {
     }
 }
 
+async function close_ticket_logic(ticket: Result<WithId<Document> | null>, res: Response) {
+    //@ts-ignore
+    await ticket.Ok!.address.forEach(async address => {
+        await address.positions.forEach(async position => {
+            const filter = {
+                ticket_id: ticket.Ok?._id,
+                school_id: address.school_id,
+                position: position.position
+            };
+
+            const job_offer = await db.find(filter, 'smp_job_offers');
+
+            if (job_offer.Ok) {
+                const workers = position.accepted;
+
+                await workers.forEach(async worker => {
+                    const db_worker = await db.find({_id: worker}, 'workers');
+
+                    if (db_worker.Err)
+                        return res.status(400).send('find worker error');
+
+                    if (db_worker.Ok) {
+                        const old_worker_work = db_worker.Ok.work;
+                        const new_worker_work = old_worker_work.filter(work => work.toString() != job_offer.Ok?._id);
+                        const update_worker = await db.update({_id: worker}, { $set: { work: new_worker_work } }, 'workers');
+
+                        if (update_worker.Err)
+                            return res.status(400).send('update error');
+                    }
+                })
+
+                const delete_job_offer = await db.delete(job_offer.Ok._id.toString(), 'smp_job_offers');
+
+                if (delete_job_offer.Err)
+                    return res.status(400).send('delete job offer error');
+            }
+
+            const update_ticket = await db.update({_id: ticket.Ok?._id}, { $set: { status: "closed" } });
+
+            if (update_ticket.Err)
+                return res.status(400).send('update ticket error');
+        })
+    })
+}
+
+async function close_ticket(req: Request, res: Response) {
+    try {
+        const id = new ObjectId(req.params.id);
+        const ticket = await db.find({ _id: id }, "tickets");
+
+        if (!ticket.Ok || ticket.Ok.length == 0)
+            return res.status(404).send("ticket was not found :(");
+
+        if (ticket.Ok.status != "in progress")
+            return res.status(402).send("ticket not in progress");
+
+        if (ticket.Ok.company_id.toString() != res.locals._id)
+            return res.status(401).send("Not your ticket");
+
+        //@ts-ignore
+        await close_ticket_logic(ticket, res);
+
+        return res.status(200).send('ticket closed');
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send(err.message);
+    }
+}
+
+async function prolong_ticket(req: Request, res: Response) {
+    try {
+        const id = new ObjectId(req.params.id);
+        const ticket = await db.find({ _id: id }, "tickets");
+
+        if (!ticket.Ok || ticket.Ok.length == 0)
+            return res.status(404).send("ticket was not found :(");
+
+        if (ticket.Ok.company_id.toString() != res.locals._id)
+            return res.status(401).send("Not your ticket");
+
+        //@ts-ignore
+        await close_ticket_logic(ticket, res);
+
+        const realization_date_parts = ticket.Ok.realization_date.split('.');
+        const realization_date = new Date(+realization_date_parts[2], realization_date_parts[1] - 1, +realization_date_parts[0]);
+        const new_realization_date = (new Date(realization_date)).setDate(realization_date.getDate() + 1);
+
+        const new_addresses = ticket.Ok.addresses.map(address => {
+            const new_positions = address.positions.map(position => {
+                return {
+                    ...position,
+                    candidates: [],
+                    accepted: []
+                }
+            });
+
+            return {
+                ...address,
+                positions: new_positions
+            }
+        });
+
+        const new_ticket_data = {
+            ...ticket.Ok,
+            date_of_creation: new Date(),
+            realization_date: new_realization_date,
+            status: "pending",
+            accepted: 0,
+            addresses: new_addresses
+        }
+
+        const new_ticket = await db.save(new_ticket_data, 'tickets');
+
+        if (new_ticket.Err)
+            return res.status(500).send('create new ticket error');
+        
+        return res.status(200).send('ticket prolonged');
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send(err.message);
+    }
+}
+
 async function get_job_offers(req: Request, res: Response) {
     try {
         const job_offers = await db.find_all({}, "smp_job_offers");
@@ -705,6 +829,8 @@ export default {
     get_address,
     get_position,
     activate_ticket,
+    close_ticket,
+    prolong_ticket,
     get_job_offers,
     get_job_offer_by_id,
     respond,
