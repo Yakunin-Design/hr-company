@@ -35,7 +35,6 @@ export default async function Notifications() {
         Notification({
             text: noti.text,
             timestamp: noti.timestamp,
-            icon: "warn",
         })
     );
 

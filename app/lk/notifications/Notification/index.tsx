@@ -16,14 +16,13 @@ export default function Notification(props: props) {
     return (
         <Card>
             <Row>
-                <Row gap={1}>
-                    <p>{icon}</p>
-                    <div>
-                        <h3>{props.text}</h3>
-                        <p>{props.timestamp}</p>
-                    </div>
-                </Row>
-                clear
+                <div>
+                    <h3>
+                        {icon} {props.text}
+                    </h3>
+                    <p>{props.timestamp}</p>
+                </div>
+                ❌
             </Row>
         </Card>
     );
