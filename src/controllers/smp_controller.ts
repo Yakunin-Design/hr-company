@@ -402,10 +402,10 @@ async function activate_ticket(req: Request, res: Response) {
 }
 
 async function close_ticket_logic(
-    ticket: Result<WithId<Document> | null>,
+    ticket: any,
+    // ticket: Result<WithId<Document> | null>,
     res: Response
 ) {
-    //@ts-ignore
     await ticket.Ok!.addresses.forEach(async address => {
         await address.positions.forEach(async position => {
             const filter = {
@@ -477,7 +477,7 @@ async function close_ticket(req: Request, res: Response) {
         if (res.locals.jwt.user_type != "employer")
             return res.status(401).send("Not your ticket");
 
-        //@ts-ignore
+        console.log(ticket.Ok);
         await close_ticket_logic(ticket, res);
 
         return res.status(200).send("ticket closed");
