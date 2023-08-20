@@ -29,9 +29,9 @@ export default function TicketActions(props: props) {
         );
     }
 
-    async function expand_ticket() {
+    async function extend_ticket() {
         const result = await axios.get(
-            `${process.env.API_ADDRESS}/prolong-ticket/${props.ticket_id}`,
+            `${process.env.API_ADDRESS}/extend-ticket/${props.ticket_id}`,
             config
         );
     }
@@ -43,7 +43,7 @@ export default function TicketActions(props: props) {
                 Закрыть
             </Button>
             <Spacer top={2} />
-            <Button secondary expand onClick={expand_ticket}>
+            <Button secondary expand onClick={extend_ticket}>
                 Продлить
             </Button>
         </>
