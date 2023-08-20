@@ -18,6 +18,7 @@ export interface ITicketPosition {
     comment: string;
     candidates: ITicketCandidate[];
     accepted: string[];
+    job_offer_id?: string;
 }
 
 export interface ITicketAddress {
@@ -35,6 +36,7 @@ export interface ITicket {
     date_of_creation: Date;
     realization_date: string;
     status: "pending" | "active" | "inactive";
+    extended: ObjectId | false;
     city: string;
     total_workers_count: number;
     accepted: number;

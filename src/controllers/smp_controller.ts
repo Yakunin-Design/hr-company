@@ -12,6 +12,7 @@ async function new_ticket(req: Request, res: Response) {
         const comment = data.comment;
         const date_of_creation = new Date();
         const status = "pending";
+        const extended = false;
         const company_name = data.company_id;
         let accepted = 0;
         const realization_date = data.date;
@@ -127,6 +128,7 @@ async function new_ticket(req: Request, res: Response) {
             date_of_creation,
             realization_date,
             status,
+            extended,
             city: ticket_city,
             total_workers_count,
             accepted,
