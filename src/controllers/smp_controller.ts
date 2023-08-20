@@ -425,6 +425,7 @@ async function extend_ticket(req: Request, res: Response) {
 
                         if (position.accepted.length > 0) {
                             const proposal_id = await create_proposal(
+                                // that is the old jo id, and we need the new one!!!
                                 position.job_offer_id,
                                 position.accepted
                             );
@@ -810,7 +811,13 @@ async function get_proposal_by_id(req: Request, res: Response) {
                 .send("[get proposal]: unable to find proposal");
 
         // check if user can respond to proposal
-        // check goes here!!
+        const user_id = res.locals.user._id.toString();
+        let allow = false;
+        db_proposal.Ok.worker_list.forEach(id => {
+            if (id.toString() === user_id) allow = true;
+        });
+
+        if (!allow) return res.status(401).send("This is not your proposal");
 
         // get job offer data
         const jo_id: string = db_proposal.Ok.job_offer_id.toString();
@@ -822,7 +829,7 @@ async function get_proposal_by_id(req: Request, res: Response) {
                 .send("[get proposal]: error: cant find job offer");
 
         // send the ticket
-        res.status(200).send(data);
+        return res.status(200).send(data);
     } catch (err) {
         console.log(err.message);
         res.status(500).send(err.message);
