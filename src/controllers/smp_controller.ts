@@ -817,7 +817,7 @@ async function get_proposal_by_id(req: Request, res: Response) {
             if (id.toString() === user_id) allow = true;
         });
 
-        if (!allow) return res.status(401).send("This is not your proposal");
+        if (!allow) return res.status(403).send("This is not your proposal");
 
         // get job offer data
         const jo_id: string = db_proposal.Ok.job_offer_id.toString();
