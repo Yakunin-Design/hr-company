@@ -6,6 +6,8 @@ import Result from "../lib/Result";
 import close_ticket_logic from "./smp/close_ticket_logic";
 import activate_ticket_logic from "./smp/activate_ticket_logic";
 import create_proposal from "./smp/create_proposal";
+import get_ticket from "./smp/get_ticket";
+import get_smp_job_offer from "./smp/get_smp_job_offer";
 
 async function new_ticket(req: Request, res: Response) {
     try {
@@ -169,48 +171,16 @@ async function get_all_tickets(req: Request, res: Response) {
 
 async function get_ticket_by_id(req: Request, res: Response) {
     try {
-        // get ticket id
-        const ticket_id = new ObjectId(req.params.id);
+        const ticket_id = req.params.id;
 
-        // find ticket in db
-        const db_ticket = await db.find({ _id: ticket_id }, "tickets");
-        if (db_ticket.Err) return res.status(500).send("db failed");
+        const data = await get_ticket(ticket_id);
+        console.log(data);
 
-        if (db_ticket.Ok === null)
-            return res.status(500).send("bruh why is it null");
-
-        // getting data setup for frontend (school data + worker_count & accepted)
-        const address_data = await Promise.all(
-            db_ticket.Ok.addresses.map(async adr => {
-                // get all school data
-                const address = await db.find(
-                    { _id: adr.school_id },
-                    "schools"
-                );
-
-                // getting worker count & accepted count
-                let worker_count = 0;
-                let accepted = 0;
-                adr.positions.map(pos => {
-                    worker_count += Number(pos.quontity);
-                    accepted += pos.accepted.length;
-                });
-
-                return {
-                    ...address.Ok,
-                    worker_count,
-                    accepted,
-                };
-            })
-        );
-
-        const response_data = {
-            ...db_ticket.Ok,
-            addresses: address_data,
-        };
+        if (!data)
+            return res.status(400).send("[get ticket] unable to get ticket");
 
         // send the ticket
-        res.status(200).send(response_data);
+        res.status(200).send(data);
     } catch (err) {
         console.log(err.message);
         res.status(500).send(err.message);
@@ -520,21 +490,14 @@ async function get_job_offers(req: Request, res: Response) {
 
 async function get_job_offer_by_id(req: Request, res: Response) {
     try {
-        const job_offer = await db.find(
-            { _id: new ObjectId(req.params.id) },
-            "smp_job_offers"
-        );
-        if (!job_offer.Ok)
-            return res.status(500).send("job offer was not found :(");
+        const jo_id = req.params.id;
 
-        const school_id = new ObjectId(job_offer.Ok.school_id);
-        const db_school = await db.find({ _id: school_id }, "schools");
-        const new_data = {
-            ...db_school.Ok,
-            ...job_offer.Ok,
-        };
+        const job_offer = await get_smp_job_offer(jo_id);
 
-        return res.status(200).send(new_data);
+        if (!job_offer)
+            return res.status(404).send("job offer was not found :(");
+
+        return res.status(200).send(job_offer);
     } catch (err) {
         console.log(err.message);
         res.status(500).send(err.message);
@@ -834,6 +797,38 @@ async function accept_candidate(req: Request, res: Response) {
     return res.status(200).send("accepted[] updated successfully");
 }
 
+async function get_proposal_by_id(req: Request, res: Response) {
+    try {
+        const proposal_id = new ObjectId(req.params.id);
+
+        // find proposal
+        const db_proposal = await db.find({ _id: proposal_id }, "proposals");
+
+        if (!db_proposal.Ok)
+            return res
+                .status(404)
+                .send("[get proposal]: unable to find proposal");
+
+        // check if user can respond to proposal
+        // check goes here!!
+
+        // get job offer data
+        const jo_id: string = db_proposal.Ok.job_offer_id.toString();
+        const data = await get_smp_job_offer(jo_id);
+
+        if (!data)
+            return res
+                .status(404)
+                .send("[get proposal]: error: cant find job offer");
+
+        // send the ticket
+        res.status(200).send(data);
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send(err.message);
+    }
+}
+
 export default {
     new_ticket,
     get_all_tickets,
@@ -848,4 +843,5 @@ export default {
     respond,
     respond_status,
     accept_candidate,
+    get_proposal_by_id,
 };
