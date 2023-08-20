@@ -3,6 +3,8 @@ import { ObjectId, WithId } from "mongodb";
 import db from "../lib/idb";
 import { ITicket } from "../interfaces/ITicket";
 import Result from "../lib/Result";
+import close_ticket_logic from "./smp/close_ticket_logic";
+import activate_ticket_logic from "./smp/activate_ticket_logic";
 
 async function new_ticket(req: Request, res: Response) {
     try {
@@ -355,113 +357,12 @@ async function get_position(req: Request, res: Response) {
 
 async function activate_ticket(req: Request, res: Response) {
     try {
-        const id = new ObjectId(req.params.id);
-        const ticket = await db.find({ _id: id }, "tickets");
-        if (!ticket.Ok || ticket.Ok.length == 0)
-            return res.status(404).send("ticket was not found :(");
-
-        if (ticket.Ok.status != "pending")
-            return res.status(402).send("already activated");
-
-        let counter = 0;
-        await ticket.Ok.addresses.forEach(async adr => {
-            adr.positions.forEach(async pos => {
-                const jo_data = {
-                    creation_time: new Date(),
-                    position: pos.position,
-                    working_hours: pos.working_hours,
-                    price: pos.price,
-                    comment: pos.comment,
-                    city: ticket.Ok!.city,
-                    quontity: pos.quontity,
-                    sex: pos.sex,
-                    visitors_count: pos.visitors_count,
-                    school_id: adr.school_id,
-                    ticket_id: ticket.Ok!._id,
-                };
-
-                const new_jo = await db.save(jo_data, "smp_job_offers");
-                if (new_jo.Err)
-                    return res
-                        .status(500)
-                        .send("smp job offer activation failed");
-
-                counter++;
-            });
-        });
-
-        await db.update(
-            { _id: ticket.Ok._id },
-            { $set: { status: "in progress" } },
-            "tickets"
-        );
-
-        return res.status(200).send(counter + " Job offers was created.");
+        const result = await activate_ticket_logic(req.params.id, res);
+        if (result) return res.status(200).send("ticket activated");
     } catch (err) {
         console.log(err.message);
         res.status(500).send(err.message);
     }
-}
-
-async function close_ticket_logic(
-    ticket: any,
-    // ticket: Result<WithId<Document> | null>,
-    res: Response
-) {
-    await ticket.Ok!.addresses.forEach(async address => {
-        await address.positions.forEach(async position => {
-            const filter = {
-                ticket_id: ticket.Ok?._id,
-                school_id: address.school_id,
-                position: position.position,
-            };
-
-            const job_offer = await db.find(filter, "smp_job_offers");
-
-            if (job_offer.Ok) {
-                const workers = position.accepted;
-
-                await workers.forEach(async worker => {
-                    const db_worker = await db.find({ _id: worker }, "workers");
-
-                    if (db_worker.Err)
-                        return res.status(400).send("find worker error");
-
-                    if (db_worker.Ok) {
-                        const old_worker_work = db_worker.Ok.work;
-                        console.log(old_worker_work);
-                        const new_worker_work = old_worker_work.filter(
-                            work => work.toString() != job_offer.Ok?._id
-                        );
-                        const update_worker = await db.update(
-                            { _id: worker },
-                            { $set: { work: new_worker_work } },
-                            "workers"
-                        );
-
-                        if (update_worker.Err)
-                            return res.status(400).send("update error");
-                    }
-                });
-
-                const delete_job_offer = await db.delete(
-                    job_offer.Ok._id.toString(),
-                    "smp_job_offers"
-                );
-
-                if (delete_job_offer.Err)
-                    return res.status(400).send("delete job offer error");
-            }
-        });
-    });
-
-    const update_ticket = await db.update(
-        { _id: ticket.Ok?._id },
-        { $set: { status: "closed" } },
-        "tickets"
-    );
-
-    if (update_ticket.Err) return res.status(400).send("update ticket error");
 }
 
 async function close_ticket(req: Request, res: Response) {
