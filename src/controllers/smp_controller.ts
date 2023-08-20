@@ -5,6 +5,7 @@ import { ITicket } from "../interfaces/ITicket";
 import Result from "../lib/Result";
 import close_ticket_logic from "./smp/close_ticket_logic";
 import activate_ticket_logic from "./smp/activate_ticket_logic";
+import create_proposal from "./smp/create_proposal";
 
 async function new_ticket(req: Request, res: Response) {
     try {
@@ -390,16 +391,13 @@ async function close_ticket(req: Request, res: Response) {
     }
 }
 
-async function prolong_ticket(req: Request, res: Response) {
+async function extend_ticket(req: Request, res: Response) {
     try {
         const id = new ObjectId(req.params.id);
         const ticket = await db.find({ _id: id }, "tickets");
 
         if (!ticket.Ok || ticket.Ok.length == 0)
             return res.status(404).send("ticket was not found :(");
-
-        if (ticket.Ok.company_id.toString() != res.locals._id)
-            return res.status(401).send("Not your ticket");
 
         //@ts-ignore
         await close_ticket_logic(ticket, res);
@@ -414,31 +412,74 @@ async function prolong_ticket(req: Request, res: Response) {
             realization_date.getDate() + 1
         );
 
-        const new_addresses = ticket.Ok.addresses.map(address => {
-            const new_positions = address.positions.map(position => {
-                return {
-                    ...position,
-                    candidates: [],
-                    accepted: [],
-                };
-            });
-
-            return {
-                ...address,
-                positions: new_positions,
-            };
-        });
-
         const new_ticket_data = {
             ...ticket.Ok,
             date_of_creation: new Date(),
             realization_date: new_realization_date,
             status: "pending",
             accepted: 0,
-            addresses: new_addresses,
         };
 
-        const new_ticket = await db.save(new_ticket_data, "tickets");
+        if (new_ticket_data._id)
+            // @ts-ignore
+            delete new_ticket_data._id;
+
+        const new_ticket_id = await db.save(new_ticket_data, "tickets");
+
+        if (!new_ticket_id.Ok)
+            return res
+                .status(500)
+                .send("[extend ticket]: Can't create new ticket");
+
+        const new_ticket = await db.find(
+            { _id: new ObjectId(new_ticket_id.Ok) },
+            "tickets"
+        );
+
+        if (!new_ticket.Ok)
+            return res
+                .status(500)
+                .send("[extend ticket]: Can't create new ticket");
+
+        await activate_ticket_logic(new_ticket.Ok._id.toString(), res);
+
+        const new_addresses = await Promise.all(
+            new_ticket.Ok.addresses.map(async address => {
+                const new_positions = await Promise.all(
+                    address.positions.map(async position => {
+                        const position_data = {
+                            ...position,
+                            candidates: [],
+                            accepted: [],
+                        };
+
+                        if (position.accepted.length > 0) {
+                            const proposal_id = await create_proposal(
+                                position.job_offer_id,
+                                position.accepted
+                            );
+
+                            position_data.proposal_id = proposal_id;
+                        }
+
+                        return position_data;
+                    })
+                );
+
+                return {
+                    ...address,
+                    positions: new_positions,
+                };
+            })
+        );
+
+        const updated_db = await db.update(
+            { _id: new ObjectId(new_ticket_id.Ok) },
+            { $set: { addresses: new_addresses } },
+            "tickets"
+        );
+
+        if (!updated_db.Ok) return res.status(500).send("extend update failed");
 
         if (new_ticket.Err)
             return res.status(500).send("create new ticket error");
@@ -651,6 +692,26 @@ async function respond(req: Request, res: Response) {
         if (updated_db.Err || updated_db.Ok === null)
             return res.status(400).send("respond update failed");
 
+        // find and update worker
+
+        const worker = await db.find({ _id: worker_id }, "workers");
+        if (!worker.Ok)
+            return res.status(500).send("[respond]: failed to find a worker");
+
+        const old_responds = worker.Ok.responds ? worker.Ok.responds : [];
+        const job_offer_id =
+            new_ticket_data.addresses[address_index].positions[position_index]
+                .job_offer_id;
+        const new_responds = [...old_responds, job_offer_id];
+
+        const updated_db2 = await db.update(
+            { _id: worker_id },
+            { $set: { responds: new_responds } },
+            "workers"
+        );
+        if (!updated_db2.Ok)
+            return res.status(400).send("respond update failed");
+
         return res.status(200).send("respond success");
     } catch (err) {
         console.log(err.message);
@@ -781,7 +842,7 @@ export default {
     get_position,
     activate_ticket,
     close_ticket,
-    prolong_ticket,
+    extend_ticket,
     get_job_offers,
     get_job_offer_by_id,
     respond,
