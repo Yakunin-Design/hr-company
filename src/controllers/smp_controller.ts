@@ -8,6 +8,7 @@ import activate_ticket_logic from "./smp/activate_ticket_logic";
 import create_proposal from "./smp/create_proposal";
 import get_ticket from "./smp/get_ticket";
 import get_smp_job_offer from "./smp/get_smp_job_offer";
+import send_notification from "./smp/send_notification";
 
 async function new_ticket(req: Request, res: Response) {
     try {
@@ -420,6 +421,15 @@ async function extend_ticket(req: Request, res: Response) {
                         const proposal_id = await create_proposal(
                             job_offer_id,
                             worker_list
+                        );
+
+                        // send notification
+                        worker_list.forEach(worker_id =>
+                            send_notification(
+                                worker_id.toString(),
+                                "Вам предложили работу! Нажмите что бы посмотреть предложение",
+                                proposal_id.toString()
+                            )
                         );
 
                         if (!proposal_id)
