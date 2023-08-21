@@ -172,9 +172,7 @@ async function get_all_tickets(req: Request, res: Response) {
 async function get_ticket_by_id(req: Request, res: Response) {
     try {
         const ticket_id = req.params.id;
-
         const data = await get_ticket(ticket_id);
-        console.log(data);
 
         if (!data)
             return res.status(400).send("[get ticket] unable to get ticket");
@@ -364,16 +362,19 @@ async function extend_ticket(req: Request, res: Response) {
     try {
         // find ticket
         const id = new ObjectId(req.params.id);
-        const ticket = await db.find({ _id: id }, "tickets");
+        const old_ticket = await db.find({ _id: id }, "tickets");
 
-        if (!ticket.Ok || ticket.Ok.length == 0)
+        if (!old_ticket.Ok || old_ticket.Ok.length == 0)
             return res.status(404).send("ticket was not found :(");
 
         // close ticket
-        await close_ticket_logic(ticket, res);
+        await close_ticket_logic(old_ticket, res);
 
-        // clone ticket
-        const realization_date_parts = ticket.Ok.realization_date.split(".");
+        // constructing new ticket
+        const new_ticket_id = new ObjectId();
+
+        const realization_date_parts =
+            old_ticket.Ok.realization_date.split(".");
         const realization_date = new Date(
             +realization_date_parts[2],
             realization_date_parts[1] - 1,
@@ -383,80 +384,86 @@ async function extend_ticket(req: Request, res: Response) {
             realization_date.getDate() + 1
         );
 
-        const new_ticket_data = {
-            ...ticket.Ok,
-            date_of_creation: new Date(),
-            realization_date: new_realization_date,
-            status: "pending",
-            accepted: 0,
-        };
-
-        if (new_ticket_data._id)
-            // @ts-ignore
-            delete new_ticket_data._id;
-
-        const new_ticket_id = await db.save(new_ticket_data, "tickets");
-
-        if (!new_ticket_id.Ok)
-            return res
-                .status(500)
-                .send("[extend ticket]: Can't create new ticket");
-
-        const new_ticket = await db.find(
-            { _id: new ObjectId(new_ticket_id.Ok) },
-            "tickets"
-        );
-
-        if (!new_ticket.Ok)
-            return res
-                .status(500)
-                .send("[extend ticket]: Can't create new ticket");
-
-        // activate new ticket
-        await activate_ticket_logic(new_ticket.Ok._id.toString(), res);
-
-        // clear the candidates and accepted
+        // mapping old ticket to create new ole
+        const old_addresses = old_ticket.Ok.addresses;
         const new_addresses = await Promise.all(
-            new_ticket.Ok.addresses.map(async address => {
+            old_addresses.map(async adr => {
                 const new_positions = await Promise.all(
-                    address.positions.map(async position => {
-                        const position_data = {
-                            ...position,
+                    adr.positions.map(async pos => {
+                        // creating new job offers
+                        const jo_data = {
+                            creation_time: new Date(),
+                            position: pos.position,
+                            working_hours: pos.working_hours,
+                            price: pos.price,
+                            comment: pos.comment,
+                            city: old_ticket.Ok!.city,
+                            quontity: pos.quontity,
+                            sex: pos.sex,
+                            visitors_count: pos.visitors_count,
+                            school_id: adr.school_id,
+                            ticket_id: new_ticket_id,
+                        };
+
+                        const new_jo = await db.save(jo_data, "smp_job_offers");
+                        if (!new_jo.Ok)
+                            return res
+                                .status(500)
+                                .send("smp job offer activation failed");
+
+                        // saving job offer id to position
+                        pos.job_offer_id = new_jo.Ok;
+
+                        // creating proposals
+                        const job_offer_id = new_jo.Ok;
+                        const worker_list = pos.accepted;
+                        const proposal_id = await create_proposal(
+                            job_offer_id,
+                            worker_list
+                        );
+
+                        if (!proposal_id)
+                            return res
+                                .status(500)
+                                .send("[extend]: failed to create a proposal");
+
+                        // saving proposal id to position in case we need it later
+                        pos.proposal_id = proposal_id;
+
+                        return {
+                            ...pos,
                             candidates: [],
                             accepted: [],
                         };
-
-                        if (position.accepted.length > 0) {
-                            const proposal_id = await create_proposal(
-                                // that is the old jo id, and we need the new one!!!
-                                position.job_offer_id,
-                                position.accepted
-                            );
-
-                            position_data.proposal_id = proposal_id;
-                        }
-
-                        return position_data;
                     })
                 );
 
                 return {
-                    ...address,
+                    school_id: adr.school_id,
                     positions: new_positions,
                 };
             })
         );
 
-        const updated_db = await db.update(
-            { _id: new ObjectId(new_ticket_id.Ok) },
-            { $set: { addresses: new_addresses } },
-            "tickets"
-        );
+        const new_ticket_data = {
+            ...old_ticket.Ok,
+            _id: new_ticket_id,
+            addresses: new_addresses,
+            date_of_creation: new Date(),
+            realization_date: new_realization_date,
+            status: "in progress",
+            accepted: 0,
+        };
 
-        if (!updated_db.Ok) return res.status(500).send("extend update failed");
+        // save new ticket
+        const db_result = await db.save(new_ticket_data, "tickets");
 
-        if (new_ticket.Err)
-            return res.status(500).send("create new ticket error");
+        if (!db_result.Ok)
+            return res
+                .status(500)
+                .send("[extend ticket]: Can't create new ticket");
+
+        // create send notifications
 
         return res.status(200).send("ticket successfully extended");
     } catch (err) {
@@ -687,16 +694,6 @@ async function respond(req: Request, res: Response) {
 }
 
 async function accept_candidate(req: Request, res: Response) {
-    /**
-     * req: {
-     *  ticket_id: string,
-     *  school_id: string,
-     *  position_index: number,
-     *  candidates: string[],
-     *  accepted: string[]
-     * }
-     */
-
     // for now we use moderator middleware bc we dont have smp client support yet
 
     const { candidates, accepted, position_index, address_index } = req.body;
