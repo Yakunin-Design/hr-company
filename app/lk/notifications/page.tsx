@@ -9,6 +9,7 @@ type notification = {
     text: string;
     timestamp: string;
     user_id: string;
+    proposal: string;
 };
 
 async function get_notifications() {
@@ -35,6 +36,7 @@ export default async function Notifications() {
         Notification({
             text: noti.text,
             timestamp: noti.timestamp,
+            proposal_id: noti.proposal,
         })
     );
 
