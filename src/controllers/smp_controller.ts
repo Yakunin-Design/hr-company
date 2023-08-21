@@ -351,7 +351,6 @@ async function close_ticket(req: Request, res: Response) {
         if (res.locals.jwt.user_type != "employer")
             return res.status(401).send("Not your ticket");
 
-        console.log(ticket.Ok);
         await close_ticket_logic(ticket, res);
 
         return res.status(200).send("ticket closed");
@@ -363,15 +362,17 @@ async function close_ticket(req: Request, res: Response) {
 
 async function extend_ticket(req: Request, res: Response) {
     try {
+        // find ticket
         const id = new ObjectId(req.params.id);
         const ticket = await db.find({ _id: id }, "tickets");
 
         if (!ticket.Ok || ticket.Ok.length == 0)
             return res.status(404).send("ticket was not found :(");
 
-        //@ts-ignore
+        // close ticket
         await close_ticket_logic(ticket, res);
 
+        // clone ticket
         const realization_date_parts = ticket.Ok.realization_date.split(".");
         const realization_date = new Date(
             +realization_date_parts[2],
@@ -411,8 +412,10 @@ async function extend_ticket(req: Request, res: Response) {
                 .status(500)
                 .send("[extend ticket]: Can't create new ticket");
 
+        // activate new ticket
         await activate_ticket_logic(new_ticket.Ok._id.toString(), res);
 
+        // clear the candidates and accepted
         const new_addresses = await Promise.all(
             new_ticket.Ok.addresses.map(async address => {
                 const new_positions = await Promise.all(
@@ -455,7 +458,7 @@ async function extend_ticket(req: Request, res: Response) {
         if (new_ticket.Err)
             return res.status(500).send("create new ticket error");
 
-        return res.status(200).send("ticket prolonged");
+        return res.status(200).send("ticket successfully extended");
     } catch (err) {
         console.log(err.message);
         res.status(500).send(err.message);
