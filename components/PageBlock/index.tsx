@@ -27,8 +27,10 @@ type props = {
 };
 
 export default function PageBlock(props: props) {
-    const href =
-        props.name.slice(0, 4) == "find" ? props.name : `/${props.name}`;
+    let href = props.name.slice(0, 4) == "find" ? props.name : `/${props.name}`;
+
+    if (props.name === "profile") href = "/lk/profile";
+    if (props.name === "notifications") href = "/lk/notifications";
 
     return (
         <>
@@ -173,6 +175,25 @@ export default function PageBlock(props: props) {
                                     }
                                 >
                                     Поиск работы
+                                </h3>
+                            </>
+                        )}
+                        {props.name == "notifications" && (
+                            <>
+                                <Image
+                                    src={
+                                        props.active
+                                            ? ProfileIconWhite
+                                            : ProfileIcon
+                                    }
+                                    alt="notifications"
+                                />
+                                <h3
+                                    className={
+                                        props.show ? styles.show : styles.name
+                                    }
+                                >
+                                    Уведомления
                                 </h3>
                             </>
                         )}

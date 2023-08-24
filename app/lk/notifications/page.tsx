@@ -44,6 +44,12 @@ export default async function Notifications() {
         <Container lk wrapper>
             <Spacer top={2} />
             <h2>Уведомления</h2>
+            {notifications.length === 0 && (
+                <p>
+                    У Вас еще нет уведомлений, как только они появятся, они
+                    будут отображаться тут.
+                </p>
+            )}
 
             {notifications}
         </Container>
