@@ -846,6 +846,25 @@ async function get_proposal_by_id(req: Request, res: Response) {
     }
 }
 
+async function accept_proposal(req: Request, res: Response) {
+    const proposal_id: string = req.body.id;
+
+    // find proposal in db -> job offer id
+
+    // find job offer -> ticket id
+
+    // find position in ticket with job offer id
+
+    // check if there is space
+
+    // add person to accepted
+}
+
+async function decline_proposal(req: Request, res: Response) {
+    // find proposal in db
+    // delete the proposal
+}
+
 export default {
     new_ticket,
     get_all_tickets,
