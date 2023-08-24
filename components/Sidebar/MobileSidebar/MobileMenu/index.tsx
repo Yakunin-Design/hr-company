@@ -12,7 +12,20 @@ export default function MobileMenu(props: props) {
     return (
         <div className={styles.menu}>
             <div className={styles.nav_block}>
-                <PageBlock name="profile" active={props.active == "profile"} toggle={props.toggle}/>
+                <PageBlock
+                    name="profile"
+                    active={props.active == "profile"}
+                    toggle={props.toggle}
+                />
+                <Spacer top="2" />
+            </div>
+            <Spacer top="2" />
+            <div className={styles.nav_block}>
+                <PageBlock
+                    name="notifications"
+                    active={props.active == "notifications"}
+                    toggle={props.toggle}
+                />
                 <Spacer top="2" />
             </div>
 
@@ -23,6 +36,7 @@ export default function MobileMenu(props: props) {
 
             {props.user_type == "worker" && (
                 <>
+                    <Spacer top="2" />
                     <div className={styles.nav_block}>
                         <PageBlock
                             name="myjob"

@@ -16,6 +16,8 @@ import SearchIconWhite from "./icons/search_icon_white.svg";
 
 import VacancyIcon from "./icons/vacancy.svg";
 import VacancyIconWhite from "./icons/vacancy_white.svg";
+import BellIcon from "./icons/bell.svg";
+import BellIconWhite from "./icons/bell_white.svg";
 import PointIcon from "./icons/points_icon.svg";
 import PointIconWhite from "./icons/points_icon_white.svg";
 
@@ -31,6 +33,7 @@ export default function PageBlock(props: props) {
 
     if (props.name === "profile") href = "/lk/profile";
     if (props.name === "notifications") href = "/lk/notifications";
+    if (props.name === "myjob") href = "/lk/myjob";
 
     return (
         <>
@@ -182,9 +185,7 @@ export default function PageBlock(props: props) {
                             <>
                                 <Image
                                     src={
-                                        props.active
-                                            ? ProfileIconWhite
-                                            : ProfileIcon
+                                        props.active ? BellIconWhite : BellIcon
                                     }
                                     alt="notifications"
                                 />
