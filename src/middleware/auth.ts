@@ -1,15 +1,15 @@
-import jwt from 'jsonwebtoken';
-import { Request, Response, NextFunction } from 'express';
-import { ObjectId } from 'mongodb';
-import db from '../lib/idb';
+import jwt from "jsonwebtoken";
+import { Request, Response, NextFunction } from "express";
+import { ObjectId } from "mongodb";
+import db from "../lib/idb";
 
-const SECRET = 'shhhh';
+const SECRET = "shhhh";
 
 function auth(req: Request, res: Response, next: NextFunction) {
-    const token = req.headers.authorization?.split(' ')[1];
+    const token = req.headers.authorization?.split(" ")[1];
 
     if (!token) {
-        return res.status(401).send('Unathorized');
+        return res.status(401).send("Unathorized");
     }
 
     jwt.verify(token, SECRET, async (error, decoded) => {
@@ -23,17 +23,17 @@ function auth(req: Request, res: Response, next: NextFunction) {
 
         let db_result = await db.find(
             { _id: new ObjectId(res.locals.jwt.userID) },
-            res.locals.jwt.user_type + 's'
+            res.locals.jwt.user_type + "s"
         );
 
         if (!db_result.Ok) {
-            return res.status(400).send('Wrong jwt');
+            return res.status(400).send("Wrong jwt");
         }
 
         delete db_result.Ok.password;
 
         if (db_result.Err) {
-            return res.status(500).send('Oooof');
+            return res.status(500).send("Oooof");
         }
 
         res.locals.user = db_result.Ok;
@@ -41,4 +41,5 @@ function auth(req: Request, res: Response, next: NextFunction) {
         next();
     });
 }
+
 export default auth;

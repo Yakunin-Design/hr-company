@@ -847,17 +847,56 @@ async function get_proposal_by_id(req: Request, res: Response) {
 }
 
 async function accept_proposal(req: Request, res: Response) {
-    const proposal_id: string = req.body.id;
+    const proposal_id = new ObjectId(req.body.id);
+    const user_id = res.locals.user.id;
 
     // find proposal in db -> job offer id
+    const db_proposal = await db.find({ _id: proposal_id }, "proposals");
+    if (!db_proposal.Ok) return res.status(404).send("cant find proposal");
+
+    const job_offer_id = db_proposal.Ok.job_offer_id;
+
+    // check if user is able to accept the proposal
+    let allow = false;
+    db_proposal.Ok.worker_list.forEach(worker => {
+        if (worker === user_id) allow = true;
+    });
+
+    if (!allow)
+        return res.status(403).send("you are not able to accept this proposal");
 
     // find job offer -> ticket id
+    const db_job_offer = await db.find({ _id: job_offer_id }, "smp_job_offers");
+    if (!db_job_offer.Ok) return res.status(404).send("cant find job offer");
+
+    const ticket_id = db_job_offer.Ok.ticket_id;
 
     // find position in ticket with job offer id
+    const db_ticket = await db.find({ _id: ticket_id }, "tickets");
+    if (!db_ticket.Ok) return res.status(404).send("cant find ticket");
 
-    // check if there is space
+    const new_addresses = db_ticket.Ok.addresses.map(adr => {
+        adr.forEach(pos => {
+            if (pos.job_offer_id === job_offer_id) {
+                // check if there is space
+                if (pos.accepted.length >= Number(pos.quontity))
+                    return res
+                        .status(200)
+                        .send(
+                            "there is no space available on that proposal anymore"
+                        );
 
-    // add person to accepted
+                // check if person is already there!
+
+                // add person to accepted
+                pos.accepted.push(user_id);
+            }
+        });
+    });
+
+    console.log(new_addresses);
+
+    // actual update
 }
 
 async function decline_proposal(req: Request, res: Response) {
