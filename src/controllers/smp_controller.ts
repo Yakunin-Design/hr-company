@@ -847,8 +847,8 @@ async function get_proposal_by_id(req: Request, res: Response) {
 }
 
 async function accept_proposal(req: Request, res: Response) {
-    const proposal_id = new ObjectId(req.body.id);
-    const user_id = res.locals.user.id;
+    const proposal_id = new ObjectId(req.params.id);
+    const user_id = res.locals.user._id;
 
     // find proposal in db -> job offer id
     const db_proposal = await db.find({ _id: proposal_id }, "proposals");
@@ -859,7 +859,7 @@ async function accept_proposal(req: Request, res: Response) {
     // check if user is able to accept the proposal
     let allow = false;
     db_proposal.Ok.worker_list.forEach(worker => {
-        if (worker === user_id) allow = true;
+        if (worker.toString() === user_id.toString()) allow = true;
     });
 
     if (!allow)
@@ -876,7 +876,7 @@ async function accept_proposal(req: Request, res: Response) {
     if (!db_ticket.Ok) return res.status(404).send("cant find ticket");
 
     const new_addresses = db_ticket.Ok.addresses.map(adr => {
-        adr.forEach(pos => {
+        adr.positions.map(pos => {
             if (pos.job_offer_id === job_offer_id) {
                 // check if there is space
                 if (pos.accepted.length >= Number(pos.quontity))
@@ -894,7 +894,7 @@ async function accept_proposal(req: Request, res: Response) {
         });
     });
 
-    console.log(new_addresses);
+    return res.status(200).send(new_addresses);
 
     // actual update
 }
@@ -919,4 +919,5 @@ export default {
     respond_status,
     accept_candidate,
     get_proposal_by_id,
+    accept_proposal,
 };
