@@ -16,9 +16,6 @@ type props = {
 };
 
 export default function TicketPlate(props: props) {
-    // for not only 2 icons are available
-    const icon = props.status != "pending" ? true : false;
-
     const status_text = convert_status(props.status);
     const title =
         "Заяка №" +

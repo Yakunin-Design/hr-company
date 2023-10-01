@@ -8,7 +8,8 @@ type props = {};
 
 export default function RespondButton(props: props) {
     function proposalAction(action: "accept" | "decline") {
-        const proposal_id = "";
+        const req_string = `${process.env.API_ADDRESS}${window.location.pathname}/${action}`;
+
         const jwt = localStorage.getItem("jwt") || "";
 
         const config = {
@@ -18,18 +19,17 @@ export default function RespondButton(props: props) {
         };
 
         axios
-            .post(
-                `${process.env.API_ADDRESS}/proposal/${proposal_id}/${action}`,
-                {},
-                config
-            )
+            .post(req_string, {}, config)
             .then(res => {
                 if (!res.data) {
                     return console.log("bruh");
                 }
 
                 if (res.status === 200) {
-                    window.location.replace("/");
+                    console.log(res.data);
+                    window.location.replace(
+                        `/job-offers/${res.data.job_offer_id}`
+                    );
                 }
             })
             .catch(e => {
@@ -44,8 +44,6 @@ export default function RespondButton(props: props) {
     function declineProposal() {
         proposalAction("decline");
     }
-
-    console.log(window.location.origin);
 
     return (
         <Row gap={1}>
