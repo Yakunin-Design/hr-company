@@ -918,7 +918,9 @@ async function accept_proposal(req: Request, res: Response) {
 
                     // check if person is already there!
                     if (pos.accepted.includes(user_id.toString()))
-                        res.status(301).send("proposal is already accepted");
+                        return res
+                            .status(301)
+                            .send("proposal is already accepted");
 
                     // add person to accepted
                     pos.accepted.push(user_id);
@@ -944,7 +946,11 @@ async function accept_proposal(req: Request, res: Response) {
         if (!update_ticket.Ok)
             return res.status(500).send("[accept proposal] ticket update err");
 
-        return res.status(200).send("proposal accepted successfully");
+        const response_object = {
+            job_offer_id: job_offer_id.toString(),
+        };
+
+        return res.status(200).send(response_object);
     } catch (err) {
         console.log(err.message);
         res.status(500).send(err.message);
@@ -964,7 +970,7 @@ async function decline_proposal(req: Request, res: Response) {
             return res.status(500).send("cant find proposal");
 
         // get notification id
-        const notificaion_id = db_proposal.Ok.proposal;
+        const notificaion_id = db_proposal.Ok.proposal.toString();
 
         // delete notification
         const db_delete_proposal = await db.delete(
@@ -982,7 +988,11 @@ async function decline_proposal(req: Request, res: Response) {
         if (!db_notifications.Ok)
             return res.status(500).send("cant delete notification");
 
-        res.status(200).send("proposal declined succsessfully");
+        const response_object = {
+            job_offer_id: db_proposal.Ok.job_offer_id.toString(),
+        };
+
+        res.status(200).send(response_object);
     } catch (err) {
         console.log(err.message);
         res.status(500).send(err.message);
