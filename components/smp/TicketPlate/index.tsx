@@ -39,7 +39,7 @@ export default function TicketPlate(props: props) {
                 />
                 <Spacer top={2} />
                 <Row gap={0.5}>
-                    <StatusIcon is_ready={icon} />
+                    <StatusIcon icon={props.status} />
                     <p>{status_text}</p>
                 </Row>
                 <p>Дата реализации {props.realization_date}</p>

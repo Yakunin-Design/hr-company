@@ -3,13 +3,8 @@ import axios from "axios";
 import { cookies } from "next/headers";
 import Spacer from "@/components/std/Spacer";
 import Container from "@/components/std/Container";
-import Row from "@/components/std/Row";
-import Button from "@/components/std/Button";
-import Image from "next/image";
-import Link from "next/link";
-import archive_icon from "@/assets/svg/archive.svg";
-import styles from "./tickets.module.css";
 import { ticket_status, convert_status } from "@/types/ticket_status";
+import Link from "next/link";
 
 type plate_ticket_data = {
     _id: string;
@@ -29,7 +24,7 @@ async function get_tickets() {
     };
 
     const db_tickets = await axios.get(
-        `${process.env.API_ADDRESS}/tickets`,
+        `${process.env.API_ADDRESS}/archive`,
         config
     );
     return db_tickets.data;
@@ -51,29 +46,10 @@ export default async function TicketsPage() {
     return (
         <Container wrapper>
             <Spacer top="2" />
-            <Row className={styles.head}>
-                <h2>Ваши заявки</h2>
-                <Link href={"/new-ticket"}>
-                    <Button secondary expand>
-                        Добавить заявку &#65291;
-                    </Button>
-                </Link>
-            </Row>
+            <h2>Архив заявок</h2>
+            <Link href={"/tickets"}> ⮌ Текущие заявки</Link>
             <Spacer top="2" />
             {ticket_list}
-            <Spacer top="2" />
-
-            <Link href={"/archive"}>
-                <Row gap={0.5}>
-                    <Image
-                        src={archive_icon}
-                        width={16}
-                        height={16}
-                        alt="archive icon"
-                    />
-                    Архив заявок
-                </Row>
-            </Link>
         </Container>
     );
 }
