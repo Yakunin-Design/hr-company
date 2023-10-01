@@ -7,6 +7,7 @@ const router = Router();
 
 router.post("/new-ticket", auth, smp_controller.new_ticket);
 router.get("/tickets", auth, smp_controller.get_all_tickets);
+router.get("/archive", auth, smp_controller.get_archived_tickets);
 router.get("/tickets/:id", auth, smp_controller.get_ticket_by_id);
 
 router.get("/activate-ticket/:id", auth, smp_controller.activate_ticket);

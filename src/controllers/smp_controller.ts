@@ -153,7 +153,30 @@ async function new_ticket(req: Request, res: Response) {
 }
 
 async function get_all_tickets(req: Request, res: Response) {
-    const tickets = await db.find_all({}, "tickets");
+    const tickets = await db.find_all(
+        {
+            $or: [{ status: "in progress" }, { status: "pending" }],
+        },
+        "tickets"
+    );
+    if (tickets.Err) return res.status(500).send("db failed");
+
+    const response_tickets = tickets.Ok?.map(ticket => {
+        return {
+            _id: ticket._id,
+            total_workers_count: ticket.total_workers_count,
+            accepted: ticket.accepted,
+            status: ticket.status,
+            realization_date: ticket.realization_date,
+            company_id: ticket.company_name,
+        };
+    });
+
+    res.status(200).send(response_tickets);
+}
+
+async function get_archived_tickets(req: Request, res: Response) {
+    const tickets = await db.find_all({ status: "closed" }, "tickets");
     if (tickets.Err) return res.status(500).send("db failed");
 
     const response_tickets = tickets.Ok?.map(ticket => {
@@ -970,6 +993,7 @@ export default {
     new_ticket,
     get_all_tickets,
     get_ticket_by_id,
+    get_archived_tickets,
     get_address,
     get_position,
     activate_ticket,
