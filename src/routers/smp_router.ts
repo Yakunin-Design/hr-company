@@ -35,6 +35,7 @@ router.post(
 
 router.get("/proposal/:id", auth, smp_controller.get_proposal_by_id);
 
-router.post("/accept-proposal/:id", auth, smp_controller.accept_proposal);
+router.post("/proposal/:id/accept", auth, smp_controller.accept_proposal);
+router.post("/proposal/:id/decline", auth, smp_controller.decline_proposal);
 
 export default router;

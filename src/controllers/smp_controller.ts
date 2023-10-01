@@ -847,61 +847,123 @@ async function get_proposal_by_id(req: Request, res: Response) {
 }
 
 async function accept_proposal(req: Request, res: Response) {
-    const proposal_id = new ObjectId(req.params.id);
-    const user_id = res.locals.user._id;
+    try {
+        const proposal_id = new ObjectId(req.params.id);
+        const user_id = res.locals.user._id;
 
-    // find proposal in db -> job offer id
-    const db_proposal = await db.find({ _id: proposal_id }, "proposals");
-    if (!db_proposal.Ok) return res.status(404).send("cant find proposal");
+        // find proposal in db -> job offer id
+        const db_proposal = await db.find({ _id: proposal_id }, "proposals");
+        if (!db_proposal.Ok) return res.status(404).send("cant find proposal");
 
-    const job_offer_id = db_proposal.Ok.job_offer_id;
+        const job_offer_id = db_proposal.Ok.job_offer_id;
 
-    // check if user is able to accept the proposal
-    let allow = false;
-    db_proposal.Ok.worker_list.forEach(worker => {
-        if (worker.toString() === user_id.toString()) allow = true;
-    });
-
-    if (!allow)
-        return res.status(403).send("you are not able to accept this proposal");
-
-    // find job offer -> ticket id
-    const db_job_offer = await db.find({ _id: job_offer_id }, "smp_job_offers");
-    if (!db_job_offer.Ok) return res.status(404).send("cant find job offer");
-
-    const ticket_id = db_job_offer.Ok.ticket_id;
-
-    // find position in ticket with job offer id
-    const db_ticket = await db.find({ _id: ticket_id }, "tickets");
-    if (!db_ticket.Ok) return res.status(404).send("cant find ticket");
-
-    const new_addresses = db_ticket.Ok.addresses.map(adr => {
-        adr.positions.map(pos => {
-            if (pos.job_offer_id === job_offer_id) {
-                // check if there is space
-                if (pos.accepted.length >= Number(pos.quontity))
-                    return res
-                        .status(200)
-                        .send(
-                            "there is no space available on that proposal anymore"
-                        );
-
-                // check if person is already there!
-
-                // add person to accepted
-                pos.accepted.push(user_id);
-            }
+        // check if user is able to accept the proposal
+        let allow = false;
+        db_proposal.Ok.worker_list.forEach(worker => {
+            if (worker.toString() === user_id.toString()) allow = true;
         });
-    });
 
-    return res.status(200).send(new_addresses);
+        if (!allow)
+            return res
+                .status(403)
+                .send("you are not able to accept this proposal");
 
-    // actual update
+        // find job offer -> ticket id
+        const db_job_offer = await db.find(
+            { _id: job_offer_id },
+            "smp_job_offers"
+        );
+        if (!db_job_offer.Ok)
+            return res.status(404).send("cant find job offer");
+
+        const ticket_id = db_job_offer.Ok.ticket_id;
+
+        // find position in ticket with job offer id
+        const db_ticket = await db.find({ _id: ticket_id }, "tickets");
+        if (!db_ticket.Ok) return res.status(404).send("cant find ticket");
+
+        const new_addresses = db_ticket.Ok.addresses.map(adr => {
+            adr.positions.forEach(pos => {
+                if (pos.job_offer_id.toString() === job_offer_id.toString()) {
+                    // check if there is space
+                    if (pos.accepted.length >= Number(pos.quontity))
+                        return res
+                            .status(200)
+                            .send(
+                                "there is no space available on that proposal anymore"
+                            );
+
+                    // check if person is already there!
+                    if (pos.accepted.includes(user_id.toString()))
+                        res.status(301).send("proposal is already accepted");
+
+                    // add person to accepted
+                    pos.accepted.push(user_id);
+                }
+            });
+
+            return adr;
+        });
+
+        const new_ticket_data = {
+            ...db_ticket.Ok,
+            accepted: db_ticket.Ok.accepted + 1,
+            addresses: new_addresses,
+        };
+
+        // actual update
+        const update_ticket = await db.update(
+            { _id: ticket_id },
+            { $set: new_ticket_data },
+            "tickets"
+        );
+
+        if (!update_ticket.Ok)
+            return res.status(500).send("[accept proposal] ticket update err");
+
+        return res.status(200).send("proposal accepted successfully");
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send(err.message);
+    }
 }
 
 async function decline_proposal(req: Request, res: Response) {
-    // find proposal in db
-    // delete the proposal
+    try {
+        // get data from request
+        const proposal_id: ObjectId = new ObjectId(req.params.id);
+        const user_id = res.locals.user._id;
+
+        // find proposal in db
+        const db_proposal = await db.find({ _id: proposal_id }, "proposals");
+        if (!db_proposal.Ok) return res.status(500).send("cant find proposal");
+        if (db_proposal.Ok == null)
+            return res.status(500).send("cant find proposal");
+
+        // get notification id
+        const notificaion_id = db_proposal.Ok.proposal;
+
+        // delete notification
+        const db_delete_proposal = await db.delete(
+            proposal_id.toString(),
+            "proposals"
+        );
+        if (!db_delete_proposal.Ok)
+            return res.status(500).send("cant delete proposal");
+
+        // delete notification
+        const db_notifications = await db.delete(
+            notificaion_id,
+            "notifications"
+        );
+        if (!db_notifications.Ok)
+            return res.status(500).send("cant delete notification");
+
+        res.status(200).send("proposal declined succsessfully");
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send(err.message);
+    }
 }
 
 export default {
@@ -920,4 +982,5 @@ export default {
     accept_candidate,
     get_proposal_by_id,
     accept_proposal,
+    decline_proposal,
 };
