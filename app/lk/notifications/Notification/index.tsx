@@ -10,12 +10,19 @@ type props = {
 };
 
 export default function Notification(props: props) {
-	const date = new Date(Number(props.timestamp));
-	date.toLocaleString("ru-RU", {
+	const date = new Date(props.timestamp);
+
+	const dispaly_date = date.toLocaleString("ru-RU", {
 		day: "numeric",
-		month: "long",
-		year: "numeric"
+		month: "long"
 	});
+
+	const dispaly_time = date.toLocaleString("ru-RU", {
+        hour: "numeric",
+        minute: "numeric",
+	});
+
+    const full_date = dispaly_date + " " + dispaly_time;
 
     let icon = "ℹ️";
     if (props.icon === "warn") icon = "⚠️";
@@ -30,7 +37,7 @@ export default function Notification(props: props) {
                         <h3>
                             {icon} {props.text}
                         </h3>
-                        <p>{date}</p>
+                        <p>{full_date}</p>
                     </div>
                     ❌
                 </Row>
