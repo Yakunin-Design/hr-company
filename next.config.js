@@ -4,7 +4,7 @@ const nextConfig = {
     appDir: true,
   },
   env: {
-    API_ADDRESS: "http://localhost:6969",
+    API_ADDRESS: "https://api.hr-company.org",
   }
 }
 

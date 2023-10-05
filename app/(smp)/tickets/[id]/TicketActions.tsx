@@ -27,6 +27,8 @@ export default function TicketActions(props: props) {
             `${process.env.API_ADDRESS}/close-ticket/${props.ticket_id}`,
             config
         );
+
+		window.location.replace("/archive");
     }
 
     async function extend_ticket() {
@@ -34,6 +36,8 @@ export default function TicketActions(props: props) {
             `${process.env.API_ADDRESS}/extend-ticket/${props.ticket_id}`,
             config
         );
+
+		window.location.replace("/tickets");
     }
 
     return (
