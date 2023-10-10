@@ -12,7 +12,7 @@ type props = {
 };
 
 export default function Notification(props: props) {
-    const user_time_zone = unwrap(cookies().get("user_time_zone")?.value, "Europe/Paris");
+    const user_time_zone = unwrap(cookies().get("user_time_zone")?.value, "Europe/Moscow");
 	const date = new Date(props.timestamp);
 
 	const dispaly_date = date.toLocaleString("ru-RU", {

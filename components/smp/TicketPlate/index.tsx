@@ -6,6 +6,8 @@ import ProgressBar from "../ProgressBar";
 import Card from "@/components/Card";
 import Link from "next/link";
 import { ticket_status, convert_status } from "@/types/ticket_status";
+import { cookies } from "next/headers";
+import unwrap from "@/functions/unwrap";
 
 type props = {
     id: string;
@@ -23,6 +25,15 @@ export default function TicketPlate(props: props) {
         " (" +
         props.total_workers_count +
         ") чел";
+    
+    const user_time_zone = unwrap(cookies().get("user_time_zone")?.value, "Europe/Moscow");
+
+    const display_date = new Date(props.realization_date).toLocaleString("ru-RU", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+        timeZone: user_time_zone
+    });
 
     return (
         <Link href={`/tickets/${props.id}`}>
@@ -39,7 +50,7 @@ export default function TicketPlate(props: props) {
                     <StatusIcon icon={props.status} />
                     <p>{status_text}</p>
                 </Row>
-                <p>Дата реализации {props.realization_date}</p>
+                <p>Дата реализации {display_date}</p>
             </Card>
         </Link>
     );
