@@ -621,6 +621,7 @@ async function respond(req: Request, res: Response) {
         // get data form body
         const position = req.body.position;
         const school_id = req.body.school_id;
+        const job_offer_id = req.body.job_offer_id;
         const ticket_id = new ObjectId(req.body.ticket_id);
 
         if (res.locals.jwt.user_type != "worker")
@@ -700,15 +701,11 @@ async function respond(req: Request, res: Response) {
             return res.status(400).send("respond update failed");
 
         // find and update worker
-
         const worker = await db.find({ _id: worker_id }, "workers");
         if (!worker.Ok)
             return res.status(500).send("[respond]: failed to find a worker");
 
         const old_responds = worker.Ok.responds ? worker.Ok.responds : [];
-        const job_offer_id =
-            new_ticket_data.addresses[address_index].positions[position_index]
-                .job_offer_id;
         const new_responds = [...old_responds, job_offer_id];
 
         const updated_db2 = await db.update(
@@ -727,108 +724,116 @@ async function respond(req: Request, res: Response) {
 }
 
 async function accept_candidate(req: Request, res: Response) {
-    // for now we use moderator middleware bc we dont have smp client support yet
+    try {
+        // for now we use moderator middleware bc we dont have smp client support yet
 
-    const { candidates, accepted, position_index, address_index } = req.body;
-    const ticket_id = new ObjectId(req.body.ticket_id);
+        const { candidates, accepted, position_index, address_index } = req.body;
+        const ticket_id = new ObjectId(req.body.ticket_id);
 
-    // find ticket
-    const ticket = await db.find({ _id: ticket_id }, "tickets");
-    if (ticket.Err) {
-        return res.status(401).send(ticket.Err.message);
-    }
+        // find ticket
+        const ticket = await db.find({ _id: ticket_id }, "tickets");
+        if (ticket.Err) {
+            return res.status(401).send(ticket.Err.message);
+        }
 
-    if (!ticket.Ok) {
-        return res
-            .status(400)
-            .send("Ticket not found: accept candidate failed");
-    }
+        if (!ticket.Ok) {
+            return res
+                .status(400)
+                .send("Ticket not found: accept candidate failed");
+        }
 
-    let new_addresses = ticket.Ok.addresses;
-    const position = new_addresses[address_index].positions[position_index];
-    const new_workers = accepted
-        .filter(worker => !position.accepted.includes(worker))
-        .map(worker => worker.toString());
+        let new_addresses = ticket.Ok.addresses;
+        const position = new_addresses[address_index].positions[position_index];
+        const new_workers = accepted
+            .filter(worker => !position.accepted.includes(worker))
+            .map(worker => worker.toString());
 
-    position.candidates = candidates.map(candidate => new ObjectId(candidate));
-    position.accepted = accepted.map(worker => new ObjectId(worker));
+        position.candidates = candidates.map(candidate => new ObjectId(candidate));
+        position.accepted = accepted.map(worker => new ObjectId(worker));
 
-    let accepted_count = 0;
-    new_addresses = new_addresses.map(adr => {
-        const new_positions = adr.positions.map(pos => {
-            accepted_count += pos.accepted.length;
-            const old_candidates = pos.candidates.map(candidate =>
-                candidate.toString()
-            );
-            const new_candidates = old_candidates
-                .filter(worker => !new_workers.includes(worker))
-                .map(worker => new ObjectId(worker));
-            return { ...pos, candidates: new_candidates };
-        });
-        return { ...adr, positions: new_positions };
-    });
-
-    // create new addresses object
-    const new_data = {
-        ...ticket.Ok,
-        accepted: accepted_count,
-        addresses: new_addresses,
-    };
-
-    const update_ticket = await db.update(
-        { _id: ticket_id },
-        { $set: { ...new_data } },
-        "tickets"
-    );
-
-    if (update_ticket.Err) {
-        return res.status(401).send("accept update failed");
-    }
-
-    const jo_filter = {
-        $and: [
-            { ticket_id },
-            { school_id: new_addresses[address_index].school_id },
-            { position: position.position },
-        ],
-    };
-    const jo_data = await db.find(jo_filter, "smp_job_offers");
-    if (!jo_data.Ok) {
-        return res.status(400).send("can't find jo");
-    }
-
-    if (new_workers.length > 0) {
-        const update_workers = await new_workers.forEach(async worker => {
-            const worker_id = new ObjectId(worker);
-
-            const worker_data = await db.find({ _id: worker_id }, "workers");
-            if (!worker_data.Ok) {
-                return res.status(400).send("Wrong worker id");
-            }
-
-            const work = worker_data.Ok.work
-                ? [...worker_data.Ok!.work, jo_data.Ok?._id]
-                : [jo_data.Ok?._id];
-            const new_responds = worker_data.Ok!.responds.filter(resp => {
-                return resp.toString() != jo_data.Ok?._id.toString();
+        let accepted_count = 0;
+        new_addresses = new_addresses.map(adr => {
+            const new_positions = adr.positions.map(pos => {
+                accepted_count += pos.accepted.length;
+                const old_candidates = pos.candidates.map(candidate =>
+                    candidate.toString()
+                );
+                const new_candidates = old_candidates
+                    .filter(worker => !new_workers.includes(worker))
+                    .map(worker => new ObjectId(worker));
+                return { ...pos, candidates: new_candidates };
             });
-            const worker_update_data = {
-                work,
-                responds: new_responds,
-            };
-
-            const update_worker = await db.update(
-                { _id: worker_id },
-                { $set: { ...worker_update_data } },
-                "workers"
-            );
-            if (!update_worker.Ok) {
-                return res.status(500).send("worker update err");
-            }
+            return { ...adr, positions: new_positions };
         });
-    }
 
-    return res.status(200).send("accepted[] updated successfully");
+        // create new addresses object
+        const new_data = {
+            ...ticket.Ok,
+            accepted: accepted_count,
+            addresses: new_addresses,
+        };
+
+        const update_ticket = await db.update(
+            { _id: ticket_id },
+            { $set: { ...new_data } },
+            "tickets"
+        );
+
+        if (update_ticket.Err) {
+            return res.status(401).send("accept update failed");
+        }
+
+        const jo_filter = {
+            $and: [
+                { ticket_id },
+                { school_id: new_addresses[address_index].school_id },
+                { position: position.position },
+            ],
+        };
+        const jo_data = await db.find(jo_filter, "smp_job_offers");
+        if (!jo_data.Ok) {
+            return res.status(400).send("can't find jo");
+        }
+
+        if (new_workers.length > 0) {
+            const update_workers = await new_workers.forEach(async worker => {
+                const worker_id = new ObjectId(worker);
+
+                const worker_data = await db.find({ _id: worker_id }, "workers");
+                if (!worker_data.Ok) {
+                    return res.status(400).send("Wrong worker id");
+                }
+
+                const work = worker_data.Ok.work
+                    ? [...worker_data.Ok!.work, jo_data.Ok?._id]
+                    : [jo_data.Ok?._id];
+
+                const new_responds = worker_data.Ok!.responds.filter(resp => {
+                    return resp?.toString() != jo_data.Ok?._id.toString();
+                });
+
+                const worker_update_data = {
+                    work,
+                    responds: new_responds,
+                };
+
+                const update_worker = await db.update(
+                    { _id: worker_id },
+                    { $set: { ...worker_update_data } },
+                    "workers"
+                );
+                if (!update_worker.Ok) {
+                    return res.status(500).send("worker update err");
+                }
+            });
+        }
+
+        return res.status(200).send("accepted[] updated successfully");
+
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send(err.message);
+    }
 }
 
 async function get_proposal_by_id(req: Request, res: Response) {

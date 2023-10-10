@@ -39,6 +39,9 @@ export default async function activate_ticket(
                                 .status(500)
                                 .send("smp job offer activation failed");
 
+                        // MARKER 3
+                        // ticket position is not getting job offer id update
+
                         pos.job_offer_id = new_jo.Ok;
                         return pos;
                     })
