@@ -16,12 +16,19 @@ async function new_ticket(req: Request, res: Response) {
 
         // Data prep for ticket creation
         const comment = data.comment;
-        const date_of_creation = new Date();
+        const date_of_creation = new Date().getTime();
         const status = "pending";
         const extended = false;
         const company_name = data.company_id;
         let accepted = 0;
-        const realization_date = data.date;
+        const realization_timestamp = data.date.split(".");
+        const realization_date = new Date(
+            realization_timestamp[1] +
+                "." +
+                realization_timestamp[0] +
+                "." +
+                realization_timestamp[2]
+        ).getTime();
 
         let total_workers_count = 0;
         // calculating workers count
@@ -397,13 +404,7 @@ async function extend_ticket(req: Request, res: Response) {
         // constructing new ticket
         const new_ticket_id = new ObjectId();
 
-        const realization_date_parts =
-            old_ticket.Ok.realization_date.split(".");
-        const realization_date = new Date(
-            +realization_date_parts[2],
-            realization_date_parts[1] - 1,
-            +realization_date_parts[0]
-        );
+        const realization_date = new Date(old_ticket.Ok.realization_date);
         const new_realization_date = new Date(realization_date).setDate(
             realization_date.getDate() + 1
         );
@@ -727,7 +728,8 @@ async function accept_candidate(req: Request, res: Response) {
     try {
         // for now we use moderator middleware bc we dont have smp client support yet
 
-        const { candidates, accepted, position_index, address_index } = req.body;
+        const { candidates, accepted, position_index, address_index } =
+            req.body;
         const ticket_id = new ObjectId(req.body.ticket_id);
 
         // find ticket
@@ -748,7 +750,9 @@ async function accept_candidate(req: Request, res: Response) {
             .filter(worker => !position.accepted.includes(worker))
             .map(worker => worker.toString());
 
-        position.candidates = candidates.map(candidate => new ObjectId(candidate));
+        position.candidates = candidates.map(
+            candidate => new ObjectId(candidate)
+        );
         position.accepted = accepted.map(worker => new ObjectId(worker));
 
         let accepted_count = 0;
@@ -799,7 +803,10 @@ async function accept_candidate(req: Request, res: Response) {
             const update_workers = await new_workers.forEach(async worker => {
                 const worker_id = new ObjectId(worker);
 
-                const worker_data = await db.find({ _id: worker_id }, "workers");
+                const worker_data = await db.find(
+                    { _id: worker_id },
+                    "workers"
+                );
                 if (!worker_data.Ok) {
                     return res.status(400).send("Wrong worker id");
                 }
@@ -829,7 +836,6 @@ async function accept_candidate(req: Request, res: Response) {
         }
 
         return res.status(200).send("accepted[] updated successfully");
-
     } catch (err) {
         console.log(err.message);
         res.status(500).send(err.message);

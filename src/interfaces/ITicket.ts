@@ -33,8 +33,8 @@ export interface ITicketAddress {
 export interface ITicket {
     company_id: ObjectId;
     company_name: string;
-    date_of_creation: Date;
-    realization_date: string;
+    date_of_creation: number;
+    realization_date: number;
     status: "pending" | "active" | "inactive";
     extended: ObjectId | false;
     city: string;
