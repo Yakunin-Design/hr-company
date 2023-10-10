@@ -13,11 +13,13 @@ export default function Notification(props: props) {
 	const date = new Date(props.timestamp);
 
 	const dispaly_date = date.toLocaleString("ru-RU", {
+        timeZone: "Europe/Moscow",
 		day: "numeric",
 		month: "long"
 	});
 
 	const dispaly_time = date.toLocaleString("ru-RU", {
+        timeZone: "Europe/Moscow",
         hour: "numeric",
         minute: "numeric",
 	});

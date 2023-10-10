@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { check_phone, check_email } from "@/functions/validation";
-import { setCookie } from 'cookies-next';
+import { setCookie } from "cookies-next";
 
 export default function login_controller() {
     const [form_data, set_form_data] = useState({
@@ -44,6 +44,13 @@ export default function login_controller() {
 
                 setCookie("jwt", res.data);
                 localStorage.setItem("jwt", res.data);
+
+                const user_time_zone = new Date().getTimezoneOffset() * -1 / 60;
+                console.log(user_time_zone);
+                // this should rather be a string like this:
+                // "Europe/Moscow"
+                // bc i could use this as argument in ToLocaleString later
+                // setCookie("user_time_zone", user_time_zone);
 
                 window.location.replace("/lk/profile");
             })
