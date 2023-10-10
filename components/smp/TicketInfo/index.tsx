@@ -9,6 +9,8 @@ import IconButton from "@/components/IconButton";
 import Link from "next/link";
 import { convert_status, ticket_status } from "@/types/ticket_status";
 import ActivateTicketButton from "./ActivateTicketButton";
+import unwrap from "@/functions/unwrap";
+import { cookies } from "next/headers";
 
 type props = {
     id: string;
@@ -24,6 +26,22 @@ export default function TicketInfo(props: props) {
     const status = props.status;
     const icon = props.status !== "pending" ? true : false;
     const status_text = convert_status(status);
+
+    const user_time_zone = unwrap(
+        cookies().get("user_time_zone")?.value,
+        "Europe/Moscow"
+    );
+
+    const display_date = new Date(props.realization_date).toLocaleString(
+        "ru-RU",
+        {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+            timeZone: user_time_zone,
+        }
+    );
+
     const title =
         "Заяка №" +
         props.id.slice(-7) +
@@ -57,7 +75,7 @@ export default function TicketInfo(props: props) {
                         )}
                     </Row>
                     <Spacer top={1} />
-                    <p>Дата реализации {props.realization_date}</p>
+                    <p>Дата реализации {display_date}</p>
                     <Spacer top={1} />
                     <p>{props.description}</p>
                 </Padding>
