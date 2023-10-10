@@ -87,6 +87,9 @@ export default function confirm_controller() {
                 localStorage.setItem("jwt", res.data);
                 setCookie("jwt", res.data);
 
+                const user_time_zone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                setCookie("user_time_zone", user_time_zone);
+
                 window.location.replace("/lk/profile");
             });
     }

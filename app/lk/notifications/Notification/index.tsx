@@ -1,6 +1,8 @@
 import Row from "@/components/std/Row";
 import Card from "@/components/Card";
 import Link from "next/link";
+import unwrap from "@/functions/unwrap";
+import { cookies } from "next/headers";
 
 type props = {
     text: string;
@@ -10,16 +12,17 @@ type props = {
 };
 
 export default function Notification(props: props) {
+    const user_time_zone = unwrap(cookies().get("user_time_zone")?.value, "Europe/Paris");
 	const date = new Date(props.timestamp);
 
 	const dispaly_date = date.toLocaleString("ru-RU", {
-        timeZone: "Europe/Moscow",
+        timeZone: user_time_zone,
 		day: "numeric",
 		month: "long"
 	});
 
 	const dispaly_time = date.toLocaleString("ru-RU", {
-        timeZone: "Europe/Moscow",
+        timeZone: user_time_zone,
         hour: "numeric",
         minute: "numeric",
 	});

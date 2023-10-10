@@ -4,7 +4,6 @@ import Compressor from 'compressorjs';
 
 export default function register_controller() {
     const [errors, set_errors] = useState<Array<any>>([])
-
     const [tou, set_tou] = useState(false);
 
     function toggle_tou() {
