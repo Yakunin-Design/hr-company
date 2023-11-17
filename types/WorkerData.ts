@@ -19,6 +19,11 @@ type WorkerData = {
         amount: number;
         period: string;
     };
+    documents?: {
+        passport: boolean;
+        medical_book: boolean;
+        employment_book: boolean;
+    };
 };
 
 export default WorkerData;

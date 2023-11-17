@@ -17,6 +17,9 @@ type props = {
         user_type: string;
         user_data: WorkerData;
     };
+    change_worker_documents: (
+        document_type: "passport" | "medical_book" | "employment_book"
+    ) => void;
     handle_change: (event: any) => void;
     save_data: () => void;
     show_save_btn: boolean;
@@ -53,7 +56,10 @@ export default function WorkerProfile(props: props) {
                     handle_change={props.handle_change}
                     edit_errors={props.edit_errors}
                 />
-                <Documents />
+                <Documents
+                    user={props.user}
+                    change_worker_documents={props.change_worker_documents}
+                />
             </Row>
 
             {/* 

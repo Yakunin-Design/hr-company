@@ -1,25 +1,41 @@
 import Card from "@/components/Card";
-import Button from "@/components/std/Button";
 import Spacer from "@/components/std/Spacer";
 
 import styles from "./documents.module.css";
 import DocumentBlock from "./DocunentBlock";
+import WorkerData from "@/types/WorkerData";
 
-export default function Documents() {
+type props = {
+    user: { user_type: string; user_data: WorkerData };
+    change_worker_documents: (
+        document_type: "passport" | "medical_book" | "employment_book"
+    ) => void;
+};
+
+export default function Documents(props: props) {
+    const ownership = props.user.user_data.documents;
+    if (!ownership) return <h1>BRUH</h1>;
+
     return (
         <Card className={styles.document_block}>
             <Spacer top="2" />
             <h3>Документы (В разработке)</h3>
 
             <DocumentBlock
-                active="show"
-                name="Паспорт РФ"
-                foreign="4 018 *** ***"
+                name="passport"
+                ownership={ownership.passport}
+                flip={props.change_worker_documents}
             />
-            <DocumentBlock active="delete" name="Мед. книжка" />
-
-            <Spacer top="1" />
-            <Button common>Добавить документ +</Button>
+            <DocumentBlock
+                name="medical_book"
+                ownership={ownership.medical_book}
+                flip={props.change_worker_documents}
+            />
+            <DocumentBlock
+                name="employment_book"
+                ownership={ownership.employment_book}
+                flip={props.change_worker_documents}
+            />
         </Card>
     );
 }

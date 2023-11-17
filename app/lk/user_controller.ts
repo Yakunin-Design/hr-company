@@ -12,31 +12,35 @@ import {
     check_email,
 } from "@/functions/validation";
 
-
 type user = {
-    user_type: string,
+    user_type: string;
     user_data: {
-        _id: string,
-        birthday: string,
-        citizenship: string,
-        email: string,
-        full_name: string,
-        phone: string,
-        specialty: [],
-        status: string,
-        city: "Санкт-Петербург",
-        district: string,
-        subway: string,
-        job_type: string,
+        _id: string;
+        birthday: string;
+        citizenship: string;
+        email: string;
+        full_name: string;
+        phone: string;
+        specialty: [];
+        status: string;
+        city: "Санкт-Петербург";
+        district: string;
+        subway: string;
+        job_type: string;
         salary: {
-            amount: number,
-            period: string,
-        },
-        inn: string,
-        company: string,
-        description: string,
-    },
-}
+            amount: number;
+            period: string;
+        };
+        inn: string;
+        company: string;
+        description: string;
+        documents: {
+            passport: boolean;
+            medical_book: boolean;
+            employment_book: boolean;
+        };
+    };
+};
 
 export default function user_controller() {
     /**
@@ -70,6 +74,11 @@ export default function user_controller() {
             inn: "",
             company: "",
             description: "",
+            documents: {
+                passport: false,
+                medical_book: false,
+                employment_book: false,
+            },
         },
     });
     /**
@@ -179,6 +188,58 @@ export default function user_controller() {
         }
     }
 
+    function change_worker_documents(
+        document_type: "passport" | "medical_book" | "employment_book"
+    ) {
+        if (document_type === "passport") {
+            set_user(prev_user_data => {
+                return {
+                    ...prev_user_data,
+                    user_data: {
+                        ...prev_user_data.user_data,
+                        documents: {
+                            ...prev_user_data.user_data.documents,
+                            passport:
+                                !prev_user_data.user_data.documents.passport,
+                        },
+                    },
+                };
+            });
+        } else if (document_type === "medical_book") {
+            set_user(prev_user_data => {
+                return {
+                    ...prev_user_data,
+                    user_data: {
+                        ...prev_user_data.user_data,
+                        documents: {
+                            ...prev_user_data.user_data.documents,
+                            medical_book:
+                                !prev_user_data.user_data.documents
+                                    .medical_book,
+                        },
+                    },
+                };
+            });
+        } else if (document_type === "employment_book") {
+            set_user(prev_user_data => {
+                return {
+                    ...prev_user_data,
+                    user_data: {
+                        ...prev_user_data.user_data,
+                        documents: {
+                            ...prev_user_data.user_data.documents,
+                            employment_book:
+                                !prev_user_data.user_data.documents
+                                    .employment_book,
+                        },
+                    },
+                };
+            });
+        }
+
+        set_show_save_btn(true);
+    }
+
     /**
      * ------------- SEND TO API -------------
      */
@@ -245,7 +306,11 @@ export default function user_controller() {
 
         if (Object.keys(data).length > 0) {
             axios
-                .post(`${process.env.API_ADDRESS}/profile/edit`, { ...data }, config)
+                .post(
+                    `${process.env.API_ADDRESS}/profile/edit`,
+                    { ...data },
+                    config
+                )
                 .then(res => {
                     if (!res.data) {
                         return console.log(res);
@@ -365,5 +430,6 @@ export default function user_controller() {
         save_data,
         show_save_btn,
         edit_errors,
+        change_worker_documents,
     };
 }

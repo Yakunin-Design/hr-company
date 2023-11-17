@@ -1,6 +1,5 @@
 "use client";
 import Container from "@/components/std/Container";
-import Spacer from "@/components/std/Spacer";
 
 import { CheckUser } from "../checkUser";
 import user_controller from "../user_controller";
@@ -15,8 +14,11 @@ export default function Page() {
         save_data,
         show_save_btn,
         edit_errors,
+        change_worker_documents,
     } = user_controller();
     CheckUser(user, set_user);
+
+    console.log(user);
 
     return (
         <>
@@ -25,6 +27,7 @@ export default function Page() {
                     <WorkerProfile
                         user={user}
                         handle_change={handleChange}
+                        change_worker_documents={change_worker_documents}
                         save_data={save_data}
                         show_save_btn={show_save_btn}
                         edit_errors={edit_errors}
