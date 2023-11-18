@@ -1,32 +1,32 @@
 "use client";
 import { useEffect } from "react";
 import axios from "axios";
-import { setCookie } from 'cookies-next';
+import { setCookie } from "cookies-next";
 
 type user = {
-    user_type: string,
+    user_type: string;
     user_data: {
-        _id: string,
-        birthday: string,
-        citizenship: string,
-        email: string,
-        full_name: string,
-        phone: string,
-        specialty: [],
-        status: string,
-        city: "Санкт-Петербург",
-        district: string,
-        subway: string,
-        job_type: string,
+        _id: string;
+        birthday: string;
+        citizenship: string;
+        email: string;
+        full_name: string;
+        phone: string;
+        specialty: [];
+        status: string;
+        city: "Санкт-Петербург";
+        district: string;
+        subway: string;
+        job_type: string;
         salary: {
-            amount: number,
-            period: string,
-        },
-        inn: string,
-        company: string,
-        description: string,
-    },
-}
+            amount: number;
+            period: string;
+        };
+        inn: string;
+        company: string;
+        description: string;
+    };
+};
 
 export function CheckUser(user: user, set_user: any) {
     useEffect(() => {
@@ -49,7 +49,7 @@ export function CheckUser(user: user, set_user: any) {
                     user_type: res.data.specialty ? "worker" : "employer",
                     user_data: {
                         ...user.user_data,
-                        ...res.data
+                        ...res.data,
                     },
                 });
 

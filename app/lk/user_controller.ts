@@ -191,6 +191,9 @@ export default function user_controller() {
     function change_worker_documents(
         document_type: "passport" | "medical_book" | "employment_book"
     ) {
+        set_edits(prev => prev.filter(edit => edit != document_type));
+        set_edits(prev => [...prev, document_type]);
+
         if (document_type === "passport") {
             set_user(prev_user_data => {
                 return {
@@ -304,6 +307,8 @@ export default function user_controller() {
             },
         };
 
+        console.log(data);
+
         if (Object.keys(data).length > 0) {
             axios
                 .post(
@@ -328,6 +333,7 @@ export default function user_controller() {
 
     function worker_valid(edits: Array<any>, err: Array<String>) {
         let data = {};
+
         edits.forEach(edit => {
             if (edit === "full_name") {
                 check_full_name(user.user_data[edit])
@@ -361,6 +367,13 @@ export default function user_controller() {
             }
             if (edit === "amount" || edit === "period") {
                 data.salary = user.user_data.salary;
+            }
+            if (
+                edit === "passprot" ||
+                edit === "madical_book" ||
+                edit === "employment_book"
+            ) {
+                data.documents = user.user_data.documents;
             }
             if (edit === "subway") {
                 subway_stations.includes(user.user_data.subway)

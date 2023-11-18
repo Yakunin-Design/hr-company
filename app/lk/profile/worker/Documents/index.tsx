@@ -1,5 +1,4 @@
 import Card from "@/components/Card";
-import Spacer from "@/components/std/Spacer";
 
 import styles from "./documents.module.css";
 import DocumentBlock from "./DocunentBlock";
@@ -18,8 +17,7 @@ export default function Documents(props: props) {
 
     return (
         <Card className={styles.document_block}>
-            <Spacer top="2" />
-            <h3>Документы (В разработке)</h3>
+            <h3>Документы</h3>
 
             <DocumentBlock
                 name="passport"

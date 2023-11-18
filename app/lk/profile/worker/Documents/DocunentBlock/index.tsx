@@ -7,6 +7,7 @@ import style from "./docblock.module.css";
 
 import cross_icon from "@/assets/svg/cross.svg";
 import checkmark_icon from "@/assets/svg/checkmark.svg";
+import Checkbox from "@/components/std/Inputs/Checkbox";
 
 type document_type = "passport" | "medical_book" | "employment_book";
 
@@ -29,7 +30,11 @@ export default function DocumentBlock(props: props) {
     return (
         <>
             <Spacer top="1" />
-            <div onClick={handle_click}>
+            <Checkbox
+                name={props.name}
+                value={props.name}
+                onChange={handle_click}
+            >
                 <Row className={style.block}>
                     <div className={style.icon}></div>
 
@@ -46,7 +51,7 @@ export default function DocumentBlock(props: props) {
                         )}
                     </div>
                 </Row>
-            </div>
+            </Checkbox>
         </>
     );
 }

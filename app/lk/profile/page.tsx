@@ -18,8 +18,6 @@ export default function Page() {
     } = user_controller();
     CheckUser(user, set_user);
 
-    console.log(user);
-
     return (
         <>
             <Container lk>
