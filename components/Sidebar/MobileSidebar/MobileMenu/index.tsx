@@ -63,6 +63,12 @@ export default function MobileMenu(props: props) {
                             toggle={props.toggle}
                         />
                         <Spacer top="2" />
+                        <PageBlock
+                            name="schools"
+                            active={props.active == "schools"}
+                            toggle={props.toggle}
+                        />
+                        <Spacer top="2" />
                     </div>
                     <Spacer top="2" />
                     <PageBlock

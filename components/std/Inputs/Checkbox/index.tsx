@@ -16,7 +16,6 @@ type props = {
 
 export default function Checkbox(props: props) {
     let className = styles.label;
-    if (props.lk) className += " " + styles.lk;
     if (props.className) className += " " + props.className;
 
     return (

@@ -8,10 +8,6 @@
     cursor: pointer;
 }
 
-.lk {
-    padding: 0.9rem 0.7em;
-}
-
 .checked {
     border-color: var(--accent) !important;
     color: var(--accent) !important;

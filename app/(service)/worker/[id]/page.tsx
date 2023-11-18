@@ -12,27 +12,27 @@ import Specialty from "./Specialty/Specialy";
 
 type params = {
     id: string;
-}
+};
 
-export default async function WorkerPage({params}: {params: params}) {
-	const worker = await get_data(params.id);
+export default async function WorkerPage({ params }: { params: params }) {
+    const worker = await get_data(params.id);
 
     return (
-		<Container wrapper>
-			<Overlay href="/find-workers" avatar={worker.avatar}>
-				<Padding className={style.card_padding}>
-					<Spacer top={1} bottom={3}>
-						<h2 className="--cd">{worker.full_name}</h2>
-					</Spacer>
-					{/* <RatingPlate rating={4.7} review_count={127}/>	 */}
-					<Specialty specialties={worker.specialtes} />
-				</Padding>
+        <Container wrapper>
+            <Overlay href="/find-workers" avatar={worker.avatar}>
+                <Padding className={style.card_padding}>
+                    <Spacer top={1} bottom={3}>
+                        <h2 className="--cd">{worker.full_name}</h2>
+                    </Spacer>
+                    {/* <RatingPlate rating={4.7} review_count={127} /> */}
+                    <Specialty specialties={worker.specialtes} />
+                </Padding>
 
-				<MainInfo {...worker.main_info}/>
-				<Documents documents={worker.documents}/>
+                <MainInfo {...worker.main_info} />
+                <Documents documents={worker.documents} />
 
-				<Spacer top={5} />
-			</Overlay>
-		</Container>
-    )
+                <Spacer top={5} />
+            </Overlay>
+        </Container>
+    );
 }

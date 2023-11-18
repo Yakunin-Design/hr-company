@@ -13,7 +13,7 @@ export default async function get_data(id: string): Promise<worker_data> {
     const worker = res.data;
 
     const main: main_info = {
-		is_ready: worker.status === "ready" ? true : false,
+        is_ready: worker.status === "ready" ? true : false,
         job_type:
             worker.job_type === "full_time"
                 ? "Полная"
@@ -33,12 +33,35 @@ export default async function get_data(id: string): Promise<worker_data> {
         city: worker.city,
     };
 
+    // const doc: worker_data = {
+    //     documents: worker.documents.passport
+    //         ? "Паспорт РФ"
+    //         : worker.documents.medical_book
+    //         ? "Мед. нижка"
+    //         : worker.documents.employment_book
+    //         ? "Трудовая книжка"
+    //         : "Нет документов",
+    // };
+
+    const documents: string[] = [];
+
+    const passport = worker.documents.passport ? "Паспорт РФ" : false;
+    if (passport) documents.push(passport);
+
+    const medical_book = worker.documents.medical_book ? "Мед. нижка" : false;
+    if (medical_book) documents.push(medical_book);
+
+    const employment_book = worker.documents.employment_book
+        ? "Трудовая книжка"
+        : false;
+    if (employment_book) documents.push(employment_book);
+
     const worker_page_data: worker_data = {
         avatar: worker.logo || "empty",
         full_name: worker.full_name,
         main_info: main,
         specialtes: worker.specialty,
-        documents: ["Паспорт РФ", "Мед книжка"],
+        documents: documents,
     };
 
     return worker_page_data;

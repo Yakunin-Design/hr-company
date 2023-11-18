@@ -307,8 +307,6 @@ export default function user_controller() {
             },
         };
 
-        console.log(data);
-
         if (Object.keys(data).length > 0) {
             axios
                 .post(

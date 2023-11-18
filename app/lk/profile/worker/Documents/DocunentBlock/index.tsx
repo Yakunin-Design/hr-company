@@ -29,7 +29,6 @@ export default function DocumentBlock(props: props) {
 
     return (
         <>
-            <Spacer top="1" />
             <Checkbox
                 name={props.name}
                 value={props.name}

@@ -18,8 +18,12 @@ import VacancyIcon from "./icons/vacancy.svg";
 import VacancyIconWhite from "./icons/vacancy_white.svg";
 import BellIcon from "./icons/bell.svg";
 import BellIconWhite from "./icons/bell_white.svg";
+
 import PointIcon from "./icons/points_icon.svg";
 import PointIconWhite from "./icons/points_icon_white.svg";
+
+import SchoolsIcon from "./icons/points_icon.svg";
+import SchoolsIconWhite from "./icons/points_icon_white.svg";
 
 type props = {
     name: string;
@@ -34,6 +38,7 @@ export default function PageBlock(props: props) {
     if (props.name === "profile") href = "/lk/profile";
     if (props.name === "notifications") href = "/lk/notifications";
     if (props.name === "myjob") href = "/lk/myjob";
+    if (props.name === "schools") href = "/lk/schools";
 
     return (
         <>
@@ -216,6 +221,26 @@ export default function PageBlock(props: props) {
                                     }
                                 >
                                     Заявки
+                                </h3>
+                            </>
+                        )}
+
+                        {props.name == "schools" && (
+                            <>
+                                <Image
+                                    src={
+                                        props.active
+                                            ? SchoolsIconWhite
+                                            : SchoolsIcon
+                                    }
+                                    alt="schools"
+                                />
+                                <h3
+                                    className={
+                                        props.show ? styles.show : styles.name
+                                    }
+                                >
+                                    Адреса
                                 </h3>
                             </>
                         )}
