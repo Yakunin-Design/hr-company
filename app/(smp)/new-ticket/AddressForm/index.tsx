@@ -8,8 +8,9 @@ import SubwayInput from "@/components/std/Inputs/SubwayInput";
 import { ticket_addres } from "../logic/ticket_types";
 import IconButton from "@/components/IconButton";
 import PositionList from "@/components/smp/PositionsList";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PhoneInput from "@/components/std/Inputs/PhoneInput";
+import axios from "axios";
 
 type props = {
     address_data: ticket_addres;
@@ -59,15 +60,39 @@ export default function AddressForm(props: props) {
         }
     }
 
+    const [school_names, set_school_names] = useState(["bruh", "test"]);
+
+    useEffect(() => {
+        const jwt = localStorage.getItem("jwt") || "";
+        const config = {
+            headers: {
+                authorization: "Bearer " + jwt,
+            },
+        };
+
+        axios
+            .get(`${process.env.API_ADDRESS}/school-names`, config)
+            .then(res => {
+                set_school_names(res.data);
+            });
+    }, []);
+
+    const options = school_names.map(opt => <option>{opt}</option>);
+
     return (
         <>
             <div className={styles.form_block}>
                 <Container>
                     <Spacer top={2} />
                     <IconButton icon="back" onClick={props.prev_form} />
+
+                    <Spacer top={2} />
+                    <datalist id="school-names">{options}</datalist>
+
                     <Spacer top={2} />
                     <Input
                         name="school_name"
+                        list="school-names"
                         label="Название ОУ*"
                         placeholder="ГБОУ ..."
                         onChange={props.handleAdress}

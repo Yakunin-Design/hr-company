@@ -9,7 +9,6 @@ import TextArea from "@/components/std/Inputs/TextArea";
 import { ticket_data } from "../logic/ticket_types";
 import AddressPlate from "@/components/smp/AddressPlate";
 import axios from "axios";
-import { create } from "domain";
 
 type props = {
     handleForm: (
@@ -155,7 +154,12 @@ export default function TicketForm(props: props) {
             <div className={styles.form_block}>
                 <Container>
                     <Spacer top={2} />
-                    <h2>Создание заявки</h2>
+                    {props.edit ? (
+                        <h2>Редактирование заявки</h2>
+                    ) : (
+                        <h2>Создание заявки</h2>
+                    )}
+
                     <Spacer top={1} />
                     <Input
                         name="company_id"
