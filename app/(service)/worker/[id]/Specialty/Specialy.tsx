@@ -4,15 +4,15 @@ import style from "./Specialty.module.css";
 import Spacer from "@/components/std/Spacer";
 
 type props = {
-    specialties: string[]
-}
+    specialties: string[];
+};
 
 export default function Specialty(props: props) {
-    const specialties = props.specialties.map(text => 
+    const specialties = props.specialties.map(text => (
         <Card className={style.specialty}>
             <h4 className="--cd">{text}</h4>
         </Card>
-    );
+    ));
 
     return (
         <>
@@ -21,5 +21,5 @@ export default function Specialty(props: props) {
             <Spacer top={1} />
             <div className={style.grid}>{specialties}</div>
         </>
-    )
+    );
 }

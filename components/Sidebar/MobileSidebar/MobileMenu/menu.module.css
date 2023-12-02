@@ -8,7 +8,7 @@
     border-bottom: 2px solid #d8d8d8;
 }
 
-@media(min-width:600px) {
+@media (min-width: 600px) {
     .menu {
         display: none;
     }

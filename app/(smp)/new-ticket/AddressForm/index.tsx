@@ -12,8 +12,14 @@ import { useEffect, useState } from "react";
 import PhoneInput from "@/components/std/Inputs/PhoneInput";
 import axios from "axios";
 
+type school_name = {
+    name: string;
+    id: string;
+};
+
 type props = {
     address_data: ticket_addres;
+    school_names: school_name[];
     handleAdress: (event: React.ChangeEvent<HTMLInputElement>) => void;
     add_address: () => void;
     next_form: () => void;
@@ -22,6 +28,10 @@ type props = {
 };
 
 export default function AddressForm(props: props) {
+    const options = props.school_names.map(opt => (
+        <option key={opt.id}>{opt.name}</option>
+    ));
+
     const [errors, set_errors] = useState<string[]>([]);
     const error_styles = {
         borderColor: "red",
@@ -34,12 +44,6 @@ export default function AddressForm(props: props) {
         }
         if (props.address_data.school_name.trim() === "") {
             errors.push("school_name");
-        }
-        if (
-            props.address_data.school_number != null &&
-            !Number.isInteger(Number(props.address_data.school_number))
-        ) {
-            errors.push("school_number");
         }
         if (props.address_data.address.trim() === "") {
             errors.push("address");
@@ -59,25 +63,6 @@ export default function AddressForm(props: props) {
             props.prev_form();
         }
     }
-
-    const [school_names, set_school_names] = useState(["bruh", "test"]);
-
-    useEffect(() => {
-        const jwt = localStorage.getItem("jwt") || "";
-        const config = {
-            headers: {
-                authorization: "Bearer " + jwt,
-            },
-        };
-
-        axios
-            .get(`${process.env.API_ADDRESS}/school-names`, config)
-            .then(res => {
-                set_school_names(res.data);
-            });
-    }, []);
-
-    const options = school_names.map(opt => <option>{opt}</option>);
 
     return (
         <>
@@ -101,18 +86,7 @@ export default function AddressForm(props: props) {
                             errors.includes("school_name") ? error_styles : {}
                         }
                     />
-                    <Spacer top={1} />
-                    <Input
-                        name="school_number"
-                        label="Номер ОУ"
-                        type="tel"
-                        placeholder="№"
-                        onChange={props.handleAdress}
-                        value={props.address_data.school_number || ""}
-                        style={
-                            errors.includes("school_number") ? error_styles : {}
-                        }
-                    />
+
                     <Spacer top={1} />
                     <Input
                         name="address"

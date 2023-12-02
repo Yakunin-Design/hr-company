@@ -1,7 +1,7 @@
 type props = {
     children: React.ReactNode;
-	horisontal?: number,
-	vertical?: number,
+    horisontal?: number;
+    vertical?: number;
 
     onClick?: () => void;
     className?: string;
@@ -17,11 +17,16 @@ export default function Padding(props: props) {
 
             paddingRight: props.horisontal + "em",
             paddingLeft: props.horisontal + "em",
-        }
+        };
     }
 
     return (
-        <div className={props.className} onClick={props.onClick} title={props.title} style={style}>
+        <div
+            className={props.className}
+            onClick={props.onClick}
+            title={props.title}
+            style={style}
+        >
             {props.children}
         </div>
     );

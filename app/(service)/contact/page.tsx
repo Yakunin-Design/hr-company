@@ -55,7 +55,7 @@ export default function ContactPage() {
                 </Column>
 
                 <Card>
-                    <FeedbackForm/>
+                    <FeedbackForm />
                 </Card>
             </main>
         </Container>

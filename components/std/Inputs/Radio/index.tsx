@@ -17,7 +17,8 @@ type props = {
 
 export default function Input(props: props) {
     let className = styles.label;
-    if (props.value == props.currentValue || props.checked) className += " " + styles.checked;
+    if (props.value == props.currentValue || props.checked)
+        className += " " + styles.checked;
     if (props.lk) className += " " + styles.lk;
     if (props.className) className += " " + props.className;
 

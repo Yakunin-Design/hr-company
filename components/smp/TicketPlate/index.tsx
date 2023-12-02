@@ -25,15 +25,21 @@ export default function TicketPlate(props: props) {
         " (" +
         props.total_workers_count +
         ") чел";
-    
-    const user_time_zone = unwrap(cookies().get("user_time_zone")?.value, "Europe/Moscow");
 
-    const display_date = new Date(props.realization_date).toLocaleString("ru-RU", {
-        day: "2-digit",
-        month: "long",
-        year: "numeric",
-        timeZone: user_time_zone
-    });
+    const user_time_zone = unwrap(
+        cookies().get("user_time_zone")?.value,
+        "Europe/Moscow"
+    );
+
+    const display_date = new Date(props.realization_date).toLocaleString(
+        "ru-RU",
+        {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+            timeZone: user_time_zone,
+        }
+    );
 
     return (
         <Link href={`/tickets/${props.id}`}>

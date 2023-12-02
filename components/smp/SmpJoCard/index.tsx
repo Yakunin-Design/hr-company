@@ -42,7 +42,10 @@ export default function SmpJoCard(props: props) {
                         />
                     </Row>
                     <Spacer top="1" />
-                    <AddressCard subway={props.jo_data.subway} address={props.jo_data.address}/>
+                    <AddressCard
+                        subway={props.jo_data.subway}
+                        address={props.jo_data.address}
+                    />
                     <JoSchedule
                         schedule={false}
                         working_time={props.jo_data.working_time}

@@ -184,7 +184,6 @@ function job_offer_validation(job_offer_data) {
     send_data.sex = job_offer_data.sex;
     send_data.city = job_offer_data.city;
 
-
     const subways = get_subways(job_offer_data.city);
 
     //required

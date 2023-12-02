@@ -5,20 +5,20 @@
 */
 
 * {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
-    font-family: 'Gilroy', sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Gilroy", sans-serif;
 }
 
 body {
-	background-color: var(--background-main);
-	font-family: 'Gilroy', sans-serif;
+    background-color: var(--background-main);
+    font-family: "Gilroy", sans-serif;
 }
 
 html {
-	font-size: 12px;
-	font-family: 'Gilroy', sans-serif;
+    font-size: 12px;
+    font-family: "Gilroy", sans-serif;
 }
 
 @media (min-width: 350px) {
@@ -34,7 +34,7 @@ html {
 }
 
 a {
-	text-decoration: none;
+    text-decoration: none;
     color: var(--accent);
 }
 
@@ -47,7 +47,7 @@ hr {
 }
 
 button {
-    color: #26589F;
+    color: #26589f;
     background: transparent;
 
     outline: none;
@@ -73,29 +73,29 @@ input {
 }
 
 input::-moz-placeholder {
-    font-family: 'Gilroy';
+    font-family: "Gilroy";
     font-size: 1rem;
 }
 
 textarea::-moz-placeholder {
-    font-family: 'Gilroy';
+    font-family: "Gilroy";
     font-size: 1rem;
 }
 
 textarea {
     font-size: 1rem;
-    font-family: 'Gilroy';
+    font-family: "Gilroy";
 }
 
 select {
     font-size: 1rem;
-    font-family: 'Gilroy';
+    font-family: "Gilroy";
     -webkit-appearance: none;
 }
 
 option {
     font-size: 1rem;
-    font-family: 'Gilroy';
+    font-family: "Gilroy";
 }
 
 input[type="text"] {
@@ -108,8 +108,8 @@ select {
     box-shadow: none;
     text-indent: 0.5em;
     /* -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none; */
+  -moz-appearance: none;
+  appearance: none; */
     background-color: transparent;
 }
 
@@ -118,7 +118,7 @@ select::-ms-expand {
 }
 
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
+input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 textarea:-webkit-autofill,
 textarea:-webkit-autofill:hover,
@@ -127,12 +127,12 @@ select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
     background-color: transparent;
-    -webkit-box-shadow: 0 0 0px 1000px rgba(0,0,0,0) inset;
-    box-shadow: 0 0 0px 1000px rgba(0,0,0,0) inset;
+    -webkit-box-shadow: 0 0 0px 1000px rgba(0, 0, 0, 0) inset;
+    box-shadow: 0 0 0px 1000px rgba(0, 0, 0, 0) inset;
     transition: background-color 5000s ease-in-out 0s;
 }
 
-@media screen and (-webkit-min-device-pixel-ratio:0) { 
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
     select:focus,
     textarea:focus,
     input:focus {

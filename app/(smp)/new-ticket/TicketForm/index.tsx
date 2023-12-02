@@ -132,8 +132,8 @@ export default function TicketForm(props: props) {
 
         return (
             <AddressPlate
-                key={address.school_number}
-                school={address.school_name + " №" + address.school_number}
+                key={address.school_name}
+                school={address.school_name}
                 address={address.address}
                 worker_count={positions}
                 onClick={() => handle_address_plate_click(address.address)}

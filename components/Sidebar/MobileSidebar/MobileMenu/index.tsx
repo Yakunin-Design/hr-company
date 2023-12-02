@@ -30,9 +30,9 @@ export default function MobileMenu(props: props) {
             </div>
 
             {/* <div className={styles.nav_block}>
-                <PageBlock name="chat" active={props.active == "chat"} toggle={props.toggle}/>
-                <Spacer top="2" />
-            </div> */}
+        <PageBlock name="chat" active={props.active == "chat"} toggle={props.toggle}/>
+        <Spacer top="2" />
+      </div> */}
 
             {props.user_type == "worker" && (
                 <>

@@ -7,7 +7,6 @@ export type ticket_data = {
 
 export type ticket_addres = {
     school_name: string;
-    school_number: number | null;
     address: string;
     subway: string;
     contact: string;

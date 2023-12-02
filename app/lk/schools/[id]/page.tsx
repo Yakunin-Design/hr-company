@@ -14,21 +14,9 @@ type params = {
     id: string;
 };
 
-type school_data = {
-    id: string;
-    school_name: string;
-    school_number: number;
-    city: string;
-    subway: string;
-    address: string;
-    contact_name: string;
-    contact_number: string;
-};
-
 export default function SchoolPage({ params }: { params: params }) {
     const [school_data, set_school_data] = useState({
         school_name: "",
-        school_number: 0,
         city: "",
         subway: "",
         address: "",
@@ -65,8 +53,6 @@ export default function SchoolPage({ params }: { params: params }) {
 
     function send_to_api() {
         let data = {};
-
-        school_data.school_number = Number(school_data.school_number);
 
         edited_fileds.forEach(edit => {
             data = {
@@ -141,16 +127,8 @@ export default function SchoolPage({ params }: { params: params }) {
                     onChange={handle_change}
                     value={school_data.school_name}
                 />
-                <Spacer top={1} />
 
-                <Input
-                    name="school_number"
-                    label="Номер ОУ"
-                    onChange={handle_change}
-                    value={school_data.school_number}
-                />
                 <Spacer top={1} />
-
                 <Input
                     name="city"
                     label="Город"
@@ -176,7 +154,7 @@ export default function SchoolPage({ params }: { params: params }) {
 
                 <Spacer top={1} />
                 <Input
-                    name="contact_person"
+                    name="contact_name"
                     label="Контактное лицо"
                     onChange={handle_change}
                     value={school_data.contact_name}

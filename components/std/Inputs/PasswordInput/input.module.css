@@ -1,7 +1,7 @@
 .label {
     font-weight: 700;
-	font-size: 1.05rem;
-	line-height: 120%;
+    font-size: 1.05rem;
+    line-height: 120%;
     letter-spacing: 0.05rem;
 }
 
@@ -16,15 +16,14 @@
     font-size: 1rem;
 }
 
-.icon_wrapper {	
-	position: relative;
+.icon_wrapper {
+    position: relative;
 }
 
 .eye {
-	position: absolute;
-	top: 50%;
-	right: 6%;
-	transform: translate(0%, -50%);
+    position: absolute;
+    top: 50%;
+    right: 6%;
+    transform: translate(0%, -50%);
     cursor: pointer;
 }
-

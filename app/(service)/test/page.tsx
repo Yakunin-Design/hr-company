@@ -18,8 +18,8 @@ export default function TestPage() {
         total_workers_count: 7,
         accepted: 5,
         status: "Pending",
-        realization_date: "25.06.2023"
-    }
+        realization_date: "25.06.2023",
+    };
 
     return (
         <>

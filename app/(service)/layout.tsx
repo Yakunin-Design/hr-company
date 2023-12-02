@@ -1,6 +1,6 @@
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import '@/styles/global.css';
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import "@/styles/global.css";
 
 export default function ServicePagesLayout({
     children,
@@ -9,13 +9,11 @@ export default function ServicePagesLayout({
     children: React.ReactNode;
     params: any;
 }) {
-
     return (
         <>
-            <Header/>
+            <Header />
             {children}
-            <Footer/>
+            <Footer />
         </>
-        
     );
 }

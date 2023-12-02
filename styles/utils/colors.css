@@ -4,20 +4,20 @@
 ----------------------------------------------------------------
 
 :root {
-  --background-main: #F0F3F6;
-  --background-header: #102442;
-  --accent: #1C5FC3;
-  --accent2: #588CD8;
-  --accent3: #B0C6E5;
-  --bodycopy: #434343;
+ --background-main: #F0F3F6;
+ --background-header: #102442;
+ --accent: #1C5FC3;
+ --accent2: #588CD8;
+ --accent3: #B0C6E5;
+ --bodycopy: #434343;
 }
 */
 
 :root {
-  --background-main: #f0f4f6;
-  --background-header: #204645;
-  --accent: #41877d;
-  --accent2: #588CD8;
-  --accent3: #B0C6E5;
-  --bodycopy: #434343;
+    --background-main: #f0f4f6;
+    --background-header: #204645;
+    --accent: #41877d;
+    --accent2: #588cd8;
+    --accent3: #b0c6e5;
+    --bodycopy: #434343;
 }

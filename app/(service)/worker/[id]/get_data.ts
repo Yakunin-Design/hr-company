@@ -34,13 +34,13 @@ export default async function get_data(id: string): Promise<worker_data> {
     };
 
     // const doc: worker_data = {
-    //     documents: worker.documents.passport
-    //         ? "Паспорт РФ"
-    //         : worker.documents.medical_book
-    //         ? "Мед. нижка"
-    //         : worker.documents.employment_book
-    //         ? "Трудовая книжка"
-    //         : "Нет документов",
+    //   documents: worker.documents.passport
+    //     ? "Паспорт РФ"
+    //     : worker.documents.medical_book
+    //     ? "Мед. нижка"
+    //     : worker.documents.employment_book
+    //     ? "Трудовая книжка"
+    //     : "Нет документов",
     // };
 
     const documents: string[] = [];

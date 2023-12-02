@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ticket_data, ticket_addres, ticket_position } from "./ticket_types";
+import axios from "axios";
 
 const empty_addres = <ticket_addres>{
     school_name: "",
-    school_number: null,
     address: "",
     subway: "",
     contact: "",
@@ -51,13 +51,63 @@ export default function ticket_controller() {
         });
     }
 
+    type school_name = {
+        name: string;
+        id: string;
+    };
+
+    const [school_names, set_school_names] = useState<school_name[]>([
+        { name: "test", id: "bruh" },
+    ]);
+
+    const jwt = localStorage.getItem("jwt") || "";
+    const config = {
+        headers: {
+            authorization: "Bearer " + jwt,
+        },
+    };
+
+    useEffect(() => {
+        axios
+            .get(`${process.env.API_ADDRESS}/school-names`, config)
+            .then(res => {
+                set_school_names(res.data);
+            });
+    }, []);
+
     function handle_address(event: React.ChangeEvent<HTMLInputElement>) {
         const { name, value } = event.target;
+
+        school_names.forEach(school_name => {
+            if (school_name.name.trim() === value) {
+                console.log(school_name.id);
+                // req to db with school id
+                axios
+                    .get(
+                        `${process.env.API_ADDRESS}/schools/${school_name.id}`,
+                        config
+                    )
+                    .then(res => {
+                        console.log(res.data);
+                        set_address_data(prev => {
+                            return {
+                                ...prev,
+                                address: res.data.address,
+                                subway: res.data.subway,
+                                phone: res.data.contact_number || "",
+                                contact: res.data.contact_name || "",
+                            };
+                        });
+                    });
+            }
+
+            // set address state with new data
+        });
 
         set_address_data(prev => {
             return {
                 ...prev,
-                [name]: name === "school_number" ? Number(value) : value,
+                [name]: value,
             };
         });
     }
@@ -145,5 +195,6 @@ export default function ticket_controller() {
         add_position,
         delete_position,
         open_address,
+        school_names,
     };
 }

@@ -1,6 +1,5 @@
 "use client";
 import AddressForm from "app/(smp)/new-ticket/AddressForm";
-import get_school_names from "app/(smp)/new-ticket/AddressForm/get_school_names";
 import PositionForm from "app/(smp)/new-ticket/PositionForm";
 import TicketForm from "app/(smp)/new-ticket/TicketForm";
 import ticket_controller from "app/(smp)/new-ticket/logic/ticket_controller";
@@ -9,7 +8,7 @@ import {
     page_state,
 } from "app/(smp)/new-ticket/logic/ticket_state";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 type params = {
     id: number;
@@ -17,6 +16,7 @@ type params = {
 
 export default function EditTicketPage({ params }: { params: params }) {
     const { ticket_form, next_form, prev_form } = ticket_state();
+    const { school_names } = ticket_controller();
 
     useEffect(() => {
         const jwt = localStorage.getItem("jwt") || "";
@@ -68,6 +68,7 @@ export default function EditTicketPage({ params }: { params: params }) {
             )}
             {ticket_form === page_state.address && (
                 <AddressForm
+                    school_names={school_names}
                     address_data={address_data}
                     next_form={next_form}
                     prev_form={prev_form}

@@ -14,7 +14,9 @@ export default function FeedbackForm() {
         text: "",
     });
 
-    function handleChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+    function handleChange(
+        event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) {
         const { name, value } = event.target;
         set_contact_data(prev => {
             return {

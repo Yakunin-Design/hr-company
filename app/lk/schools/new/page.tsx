@@ -14,7 +14,6 @@ import Select from "@/components/std/Inputs/Select";
 export default function NewSchool() {
     const [school_data, set_school_data] = useState({
         school_name: "",
-        school_number: "",
         city: "Санкт-Петербург",
         subway: "",
         address: "",
@@ -67,16 +66,6 @@ export default function NewSchool() {
                     label="Название ОУ*"
                     onChange={handle_change}
                     value={school_data.school_name}
-                />
-                <Spacer top={1} />
-
-                <Input
-                    name="school_number"
-                    label="Номер ОУ"
-                    placeholder="777"
-                    type="tel"
-                    onChange={handle_change}
-                    value={school_data.school_number}
                 />
                 <Spacer top={1} />
 
