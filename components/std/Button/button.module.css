@@ -85,3 +85,11 @@
 .common:hover {
     text-decoration: underline;
 }
+
+.disabled {
+    color: rgb(44, 44, 44);
+    background-color: lightgrey;
+    cursor: not-allowed;
+
+    border: 2px solid transparent;
+}

@@ -9,6 +9,7 @@ type props = {
     school_id: string;
     school_name: string;
     subway: saint_petersburg_subway;
+    school_number: number;
     address?: string;
 };
 
@@ -17,7 +18,12 @@ export default function SchoolPlate(props: props) {
         <Link href={`/lk/schools/${props.school_id}`}>
             <Card className={style.school_plate}>
                 <Row>
-                    <h3>{props.school_name}</h3>
+                    <h3>
+                        {props.school_name}{" "}
+                        {props.school_number.toString() === " "
+                            ? ""
+                            : `№ ${props.school_number}`}
+                    </h3>
 
                     {props.address ? (
                         <Row gap={2}>

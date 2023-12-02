@@ -9,7 +9,9 @@ import { CSSProperties, ChangeEvent } from "react";
 
 type props = {
     value: string;
-    onChange: ((value: string) => void) | ((event: ChangeEvent<HTMLInputElement>) => void);
+    onChange:
+        | ((value: string) => void)
+        | ((event: ChangeEvent<HTMLInputElement>) => void);
     label?: string;
     style?: CSSProperties;
 };
@@ -30,7 +32,7 @@ export default function SubwayInput(props: props) {
     Object.assign(input_padding, input_style);
 
     return (
-        <>
+        <div className={styles.parant}>
             <Input
                 name="subway"
                 label={props.label || "Метро"}
@@ -55,9 +57,11 @@ export default function SubwayInput(props: props) {
 
             <datalist id="subways">
                 {subway_stations.map(station => (
-                    <option value={station} key={station}>{station}</option>
+                    <option value={station} key={station}>
+                        {station}
+                    </option>
                 ))}
             </datalist>
-        </>
+        </div>
     );
 }

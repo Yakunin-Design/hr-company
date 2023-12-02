@@ -10,8 +10,16 @@
     border-radius: 50%;
 
     position: absolute;
-    margin-top: -2.4rem;
-    margin-left: 1rem;
+    /* margin-top: -2.4rem;
+    margin-left: 1rem; */
+    left: 1rem;
+
+    top: 50%;
+    transform: translate(0%, 25%);
+}
+
+.parant {
+    position: relative;
 }
 
 .subway_input {

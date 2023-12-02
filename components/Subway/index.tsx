@@ -20,7 +20,7 @@ export default function Subway(props: props) {
         props.station === "Гостиный Двор" ||
         props.station === "Маяковская" ||
         props.station === "Зенит" ||
-        props.station === "Пл.Александра Невского 1" ||
+        props.station === "Пл. Александра Невского-1" ||
         props.station === "Елизаровская" ||
         props.station === "Ломоносовская" ||
         props.station === "Пролетарская" ||
@@ -31,11 +31,11 @@ export default function Subway(props: props) {
     }
 
     if (
-        props.station === "Дыбенко" ||
+        props.station === "Улица Дыбенко" ||
         props.station === "Проспект Большевиков" ||
         props.station === "Ладожская" ||
         props.station === "Новочеркасская" ||
-        props.station === "Пл.Александра Невского 2" ||
+        props.station === "Пл. Александра Невского-2" ||
         props.station === "Лиговский проспект" ||
         props.station === "Достоевская" ||
         props.station === "Спасская"
@@ -48,7 +48,7 @@ export default function Subway(props: props) {
         props.station === "Гражданский проспект" ||
         props.station === "Академическая" ||
         props.station === "Политехническая" ||
-        props.station === "Площадь мужества" ||
+        props.station === "Площадь Мужества" ||
         props.station === "Лесная" ||
         props.station === "Выборгская" ||
         props.station === "Площадь Ленина" ||
@@ -56,7 +56,7 @@ export default function Subway(props: props) {
         props.station === "Площадь Восстания" ||
         props.station === "Владимирская" ||
         props.station === "Пушкинская" ||
-        props.station === "Технологический институт 1" ||
+        props.station === "Технологический институт-1" ||
         props.station === "Балтийская" ||
         props.station === "Нарвская" ||
         props.station === "Кировский завод" ||
@@ -73,12 +73,12 @@ export default function Subway(props: props) {
         props.station === "Озерки" ||
         props.station === "Удельная" ||
         props.station === "Пионерская" ||
-        props.station === "Черная речка" ||
+        props.station === "Чёрная речка" ||
         props.station === "Петроградская" ||
         props.station === "Горьковская" ||
         props.station === "Невский проспект" ||
         props.station === "Сенная площадь" ||
-        props.station === "Технологический институт 2" ||
+        props.station === "Технологический институт-2" ||
         props.station === "Фрунзенская" ||
         props.station === "Московские ворота" ||
         props.station === "Электросила" ||
@@ -92,14 +92,14 @@ export default function Subway(props: props) {
 
     if (
         props.station === "Комендантский проспект" ||
-        props.station === "Старая деревня" ||
+        props.station === "Старая Деревня" ||
         props.station === "Крестовский остров" ||
         props.station === "Чкаловская" ||
         props.station === "Спортивная" ||
         props.station === "Адмиралтейская" ||
         props.station === "Садовая" ||
         props.station === "Звенигородская" ||
-        props.station === "Обводной канал" ||
+        props.station === "Обводный канал" ||
         props.station === "Волковская" ||
         props.station === "Бухаресткая" ||
         props.station === "Международная" ||

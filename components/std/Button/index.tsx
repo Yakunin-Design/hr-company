@@ -9,6 +9,7 @@ type props = {
     className?: string;
     red?: boolean;
     submit?: boolean;
+    disabled?: boolean;
 };
 
 export default function Button(props: props) {
@@ -30,12 +31,20 @@ export default function Button(props: props) {
         button_styles += " " + styles.expand;
     }
 
+    if (props.disabled) {
+        button_styles += " " + styles.disabled;
+    }
+
     if (props.className) {
         button_styles += " " + props.className;
     }
 
     return (
-        <button className={button_styles} onClick={props.onClick} type={props.submit ? "submit" : "button"}>
+        <button
+            className={button_styles}
+            onClick={props.onClick}
+            type={props.submit ? "submit" : "button"}
+        >
             {props.children}
         </button>
     );

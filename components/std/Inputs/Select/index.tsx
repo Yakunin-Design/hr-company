@@ -17,10 +17,11 @@ type props = {
 export default function Select(props: props) {
     const options: Array<any> = [];
     props.options.map(opt => {
-        const value =
-            options.length < 8 ? `0${options.length}` : options.length;
+        const value = opt;
+        //const value = options.length < 8 ? `0${options.length}` : options.length;
+        // .toString() was added
         options.push(
-            <option value={value} key={options.length}>
+            <option value={value.toString()} key={options.length}>
                 {opt}
             </option>
         );
@@ -31,7 +32,7 @@ export default function Select(props: props) {
             {props.label && (
                 <>
                     <label className={styles.label} htmlFor={props.name}>
-                        {props.label}
+                        <h3>{props.label}</h3>
                     </label>
                     <Spacer top={1} />
                 </>

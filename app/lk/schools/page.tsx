@@ -3,6 +3,7 @@ import Spacer from "@/components/std/Spacer";
 import SchoolPlate from "./SchoolPlate";
 import Row from "@/components/std/Row";
 import Button from "@/components/std/Button";
+import Link from "next/dist/client/link";
 import get_data from "./get_data";
 
 export default async function SchoolsPage() {
@@ -12,7 +13,8 @@ export default async function SchoolsPage() {
         <>
             <SchoolPlate
                 school_id={school._id}
-                school_name={school.number}
+                school_name={school.school_name}
+                school_number={school.school_number}
                 subway={school.subway}
                 key={school.id}
             />
@@ -25,7 +27,9 @@ export default async function SchoolsPage() {
             <Spacer top={1} />
             <Row>
                 <h2>Ваши адреса</h2>
-                <Button secondary>Добавить адрес +</Button>
+                <Link href={`/lk/schools/new`}>
+                    <Button secondary>Добавить адрес +</Button>
+                </Link>
             </Row>
 
             {schools_list}
