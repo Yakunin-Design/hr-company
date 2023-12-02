@@ -1011,16 +1011,18 @@ async function decline_proposal(req: Request, res: Response) {
 }
 
 type input_data = {
-    number: string;
+    school_name: string;
+    school_number: string;
     city: string;
-    contact: string;
-    phone: string;
     address: string;
     subway: string;
+    contact_number: string;
+    contact_name: string;
 };
 
 function valid_school_data(input_data: input_data) {
-    if (input_data.number.length >= 0) return true;
+    if (input_data.school_number.length >= 0) return true;
+    if (input_data.school_name.length >= 0) return true;
     if (input_data.city.length >= 0) return true;
     if (input_data.address.length >= 0) return true;
     if (input_data.subway.length >= 0) return true;
@@ -1029,34 +1031,67 @@ function valid_school_data(input_data: input_data) {
 }
 
 async function new_school(req: Request, res: Response) {
-    const input_data = req.body;
+    try {
+        const input_data = req.body;
+        console.log(input_data);
 
-    // validation
-    if (!valid_school_data(input_data))
-        return res.status(300).send("wrong input");
+        // validation
+        if (!valid_school_data(input_data))
+            return res.status(300).send("wrong input");
 
-    const unique_number = await db.find({ number: req.body.number }, "schools");
-    if (unique_number.Ok != null)
-        return res.status(404).send("school with that number alrealy exists");
+        const unique_number = await db.find(
+            { school_number: req.body.school_number },
+            "schools"
+        );
+        if (unique_number.Ok != null)
+            return res
+                .status(404)
+                .send("school with that number alrealy exists");
 
-    const school_data = {
-        number: req.body.number,
-        city: req.body.city,
-        contact: req.body.contact,
-        phone: req.body.phone,
-        address: req.body.address,
-        subway: req.body.subway,
-    };
+        const school_data = {
+            school_name: req.body.school_name,
+            school_number: Number(req.body.school_number),
+            city: req.body.city,
+            address: req.body.address,
+            subway: req.body.subway,
+            contact_number: req.body.contact_number,
+            contact_name: req.body.contact_name,
+        };
 
-    const db_schools = await db.save(school_data, "schools");
-    if (!db_schools)
-        return res.status(500).send("Error incerting school in db");
+        const db_schools = await db.save(school_data, "schools");
+        if (!db_schools)
+            return res.status(500).send("Error incerting school in db");
 
-    res.status(200).send(db_schools.Ok);
+        res.status(200).send(db_schools.Ok);
+    } catch (e) {
+        console.log("new school creation falid: " + e);
+    }
+}
+
+async function update_school(req: Request, res: Response) {
+    try {
+        const school_id = new ObjectId(req.params.id);
+        const edits = req.body;
+        // validation
+        // if (!valid_school_data(edits))
+        //     return res.status(300).send("wrong input");
+
+        const db_result = await db.update(
+            { _id: school_id },
+            { $set: { ...edits } },
+            "schools"
+        );
+
+        if (!db_result) return res.status(500).send("cant find any schools");
+
+        res.status(200).send("updated");
+    } catch (e) {
+        console.log("update school creation falid: " + e);
+    }
 }
 
 async function get_all_schools(req: Request, res: Response) {
-    const db_schools = await db.find_all({}, "schools");
+    const db_schools = await db.find_all({}, "schools", 1000);
     if (!db_schools) return res.status(404).send("cant find any schools");
 
     res.status(200).send(db_schools.Ok);
@@ -1099,6 +1134,7 @@ export default {
     accept_proposal,
     decline_proposal,
     new_school,
+    update_school,
     get_all_schools,
     get_school_by_id,
     delete_school_by_id,

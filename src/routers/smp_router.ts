@@ -40,6 +40,7 @@ router.post("/proposal/:id/accept", auth, smp_controller.accept_proposal);
 router.post("/proposal/:id/decline", auth, smp_controller.decline_proposal);
 
 router.post("/new-school", auth, smp_controller.new_school);
+router.post("/update-school/:id", auth, smp_controller.update_school);
 router.get("/schools", auth, smp_controller.get_all_schools);
 router.get("/schools/:id", auth, smp_controller.get_school_by_id);
 router.delete("/schools/:id", auth, smp_controller.delete_school_by_id);
