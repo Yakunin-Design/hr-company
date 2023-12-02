@@ -13,6 +13,7 @@ router.get("/tickets/:id", auth, smp_controller.get_ticket_by_id);
 router.get("/activate-ticket/:id", auth, smp_controller.activate_ticket);
 router.get("/close-ticket/:id", auth, smp_controller.close_ticket);
 router.get("/extend-ticket/:id", auth, smp_controller.extend_ticket);
+router.post("/edit-ticket", auth, smp_controller.edit_ticket);
 
 router.get("/address/:id/:number", auth, smp_controller.get_address);
 router.get(

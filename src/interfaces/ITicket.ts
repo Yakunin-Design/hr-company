@@ -31,6 +31,7 @@ export interface ITicketAddress {
 }
 
 export interface ITicket {
+    _id?: ObjectId;
     company_id: ObjectId;
     company_name: string;
     date_of_creation: number;

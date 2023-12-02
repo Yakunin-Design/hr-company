@@ -19,6 +19,7 @@ async function new_ticket(req: Request, res: Response) {
         const date_of_creation = new Date().getTime();
         const status = "pending";
         const extended = false;
+        const _id = data._id;
         const company_name = data.company_id;
         let accepted = 0;
         const realization_timestamp = data.date.split(".");
@@ -79,7 +80,7 @@ async function new_ticket(req: Request, res: Response) {
                     {
                         $and: [
                             { city: ticket_city },
-                            { number: adr.school_number },
+                            { school_name: adr.school_name },
                         ],
                     },
                     "schools"
@@ -88,12 +89,13 @@ async function new_ticket(req: Request, res: Response) {
 
                 if (db_school.Ok === null) {
                     const new_school = {
+                        school_name: adr.school_name,
+                        school_number: adr.school_number,
                         city: ticket_city,
-                        contact: adr.contact,
-                        phone: adr.phone,
-                        number: adr.school_number,
                         address: adr.address,
                         subway: adr.subway,
+                        contact_name: adr.contact,
+                        contact_number: adr.phone,
                     };
 
                     const new_school_query = await db.save(
@@ -148,6 +150,8 @@ async function new_ticket(req: Request, res: Response) {
             comment,
             addresses,
         };
+
+        if (_id) ticket_data._id = new ObjectId(_id);
 
         const new_ticket = await db.save(ticket_data, "tickets");
         if (new_ticket.Err) return res.status(500).send("db failed");
@@ -500,6 +504,32 @@ async function extend_ticket(req: Request, res: Response) {
         // create send notifications
 
         return res.status(200).send("ticket successfully extended");
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send(err.message);
+    }
+}
+
+async function edit_ticket(req: Request, res: Response) {
+    try {
+        const ticket_data = req.body;
+        const ticket_id = new ObjectId(ticket_data._id);
+
+        const db_ticket = await db.find({ _id: ticket_id }, "tickets");
+
+        if (db_ticket.Ok && db_ticket.Ok.status === "pending") {
+            //delete old db_ticket
+            const db_delete = await db.delete(
+                db_ticket.Ok._id.toString(),
+                "tickets"
+            );
+            if (!db_delete)
+                return res.status(400).send("cannot delete old ticket");
+
+            return await new_ticket(req, res);
+        }
+
+        return res.status(300).send("wrong ticket status");
     } catch (err) {
         console.log(err.message);
         res.status(500).send(err.message);
@@ -1091,28 +1121,40 @@ async function update_school(req: Request, res: Response) {
 }
 
 async function get_all_schools(req: Request, res: Response) {
-    const db_schools = await db.find_all({}, "schools", 1000);
-    if (!db_schools) return res.status(404).send("cant find any schools");
+    try {
+        const db_schools = await db.find_all({}, "schools", 1000);
+        if (!db_schools) return res.status(404).send("cant find any schools");
 
-    res.status(200).send(db_schools.Ok);
+        res.status(200).send(db_schools.Ok);
+    } catch (e) {
+        console.log("update school creation falid: " + e);
+    }
 }
 
 async function get_school_by_id(req: Request, res: Response) {
-    const school_id = new ObjectId(req.params.id);
+    try {
+        const school_id = new ObjectId(req.params.id);
 
-    const db_schools = await db.find({ _id: school_id }, "schools");
-    if (!db_schools) return res.status(404).send("cant find any schools");
+        const db_schools = await db.find({ _id: school_id }, "schools");
+        if (!db_schools) return res.status(404).send("cant find any schools");
 
-    res.status(200).send(db_schools.Ok);
+        res.status(200).send(db_schools.Ok);
+    } catch (e) {
+        console.log("update school creation falid: " + e);
+    }
 }
 
 async function delete_school_by_id(req: Request, res: Response) {
-    const school_id = req.params.id;
+    try {
+        const school_id = req.params.id;
 
-    const db_schools = await db.delete(school_id, "schools");
-    if (!db_schools) return res.status(404).send("cant find any schools");
+        const db_schools = await db.delete(school_id, "schools");
+        if (!db_schools) return res.status(404).send("cant find any schools");
 
-    res.status(200).send(db_schools.Ok);
+        res.status(200).send(db_schools.Ok);
+    } catch (e) {
+        console.log("update school creation falid: " + e);
+    }
 }
 
 export default {
@@ -1125,6 +1167,7 @@ export default {
     activate_ticket,
     close_ticket,
     extend_ticket,
+    edit_ticket,
     get_job_offers,
     get_job_offer_by_id,
     respond,

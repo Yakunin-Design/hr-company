@@ -29,6 +29,7 @@ export default async function get_ticket(ticket_id: string) {
                 ...address.Ok,
                 worker_count,
                 accepted,
+                positions: adr.positions,
             };
         })
     );
