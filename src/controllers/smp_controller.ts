@@ -1063,24 +1063,22 @@ function valid_school_data(input_data: input_data) {
 async function new_school(req: Request, res: Response) {
     try {
         const input_data = req.body;
-        console.log(input_data);
 
         // validation
         if (!valid_school_data(input_data))
             return res.status(300).send("wrong input");
 
-        const unique_number = await db.find(
-            { school_number: req.body.school_number },
+        const unique_school_name = await db.find(
+            { school_name: req.body.school_name },
             "schools"
         );
-        if (unique_number.Ok != null)
+        if (unique_school_name.Ok != null)
             return res
                 .status(404)
                 .send("school with that number alrealy exists");
 
         const school_data = {
             school_name: req.body.school_name,
-            school_number: Number(req.body.school_number),
             city: req.body.city,
             address: req.body.address,
             subway: req.body.subway,
@@ -1104,7 +1102,7 @@ async function update_school(req: Request, res: Response) {
         const edits = req.body;
         // validation
         // if (!valid_school_data(edits))
-        //     return res.status(300).send("wrong input");
+        //   return res.status(300).send("wrong input");
 
         const db_result = await db.update(
             { _id: school_id },
@@ -1137,9 +1135,9 @@ async function school_names(req: Request, res: Response) {
         if (!db_schools || db_schools.Ok === null)
             return res.status(404).send("cant find any schools");
 
-        const school_names: string[] = db_schools.Ok.map(
-            school => school.school_name
-        );
+        const school_names = db_schools.Ok.map(school => {
+            return { name: school.school_name, id: school._id };
+        });
 
         res.status(200).send(school_names);
     } catch (e) {
