@@ -1131,6 +1131,22 @@ async function get_all_schools(req: Request, res: Response) {
     }
 }
 
+async function school_names(req: Request, res: Response) {
+    try {
+        const db_schools = await db.find_all({}, "schools", 1000);
+        if (!db_schools || db_schools.Ok === null)
+            return res.status(404).send("cant find any schools");
+
+        const school_names: string[] = db_schools.Ok.map(
+            school => school.school_name
+        );
+
+        res.status(200).send(school_names);
+    } catch (e) {
+        console.log("update school creation falid: " + e);
+    }
+}
+
 async function get_school_by_id(req: Request, res: Response) {
     try {
         const school_id = new ObjectId(req.params.id);
@@ -1177,6 +1193,7 @@ export default {
     accept_proposal,
     decline_proposal,
     new_school,
+    school_names,
     update_school,
     get_all_schools,
     get_school_by_id,
