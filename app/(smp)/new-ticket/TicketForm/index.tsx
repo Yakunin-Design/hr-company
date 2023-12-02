@@ -9,6 +9,7 @@ import TextArea from "@/components/std/Inputs/TextArea";
 import { ticket_data } from "../logic/ticket_types";
 import AddressPlate from "@/components/smp/AddressPlate";
 import axios from "axios";
+import { create } from "domain";
 
 type props = {
     handleForm: (
@@ -17,6 +18,7 @@ type props = {
     next_form: () => void;
     ticket_data: ticket_data;
     open_address: (address_name: string) => void;
+    edit?: boolean;
 };
 
 export default function TicketForm(props: props) {
@@ -89,12 +91,36 @@ export default function TicketForm(props: props) {
                 },
             };
 
-            axios.post(
-                `${process.env.API_ADDRESS}/new-ticket`,
-                props.ticket_data,
-                config
-            ).then(res => window.location.href = "/tickets");
-                
+            axios
+                .post(
+                    `${process.env.API_ADDRESS}/new-ticket`,
+                    props.ticket_data,
+                    config
+                )
+                .then(res => (window.location.href = "/tickets"));
+        }
+    }
+
+    function edit_ticket() {
+        const errors = check_errors();
+        if (errors.length > 0) {
+            set_errors(errors);
+        } else {
+            set_errors([]);
+            const jwt = localStorage.getItem("jwt") || "";
+            const config = {
+                headers: {
+                    authorization: "Bearer " + jwt,
+                },
+            };
+
+            axios
+                .post(
+                    `${process.env.API_ADDRESS}/edit-ticket`,
+                    props.ticket_data,
+                    config
+                )
+                .then(res => (window.location.href = "/tickets"));
         }
     }
 
@@ -108,7 +134,7 @@ export default function TicketForm(props: props) {
         return (
             <AddressPlate
                 key={address.school_number}
-                school={address.school_number}
+                school={address.school_name + " №" + address.school_number}
                 address={address.address}
                 worker_count={positions}
                 onClick={() => handle_address_plate_click(address.address)}
@@ -172,9 +198,15 @@ export default function TicketForm(props: props) {
                     Добавить адрес +
                 </Button>
                 <Spacer top={2} />
-                <Button onClick={create_ticket} expand>
-                    Создать заявку
-                </Button>
+                {props.edit ? (
+                    <Button onClick={edit_ticket} expand>
+                        Редактировать заявку
+                    </Button>
+                ) : (
+                    <Button onClick={create_ticket} expand>
+                        Создать заявку
+                    </Button>
+                )}
             </Container>
         </>
     );

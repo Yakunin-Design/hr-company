@@ -65,7 +65,10 @@ export default async function TicketPage({ params }: { params: params }) {
             <Container wrapper>
                 {address_list}
 
-                <TicketActions ticket_id={params.id} />
+                <TicketActions
+                    ticket_id={params.id}
+                    status={ticket_data.status}
+                />
             </Container>
         </>
     );

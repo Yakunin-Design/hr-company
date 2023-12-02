@@ -2,7 +2,8 @@ import { useState } from "react";
 import { ticket_data, ticket_addres, ticket_position } from "./ticket_types";
 
 const empty_addres = <ticket_addres>{
-    school_number: "",
+    school_name: "",
+    school_number: null,
     address: "",
     subway: "",
     contact: "",
@@ -31,6 +32,7 @@ export default function ticket_controller() {
         comment: "",
         addresses: [],
     });
+
     const [address_data, set_address_data] =
         useState<ticket_addres>(empty_addres);
     const [position_data, set_position_data] =
@@ -55,7 +57,7 @@ export default function ticket_controller() {
         set_address_data(prev => {
             return {
                 ...prev,
-                [name]: value,
+                [name]: name === "school_number" ? Number(value) : value,
             };
         });
     }
@@ -133,6 +135,7 @@ export default function ticket_controller() {
 
     return {
         ticket_data,
+        set_ticket_data,
         address_data,
         position_data,
         handle_form,

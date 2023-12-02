@@ -8,7 +8,6 @@ import ProgressBar from "../ProgressBar";
 import IconButton from "@/components/IconButton";
 import Link from "next/link";
 import { convert_status, ticket_status } from "@/types/ticket_status";
-import ActivateTicketButton from "./ActivateTicketButton";
 import unwrap from "@/functions/unwrap";
 import { cookies } from "next/headers";
 
@@ -70,9 +69,6 @@ export default function TicketInfo(props: props) {
                             <StatusIcon is_ready={icon} />
                             <p>{status_text}</p>
                         </Row>
-                        {status === "pending" && (
-                            <ActivateTicketButton ticket_id={props.id} />
-                        )}
                     </Row>
                     <Spacer top={1} />
                     <p>Дата реализации {display_date}</p>

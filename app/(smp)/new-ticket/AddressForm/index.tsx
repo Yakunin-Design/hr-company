@@ -31,7 +31,13 @@ export default function AddressForm(props: props) {
         if (props.address_data.positions.length === 0) {
             errors.push("positions");
         }
-        if (props.address_data.school_number.trim() === "") {
+        if (props.address_data.school_name.trim() === "") {
+            errors.push("school_name");
+        }
+        if (
+            props.address_data.school_number != null &&
+            !Number.isInteger(Number(props.address_data.school_number))
+        ) {
             errors.push("school_number");
         }
         if (props.address_data.address.trim() === "") {
@@ -61,11 +67,23 @@ export default function AddressForm(props: props) {
                     <IconButton icon="back" onClick={props.prev_form} />
                     <Spacer top={2} />
                     <Input
-                        name="school_number"
-                        label="Номер ОУ*"
-                        placeholder="Школа №488"
+                        name="school_name"
+                        label="Название ОУ*"
+                        placeholder="ГБОУ ..."
                         onChange={props.handleAdress}
-                        value={props.address_data.school_number}
+                        value={props.address_data.school_name}
+                        style={
+                            errors.includes("school_name") ? error_styles : {}
+                        }
+                    />
+                    <Spacer top={1} />
+                    <Input
+                        name="school_number"
+                        label="Номер ОУ"
+                        type="tel"
+                        placeholder="№"
+                        onChange={props.handleAdress}
+                        value={props.address_data.school_number || ""}
                         style={
                             errors.includes("school_number") ? error_styles : {}
                         }
