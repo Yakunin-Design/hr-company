@@ -110,6 +110,12 @@ export default function FullSidebar(props: props) {
                                 show={props.show}
                             />
                             <Spacer top="2" />
+                            <PageBlock
+                                name="clients"
+                                active={props.active == "clients"}
+                                show={props.show}
+                            />
+                            <Spacer top="2" />
                         </div>
                         <Spacer top="2" />
                         <PageBlock

@@ -9,13 +9,16 @@ import styles from "./block.module.css";
 
 import ProfileIcon from "./icons/profile_icon.svg";
 import ProfileIconWhite from "./icons/profile_icon_white.svg";
+
 import ChatIcon from "./icons/chat_icon.svg";
 import ChatIconWhite from "./icons/chat_icon_white.svg";
+
 import SearchIcon from "./icons/search_icon.svg";
 import SearchIconWhite from "./icons/search_icon_white.svg";
 
 import VacancyIcon from "./icons/vacancy.svg";
 import VacancyIconWhite from "./icons/vacancy_white.svg";
+
 import BellIcon from "./icons/bell.svg";
 import BellIconWhite from "./icons/bell_white.svg";
 
@@ -24,6 +27,9 @@ import PointIconWhite from "./icons/points_icon_white.svg";
 
 import SchoolsIcon from "./icons/points_icon.svg";
 import SchoolsIconWhite from "./icons/points_icon_white.svg";
+
+import PersonIcon from "./icons/person.svg";
+import PersonIconWhite from "./icons/person_white.svg";
 
 type props = {
     name: string;
@@ -39,6 +45,7 @@ export default function PageBlock(props: props) {
     if (props.name === "notifications") href = "/lk/notifications";
     if (props.name === "myjob") href = "/lk/myjob";
     if (props.name === "schools") href = "/lk/schools";
+    if (props.name === "clients") href = "/lk/clients";
 
     return (
         <>
@@ -241,6 +248,26 @@ export default function PageBlock(props: props) {
                                     }
                                 >
                                     Адреса
+                                </h3>
+                            </>
+                        )}
+
+                        {props.name == "clients" && (
+                            <>
+                                <Image
+                                    src={
+                                        props.active
+                                            ? PersonIconWhite
+                                            : PersonIcon
+                                    }
+                                    alt="clients"
+                                />
+                                <h3
+                                    className={
+                                        props.show ? styles.show : styles.name
+                                    }
+                                >
+                                    Клиенты
                                 </h3>
                             </>
                         )}

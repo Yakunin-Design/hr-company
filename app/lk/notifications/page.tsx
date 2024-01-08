@@ -4,6 +4,10 @@ import { cookies } from "next/headers";
 import Container from "@/components/std/Container";
 import Spacer from "@/components/std/Spacer";
 import Notification from "./Notification";
+import Card from "@/components/Card";
+import Row from "@/components/std/Row";
+import Button from "@/components/std/Button";
+import NotificationSettings from "./NotificationSettings";
 
 type notification = {
     text: string;
@@ -32,6 +36,9 @@ async function get_notifications() {
 export default async function Notifications() {
     const data = await get_notifications();
 
+    const cookieStore = cookies();
+    const jwt = cookieStore.get("jwt")?.value;
+
     const notifications = data.map((noti: notification) =>
         Notification({
             text: noti.text,
@@ -43,6 +50,7 @@ export default async function Notifications() {
     return (
         <Container lk wrapper>
             <Spacer top={2} />
+            <NotificationSettings />
             <h2>Уведомления</h2>
             {notifications.length === 0 && (
                 <p>
