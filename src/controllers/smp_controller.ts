@@ -1051,7 +1051,6 @@ type input_data = {
 };
 
 function valid_school_data(input_data: input_data) {
-    if (input_data.school_number.length >= 0) return true;
     if (input_data.school_name.length >= 0) return true;
     if (input_data.city.length >= 0) return true;
     if (input_data.address.length >= 0) return true;
@@ -1171,6 +1170,108 @@ async function delete_school_by_id(req: Request, res: Response) {
     }
 }
 
+async function get_all_clients(req: Request, res: Response) {
+    try {
+        const db_clients = await db.find_all({}, "smp_clients", 1000);
+        if (!db_clients) return res.status(404).send("cant find any clients");
+
+        res.status(200).send(db_clients.Ok);
+    } catch (e) {
+        console.log("update clients creation falid: " + e);
+    }
+}
+
+async function get_client_by_id(req: Request, res: Response) {
+    try {
+        const client_id = new ObjectId(req.params.id);
+
+        const db_clients = await db.find(client_id, "smp_clients");
+        if (!db_clients) return res.status(404).send("cant find any clients");
+
+        if (db_clients.Ok === null)
+            return res.status(404).send("cant find any clients");
+
+        res.status(200).send(db_clients.Ok);
+    } catch (e) {
+        console.log("update client creation falid: " + e);
+    }
+}
+
+type client_data = {
+    name: string;
+    city: string;
+    inn: string;
+    password: string;
+    contact_number: string;
+    contact_name: string;
+};
+
+function validate_client_data(input_data: client_data) {
+    if (input_data.name.length >= 0) return true;
+    if (input_data.city.length >= 0) return true;
+    if (input_data.password.length >= 0) return true;
+
+    return false;
+}
+
+async function new_client(req: Request, res: Response) {
+    try {
+        const input_data = req.body;
+
+        // validation
+        if (!validate_client_data(input_data))
+            return res.status(300).send("wrong input");
+
+        const unique_client_name = await db.find(
+            { client_name: req.body.name },
+            "smp_clients"
+        );
+        if (unique_client_name.Ok != null)
+            return res.status(404).send("client with that name alrealy exists");
+
+        const password = req.body.password;
+
+        const client_data = {
+            name: req.body.name,
+            inn: req.body.inn,
+            city: req.body.city,
+            contact_name: req.body.contact_name,
+            contact_number: req.body.contact_number,
+            password,
+        };
+
+        const db_clients = await db.save(client_data, "smp_clients");
+        if (!db_clients)
+            return res.status(500).send("Error incerting client in db");
+
+        res.status(200).send(db_clients.Ok);
+    } catch (e) {
+        console.log("new clients creation falid: " + e);
+    }
+}
+
+async function update_client(req: Request, res: Response) {
+    try {
+        const client_id = new ObjectId(req.params.id);
+        const edits = req.body;
+        // validation
+        // if (!valid_school_data(edits))
+        //   return res.status(300).send("wrong input");
+
+        const db_result = await db.update(
+            { _id: client_id },
+            { $set: { ...edits } },
+            "smp_clients"
+        );
+
+        if (!db_result) return res.status(500).send("cant find any clients");
+
+        res.status(200).send("updated");
+    } catch (e) {
+        console.log("update client creation falid: " + e);
+    }
+}
+
 export default {
     new_ticket,
     get_all_tickets,
@@ -1196,4 +1297,8 @@ export default {
     get_all_schools,
     get_school_by_id,
     delete_school_by_id,
+    get_all_clients,
+    get_client_by_id,
+    new_client,
+    update_client,
 };

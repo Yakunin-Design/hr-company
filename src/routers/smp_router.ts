@@ -47,6 +47,9 @@ router.get("/school-names", auth, smp_controller.school_names);
 router.get("/schools/:id", auth, smp_controller.get_school_by_id);
 router.delete("/schools/:id", auth, smp_controller.delete_school_by_id);
 
-// router.patch("/schools/:id", auth, smp_controller.get_proposal_by_id);
+router.get("/clients", auth, smp_controller.get_all_clients);
+router.get("/clients/:id", auth, smp_controller.get_client_by_id);
+router.post("/new-client", auth, smp_controller.new_client);
+router.post("/update-client/:id", auth, smp_controller.update_client);
 
 export default router;
