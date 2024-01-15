@@ -17,10 +17,15 @@ export default async function send_notification(
         );
 
     if (db_user.Ok.telegram_id)
+
+	/*
+
         send_message(
             db_user.Ok.telegram_id,
             "Вам предложили выйти на таких же условиях как в прошлый раз. Зайдите в личный кабинет что бы посмотреть предложение. smp.hr-company.org"
         );
+
+	*/
 
     // save notification to db
     const timestamp = Date.now();
