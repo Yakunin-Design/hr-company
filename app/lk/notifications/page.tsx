@@ -3,10 +3,11 @@ import { cookies } from "next/headers";
 
 import Container from "@/components/std/Container";
 import Spacer from "@/components/std/Spacer";
-import Notification from "./Notification";
 import Card from "@/components/Card";
 import Row from "@/components/std/Row";
 import Button from "@/components/std/Button";
+
+import Notification from "./Notification";
 import NotificationSettings from "./NotificationSettings";
 
 type notification = {

@@ -9,6 +9,8 @@ type props = {
 };
 
 export default function ActivateTicketButton(props: props) {
+    const user_type = localStorage.getItem("user_type") || "";
+
     function onClick() {
         const accept = confirm("Вы уверены, что хотите активировать заяку?");
         if (accept) {
@@ -30,8 +32,12 @@ export default function ActivateTicketButton(props: props) {
     }
 
     return (
-        <Button expand onClick={onClick}>
-            Активировать заявку
-        </Button>
+	<>
+		{ user_type === "employer" &&
+			<Button expand onClick={onClick}>
+				Активировать заявку
+			</Button>
+		}
+	</>
     );
 }

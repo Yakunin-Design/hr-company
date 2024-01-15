@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from "react";
 import { ticket_data, ticket_addres, ticket_position } from "./ticket_types";
 import axios from "axios";
@@ -60,7 +61,11 @@ export default function ticket_controller() {
         { name: "test", id: "bruh" },
     ]);
 
-    const jwt = localStorage.getItem("jwt") || "";
+    let jwt = "";
+	if (typeof window !== 'undefined') {
+		jwt = localStorage.getItem("jwt") || "";
+	}
+
     const config = {
         headers: {
             authorization: "Bearer " + jwt,
@@ -79,8 +84,9 @@ export default function ticket_controller() {
         const { name, value } = event.target;
 
         school_names.forEach(school_name => {
+			console.log(school_name.name);
             if (school_name.name.trim() === value) {
-                console.log(school_name.id);
+
                 // req to db with school id
                 axios
                     .get(

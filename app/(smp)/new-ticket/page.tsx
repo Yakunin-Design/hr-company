@@ -8,6 +8,7 @@ import PositionForm from "./PositionForm";
 
 export default function NewTicketPage() {
     const { ticket_form, next_form, prev_form } = ticket_state();
+
     const {
         ticket_data,
         address_data,

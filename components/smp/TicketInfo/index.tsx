@@ -64,12 +64,10 @@ export default function TicketInfo(props: props) {
                         light
                     />
                     <Spacer top={2} />
-                    <Row>
-                        <Row gap={0.5}>
-                            <StatusIcon is_ready={icon} />
-                            <p>{status_text}</p>
-                        </Row>
-                    </Row>
+					<Row gap={0.5}>
+						<StatusIcon is_ready={icon} />
+						<p>{status_text}</p>
+					</Row>
                     <Spacer top={1} />
                     <p>Дата реализации {display_date}</p>
                     <Spacer top={1} />

@@ -46,6 +46,7 @@ export default function PageBlock(props: props) {
     if (props.name === "myjob") href = "/lk/myjob";
     if (props.name === "schools") href = "/lk/schools";
     if (props.name === "clients") href = "/lk/clients";
+    if (props.name === "find-workers") href = "/find-workers";
 
     return (
         <>
@@ -163,7 +164,7 @@ export default function PageBlock(props: props) {
                                             ? VacancyIconWhite
                                             : VacancyIcon
                                     }
-                                    alt="find-workers"
+                                    alt="My job icon"
                                 />
                                 <h3
                                     className={
