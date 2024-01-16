@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { ObjectId, WithId } from "mongodb";
 import db from "../lib/idb";
 import { ITicket } from "../interfaces/ITicket";
-import Result from "../lib/Result";
 import close_ticket_logic from "./smp/close_ticket_logic";
 import activate_ticket_logic from "./smp/activate_ticket_logic";
 import create_proposal from "./smp/create_proposal";
@@ -1272,6 +1271,61 @@ async function update_client(req: Request, res: Response) {
     }
 }
 
+async function get_jobs_by_worker_id(req: Request, res: Response) {
+    try {
+        const worker_id = res.locals.user._id.toString();
+
+        // get all active tickets
+        const active_tickets = await db.find_all(
+            { status: "in progress" },
+            "tickets"
+        );
+        if (!active_tickets)
+            return res.status(404).send("cant find any clients");
+
+        if (active_tickets.Ok === null)
+            return res.status(404).send("cant find any active tickets");
+
+        // get job offer ids
+        let job_offer_ids: string[] = [];
+
+        active_tickets.Ok.forEach(ticket => {
+            ticket.addresses.forEach(address => {
+                address.positions.forEach(pos => {
+                    pos.accepted.forEach(acc => {
+                        if (acc.toString() === worker_id)
+                            job_offer_ids.push(pos.job_offer_id.toString());
+                        else return;
+                    });
+                });
+            });
+        });
+
+        // check if worker has any active job offers
+        if (job_offer_ids.length === 0) return res.status(200).send([]);
+
+        // get job offers data
+        /*
+		const job_offers = await Promise.all(job_offer_ids.map(async (id: string) => {
+			const job_offer_id = new ObjectId(id);
+			const job_offer = await db.find(job_offer_id, "smp_job_offers");
+			if(job_offer.Ok) 
+				return job_offer.Ok
+		}));
+		*/
+
+        const job_offers = await Promise.all(
+            job_offer_ids.map(async (id: string) => {
+                return await get_smp_job_offer(id);
+            })
+        );
+
+        res.status(200).send(job_offers);
+    } catch (e) {
+        console.log("cant get jobs by worker id" + e);
+    }
+}
+
 export default {
     new_ticket,
     get_all_tickets,
@@ -1301,4 +1355,5 @@ export default {
     get_client_by_id,
     new_client,
     update_client,
+    get_jobs_by_worker_id,
 };

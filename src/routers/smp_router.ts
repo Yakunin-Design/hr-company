@@ -6,7 +6,7 @@ import auth_moderator from "../middleware/auth_moderator";
 const router = Router();
 
 router.post("/new-ticket", auth, smp_controller.new_ticket);
-router.get("/tickets", auth, smp_controller.get_all_tickets);
+router.get("/tickets", auth, auth_moderator, smp_controller.get_all_tickets);
 router.get("/archive", auth, smp_controller.get_archived_tickets);
 router.get("/tickets/:id", auth, smp_controller.get_ticket_by_id);
 
@@ -51,5 +51,12 @@ router.get("/clients", auth, smp_controller.get_all_clients);
 router.get("/clients/:id", auth, smp_controller.get_client_by_id);
 router.post("/new-client", auth, smp_controller.new_client);
 router.post("/update-client/:id", auth, smp_controller.update_client);
+
+// should be limited to workers only
+router.get(
+    "/get-jobs-by-worker-id",
+    auth,
+    smp_controller.get_jobs_by_worker_id
+);
 
 export default router;

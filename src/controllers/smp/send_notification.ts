@@ -9,23 +9,6 @@ export default async function send_notification(
     proposal_id?: string
 ) {
     const id = new ObjectId(user_id);
-    // send notification in telegram if its linked
-    const db_user = await db.find({ _id: id }, "workers");
-    if (!db_user.Ok)
-        return new Error(
-            "database error: failed to find user for notification"
-        );
-
-    if (db_user.Ok.telegram_id)
-
-	/*
-
-        send_message(
-            db_user.Ok.telegram_id,
-            "Вам предложили выйти на таких же условиях как в прошлый раз. Зайдите в личный кабинет что бы посмотреть предложение. smp.hr-company.org"
-        );
-
-	*/
 
     // save notification to db
     const timestamp = Date.now();
@@ -40,6 +23,19 @@ export default async function send_notification(
 
     const db_noti = await db.save(notification, "notifications");
     if (!db_noti.Ok) return new Error("adding notification failed");
+
+    // send notification in telegram if its linked
+    const db_user = await db.find({ _id: id }, "workers");
+    if (!db_user.Ok)
+        return new Error(
+            "database error: failed to find user for notification"
+        );
+
+    if (db_user.Ok.telegram_id)
+        send_message(
+            db_user.Ok.telegram_id,
+            "Вам предложили выйти на таких же условиях как в прошлый раз. Зайдите в личный кабинет что бы посмотреть предложение. smp.hr-company.org"
+        );
 
     return true;
 }
