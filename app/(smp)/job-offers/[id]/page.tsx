@@ -39,6 +39,8 @@ export default async function JobOffers({ params }: { params: params }) {
         timeZone: user_time_zone,
     });
 
+    console.log(jo_data);
+
     return (
         <Container wrapper>
             <Overlay href="/job-offers">
@@ -95,7 +97,7 @@ export default async function JobOffers({ params }: { params: params }) {
 
                     <Row>
                         <p>Номер ОУ:</p>
-                        <h3>{jo_data.number}</h3>
+                        <h3>{jo_data.school_name}</h3>
                     </Row>
                     <Spacer top={1} />
 
@@ -118,7 +120,7 @@ export default async function JobOffers({ params }: { params: params }) {
                         </>
                     ) : (
                         <Row>
-                            <p>Начало</p>
+                            <p>Начало:</p>
                             <h3>{jo_data.working_hours.from}</h3>
                         </Row>
                     )}

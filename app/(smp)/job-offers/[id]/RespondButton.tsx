@@ -14,7 +14,10 @@ export default function RespondButton(props: props) {
         "accepted_worker" | "worker" | "candidate" | "hidden"
     >("hidden");
 
-    const job_offer_id = window.location.pathname.split('/')[2];
+    let job_offer_id = "";
+    if (typeof window !== "undefined") {
+        job_offer_id = window.location.pathname.split("/")[2];
+    }
 
     useEffect(() => {
         const jwt = localStorage.getItem("jwt") || "";
@@ -67,7 +70,7 @@ export default function RespondButton(props: props) {
                     school_id: props.school_id,
                     position: props.position,
                     worker: jwt,
-                    job_offer_id
+                    job_offer_id,
                 },
                 config
             )
