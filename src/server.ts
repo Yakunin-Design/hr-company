@@ -14,7 +14,7 @@ import cors from 'cors';
 const app = express();
 const server = http.createServer(app);
 
-const PORT = process.env.PORT || 6969
+const PORT = process.env.PORT || 3009;
 
 app.use(cors());
 app.use(express.json({limit: '30mb' }));
@@ -32,7 +32,7 @@ app.use(smp_router);
 
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:3000",
+        origin: "https://smp.hr-company.org",
         methods: ["GET", "POST"],
     },
 });
